@@ -2,11 +2,13 @@ require "api"
 
 function Init()
     txt = "Hello from Love2D!"
-    txt2 = ""
+    num = 1
+    txt2 = "Hello from Fantasy Console! x" .. num
 end
 
 function Update()
-    txt2 = "Hello from Fantasy Console!"
+    num = num + 1
+    txt2 = "Hello from Fantasy Console! x" .. num
 end
 
 function Draw()

@@ -1,6 +1,13 @@
-require "api"
+require "_cart"
+
+function love.load()
+    Init()
+end
+
+function love.update()
+    Update()
+end
 
 function love.draw()
-    --love.graphics.print("Hello world!")
-    Write("Hello world!", 10, 20)
+    Draw()
 end
