@@ -62,3 +62,38 @@ function Join(ss, delimiter)
     local s = table.concat(ss, delimiter)
     return s
 end
+
+
+function Split(s, delimiter)
+    --[[
+    Function Split takes single string and delimiter as arguments,
+    and tries to split the string on delimiter.
+    If delimiter is not provided, it defaults to single space.
+    If delimiter is set to empty string, this function returns the
+    string passed without changes.
+
+    Arguments
+    ---------
+    s : string
+        Text to be split.
+    delimiter : string = " "
+        Delimiter used to split the string.
+    
+    Returns
+    -------
+    {strings}
+    ]]--
+
+    if delimiter == "" then
+        return s
+    end
+    if not delimiter then
+        delimiter = " "
+    end
+
+    local result = {}
+    for match in (s..delimiter):gmatch("(.-)"..delimiter) do
+        table.insert(result, match)
+    end
+    return result
+end
