@@ -7,7 +7,7 @@ requiring user to write repeatedly module name over and over.
 ]]--
 
 
-local usub = require "usub"
+local usub = require "stringEx"
 local utf8 = require "utf8"
 
 
@@ -106,9 +106,13 @@ end
 function Sub(s, i, j)
     --[[
     Function Sub uses a third-party implementation of "usub" string
-    method – quite literally, "u(tf-8)-sub".
+    method, provided by stringEx library by losttoken.
+
+    Please see license at the top of stringEx.lua file.
+
+    https://github.com/losttoken/lua-utf8-string
+    accessed 20240506
     ]]--
-    local result = s:usub(i, j)
+    local result = string.usub(s, i, j)
     return result
 end
-
