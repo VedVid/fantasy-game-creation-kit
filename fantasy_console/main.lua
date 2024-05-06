@@ -1,3 +1,13 @@
+require "_cart"
+
+function love.load()
+    Init()
+end
+
+function love.update()
+    Update()
+end
+
 function love.draw()
-    love.graphics.print("Hello world!")
+    Draw()
 end
