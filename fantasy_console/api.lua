@@ -85,7 +85,7 @@ function Split(s, delimiter)
     ]]--
 
     if delimiter == "" then
-        return s
+        return {s}
     end
     if not delimiter then
         delimiter = " "
