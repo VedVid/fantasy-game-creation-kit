@@ -4,7 +4,7 @@ function Init()
     txt = "Hello from Love2D!"
     num = 1
     txt2 = "Hello from Fantasy Console! x" .. num
-    txt3 = Sub(txt2, 1, 5)  -- "Hello" expected
+    txt3 = Sub(txt2, 1, -4)  -- "H" expected
 end
 
 function Update()
