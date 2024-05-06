@@ -9,7 +9,7 @@ requiring user to write repeatedly module name over and over.
 
 function Write(s, x, y)
     --[[
-    Method Write uses the Love2D's print function under the
+    Function Write uses the Love2D's print function under the
     hood, but it does not expose all of its arguments to the
     user. 
     Rotation, scaling, and offset are set to the Love2D's
