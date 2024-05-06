@@ -55,6 +55,7 @@ function Join(ss, delimiter)
     -------
     string
     ]]--
+
     if not delimiter then
         delimiter = ""
     end
