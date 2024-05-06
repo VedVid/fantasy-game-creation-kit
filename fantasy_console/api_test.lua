@@ -45,7 +45,6 @@ function TestJoin:test__should_return_initial_string__when_table_with_single_scr
     luaunit.assertEquals(result, "abcd")
 end
 
-
 --[[ End of TestJoin ]]
 
 
