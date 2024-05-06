@@ -34,3 +34,30 @@ function Write(s, x, y)
 
     love.graphics.print(s, x, y, 0, 1, 1, 0, 0)
 end
+
+
+function Join(ss, delimiter)
+    --[[
+    Function Join joins multiple strings into single string.
+    It is provided to make joining larger amount of strings into
+    single string easier than by using `..` operator.
+
+    Arguments
+    ---------
+    ss : array of strings
+        Single table with all strings to be joined, e.g.
+        {"text1", "text2"}
+    delimiter : string = ""
+        Optional argument. It specifies what symbol or text will
+        be added between strings joined. Defaults to empty string.
+    
+    Returns
+    -------
+    string
+    ]]--
+    if not delimiter then
+        delimiter = ""
+    end
+    local s = table.concat(ss, delimiter)
+    return s
+end
