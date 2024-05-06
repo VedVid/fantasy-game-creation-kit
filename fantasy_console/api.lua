@@ -7,6 +7,7 @@ requiring user to write repeatedly module name over and over.
 ]]--
 
 
+local usub = require "usub"
 local utf8 = require "utf8"
 
 
@@ -104,40 +105,10 @@ end
 
 function Sub(s, i, j)
     --[[
-    Function Sub returns substring withing range of i and j
-    (including). Support for utf-8 is experimental
-    Also, I am not sure if I like how j smaller than 1 is handled,
-    but first of all I do not want this function to simply crash
-    on users.
-
-    Unfortunately, this function can not be easily tested with
-    standalone Lua interpreter, because:
-    - Love2D uses LuaJIT
-    - LuaJIT does not provide binaries
-    - LuaJIT is compatible with Lua 5.1 and not with Lua 5.3
-    - Lua 5.1 does not support UTF-8
-
-    Arguments
-    ---------
-    s : string
-        Base string.
-    i : number
-        Start of the substring (i included).
-    j : number
-        End of the substring (j included). Must be positive.
-    
-    Returns
-    -------
-    string
+    Function Sub uses a third-party implementation of "usub" string
+    method – quite literally, "u(tf-8)-sub".
     ]]--
-
-    if j < 1 then
-        j = i
-    end
-
-    i = utf8.offset(s, i)
-    j = utf8.offset(s, j)
-    
-    local result = string.sub(s, i, j)
+    local result = s:usub(i, j)
     return result
 end
+
