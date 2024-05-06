@@ -112,4 +112,39 @@ end
 --[[ End of TestSplit ]]
 
 
+--[[ Start of TestSub  ]]
+
+-- Unfortunately, due the number of reasons related to
+-- UTF-8 implementation (see api.Sub block comment for details),
+-- Sub function can not be easily tested within this environment.
+-- Still, I performed a couple of manual tests that I want to
+-- document here.
+-- - Test 1
+--   - git commit: 042a8d65bdfe499ea1ad9dd0f3aca7e4f508b6d0
+--   - test case: Sub("Hello from Love2D!", 1, 5)
+--   - expected result: "Hello"
+--   - returned result: "Hello"
+--   - OK
+-- - Test 2
+--   - git commit: bf7557296240a133bb5a95889865ef8c0eff3119
+--   - test case: Sub("Hello from Love2D!", 1, -4)
+--   - expected result: "H"
+--   - returned result: "H"
+--   - OK
+-- - Test 3
+--   - git commit: acb9a4294bdf24b8fd20f91dbbcada669883aa9f
+--   - test case: Sub("大日本國璽", 1, 1)
+--   - expected result: "大"
+--   - returned result: "大"
+--   - OK
+-- - Test 4
+--   - git commit: 4ff077d96cbb9b5e18e8f9839f678d26f7214a26
+--   - test case: Sub("Česká", 2, 5)
+--   - expected result: "eská"
+--   - returned result: "eská"
+--   - OK
+
+--[[ End of TestSub ]]
+
+
 os.exit( luaunit.LuaUnit.run() )
