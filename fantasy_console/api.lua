@@ -106,13 +106,44 @@ end
 function Sub(s, i, j)
     --[[
     Function Sub uses a third-party implementation of "usub" string
-    method, provided by stringEx library by losttoken.
+    method, provided by stringEx library by losttoken. It is
+    released under the terms of MIT license.
 
     Please see license at the top of stringEx.lua file.
 
     https://github.com/losttoken/lua-utf8-string
     accessed 20240506
+
+    Unfortunately, this function can not be easily tested with
+    standalone Lua interpreter, because:
+    - Love2D uses LuaJIT
+    - LuaJIT does not provide binaries
+    - LuaJIT is compatible with Lua 5.1 and not with Lua 5.3
+    - Lua 5.1 does not support UTF-8
+
+    I am not sure if I like how j smaller than 1 is handled
+    (here, in Sub function, not in the stringEx library),
+    but first of all I do not want this function to simply crash
+    on users.
+
+    Arguments
+    ---------
+    s : string
+        Base string.
+    i : number
+        Start of the substring (i included).
+    j : number
+        End of the substring (j included). Must be positive.
+    
+    Returns
+    -------
+    string
     ]]--
+
+    if j < 1 then
+        j = i
+    end
+
     local result = string.usub(s, i, j)
     return result
 end
