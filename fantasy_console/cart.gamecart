@@ -1,0 +1,12 @@
+function init()
+    text = "Hello world"
+end
+
+function draw()
+    do end
+end
+
+function update()
+    text = "Hello from cart"
+    return text
+end
