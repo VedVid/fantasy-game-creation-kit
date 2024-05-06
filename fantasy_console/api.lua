@@ -8,7 +8,6 @@ requiring user to write repeatedly module name over and over.
 
 
 local usub = require "stringEx"
-local utf8 = require "utf8"
 
 
 function Write(s, x, y)
