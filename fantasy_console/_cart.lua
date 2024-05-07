@@ -7,7 +7,7 @@ function Init()
     txt3 = Sub("Česká", 2, 5) -- eská expected
     local gamepixel = require "gamepixel"
     local palette = require "palette"
-    pix = gamepixel.new_pixel(100, 100, palette.green)
+    pix = gamepixel.new_gamepixel(100, 100, palette.green)
 end
 
 function Update()

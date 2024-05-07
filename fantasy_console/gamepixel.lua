@@ -10,7 +10,7 @@ gamepixel.y = 1
 gamepixel.color = gamepixel.default_color
 
 
-function gamepixel.new_pixel(x, y, color)
+function gamepixel.new_gamepixel(x, y, color)
     local new_gamepixel = {}
     new_gamepixel.x = x
     if new_gamepixel.x == nil then
