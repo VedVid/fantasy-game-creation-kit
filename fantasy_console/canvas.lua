@@ -1,6 +1,13 @@
 local g = require "globals"
 
+
 local canvas = {}
+
+
+--[[
+Below we define the correct scaling
+for a few popular screen resolutions.
+]]--
 
 canvas.scale_1920x1080 = {}
 canvas.scale_1920x1080.gamepixel_w = 5
@@ -18,10 +25,33 @@ canvas.scale_3840x2160 = {}
 canvas.scale_3840x2160.gamepixel_w = 9
 canvas.scale_3840x2160.gamepixel_h = 9
 
+
+--[[
+At the startup, default scale will be determinated
+by checking the monitor dimensions. It will use
+one of the scaling modes defined above.
+]]
 canvas.default_scale = nil
 
 
 function canvas.get_player_screen_dimension()
+    --[[
+    This method checks the monitor dimensions, then
+    sets the default scale that will be used at the
+    beginning of app execution.
+    Gamepixel is a fundamental unit that tells how many
+    "real" pixels grouped together makes a single in-game
+    pixel.
+
+    Arguments
+    ---------
+    none
+
+    Returns
+    -------
+    nothing
+    ]]--
+
     local _, _, flags = love.window.getMode()
     local _, screen_height = love.window.getDesktopDimensions(flags.displaye)
     if screen_height <= 768 then
@@ -37,6 +67,35 @@ end
 
 
 function canvas.set_global_screen_variables(scale, gamepixel_w, gamepixel_h)
+    --[[
+    This method sets global variables that are used by other functions
+    to set the size of screen.
+    Gamepixel is a fundamental unit that tells how many
+    "real" pixels grouped together makes a single in-game
+    pixel.
+
+    Arguments
+    ---------
+    scale : table
+        Scale is table with width and height of gamepixel. 
+        It can be nil, if all other arguments are provided.
+        Scale has higher priority than other arguments.
+    gamepixel_w : number
+        Arbitral value of gamepixel width. By convention, gamepixel_w
+        is the same value as gamepixel_h, but app does not
+        enforce it.
+        Can be nil if `scale` argument is provided.
+    gamepixel_h : number
+        Arbitral value of gamepixel height. By convention, gamepixel_h
+        is the same value as gamepixel_w, but app does not
+        enforce it.
+        Can be nil if `scale` argument is provided.
+    
+    Returns
+    -------
+    nothing
+    ]]--
+
     if scale ~= nil then
         g.screen.gamepixel.w = scale.gamepixel_w
         g.screen.gamepixel.h = scale.gamepixel_h
@@ -52,12 +111,39 @@ end
 
 
 function canvas.scale_up()
+    --[[
+    This method might be used to scale the gamepixels and, therefore,
+    app window, up. There is no defined upper bound of scaling.
+
+    Arguments
+    ---------
+    none
+
+    Returns
+    -------
+    nothing
+    ]]--
+
     canvas.set_global_screen_variables(nil, g.screen.gamepixel.w + 1, g.screen.gamepixel.h + 1)
     canvas.set_window_size()
 end
 
 
 function canvas.scale_down()
+    --[[
+    This method might be used to scale the gamepixels and, therefore,
+    app window, down. Each gamepixel can not be smaller than 1 real
+    pixel.
+
+    Arguments
+    ---------
+    none
+
+    Returns
+    -------
+    nothing
+    ]]--
+
     local new_gamepixel_w = g.screen.gamepixel.w - 1
     local new_gamepixel_h = g.screen.gamepixel.h - 1
     if new_gamepixel_w <= 0 or new_gamepixel_h <= 0 then
@@ -69,6 +155,18 @@ end
 
 
 function canvas.set_window_size()
+    --[[
+    This method sets window size taking into account global variables.
+
+    Arguments
+    ---------
+    none
+
+    Returns
+    -------
+    nothing
+    ]]--
+
     love.window.setMode(g.screen.size.pixels.w, g.screen.size.pixels.h)
 end
 
