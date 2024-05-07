@@ -152,6 +152,25 @@ end
 
 
 function Pset(x, y, color)
+    --[[
+    Function Pset draws new pixel on screen. It does not
+    use gamepixel under the hood – user just specifies coordinates
+    and color of pixel.
+
+    Arguments
+    ---------
+    x : number
+        Position of pixel on horizontal axis.
+    y : number
+        Position of pixel on vertical axis.
+    color : palette.<color>
+        Color of pixel to-bo-created. Currently ignored.
+    
+    Returns
+    -------
+    nothing
+    ]]--
+
     love.graphics.setColor(0.282, 0.459, 0.282, 1)
     love.graphics.rectangle(
         "fill",
@@ -165,6 +184,19 @@ end
 
 
 function Ppset(gamepixel)
+    --[[
+    Function Pset creates new gamepixel and draws it on screen.
+
+    Arguments
+    ---------
+    gamepixel : gamepixel
+        Gamepixel instance. It encapsulates coordinates and color.
+    
+    Returns
+    -------
+    nothing
+    ]]--
+
     love.graphics.setColor(0.282, 0.459, 0.282, 1)
     love.graphics.rectangle(
         "fill",
