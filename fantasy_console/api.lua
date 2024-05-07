@@ -9,6 +9,9 @@ requiring user to write repeatedly module name over and over.
 
 local usub = require "stringEx"
 
+local g = require "globals"
+local palette = require "palette"
+
 
 function Write(s, x, y)
     --[[
@@ -145,4 +148,30 @@ function Sub(s, i, j)
 
     local result = string.usub(s, i, j)
     return result
+end
+
+
+function Pset(x, y, color)
+    love.graphics.setColor(0.282, 0.459, 0.282, 1)
+    love.graphics.rectangle(
+        "fill",
+        x,
+        y,
+        g.screen.gamepixel.w,
+        g.screen.gamepixel.h
+    )
+    love.graphics.setColor(0.592, 0.529, 0.443, 1)
+end
+
+
+function Ppset(gamepixel)
+    love.graphics.setColor(0.282, 0.459, 0.282, 1)
+    love.graphics.rectangle(
+        "fill",
+        gamepixel.x,
+        gamepixel.y,
+        g.screen.gamepixel.w,
+        g.screen.gamepixel.h
+    )
+    love.graphics.setColor(0.592, 0.529, 0.443, 1)
 end

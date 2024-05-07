@@ -5,6 +5,9 @@ local gamepixel = {}
 
 
 gamepixel.default_color = palette.black
+gamepixel.x = 1
+gamepixel.y = 1
+gamepixel.color = gamepixel.default_color
 
 
 function gamepixel.new_pixel(x, y, color)
