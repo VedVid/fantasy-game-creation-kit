@@ -9,6 +9,14 @@ function love.load()
     Init()
 end
 
+function love.keypressed(key, scancode, isrepeat)
+    if key == "pageup" then
+        canvas.scale_up()
+    elseif key == "pagedown" then
+        canvas.scale_down()
+    end
+end
+
 function love.update()
     Update()
 end

@@ -51,6 +51,23 @@ function canvas.set_global_screen_variables(scale, gamepixel_w, gamepixel_h)
 end
 
 
+function canvas.scale_up()
+    canvas.set_global_screen_variables(nil, g.screen.gamepixel.w + 1, g.screen.gamepixel.h + 1)
+    canvas.set_window_size()
+end
+
+
+function canvas.scale_down()
+    local new_gamepixel_w = g.screen.gamepixel.w - 1
+    local new_gamepixel_h = g.screen.gamepixel.h - 1
+    if new_gamepixel_w <= 0 or new_gamepixel_h <= 0 then
+        return
+    end
+    canvas.set_global_screen_variables(nil, new_gamepixel_w, new_gamepixel_w)
+    canvas.set_window_size()
+end
+
+
 function canvas.set_window_size()
     love.window.setMode(g.screen.size.pixels.w, g.screen.size.pixels.h)
 end
