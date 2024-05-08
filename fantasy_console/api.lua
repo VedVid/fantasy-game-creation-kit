@@ -9,6 +9,7 @@ requiring user to write repeatedly module name over and over.
 
 local usub = require "stringEx"
 
+local gamepixel = require "gamepixel"
 local g = require "globals"
 local palette = require "palette"
 
@@ -171,7 +172,7 @@ function Pset(x, y, color)
     nothing
     ]]--
 
-    love.graphics.setColor(0.282, 0.459, 0.282, 1)
+    love.graphics.setColor(unpack(color.rgb01))
     love.graphics.rectangle(
         "fill",
         x,
@@ -179,7 +180,7 @@ function Pset(x, y, color)
         g.screen.gamepixel.w,
         g.screen.gamepixel.h
     )
-    love.graphics.setColor(0.592, 0.529, 0.443, 1)
+    love.graphics.setColor(unpack(palette.white_bold.rgb01))
 end
 
 
@@ -197,7 +198,7 @@ function Ppset(gamepixel)
     nothing
     ]]--
 
-    love.graphics.setColor(0.282, 0.459, 0.282, 1)
+    love.graphics.setColor(unpack(gamepixel.color.rgb01))
     love.graphics.rectangle(
         "fill",
         gamepixel.x,
@@ -205,5 +206,5 @@ function Ppset(gamepixel)
         g.screen.gamepixel.w,
         g.screen.gamepixel.h
     )
-    love.graphics.setColor(0.592, 0.529, 0.443, 1)
+    love.graphics.setColor(unpack(palette.white_bold.rgb01))
 end

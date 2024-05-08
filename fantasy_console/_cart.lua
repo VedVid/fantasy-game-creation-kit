@@ -20,4 +20,6 @@ function Draw()
     Write(txt2, 10, 50)
     Write(txt3, 10, 90)
     Ppset(pix)
+    local palette = require "palette"
+    Pset(108, 100, palette.blue_bold)
 end
