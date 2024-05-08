@@ -1,3 +1,6 @@
+local palette = require "palette"
+
+
 local globals = {}
 
 globals.screen = {}
@@ -11,5 +14,8 @@ globals.screen.size.gamepixels.h = 192
 globals.screen.size.pixels = {}
 globals.screen.size.pixels.w = globals.screen.size.gamepixels.w * globals.screen.gamepixel.w
 globals.screen.size.pixels.h = globals.screen.size.gamepixels.h * globals.screen.gamepixel.h
+
+globals.colors = {}
+globals.colors.default_color = palette.white
 
 return globals
