@@ -7,7 +7,8 @@ function Init()
     txt3 = Sub("Česká", 2, 5) -- eská expected
     local gamepixel = require "gamepixel"
     local palette = require "palette"
-    pix = gamepixel.new_gamepixel(100, 100, palette.green)
+    pix = gamepixel.new_gamepixel(1, 2, palette.red_bold)
+    pix2 = gamepixel.new_gamepixel(2, 2, palette.green_bold)
 end
 
 function Update()
@@ -16,10 +17,13 @@ function Update()
 end
 
 function Draw()
-    Write(txt, 10, 10)
-    Write(txt2, 10, 50)
-    Write(txt3, 10, 90)
-    Ppset(pix)
+    Write(txt, 1, 1)
+    Write(txt2, 1, 1+8)
+    Write(txt3, 1, 1+16)
+    --Ppset(pix)
     local palette = require "palette"
-    Pset(108, 100, palette.blue_bold)
+    Pset(1, 1, palette.blue_bold)
+    Pset(2, 1, palette.magenta_bold)
+    Ppset(pix)
+    Ppset(pix2)
 end

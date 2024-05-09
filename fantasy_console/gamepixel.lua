@@ -1,3 +1,4 @@
+local g = require "globals"
 local palette = require "palette"
 
 
@@ -36,13 +37,15 @@ function gamepixel.new_gamepixel(x, y, color)
     ]]--
 
     local new_gamepixel = {}
-    new_gamepixel.x = x
-    if new_gamepixel.x == nil then
-        new_gamepixel.x = 1
+    if x == nil then
+        new_gamepixel.x = g.screen.gamepixel.w
+    else
+        new_gamepixel.x = x * g.screen.gamepixel.w
     end
-    new_gamepixel.y = y
-    if new_gamepixel.y == nil then
-        new_gamepixel.y = 1
+    if y == nil then
+        new_gamepixel.y = g.screen.gamepixel.h
+    else
+        new_gamepixel.y = y * g.screen.gamepixel.h
     end
     new_gamepixel.color = color
     if new_gamepixel.color == nil then

@@ -39,7 +39,9 @@ function Write(s, x, y)
     nothing
     ]]--
 
-    love.graphics.print(s, x, y, 0, 1, 1, 0, 0)
+    local lx = x * g.screen.gamepixel.w
+    local ly = y * g.screen.gamepixel.h
+    love.graphics.print(s, lx, ly, 0, 1, 1, 0, 0)
 end
 
 
@@ -172,11 +174,13 @@ function Pset(x, y, color)
     nothing
     ]]--
 
+    local lx = x * g.screen.gamepixel.w
+    local ly = y * g.screen.gamepixel.h
     love.graphics.setColor(unpack(color.rgb01))
     love.graphics.rectangle(
         "fill",
-        x,
-        y,
+        lx,
+        ly,
         g.screen.gamepixel.w,
         g.screen.gamepixel.h
     )
