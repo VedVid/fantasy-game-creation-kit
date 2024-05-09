@@ -12,18 +12,22 @@ for a few popular screen resolutions.
 canvas.scale_1920x1080 = {}
 canvas.scale_1920x1080.gamepixel_w = 5
 canvas.scale_1920x1080.gamepixel_h = 5
+canvas.scale_1920x1080.font_size = 8
 
 canvas.scale_1366x768 = {}
 canvas.scale_1366x768.gamepixel_w = 3
 canvas.scale_1366x768.gamepixel_h = 3
+canvas.scale_1366x768.font_size = 6
 
 canvas.scale_2560x1440 = {}
 canvas.scale_2560x1440.gamepixel_w = 6
 canvas.scale_2560x1440.gamepixel_h = 6
+canvas.scale_2560x1440.font_size = 10
 
 canvas.scale_3840x2160 = {}
 canvas.scale_3840x2160.gamepixel_w = 9
 canvas.scale_3840x2160.gamepixel_h = 9
+canvas.scale_3840x2160.font_size = 12
 
 
 --[[
