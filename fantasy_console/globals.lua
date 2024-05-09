@@ -3,6 +3,9 @@ local palette = require "palette"
 
 local globals = {}
 
+globals.min_dt = 1/30
+globals.next_time = 0
+
 globals.screen = {}
 globals.screen.gamepixel = {}
 globals.screen.gamepixel.w = 5
