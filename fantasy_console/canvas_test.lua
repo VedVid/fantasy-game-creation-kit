@@ -41,7 +41,7 @@ function Test__set_global_screen_variables:test__should_use_scale__when_both_sca
 
     luaunit.assertEquals(
         g.screen.font_size,
-        g.screen.font_size * 2
+        canvas.scale_3840x2160.font_size
     )
 end
 

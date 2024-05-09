@@ -111,7 +111,7 @@ function canvas.set_global_screen_variables(scale, gamepixel_w, gamepixel_h, fon
     elseif gamepixel_h ~= nil and gamepixel_w ~= nil and font_size ~= nil then
         g.screen.gamepixel.w = gamepixel_w
         g.screen.gamepixel.h = gamepixel_h
-        g.screen.font_size = font_size
+        g.screen.font_size = font_size * gamepixel_h
     else
         error("Error in canvas.set_global_screen_variables:\nscale or (gamepixel_h and gamepixel_h) must be valid value.")
     end
