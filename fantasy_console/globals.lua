@@ -6,10 +6,13 @@ local globals = {}
 globals.min_dt = 1/30
 globals.next_time = 0
 
+globals.font = nil
+
 globals.screen = {}
 globals.screen.gamepixel = {}
 globals.screen.gamepixel.w = 5
 globals.screen.gamepixel.h = 5
+globals.screen.font_size = 8*5
 globals.screen.size = {}
 globals.screen.size.gamepixels = {}
 globals.screen.size.gamepixels.w = 256

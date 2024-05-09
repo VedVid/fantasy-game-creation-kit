@@ -12,18 +12,22 @@ for a few popular screen resolutions.
 canvas.scale_1920x1080 = {}
 canvas.scale_1920x1080.gamepixel_w = 5
 canvas.scale_1920x1080.gamepixel_h = 5
+canvas.scale_1920x1080.font_size = 5*8
 
 canvas.scale_1366x768 = {}
 canvas.scale_1366x768.gamepixel_w = 3
 canvas.scale_1366x768.gamepixel_h = 3
+canvas.scale_1366x768.font_size = 3*8
 
 canvas.scale_2560x1440 = {}
 canvas.scale_2560x1440.gamepixel_w = 6
 canvas.scale_2560x1440.gamepixel_h = 6
+canvas.scale_2560x1440.font_size = 6*8
 
 canvas.scale_3840x2160 = {}
 canvas.scale_3840x2160.gamepixel_w = 9
 canvas.scale_3840x2160.gamepixel_h = 9
+canvas.scale_3840x2160.font_size = 9*8
 
 
 --[[
@@ -66,13 +70,14 @@ function canvas.get_player_screen_dimension()
 end
 
 
-function canvas.set_global_screen_variables(scale, gamepixel_w, gamepixel_h)
+function canvas.set_global_screen_variables(scale, gamepixel_w, gamepixel_h, font_size)
     --[[
     This method sets global variables that are used by other functions
     to set the size of screen.
     Gamepixel is a fundamental unit that tells how many
     "real" pixels grouped together makes a single in-game
     pixel.
+    Font size is the height in pixels (_not_ gamepixels).
 
     Arguments
     ---------
@@ -90,6 +95,9 @@ function canvas.set_global_screen_variables(scale, gamepixel_w, gamepixel_h)
         is the same value as gamepixel_w, but app does not
         enforce it.
         Can be nil if `scale` argument is provided.
+    font_size : number
+        Height of font in pixels.
+        Can be nil if `scale` argument is provided.
     
     Returns
     -------
@@ -99,9 +107,11 @@ function canvas.set_global_screen_variables(scale, gamepixel_w, gamepixel_h)
     if scale ~= nil then
         g.screen.gamepixel.w = scale.gamepixel_w
         g.screen.gamepixel.h = scale.gamepixel_h
-    elseif gamepixel_h ~= nil and gamepixel_w ~= nil then
+        g.screen.font_size = scale.font_size
+    elseif gamepixel_h ~= nil and gamepixel_w ~= nil and font_size ~= nil then
         g.screen.gamepixel.w = gamepixel_w
         g.screen.gamepixel.h = gamepixel_h
+        g.screen.font_size = font_size * gamepixel_h
     else
         error("Error in canvas.set_global_screen_variables:\nscale or (gamepixel_h and gamepixel_h) must be valid value.")
     end
@@ -113,7 +123,8 @@ end
 function canvas.scale_up()
     --[[
     This method might be used to scale the gamepixels and, therefore,
-    app window, up. There is no defined upper bound of scaling.
+    app window, up. It also scales the font size.
+    There is no defined upper bound of scaling.
 
     Arguments
     ---------
@@ -124,7 +135,13 @@ function canvas.scale_up()
     nothing
     ]]--
 
-    canvas.set_global_screen_variables(nil, g.screen.gamepixel.w + 1, g.screen.gamepixel.h + 1)
+    canvas.set_global_screen_variables(
+        nil,
+        g.screen.gamepixel.w + 1,
+        g.screen.gamepixel.h + 1,
+        (g.screen.font_size / g.screen.gamepixel.h) + 1
+    )
+    canvas.set_font()
     canvas.set_window_size()
 end
 
@@ -132,8 +149,9 @@ end
 function canvas.scale_down()
     --[[
     This method might be used to scale the gamepixels and, therefore,
-    app window, down. Each gamepixel can not be smaller than 1 real
-    pixel.
+    app window, down. It also scales the font size. Font and each
+    gamepixel can not be smaller than 1 real pixel.
+    
 
     Arguments
     ---------
@@ -146,11 +164,20 @@ function canvas.scale_down()
 
     local new_gamepixel_w = g.screen.gamepixel.w - 1
     local new_gamepixel_h = g.screen.gamepixel.h - 1
-    if new_gamepixel_w <= 0 or new_gamepixel_h <= 0 then
+    local new_font_size = (g.screen.font_size / g.screen.gamepixel.h) - 1
+    if new_gamepixel_w <= 0 or new_gamepixel_h <= 0 or new_font_size <= 0 then
         return
     end
-    canvas.set_global_screen_variables(nil, new_gamepixel_w, new_gamepixel_w)
+    canvas.set_global_screen_variables(nil, new_gamepixel_w, new_gamepixel_w, new_font_size)
+    canvas.set_font()
     canvas.set_window_size()
+end
+
+
+function canvas.set_font()
+    g.font = nil
+    g.font = love.graphics.newFont(g.screen.font_size)
+    love.graphics.setFont(g.font)
 end
 
 
