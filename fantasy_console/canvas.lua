@@ -139,7 +139,7 @@ function canvas.scale_up()
         nil,
         g.screen.gamepixel.w + 1,
         g.screen.gamepixel.h + 1,
-        g.screen.font_size + 1
+        (g.screen.font_size / g.screen.gamepixel.h) + 1
     )
     canvas.set_window_size()
 end
@@ -163,7 +163,7 @@ function canvas.scale_down()
 
     local new_gamepixel_w = g.screen.gamepixel.w - 1
     local new_gamepixel_h = g.screen.gamepixel.h - 1
-    local new_font_size = g.font_size - 1
+    local new_font_size = (g.screen.font_size / g.screen.gamepixel.h) - 1
     if new_gamepixel_w <= 0 or new_gamepixel_h <= 0 or new_font_size <= 0 then
         return
     end
