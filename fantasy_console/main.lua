@@ -7,8 +7,7 @@ function love.load()
     canvas.get_player_screen_dimension()
     canvas.set_global_screen_variables(canvas.default_scale)
     canvas.set_window_size()
-    g.font = love.graphics.newFont(g.screen.font_size)
-    love.graphics.setFont(g.font)
+    canvas.set_font()
     g.next_time = love.timer.getTime()
     Init()
 end
@@ -16,16 +15,8 @@ end
 function love.keypressed(key, scancode, isrepeat)
     if key == "pageup" then
         canvas.scale_up()
-        print(g.screen.font_size)
-        g.font = nil
-        g.font = love.graphics.newFont(g.screen.font_size)
-        love.graphics.setFont(g.font)
     elseif key == "pagedown" then
         canvas.scale_down()
-        print(g.screen.font_size)
-        g.font = nil
-        g.font = love.graphics.newFont(g.screen.font_size)
-        love.graphics.setFont(g.font)
     end
 end
 
