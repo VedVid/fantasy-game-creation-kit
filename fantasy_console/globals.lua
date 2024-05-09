@@ -10,6 +10,7 @@ globals.screen = {}
 globals.screen.gamepixel = {}
 globals.screen.gamepixel.w = 5
 globals.screen.gamepixel.h = 5
+globals.screen.font_size = 8*5
 globals.screen.size = {}
 globals.screen.size.gamepixels = {}
 globals.screen.size.gamepixels.w = 256
