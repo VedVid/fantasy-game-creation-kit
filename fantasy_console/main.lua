@@ -8,6 +8,7 @@ function love.load()
     canvas.set_global_screen_variables(canvas.default_scale)
     canvas.set_window_size()
     canvas.set_font()
+    canvas.set_line_width()
     g.next_time = love.timer.getTime()
     Init()
 end

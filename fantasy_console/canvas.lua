@@ -142,6 +142,7 @@ function canvas.scale_up()
         (g.screen.font_size / g.screen.gamepixel.h) + 1
     )
     canvas.set_font()
+    canvas.set_line_width()
     canvas.set_window_size()
 end
 
@@ -170,6 +171,7 @@ function canvas.scale_down()
     end
     canvas.set_global_screen_variables(nil, new_gamepixel_w, new_gamepixel_w, new_font_size)
     canvas.set_font()
+    canvas.set_line_width()
     canvas.set_window_size()
 end
 
@@ -192,6 +194,16 @@ function canvas.set_font()
     g.font = nil
     g.font = love.graphics.newFont(g.screen.font_size)
     love.graphics.setFont(g.font)
+end
+
+
+function canvas.set_line_width()
+    love.graphics.setLineWidth(
+        math.min(
+            g.screen.gamepixel.h,
+            g.screen.gamepixel.w
+        )
+    )
 end
 
 
