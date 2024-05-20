@@ -304,6 +304,28 @@ function Rectfill(x, y, w, h, color)
 end
 
 
+function Circ(x, y, r, color)
+    local current_x, current_y, angle
+    local coords = {}
+    for i = 1, 360, 1 do
+        angle = math.floor(i)
+        current_x = r * math.cos(angle * math.pi / 180)
+        current_y = r * math.sin(angle * math.pi / 180)
+        if current_x % g.screen.gamepixel.w == 0 and current_y % g.screen.gamepixel.h == 0 then
+            Pset(
+                x + current_x,
+                y + current_y,
+                color
+            )
+        end
+        --local new_coord = {}
+        --new_coord.x = x + current_x
+        --new_coord.y = y + current_y
+        --table.insert(coords, new_coord)
+    end
+end
+
+
 --------------------
 ---------- COLORS --
 --------------------

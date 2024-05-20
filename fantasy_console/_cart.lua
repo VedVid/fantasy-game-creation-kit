@@ -32,4 +32,5 @@ function Draw()
     Pset(34, 30, Cyan)
     Pset(34, 34, CyanBold)
     Rectfill(34, 30, 4, 4, BlueBold)
+    Circ(60, 30, 8, GreenBold)
 end
