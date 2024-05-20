@@ -28,7 +28,7 @@ function Draw()
     Ppset(pix2)
     Pset(29, 30, palette.cyan_bold)
     Pset(29, 34, palette.cyan)
-    Rect(30, 30, 4, 4, palette.green_bold)
+    Rect(29, 30, 4, 4, palette.green_bold)
     Pset(34, 30, palette.cyan)
     Pset(34, 34, palette.cyan_bold)
 end
