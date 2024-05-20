@@ -16,7 +16,7 @@ Graphics:
 * [x] print
 * [x] pset
 * [x] rect
-* [ ] rectfill
+* [x] rectfill
 * [ ] spr
 * [ ] sspr
 Not sure if it will be implemented:

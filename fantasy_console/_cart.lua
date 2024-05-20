@@ -31,4 +31,5 @@ function Draw()
     Rect(29, 30, 4, 4, palette.green_bold)
     Pset(34, 30, palette.cyan)
     Pset(34, 34, palette.cyan_bold)
+    Rectfill(34, 30, 4, 4, palette.blue_bold)
 end
