@@ -197,6 +197,11 @@ function canvas.set_font()
 end
 
 
+function canvas.set_line_style()
+    love.graphics.setLineStyle("rough")
+end
+
+
 function canvas.set_line_width()
     love.graphics.setLineWidth(
         math.min(
