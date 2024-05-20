@@ -7,8 +7,8 @@ Will not implement:
 
 Graphics:
 - [] camera
-- [] circ
-- [] circfill
+* [x] circ
+* [x] circfill
 - [] oval
 - [] ovalfill
 - [] cls
@@ -130,4 +130,5 @@ Challanges:
 	- implement basic API based on PICO-8 API
 	- remove redundancy between API and Lua
 	- fill the gaps
+
 
