@@ -305,6 +305,26 @@ end
 
 
 function Circ(x, y, r, color)
+    --[[
+    Function Circ creates empty (ie not filled) circle on the screen.
+    It uses midpoint circle alogrithm. 
+
+    Arguments
+    ---------
+    x : number
+        Position of circle center on the x axis.
+    y : number
+        Position of circle center on the y axis.
+    r : number
+        Radius.
+    color : palette.<color>
+        Color of circle.
+    
+    Returns
+    -------
+    nothing
+    ]]--
+
     local dx = r
     local dy = 0
     local err = 1 - r
