@@ -186,7 +186,7 @@ function Pset(x, y, color)
 
     local lx = x * g.screen.gamepixel.w
     local ly = y * g.screen.gamepixel.h
-    love.graphics.setColor(unpack(color.rgb01))
+    love.graphics.setColor(unpack(color))
     love.graphics.rectangle(
         "fill",
         lx,
@@ -262,7 +262,7 @@ function Rect(x, y, w, h, color)
     local ly = (y * g.screen.gamepixel.h) + (g.screen.gamepixel.h / 2)
     local lw = (w - 1) * g.screen.gamepixel.w
     local lh = (h - 1) * g.screen.gamepixel.h
-    love.graphics.setColor(unpack(color.rgb01))
+    love.graphics.setColor(unpack(color))
     love.graphics.rectangle("line", lx, ly, lw, lh)
     love.graphics.setColor(unpack(palette.white_bold.rgb01))
 end
@@ -298,7 +298,7 @@ function Rectfill(x, y, w, h, color)
     local ly = y * g.screen.gamepixel.h
     local lw = w * g.screen.gamepixel.w
     local lh = h * g.screen.gamepixel.h
-    love.graphics.setColor(unpack(color.rgb01))
+    love.graphics.setColor(unpack(color))
     love.graphics.rectangle("fill", lx, ly, lw, lh)
     love.graphics.setColor(unpack(palette.white_bold.rgb01))
 end
@@ -307,3 +307,84 @@ end
 --------------------
 ---------- COLORS --
 --------------------
+
+
+function Black()
+    return palette.black.rgb01
+end
+
+
+function BlackBold()
+    return palette.black_bold.rgb01
+end
+
+
+function Red()
+    return palette.red.rgb01
+end
+
+
+function RedBold()
+    return palette.red_bold.rgb01
+end
+
+
+function Green()
+    return palette.green.rgb01
+end
+
+
+function GreenBold()
+    return palette.green_bold.rgb01
+end
+
+
+function Yellow()
+    return palette.yellow.rgb01
+end
+
+
+function YellowBold()
+    return palette.yellow_bold.rgb01
+end
+
+
+function Blue()
+    return palette.blue.rgb01
+end
+
+
+function BlueBold()
+    return palette.blue_bold.rgb01
+end
+
+
+function Pink()
+    return palette.magenta.rgb01
+end
+
+
+function PinkBold()
+    return palette.magenta_bold.rgb01
+end
+
+
+function Cyan()
+    return palette.cyan.rgb01
+end
+
+
+function CyanBold()
+    return palette.cyan_bold.rgb01
+end
+
+
+function White()
+    return palette.white.rgb01
+end
+
+
+function WhiteBold()
+    return palette.white_bold.rgb01
+end
+
