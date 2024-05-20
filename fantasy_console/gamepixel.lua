@@ -38,14 +38,14 @@ function gamepixel.new_gamepixel(x, y, color)
 
     local new_gamepixel = {}
     if x == nil then
-        new_gamepixel.x = g.screen.gamepixel.w
+        new_gamepixel.x = 1
     else
-        new_gamepixel.x = x * g.screen.gamepixel.w
+        new_gamepixel.x = x
     end
     if y == nil then
-        new_gamepixel.y = g.screen.gamepixel.h
+        new_gamepixel.y = 1
     else
-        new_gamepixel.y = y * g.screen.gamepixel.h
+        new_gamepixel.y = y
     end
     new_gamepixel.color = color
     if new_gamepixel.color == nil then

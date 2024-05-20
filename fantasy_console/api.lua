@@ -205,8 +205,8 @@ function Ppset(gamepixel)
     love.graphics.setColor(unpack(gamepixel.color.rgb01))
     love.graphics.rectangle(
         "fill",
-        gamepixel.x,
-        gamepixel.y,
+        gamepixel.x * g.screen.gamepixel.w,
+        gamepixel.y * g.screen.gamepixel.h,
         g.screen.gamepixel.w,
         g.screen.gamepixel.h
     )
