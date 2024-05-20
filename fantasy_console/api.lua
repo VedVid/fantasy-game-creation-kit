@@ -304,6 +304,50 @@ function Rectfill(x, y, w, h, color)
 end
 
 
+function Circ(x, y, r, color)
+    --[[
+    Function Circ creates empty (ie not filled) circle on the screen.
+    It uses midpoint circle alogrithm. 
+
+    Arguments
+    ---------
+    x : number
+        Position of circle center on the x axis.
+    y : number
+        Position of circle center on the y axis.
+    r : number
+        Radius.
+    color : palette.<color>
+        Color of circle.
+    
+    Returns
+    -------
+    nothing
+    ]]--
+
+    local dx = r
+    local dy = 0
+    local err = 1 - r
+    while dx >= dy do
+        Pset(x + dx, y + dy, color)
+        Pset(x - dx, y + dy, color)
+        Pset(x + dx, y - dy, color)
+        Pset(x - dx, y - dy, color)
+        Pset(x + dy, y + dx, color)
+        Pset(x - dy, y + dx, color)
+        Pset(x + dy, y - dx, color)
+        Pset(x - dy, y - dx, color)
+        dy = dy + 1
+        if err < 0 then
+            err = err + 2 * dy + 1
+        else
+            dx = dx - 1
+            err = err + 2 * (dy - dx) + 1
+        end
+    end
+end
+
+
 --------------------
 ---------- COLORS --
 --------------------
