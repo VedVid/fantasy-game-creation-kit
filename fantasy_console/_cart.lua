@@ -34,5 +34,5 @@ function Draw()
     Rectfill(34, 30, 4, 4, BlueBold)
     Circ(60, 30, 8, GreenBold)
     Circfill(80, 30, 8, Green)
-    Oval(60, 60, 20, 10, Blue)
+    Oval(20, 10, 60, 60, Blue)
 end
