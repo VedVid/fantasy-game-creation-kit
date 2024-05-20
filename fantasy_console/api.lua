@@ -380,7 +380,7 @@ function Circfill(x, y, r, color)
 end
 
 
-function Oval(rx, ry, xc, yc, color)
+function Oval(xc, yc, rx, ry, color)
 	local dx, dy, d1, d2, x, y
 	x = 0;
 	y = ry;
