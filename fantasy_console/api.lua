@@ -349,6 +349,26 @@ end
 
 
 function Circfill(x, y, r, color)
+    --[[
+    Function Circfill draws filled circle on the screen. 
+    It reuses Circ function for the borders, and brute-forces the coloring.
+    
+    Arguments
+    ---------
+    x : number
+        Position of circle center on the x axis.
+    y : number
+        Position of circle center on the y axis.
+    r : number
+        Radius.
+    color : palette.<color>
+        Color of circle.
+    
+    Returns
+    -------
+    nothing
+    ]]--
+
     for ty=-r,r do
         for tx=-r,r do
             if(tx*tx+ty*ty <= r*r) then
