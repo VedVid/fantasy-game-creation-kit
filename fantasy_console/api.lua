@@ -14,6 +14,11 @@ local g = require "globals"
 local palette = require "palette"
 
 
+------------------
+---------- TEXT --
+------------------
+
+
 function Write(s, x, y)
     --[[
     Function Write uses the Love2D's print function under the
@@ -154,6 +159,11 @@ function Sub(s, i, j)
 end
 
 
+----------------------
+---------- GEOMETRY --
+----------------------
+
+
 function Pset(x, y, color)
     --[[
     Function Pset draws new pixel on screen. It does not
@@ -292,3 +302,8 @@ function Rectfill(x, y, w, h, color)
     love.graphics.rectangle("fill", lx, ly, lw, lh)
     love.graphics.setColor(unpack(palette.white_bold.rgb01))
 end
+
+
+--------------------
+---------- COLORS --
+--------------------
