@@ -215,6 +215,35 @@ end
 
 
 function Rect(x, y, w, h, color)
+    --[[
+    Function Rect creates empty (ie not filled) rectangle on screen.
+    lx, ly are increased by half of the current gamepixel due the
+    three reasons:
+    - by default, Love2D starts drawing in the middle of the pixel,
+        which mights result in blurry lines unless we pass 0.5 to
+        x and y all the time (not feasible with current app architecture)
+        or unless we use "rough" line style (which we use);
+    - rough line style rounds the half-pixel which mights cause
+        off-by-one issues;
+    - setting wide line width cause the line to grow in both directions.
+    lw, lh are decreased by single gamepixel because Love2D does
+    not take into account the starting point when calculating size
+    of rectangle.
+
+    Arguments
+    ---------
+    x : number
+        Position of top-left rectangle corner on the x axis.
+    y : number
+        Position of top-left rectangle corner on the y axis.
+    w : number
+        Width of rectangle.
+    h : number
+        Height of rectangle.
+    color : palette.<color>
+        Color of pixel to-bo-created.
+    ]]--
+
     local lx = (x * g.screen.gamepixel.w) + (g.screen.gamepixel.w / 2)
     local ly = (y * g.screen.gamepixel.h) + (g.screen.gamepixel.h / 2)
     local lw = (w - 1) * g.screen.gamepixel.w
