@@ -15,7 +15,7 @@ Graphics:
 - [] line
 * [x] print
 * [x] pset
-* [ ] rect
+* [x] rect
 * [ ] rectfill
 * [ ] spr
 * [ ] sspr
