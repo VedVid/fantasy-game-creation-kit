@@ -242,6 +242,10 @@ function Rect(x, y, w, h, color)
         Height of rectangle.
     color : palette.<color>
         Color of pixel to-bo-created.
+    
+    Returns
+    -------
+    nothing
     ]]--
 
     local lx = (x * g.screen.gamepixel.w) + (g.screen.gamepixel.w / 2)
@@ -250,5 +254,41 @@ function Rect(x, y, w, h, color)
     local lh = (h - 1) * g.screen.gamepixel.h
     love.graphics.setColor(unpack(color.rgb01))
     love.graphics.rectangle("line", lx, ly, lw, lh)
+    love.graphics.setColor(unpack(palette.white_bold.rgb01))
+end
+
+
+function Rectfill(x, y, w, h, color)
+    --[[
+    Function Rectfill drawn filled rectangle on the screen.
+    `rectangle("line")` and `recangle("filled")` works a bit differently
+    in Love2D.
+    Rectfill does not require taking into account line width set in
+    Love2D, hence the Rectfill implementation is simpler than the Rect one.
+
+    Arguments
+    ---------
+    x : number
+        Position of top-left rectangle corner on the x axis.
+    y : number
+        Position of top-left rectangle corner on the y axis.
+    w : number
+        Width of rectangle.
+    h : number
+        Height of rectangle.
+    color : palette.<color>
+        Color of pixel to-bo-created.
+    
+    Returns
+    -------
+    nothing
+    ]]--
+
+    local lx = x * g.screen.gamepixel.w
+    local ly = y * g.screen.gamepixel.h
+    local lw = w * g.screen.gamepixel.w
+    local lh = h * g.screen.gamepixel.h
+    love.graphics.setColor(unpack(color.rgb01))
+    love.graphics.rectangle("fill", lx, ly, lw, lh)
     love.graphics.setColor(unpack(palette.white_bold.rgb01))
 end
