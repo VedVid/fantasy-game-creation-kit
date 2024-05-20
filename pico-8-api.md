@@ -9,7 +9,7 @@ Graphics:
 - [] camera
 * [x] circ
 * [x] circfill
-- [] oval
+* [x] oval
 - [] ovalfill
 - [] cls
 - [] line
