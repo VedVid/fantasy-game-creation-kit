@@ -215,8 +215,8 @@ end
 
 
 function Rect(x, y, w, h, color)
-    local lx = x * g.screen.gamepixel.w
-    local ly = y * g.screen.gamepixel.h
+    local lx = (x * g.screen.gamepixel.w) + (g.screen.gamepixel.w / 2)
+    local ly = (y * g.screen.gamepixel.h) + (g.screen.gamepixel.h / 2)
     local lw = (w - 1) * g.screen.gamepixel.w
     local lh = (h - 1) * g.screen.gamepixel.h
     love.graphics.setColor(unpack(color.rgb01))
