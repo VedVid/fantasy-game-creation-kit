@@ -381,6 +381,24 @@ end
 
 
 function Oval(x, y, rx, ry, color)
+    --[[
+    Function Oval draws empty (ie not filled) ellipse on the screen.
+    It uses midpoint ellipse algorithm.
+
+    Arguments
+    ---------
+    x : number
+        Position of ellipse center on the x axis.
+    y : number
+        Position of ellipse center on the y axis.
+    rx : number
+        Length of radius on the x axis.
+    ry : number
+        Length of radius on the y axis.
+    color : palette.<color>
+        Color of ellipse.
+    ]]--
+
 	local dx, dy, d1, d2
 	local xx = 0;
 	local yy = ry;
