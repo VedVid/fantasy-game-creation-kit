@@ -29,7 +29,7 @@ function gamepixel.new_gamepixel(x, y, color)
     y : number
         Position of gamepixel on vertical axis. Defaults to 1.
     color : palette.<color>
-        Color of pixel-to-be-created. Currently ignored.
+        Color of pixel-to-be-created.
     
     Returns
     -------

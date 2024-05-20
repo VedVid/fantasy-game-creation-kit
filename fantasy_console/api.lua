@@ -167,7 +167,7 @@ function Pset(x, y, color)
     y : number
         Position of pixel on vertical axis.
     color : palette.<color>
-        Color of pixel to-bo-created. Currently ignored.
+        Color of pixel to-bo-created.
     
     Returns
     -------
