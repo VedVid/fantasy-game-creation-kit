@@ -309,82 +309,19 @@ end
 --------------------
 
 
-function Black()
-    return palette.black.rgb01
-end
-
-
-function BlackBold()
-    return palette.black_bold.rgb01
-end
-
-
-function Red()
-    return palette.red.rgb01
-end
-
-
-function RedBold()
-    return palette.red_bold.rgb01
-end
-
-
-function Green()
-    return palette.green.rgb01
-end
-
-
-function GreenBold()
-    return palette.green_bold.rgb01
-end
-
-
-function Yellow()
-    return palette.yellow.rgb01
-end
-
-
-function YellowBold()
-    return palette.yellow_bold.rgb01
-end
-
-
-function Blue()
-    return palette.blue.rgb01
-end
-
-
-function BlueBold()
-    return palette.blue_bold.rgb01
-end
-
-
-function Pink()
-    return palette.magenta.rgb01
-end
-
-
-function PinkBold()
-    return palette.magenta_bold.rgb01
-end
-
-
-function Cyan()
-    return palette.cyan.rgb01
-end
-
-
-function CyanBold()
-    return palette.cyan_bold.rgb01
-end
-
-
-function White()
-    return palette.white.rgb01
-end
-
-
-function WhiteBold()
-    return palette.white_bold.rgb01
-end
-
+Black = palette.black.rgb01
+BlackBold = palette.black_bold.rgb01
+Blue = palette.blue.rgb01
+BlueBold = palette.blue_bold.rgb01
+Cyan = palette.cyan.rgb01
+CyanBold = palette.cyan_bold.rgb01
+Green = palette.green.rgb01
+GreenBold = palette.green_bold.rgb01
+Pink = palette.magenta.rgb01
+PinkBold = palette.magenta_bold.rgb01
+Red = palette.red.rgb01
+RedBold = palette.red_bold.rgb01
+Yellow = palette.yellow.rgb01
+YellowBold = palette.yellow_bold.rgb01
+White = palette.white.rgb01
+WhiteBold = palette.white_bold.rgb01
