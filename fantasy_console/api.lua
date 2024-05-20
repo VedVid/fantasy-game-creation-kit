@@ -348,6 +348,41 @@ function Circ(x, y, r, color)
 end
 
 
+function Circfill(x, y, r, color)
+    local dx = r
+    local dy = 0
+    local err = 1 - r
+    local coords = {}
+    while dx >= dy do
+        table.insert(coords, {x + dx, y + dy})
+        table.insert(coords, {x - dx, y + dy})
+        table.insert(coords, {x + dx, y - dy})
+        table.insert(coords, {x - dx, y - dy})
+        table.insert(coords, {x + dy, y + dx})
+        table.insert(coords, {x - dy, y + dx})
+        table.insert(coords, {x + dy, y - dx})
+        table.insert(coords, {x - dy, y - dx})
+        dy = dy + 1
+        if err < 0 then
+            err = err + 2 * dy + 1
+        else
+            dx = dx - 1
+            err = err + 2 * (dy - dx) + 1
+        end
+    end
+
+    local function compare(a, b)
+        return a[1] < b[1]
+    end
+
+    table.sort(coords, compare)
+
+    local interior = {}
+    
+
+end
+
+
 --------------------
 ---------- COLORS --
 --------------------
