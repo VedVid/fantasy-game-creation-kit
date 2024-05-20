@@ -384,18 +384,15 @@ function Oval(x, y, rx, ry, color)
 	local dx, dy, d1, d2
 	local xx = 0;
 	local yy = ry;
-	
 	d1 = (ry * ry) - (rx * rx * ry) + (0.25 * rx * rx)
 	dx = 2 * ry * ry * xx
 	dy = 2 * rx * rx * yy
 	
-	while (dx < dy) do
-		
+	while (dx < dy) do	
         Pset(xx + x, yy + y, color)
         Pset(-xx + x, yy + y, color)
         Pset(xx + x, -yy + y, color)
         Pset(-xx + x, -yy + y, color)
-
 		if d1 < 0 then
 			xx = xx + 1
 			dx = dx + (2 * ry * ry)
@@ -410,14 +407,11 @@ function Oval(x, y, rx, ry, color)
 	end
 	
 	d2 = ((ry * ry) * ((xx + 0.5) * (xx + 0.5))) + ((rx * rx) * ((yy - 1) * (yy - 1))) - (rx * rx * ry * ry)
-	
-	while (yy >= 0) do
-		
+	while (yy >= 0) do	
         Pset(xx + x, yy + y, color)
         Pset(-xx + x, yy + y, color)
         Pset(xx + x, -yy + y, color)
-        Pset(-xx + x, -yy + y, color)
-		
+        Pset(-xx + x, -yy + y, color)	
 		if d2 > 0 then
 			yy = yy - 1
 			dy = dy - (2 * rx * rx)
