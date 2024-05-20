@@ -305,23 +305,25 @@ end
 
 
 function Circ(x, y, r, color)
-    local current_x, current_y, angle
-    local coords = {}
-    for i = 1, 360, 1 do
-        angle = math.floor(i)
-        current_x = r * math.cos(angle * math.pi / 180)
-        current_y = r * math.sin(angle * math.pi / 180)
-        if current_x % g.screen.gamepixel.w == 0 and current_y % g.screen.gamepixel.h == 0 then
-            Pset(
-                x + current_x,
-                y + current_y,
-                color
-            )
+    local dx = r
+    local dy = 0
+    local err = 1 - r
+    while dx >= dy do
+        Pset(x + dx, y + dy, color)
+        Pset(x - dx, y + dy, color)
+        Pset(x + dx, y - dy, color)
+        Pset(x - dx, y - dy, color)
+        Pset(x + dy, y + dx, color)
+        Pset(x - dy, y + dx, color)
+        Pset(x + dy, y - dx, color)
+        Pset(x - dy, y - dx, color)
+        dy = dy + 1
+        if err < 0 then
+            err = err + 2 * dy + 1
+        else
+            dx = dx - 1
+            err = err + 2 * (dy - dx) + 1
         end
-        --local new_coord = {}
-        --new_coord.x = x + current_x
-        --new_coord.y = y + current_y
-        --table.insert(coords, new_coord)
     end
 end
 
