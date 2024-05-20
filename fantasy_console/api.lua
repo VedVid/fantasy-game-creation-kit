@@ -186,7 +186,7 @@ function Pset(x, y, color)
 
     local lx = x * g.screen.gamepixel.w
     local ly = y * g.screen.gamepixel.h
-    love.graphics.setColor(unpack(color.rgb01))
+    love.graphics.setColor(unpack(color))
     love.graphics.rectangle(
         "fill",
         lx,
@@ -262,7 +262,7 @@ function Rect(x, y, w, h, color)
     local ly = (y * g.screen.gamepixel.h) + (g.screen.gamepixel.h / 2)
     local lw = (w - 1) * g.screen.gamepixel.w
     local lh = (h - 1) * g.screen.gamepixel.h
-    love.graphics.setColor(unpack(color.rgb01))
+    love.graphics.setColor(unpack(color))
     love.graphics.rectangle("line", lx, ly, lw, lh)
     love.graphics.setColor(unpack(palette.white_bold.rgb01))
 end
@@ -298,7 +298,7 @@ function Rectfill(x, y, w, h, color)
     local ly = y * g.screen.gamepixel.h
     local lw = w * g.screen.gamepixel.w
     local lh = h * g.screen.gamepixel.h
-    love.graphics.setColor(unpack(color.rgb01))
+    love.graphics.setColor(unpack(color))
     love.graphics.rectangle("fill", lx, ly, lw, lh)
     love.graphics.setColor(unpack(palette.white_bold.rgb01))
 end
@@ -307,3 +307,21 @@ end
 --------------------
 ---------- COLORS --
 --------------------
+
+
+Black = palette.black.rgb01
+BlackBold = palette.black_bold.rgb01
+Blue = palette.blue.rgb01
+BlueBold = palette.blue_bold.rgb01
+Cyan = palette.cyan.rgb01
+CyanBold = palette.cyan_bold.rgb01
+Green = palette.green.rgb01
+GreenBold = palette.green_bold.rgb01
+Pink = palette.magenta.rgb01
+PinkBold = palette.magenta_bold.rgb01
+Red = palette.red.rgb01
+RedBold = palette.red_bold.rgb01
+Yellow = palette.yellow.rgb01
+YellowBold = palette.yellow_bold.rgb01
+White = palette.white.rgb01
+WhiteBold = palette.white_bold.rgb01
