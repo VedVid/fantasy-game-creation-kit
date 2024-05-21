@@ -22,6 +22,7 @@ globals.screen.size.pixels.w = globals.screen.size.gamepixels.w * globals.screen
 globals.screen.size.pixels.h = globals.screen.size.gamepixels.h * globals.screen.gamepixel.h
 
 globals.colors = {}
-globals.colors.default_color = palette.white
+globals.colors.default_fg_color = palette.white
+globals.colors.default_bg_color = palette.black
 
 return globals

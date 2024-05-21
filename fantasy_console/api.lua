@@ -159,6 +159,15 @@ function Sub(s, i, j)
 end
 
 
+--------------------
+---------- SCREEN --
+--------------------
+
+function Cls()
+    love.graphics.clear(g.colors.default_bg_color.rgb01)
+end
+
+
 ----------------------
 ---------- GEOMETRY --
 ----------------------

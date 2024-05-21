@@ -17,6 +17,7 @@ function Update()
 end
 
 function Draw()
+    Cls()
     Write(txt, 1, 1)
     Write(txt2, 1, 1+8)
     Write(txt3, 1, 1+16)
