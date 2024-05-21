@@ -1,0 +1,26 @@
+This software uses the following programs, libraries and resources:
+
+1. Love2D
+   2D game framework.
+   https://love2d.org/  [available as of 20240521]
+   zlib license – full text available in the `licenses` directory
+
+2. Lua 5.1
+   Programming language.
+   https://www.lua.org/  [available as of 20240521]
+   MIT license – full text available in the `licenses` directory
+
+3. LuaUnit
+   Unit testing framework for Lua.
+   https://github.com/bluebird75/luaunit  [available as of 20240521]
+   BSD license – full text available in the `licenses` directory
+
+4. stringEx
+   Library providing unicode-aware substring functionality.
+   https://github.com/losttoken/lua-utf8-string  [available as of 20240521]
+   MIT license – full text available in the `licenses` directory
+
+5. bresenham by Petr Viktorin
+   I translated Bresenham's Line algorithm originally implemented in Python to Lua. I did not make more changes than necessary (storing data in table instead of yielding results).
+   https://github.com/encukou/bresenham  [available as of 20240521]
+   MIT license – full text available in the `licenses` directory
