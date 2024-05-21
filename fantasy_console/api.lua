@@ -203,7 +203,7 @@ function Pset(x, y, color)
         g.screen.gamepixel.w,
         g.screen.gamepixel.h
     )
-    love.graphics.setColor(unpack(palette.white_bold.rgb01))
+    love.graphics.setColor(unpack(g.colors.default_fg_color.rgb01))
 end
 
 
@@ -229,7 +229,7 @@ function Ppset(gamepixel)
         g.screen.gamepixel.w,
         g.screen.gamepixel.h
     )
-    love.graphics.setColor(unpack(palette.white_bold.rgb01))
+    love.graphics.setColor(unpack(g.colors.default_fg_color.rgb01))
 end
 
 
@@ -345,7 +345,7 @@ function Rect(x, y, w, h, color)
     local lh = (h - 1) * g.screen.gamepixel.h
     love.graphics.setColor(unpack(color))
     love.graphics.rectangle("line", lx, ly, lw, lh)
-    love.graphics.setColor(unpack(palette.white_bold.rgb01))
+    love.graphics.setColor(unpack(g.colors.default_fg_color.rgb01))
 end
 
 
@@ -381,7 +381,7 @@ function Rectfill(x, y, w, h, color)
     local lh = h * g.screen.gamepixel.h
     love.graphics.setColor(unpack(color))
     love.graphics.rectangle("fill", lx, ly, lw, lh)
-    love.graphics.setColor(unpack(palette.white_bold.rgb01))
+    love.graphics.setColor(unpack(g.colors.default_fg_color.rgb01))
 end
 
 
