@@ -46,6 +46,12 @@ function Write(s, x, y, color)
     nothing
     ]]--
 
+    assert(type(s) == "string", "First argument (s) to Write must be string.")
+    assert(type(x) == "number", "Second argument (x) to Write must be number.")
+    assert(x >= 0, "Second argument (x) to Write must not be negative.")
+    assert(type(y) == "number", "Third argument (y) to Write must be number.")
+    assert(y >= 0, "Third argument (y) to Write must not be negative.")
+
     local lx = x * g.screen.gamepixel.w
     local ly = y * g.screen.gamepixel.h
     if not color then color = g.colors.default_fg_color.rgb01 end
