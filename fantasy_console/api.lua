@@ -250,6 +250,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
     ]]--
+    print()
+    print("sx: " .. sx .. ", sy: " .. sy .. ", tx:" .. tx .. ", ty: " .. ty)
     local dx = tx - sx
     local dy = ty - sy
 
@@ -284,7 +286,8 @@ THE SOFTWARE.
     for x = 0, dx do
         local coord = {}
         coord.x = sx + x * xx + y * yx
-        coord.y = sx + x * xy + y * yy
+        coord.y = sy + x * xy + y * yy
+        print(coord.x .. ", " .. coord.y)
         Pset(coord.x, coord.y, color)
         if d >= 0 then
             y = y + 1
