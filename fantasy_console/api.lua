@@ -415,17 +415,11 @@ function Rect(x, y, w, h, color)
     assert(type(h) == "number", "Fourth argument (h) to Rect must be a number.")
     assert(h > 1, "Fourth argument (h) to Rect must be larger than 1.")
 
-    local lx = math.floor(
-        (x * g.screen.gamepixel.w) + (g.screen.gamepixel.w / 2)
-    )
-    local ly = math.floor(
-        (y * g.screen.gamepixel.h) + (g.screen.gamepixel.h / 2)
-    )
-    local lw = math.floor((w - 1) * g.screen.gamepixel.w)
-    local lh = math.floor((h - 1) * g.screen.gamepixel.h)
-
+    local lx = (x * g.screen.gamepixel.w) + (g.screen.gamepixel.w / 2)
+    local ly = (y * g.screen.gamepixel.h) + (g.screen.gamepixel.h / 2)
+    local lw = (w - 1) * g.screen.gamepixel.w
+    local lh = (h - 1) * g.screen.gamepixel.h
     if not color then color = g.colors.default_fg_color.rgb01 end
-
     love.graphics.setColor(unpack(color))
     love.graphics.rectangle("line", lx, ly, lw, lh)
     love.graphics.setColor(unpack(g.colors.default_fg_color.rgb01))
