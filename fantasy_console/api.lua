@@ -310,6 +310,15 @@ THE SOFTWARE.
     nothing
     ]]--
 
+    assert(type(sx) == "number", "First argument (sx) to Line must be a number.")
+    assert(sx >= 0, "First argument (sx) to Line must not be negative.")
+    assert(type(sy) == "number", "Second argument (sy) to Line must be a number.")
+    assert(sy >= 0, "Second argument (sy) to Line must not be negative.")
+    assert(type(tx) == "number", "Third argument (tx) to Line must be a number.")
+    assert(tx >= 0, "Third argument (tx) to Line must not be negative.")
+    assert(type(ty) == "number", "Fourth argument (ty) to Line must be a number.")
+    assert(ty >= 0, "Fourth argument (ty) to Line must not be negative.")
+
     if not color then color = g.colors.default_fg_color.rgb01 end
 
     local dx = tx - sx
