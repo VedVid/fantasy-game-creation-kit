@@ -217,6 +217,11 @@ function Pset(x, y, color)
     nothing
     ]]--
 
+    assert(type(x) == "number", "First argument (x) to Pset must be number.")
+    assert(x >= 0, "First argument (x) to Pset must not be negative.")
+    assert(type(y) == "number", "Second argument (y) to Pset must be number.")
+    assert(y >= 0, "Second argument (y) to Pset must not be negative.")
+
     local lx = x * g.screen.gamepixel.w
     local ly = y * g.screen.gamepixel.h
     if not color then color = g.colors.default_fg_color.rgb01 end
