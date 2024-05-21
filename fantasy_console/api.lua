@@ -250,8 +250,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
     ]]--
-    print()
-    print("sx: " .. sx .. ", sy: " .. sy .. ", tx:" .. tx .. ", ty: " .. ty)
+
     local dx = tx - sx
     local dy = ty - sy
 
@@ -287,7 +286,6 @@ THE SOFTWARE.
         local coord = {}
         coord.x = sx + x * xx + y * yx
         coord.y = sy + x * xy + y * yy
-        print(coord.x .. ", " .. coord.y)
         Pset(coord.x, coord.y, color)
         if d >= 0 then
             y = y + 1
@@ -545,7 +543,7 @@ function Ovalfill(x, y, rx, ry, color)
     dx = 2 * ry * ry * xx
     dy = 2 * rx * rx * yy
 
-    while (dx < dy) do	
+    while (dx < dy) do
         Line(x - xx, y + yy, x + xx, y + yy, color)
         Line(x - xx, y - yy, x + xx, y - yy, color)
         if d1 < 0 then
@@ -562,7 +560,7 @@ function Ovalfill(x, y, rx, ry, color)
     end
 
     d2 = ((ry * ry) * ((xx + 0.5) * (xx + 0.5))) + ((rx * rx) * ((yy - 1) * (yy - 1))) - (rx * rx * ry * ry)
-    while (yy >= 0) do	
+    while (yy >= 0) do
         Line(x - xx, y + yy, x + xx, y + yy, color)
         Line(x - xx, y - yy, x + xx, y - yy, color)
         if d2 > 0 then
