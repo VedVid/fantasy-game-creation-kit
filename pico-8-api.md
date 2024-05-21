@@ -11,7 +11,7 @@ Graphics:
 * [x] circfill
 * [x] oval
 * [x] ovalfill
-- [] cls
+* [x] cls
 * [x] line
 * [x] print
 * [x] pset
