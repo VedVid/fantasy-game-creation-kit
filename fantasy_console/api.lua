@@ -267,6 +267,26 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
     ]]--
 
+    --[[
+    Arguments
+    ---------
+    sx : number
+        Position of the starting point on the x axis.
+    sy : number
+        Position of the starting point on the y axis.
+    tx : number
+        Position of the end point on the x axis.
+    ty : number
+        Position of the end point on the y axis.
+    color : palette.<color>
+        Color of line to-bo-created. Defaults to the default
+        foreground colour.
+
+    Returns
+    -------
+    nothing
+    ]]--
+
     if not color then color = g.colors.default_fg_color.rgb01 end
 
     local dx = tx - sx
