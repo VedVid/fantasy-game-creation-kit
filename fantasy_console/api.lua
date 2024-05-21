@@ -447,6 +447,15 @@ function Rectfill(x, y, w, h, color)
     nothing
     ]]--
 
+    assert(type(x) == "number", "First argument (x) to Rectfill must be a number.")
+    assert(x >= 0, "First argument (x) to Rectfill must not be negative.")
+    assert(type(y) == "number", "Second argument (y) to Rectfill must be a number.")
+    assert(y >= 0, "Second argument (y) to Rectfill must not be negative.")
+    assert(type(w) == "number", "Third argument (w) to Rectfill must be a number.")
+    assert(w >= 0, "Third argument (w) to Rectfill must not be negative.")
+    assert(type(h) == "number", "Fourth argument (h) to Rectfill must be a number.")
+    assert(h >= 0, "Fourth argument (h) to Rectfill must not be negative.")
+
     local lx = x * g.screen.gamepixel.w
     local ly = y * g.screen.gamepixel.h
     local lw = w * g.screen.gamepixel.w
