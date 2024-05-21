@@ -7,6 +7,7 @@ function love.load()
     canvas.get_player_screen_dimension()
     canvas.set_global_screen_variables(canvas.default_scale)
     canvas.set_window_size()
+    canvas.set_background_color()
     canvas.set_font()
     canvas.set_line_style()
     canvas.set_line_width()
@@ -28,6 +29,7 @@ function love.update()
 end
 
 function love.draw()
+    canvas.set_background_color()
     Draw()
     local current_time = love.timer.getTime()
     if g.next_time <= current_time then

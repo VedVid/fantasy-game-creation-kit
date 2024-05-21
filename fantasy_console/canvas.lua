@@ -229,4 +229,23 @@ function canvas.set_window_size()
 end
 
 
+function canvas.set_background_color()
+    --[[
+    This method sets the default background color for console.
+    It is called once during love.load call, and then on every frame
+    at the beginning of love.draw call.
+
+    Arguments
+    ---------
+    none
+
+    Returns
+    -------
+    nothing
+    ]]--
+
+    love.graphics.clear(g.colors.default_bg_color.rgb01)
+end
+
+
 return canvas
