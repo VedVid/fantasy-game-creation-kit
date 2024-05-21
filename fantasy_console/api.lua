@@ -114,6 +114,11 @@ function Split(s, delimiter)
     {strings}
     ]]--
 
+    assert(type(s) == "string", "First argument (s) passed to Split must be string.")
+    if delimiter then
+        assert(type(delimiter) == "string", "If second argument (delimiter) is passed to Split, it must be string.")
+    end
+
     if delimiter == "" then
         return {s}
     end
