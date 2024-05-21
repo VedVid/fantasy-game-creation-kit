@@ -171,6 +171,8 @@ function Sub(s, i, j)
     string
     ]]--
 
+    assert(type(s) == "string", "First argument (s) passed to Sub must be string.")
+
     if j < 1 then
         j = i
     end
