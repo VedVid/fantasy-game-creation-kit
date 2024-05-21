@@ -548,8 +548,6 @@ function Ovalfill(x, y, rx, ry, color)
     while (dx < dy) do	
         Line(x - xx, y + yy, x + xx, y + yy, color)
         Line(x - xx, y - yy, x + xx, y - yy, color)
-        --Line(x - yy, y + xx, x + yy, y + xx, color)
-        --Line(x - yy, y - xx, x + yy, y - xx, color)
         if d1 < 0 then
             xx = xx + 1
             dx = dx + (2 * ry * ry)
@@ -567,8 +565,6 @@ function Ovalfill(x, y, rx, ry, color)
     while (yy >= 0) do	
         Line(x - xx, y + yy, x + xx, y + yy, color)
         Line(x - xx, y - yy, x + xx, y - yy, color)
-        --Line(x - yy, y + xx, x + yy, y + xx, color)
-        --Line(x - yy, y - xx, x + yy, y - xx, color)
         if d2 > 0 then
             yy = yy - 1
             dy = dy - (2 * rx * rx)
