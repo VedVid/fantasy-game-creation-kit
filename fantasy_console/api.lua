@@ -81,6 +81,11 @@ function Join(ss, delimiter)
     string
     ]]--
 
+    assert(type(ss) == "table", "First argument (ss) to Join must be table.")
+    for _, element in ipairs(ss) do
+        assert(type(element) == "string", "Every element of table passed to Join must be string.")
+    end
+
     if not delimiter then
         delimiter = ""
     end
