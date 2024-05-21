@@ -38,6 +38,8 @@ function Write(s, x, y, color)
         Position of text beginning at the x axis.
     y : number
         Position of text beginning at the y axis.
+    color : palette.<color>
+        Color of text. Defaults to the default foreground colour.
     
     Returns
     -------
@@ -46,6 +48,7 @@ function Write(s, x, y, color)
 
     local lx = x * g.screen.gamepixel.w
     local ly = y * g.screen.gamepixel.h
+    if not color then color = g.colors.default_fg_color.rgb01 end
     love.graphics.setColor(unpack(color))
     love.graphics.print(s, lx, ly, 0, 1, 1, 0, 0)
     love.graphics.setColor(unpack(g.colors.default_fg_color.rgb01))
@@ -188,7 +191,8 @@ function Pset(x, y, color)
     y : number
         Position of pixel on vertical axis.
     color : palette.<color>
-        Color of pixel to-bo-created.
+        Color of pixel to-bo-created. Defaults to the default
+        foreground colour.
     
     Returns
     -------
@@ -197,6 +201,7 @@ function Pset(x, y, color)
 
     local lx = x * g.screen.gamepixel.w
     local ly = y * g.screen.gamepixel.h
+    if not color then color = g.colors.default_fg_color.rgb01 end
     love.graphics.setColor(unpack(color))
     love.graphics.rectangle(
         "fill",
@@ -261,6 +266,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
     ]]--
+
+    if not color then color = g.colors.default_fg_color.rgb01 end
 
     local dx = tx - sx
     local dy = ty - sy
@@ -334,7 +341,8 @@ function Rect(x, y, w, h, color)
     h : number
         Height of rectangle.
     color : palette.<color>
-        Color of pixel to-bo-created.
+        Color of pixel to-bo-created. Defaults to the default
+        foreground colour.
     
     Returns
     -------
@@ -345,6 +353,7 @@ function Rect(x, y, w, h, color)
     local ly = (y * g.screen.gamepixel.h) + (g.screen.gamepixel.h / 2)
     local lw = (w - 1) * g.screen.gamepixel.w
     local lh = (h - 1) * g.screen.gamepixel.h
+    if not color then color = g.colors.default_fg_color.rgb01 end
     love.graphics.setColor(unpack(color))
     love.graphics.rectangle("line", lx, ly, lw, lh)
     love.graphics.setColor(unpack(g.colors.default_fg_color.rgb01))
@@ -370,7 +379,7 @@ function Rectfill(x, y, w, h, color)
     h : number
         Height of rectangle.
     color : palette.<color>
-        Color of pixel to-bo-created.
+        Color of pixel to-bo-created. Defaults to the default foreground colour.
     
     Returns
     -------
@@ -381,6 +390,7 @@ function Rectfill(x, y, w, h, color)
     local ly = y * g.screen.gamepixel.h
     local lw = w * g.screen.gamepixel.w
     local lh = h * g.screen.gamepixel.h
+    if not color then color = g.colors.default_fg_color.rgb01 end
     love.graphics.setColor(unpack(color))
     love.graphics.rectangle("fill", lx, ly, lw, lh)
     love.graphics.setColor(unpack(g.colors.default_fg_color.rgb01))
@@ -401,12 +411,14 @@ function Circ(x, y, r, color)
     r : number
         Radius.
     color : palette.<color>
-        Color of circle.
+        Color of circle. Defaults to the default foreground colour.
     
     Returns
     -------
     nothing
     ]]--
+
+    if not color then color = g.colors.default_fg_color.rgb01 end
 
     local dx = r
     local dy = 0
@@ -445,12 +457,14 @@ function Circfill(x, y, r, color)
     r : number
         Radius.
     color : palette.<color>
-        Color of circle.
+        Color of circle. Defaults to the default foreground colour.
     
     Returns
     -------
     nothing
     ]]--
+
+    if not color then color = g.colors.default_fg_color.rgb01 end
 
     for ty=-r,r do
         for tx=-r,r do
@@ -479,8 +493,10 @@ function Oval(x, y, rx, ry, color)
     ry : number
         Length of radius on the y axis.
     color : palette.<color>
-        Color of ellipse.
+        Color of ellipse. Defaults to the default foreground colour.
     ]]--
+
+    if not color then color = g.colors.default_fg_color.rgb01 end
 
     local dx, dy, d1, d2
     local xx = 0;
@@ -544,8 +560,10 @@ function Ovalfill(x, y, rx, ry, color)
     ry : number
         Length of radius on the y axis.
     color : palette.<color>
-        Color of ellipse.
+        Color of ellipse. Defaults to the default foreground colour.
     ]]--
+
+    if not color then color = g.colors.default_fg_color.rgb01 end
 
     local dx, dy, d1, d2
     local xx = 0;
