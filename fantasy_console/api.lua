@@ -7,7 +7,6 @@ requiring user to write repeatedly module name over and over.
 ]]--
 
 
-local bresenham = require "bresenham"
 local usub = require "stringEx"
 
 local gamepixel = require "gamepixel"
@@ -225,7 +224,7 @@ function Ppset(gamepixel)
 end
 
 
-function Line(sx, sy, tx, ty)
+function Line(sx, sy, tx, ty, color)
     -- This is a translation of bresenham algorithm by Petr Viktorin,
     -- written in Python, released under the MIT license.
     -- It's available at https://github.com/encukou/bresenham as of
@@ -282,12 +281,11 @@ THE SOFTWARE.
     local d = 2 * dy - dx
     local y = 0
 
-    local coords = {}
     for x = 0, dx do
         local coord = {}
         coord.x = sx + x * xx + y * yx
         coord.y = sx + x * xy + y * yy
-        table.insert(coords, coord)
+        Pset(coord.x, coord.y, color)
         if d >= 0 then
             y = y + 1
             d = d - 2 * dx

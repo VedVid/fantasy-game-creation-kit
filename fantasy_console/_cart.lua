@@ -36,4 +36,5 @@ function Draw()
     Circfill(80, 30, 8, Green)
     Oval(60, 60, 20, 10, Blue)
     Oval(100, 30, 10, 4, White)
+    Line(10, 60, 20, 60, WhiteBold)
 end
