@@ -12,7 +12,7 @@ Graphics:
 * [x] oval
 - [] ovalfill
 - [] cls
-- [] line
+* [x] line
 * [x] print
 * [x] pset
 * [x] rect
@@ -130,5 +130,6 @@ Challanges:
 	- implement basic API based on PICO-8 API
 	- remove redundancy between API and Lua
 	- fill the gaps
+
 
 
