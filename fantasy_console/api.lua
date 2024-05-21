@@ -19,7 +19,7 @@ local palette = require "palette"
 ------------------
 
 
-function Write(s, x, y)
+function Write(s, x, y, color)
     --[[
     Function Write uses the Love2D's print function under the
     hood, but it does not expose all of its arguments to the
@@ -46,7 +46,9 @@ function Write(s, x, y)
 
     local lx = x * g.screen.gamepixel.w
     local ly = y * g.screen.gamepixel.h
+    love.graphics.setColor(unpack(color))
     love.graphics.print(s, lx, ly, 0, 1, 1, 0, 0)
+    love.graphics.setColor(unpack(g.colors.default_fg_color.rgb01))
 end
 
 

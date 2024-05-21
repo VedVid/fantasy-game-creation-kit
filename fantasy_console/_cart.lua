@@ -17,9 +17,9 @@ function Update()
 end
 
 function Draw()
-    Write(txt, 1, 1)
-    Write(txt2, 1, 1+8)
-    Write(txt3, 1, 1+16)
+    Write(txt, 1, 1, YellowBold)
+    Write(txt2, 1, 1+8, BlackBold)
+    Write(txt3, 1, 1+16, Pink)
     --Ppset(pix)
     local palette = require "palette"
     Pset(1, 1, BlueBold)
