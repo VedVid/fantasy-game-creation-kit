@@ -52,8 +52,8 @@ function Write(s, x, y, color)
     assert(type(y) == "number", "Third argument (y) to Write must be a number.")
     assert(y >= 0, "Third argument (y) to Write must not be negative.")
 
-    local lx = x * g.screen.gamepixel.w
-    local ly = y * g.screen.gamepixel.h
+    local lx = math.floor(x * g.screen.gamepixel.w)
+    local ly = math.floor(y * g.screen.gamepixel.h)
     if not color then color = g.colors.default_fg_color.rgb01 end
     love.graphics.setColor(unpack(color))
     love.graphics.print(s, lx, ly, 0, 1, 1, 0, 0)
@@ -177,7 +177,7 @@ function Sub(s, i, j)
         j = i
     end
 
-    local result = string.usub(s, i, j)
+    local result = string.usub(s, math.floor(i), math.floor(j))
     return result
 end
 
@@ -222,8 +222,8 @@ function Pset(x, y, color)
     assert(type(y) == "number", "Second argument (y) to Pset must be a number.")
     assert(y >= 0, "Second argument (y) to Pset must not be negative.")
 
-    local lx = x * g.screen.gamepixel.w
-    local ly = y * g.screen.gamepixel.h
+    local lx = math.floor(x * g.screen.gamepixel.w)
+    local ly = math.floor(y * g.screen.gamepixel.h)
     if not color then color = g.colors.default_fg_color.rgb01 end
     love.graphics.setColor(unpack(color))
     love.graphics.rectangle(
@@ -321,6 +321,11 @@ THE SOFTWARE.
 
     if not color then color = g.colors.default_fg_color.rgb01 end
 
+    sx = math.floor(sx)
+    sy = math.floor(sy)
+    tx = math.floor(tx)
+    ty = math.floor(ty)
+
     local dx = tx - sx
     local dy = ty - sy
 
@@ -410,11 +415,17 @@ function Rect(x, y, w, h, color)
     assert(type(h) == "number", "Fourth argument (h) to Rect must be a number.")
     assert(h > 1, "Fourth argument (h) to Rect must be larger than 1.")
 
-    local lx = (x * g.screen.gamepixel.w) + (g.screen.gamepixel.w / 2)
-    local ly = (y * g.screen.gamepixel.h) + (g.screen.gamepixel.h / 2)
-    local lw = (w - 1) * g.screen.gamepixel.w
-    local lh = (h - 1) * g.screen.gamepixel.h
+    local lx = math.floor(
+        (x * g.screen.gamepixel.w) + (g.screen.gamepixel.w / 2)
+    )
+    local ly = math.floor(
+        (y * g.screen.gamepixel.h) + (g.screen.gamepixel.h / 2)
+    )
+    local lw = math.floor((w - 1) * g.screen.gamepixel.w)
+    local lh = math.floor((h - 1) * g.screen.gamepixel.h)
+
     if not color then color = g.colors.default_fg_color.rgb01 end
+
     love.graphics.setColor(unpack(color))
     love.graphics.rectangle("line", lx, ly, lw, lh)
     love.graphics.setColor(unpack(g.colors.default_fg_color.rgb01))
@@ -456,11 +467,13 @@ function Rectfill(x, y, w, h, color)
     assert(type(h) == "number", "Fourth argument (h) to Rectfill must be a number.")
     assert(h > 1, "Fourth argument (h) to Rectfill must be larger than 1.")
 
-    local lx = x * g.screen.gamepixel.w
-    local ly = y * g.screen.gamepixel.h
-    local lw = w * g.screen.gamepixel.w
-    local lh = h * g.screen.gamepixel.h
+    local lx = math.floor(x * g.screen.gamepixel.w)
+    local ly = math.floor(y * g.screen.gamepixel.h)
+    local lw = math.floor(w * g.screen.gamepixel.w)
+    local lh = math.floor(h * g.screen.gamepixel.h)
+
     if not color then color = g.colors.default_fg_color.rgb01 end
+
     love.graphics.setColor(unpack(color))
     love.graphics.rectangle("fill", lx, ly, lw, lh)
     love.graphics.setColor(unpack(g.colors.default_fg_color.rgb01))
@@ -494,6 +507,10 @@ function Circ(x, y, r, color)
     assert(y >= 0, "Second argument (y) to Circ must not be negative.")
     assert(type(r) == "number", "Third argument (r) to Circ must be a number.")
     assert(r > 0, "Third argument (r) to Circ must be larger than 0.")
+
+    x = math.floor(x)
+    y = math.floor(y)
+    r = math.floor(r)
 
     if not color then color = g.colors.default_fg_color.rgb01 end
 
@@ -548,6 +565,10 @@ function Circfill(x, y, r, color)
     assert(type(r) == "number", "Third argument (r) to Circfill must be a number.")
     assert(r > 0, "Third argument (r) to Circfill must be larger than 0.")
 
+    x = math.floor(x)
+    y = math.floor(y)
+    r = math.floor(r)
+
     if not color then color = g.colors.default_fg_color.rgb01 end
 
     for ty=-r,r do
@@ -588,6 +609,11 @@ function Oval(x, y, rx, ry, color)
     assert(rx > 0, "Third argument (rx) to Oval must be larger than 0.")
     assert(type(ry) == "number", "Fourth argument (ry) to Oval must be a number.")
     assert(ry > 0, "Fourth argument (ry) to Oval must be larger than 0.")
+
+    x = math.floor(x)
+    y = math.floor(y)
+    rx = math.floor(rx)
+    ry = math.floor(ry)
 
     if not color then color = g.colors.default_fg_color.rgb01 end
 
@@ -664,6 +690,11 @@ function Ovalfill(x, y, rx, ry, color)
     assert(rx > 0, "Third argument (rx) to Ovalfill must be larger than 0.")
     assert(type(ry) == "number", "Fourth argument (ry) to Ovalfill must be a number.")
     assert(ry > 0, "Fourth argument (ry) to Ovalfill must be larger than 0.")
+
+    x = math.floor(x)
+    y = math.floor(y)
+    rx = math.floor(rx)
+    ry = math.floor(ry)
 
     if not color then color = g.colors.default_fg_color.rgb01 end
 
