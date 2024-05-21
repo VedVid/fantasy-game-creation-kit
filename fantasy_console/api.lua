@@ -488,6 +488,13 @@ function Circ(x, y, r, color)
     nothing
     ]]--
 
+    assert(type(x) == "number", "First argument (x) to Circ must be a number.")
+    assert(x >= 0, "First argument (x) to Circ must not be negative.")
+    assert(type(y) == "number", "Second argument (y) to Circ must be a number.")
+    assert(y >= 0, "Second argument (y) to Circ must not be negative.")
+    assert(type(r) == "number", "Third argument (r) to Circ must be a number.")
+    assert(r > 0, "Third argument (r) to Circ must be larger than 0.")
+
     if not color then color = g.colors.default_fg_color.rgb01 end
 
     local dx = r
