@@ -46,10 +46,10 @@ function Write(s, x, y, color)
     nothing
     ]]--
 
-    assert(type(s) == "string", "First argument (s) to Write must be string.")
-    assert(type(x) == "number", "Second argument (x) to Write must be number.")
+    assert(type(s) == "string", "First argument (s) to Write must be a string.")
+    assert(type(x) == "number", "Second argument (x) to Write must be a number.")
     assert(x >= 0, "Second argument (x) to Write must not be negative.")
-    assert(type(y) == "number", "Third argument (y) to Write must be number.")
+    assert(type(y) == "number", "Third argument (y) to Write must be a number.")
     assert(y >= 0, "Third argument (y) to Write must not be negative.")
 
     local lx = x * g.screen.gamepixel.w
@@ -81,9 +81,9 @@ function Join(ss, delimiter)
     string
     ]]--
 
-    assert(type(ss) == "table", "First argument (ss) to Join must be table.")
+    assert(type(ss) == "table", "First argument (ss) to Join must be a table.")
     for _, element in ipairs(ss) do
-        assert(type(element) == "string", "Every element of table passed to Join must be string.")
+        assert(type(element) == "string", "Every element of table passed to Join must be a string.")
     end
 
     if not delimiter then
@@ -114,9 +114,9 @@ function Split(s, delimiter)
     {strings}
     ]]--
 
-    assert(type(s) == "string", "First argument (s) passed to Split must be string.")
+    assert(type(s) == "string", "First argument (s) passed to Split must be a string.")
     if delimiter then
-        assert(type(delimiter) == "string", "If second argument (delimiter) is passed to Split, it must be string.")
+        assert(type(delimiter) == "string", "If second argument (delimiter) is passed to Split, it must be a string.")
     end
 
     if delimiter == "" then
@@ -171,7 +171,7 @@ function Sub(s, i, j)
     string
     ]]--
 
-    assert(type(s) == "string", "First argument (s) passed to Sub must be string.")
+    assert(type(s) == "string", "First argument (s) passed to Sub must be a string.")
 
     if j < 1 then
         j = i
@@ -217,9 +217,9 @@ function Pset(x, y, color)
     nothing
     ]]--
 
-    assert(type(x) == "number", "First argument (x) to Pset must be number.")
+    assert(type(x) == "number", "First argument (x) to Pset must be a number.")
     assert(x >= 0, "First argument (x) to Pset must not be negative.")
-    assert(type(y) == "number", "Second argument (y) to Pset must be number.")
+    assert(type(y) == "number", "Second argument (y) to Pset must be a number.")
     assert(y >= 0, "Second argument (y) to Pset must not be negative.")
 
     local lx = x * g.screen.gamepixel.w
