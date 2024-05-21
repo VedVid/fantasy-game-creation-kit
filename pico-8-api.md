@@ -10,7 +10,7 @@ Graphics:
 * [x] circ
 * [x] circfill
 * [x] oval
-- [] ovalfill
+* [x] ovalfill
 - [] cls
 * [x] line
 * [x] print
