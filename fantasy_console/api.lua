@@ -224,6 +224,80 @@ function Ppset(gamepixel)
 end
 
 
+function Line(sx, sy, tx, ty, color)
+    -- This is a translation of bresenham algorithm by Petr Viktorin,
+    -- written in Python, released under the MIT license.
+    -- It's available at https://github.com/encukou/bresenham as of
+    -- 20240521
+    --[[
+Copyright © 2016 Petr Viktorin
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+    ]]--
+    print()
+    print("sx: " .. sx .. ", sy: " .. sy .. ", tx:" .. tx .. ", ty: " .. ty)
+    local dx = tx - sx
+    local dy = ty - sy
+
+    local xsign = 1
+    if dx <= 0 then
+        xsign = -1
+    end
+
+    local ysign = 1
+    if dy <= 0 then
+        ysign = -1
+    end
+
+    dx = math.abs(dx)
+    dy = math.abs(dy)
+
+    local xx = xsign
+    local xy = 0
+    local yx = 0
+    local yy = ysign
+    if dx <= dy then
+        dx, dy = dy, dx
+        xx = 0
+        xy = ysign
+        yx = xsign
+        yy = 0
+    end
+
+    local d = 2 * dy - dx
+    local y = 0
+
+    for x = 0, dx do
+        local coord = {}
+        coord.x = sx + x * xx + y * yx
+        coord.y = sy + x * xy + y * yy
+        print(coord.x .. ", " .. coord.y)
+        Pset(coord.x, coord.y, color)
+        if d >= 0 then
+            y = y + 1
+            d = d - 2 * dx
+        end
+        d = d + 2 * dy
+    end
+end
+
+
 function Rect(x, y, w, h, color)
     --[[
     Function Rect creates empty (ie not filled) rectangle on screen.
