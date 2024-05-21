@@ -580,6 +580,15 @@ function Oval(x, y, rx, ry, color)
         Color of ellipse. Defaults to the default foreground colour.
     ]]--
 
+    assert(type(x) == "number", "First argument (x) to Oval must be a number.")
+    assert(x >= 0, "First argument (x) to Oval must not be negative.")
+    assert(type(y) == "number", "Second argument (y) to Oval must be a number.")
+    assert(y >= 0, "Second argument (y) to Oval must not be negative.")
+    assert(type(rx) == "number", "Third argument (rx) to Oval must be a number.")
+    assert(rx > 0, "Third argument (rx) to Oval must be larger than 0.")
+    assert(type(ry) == "number", "Fourth argument (ry) to Oval must be a number.")
+    assert(ry > 0, "Fourth argument (ry) to Oval must be larger than 0.")
+
     if not color then color = g.colors.default_fg_color.rgb01 end
 
     local dx, dy, d1, d2
