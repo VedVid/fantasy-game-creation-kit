@@ -519,6 +519,71 @@ function Oval(x, y, rx, ry, color)
 end
 
 
+function Ovalfill(x, y, rx, ry, color)
+    --[[
+    Function Ovalfill draws filled ellipse on the screen.
+    It uses slightly modified midpoint ellipse algorithm.
+
+    Arguments
+    ---------
+    x : number
+        Position of ellipse center on the x axis.
+    y : number
+        Position of ellipse center on the y axis.
+    rx : number
+        Length of radius on the x axis.
+    ry : number
+        Length of radius on the y axis.
+    color : palette.<color>
+        Color of ellipse.
+    ]]--
+
+    local dx, dy, d1, d2
+    local xx = 0;
+    local yy = ry;
+    d1 = (ry * ry) - (rx * rx * ry) + (0.25 * rx * rx)
+    dx = 2 * ry * ry * xx
+    dy = 2 * rx * rx * yy
+
+    while (dx < dy) do	
+        Pset(xx + x, yy + y, color)
+        Pset(-xx + x, yy + y, color)
+        Pset(xx + x, -yy + y, color)
+        Pset(-xx + x, -yy + y, color)
+        if d1 < 0 then
+            xx = xx + 1
+            dx = dx + (2 * ry * ry)
+            d1 = d1 + dx + (ry * ry)
+        else
+            xx = xx + 1
+            yy = yy - 1
+            dx = dx + (2 * ry * ry)
+            dy = dy - (2 * rx * rx)
+            d1 = d1 + dx - dy + (ry * ry)
+        end
+    end
+
+    d2 = ((ry * ry) * ((xx + 0.5) * (xx + 0.5))) + ((rx * rx) * ((yy - 1) * (yy - 1))) - (rx * rx * ry * ry)
+    while (yy >= 0) do	
+        Pset(xx + x, yy + y, color)
+        Pset(-xx + x, yy + y, color)
+        Pset(xx + x, -yy + y, color)
+        Pset(-xx + x, -yy + y, color)	
+        if d2 > 0 then
+            yy = yy - 1
+            dy = dy - (2 * rx * rx)
+            d2 = d2 + (rx * rx) - dy
+        else
+            yy = yy - 1
+            xx = xx + 1
+            dx = dx + (2 * ry * ry)
+            dy = dy - (2 * rx * rx)
+            d2 = d2 + dx - dy + (rx * rx)
+        end
+    end
+end
+
+
 --------------------
 ---------- COLORS --
 --------------------
