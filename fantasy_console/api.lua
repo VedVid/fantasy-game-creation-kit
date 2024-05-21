@@ -546,10 +546,10 @@ function Ovalfill(x, y, rx, ry, color)
     dy = 2 * rx * rx * yy
 
     while (dx < dy) do	
-        Pset(xx + x, yy + y, color)
-        Pset(-xx + x, yy + y, color)
-        Pset(xx + x, -yy + y, color)
-        Pset(-xx + x, -yy + y, color)
+        Line(x - xx, y + yy, x + xx, y + yy, color)
+        Line(x - xx, y - yy, x + xx, y - yy, color)
+        --Line(x - yy, y + xx, x + yy, y + xx, color)
+        --Line(x - yy, y - xx, x + yy, y - xx, color)
         if d1 < 0 then
             xx = xx + 1
             dx = dx + (2 * ry * ry)
