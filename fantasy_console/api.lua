@@ -46,6 +46,12 @@ function Write(s, x, y, color)
     nothing
     ]]--
 
+    assert(type(s) == "string", "First argument (s) to Write must be a string.")
+    assert(type(x) == "number", "Second argument (x) to Write must be a number.")
+    assert(x >= 0, "Second argument (x) to Write must not be negative.")
+    assert(type(y) == "number", "Third argument (y) to Write must be a number.")
+    assert(y >= 0, "Third argument (y) to Write must not be negative.")
+
     local lx = x * g.screen.gamepixel.w
     local ly = y * g.screen.gamepixel.h
     if not color then color = g.colors.default_fg_color.rgb01 end
@@ -75,6 +81,11 @@ function Join(ss, delimiter)
     string
     ]]--
 
+    assert(type(ss) == "table", "First argument (ss) to Join must be a table.")
+    for _, element in ipairs(ss) do
+        assert(type(element) == "string", "Every element of table passed to Join must be a string.")
+    end
+
     if not delimiter then
         delimiter = ""
     end
@@ -102,6 +113,11 @@ function Split(s, delimiter)
     -------
     {strings}
     ]]--
+
+    assert(type(s) == "string", "First argument (s) passed to Split must be a string.")
+    if delimiter then
+        assert(type(delimiter) == "string", "If second argument (delimiter) is passed to Split, it must be a string.")
+    end
 
     if delimiter == "" then
         return {s}
@@ -155,6 +171,8 @@ function Sub(s, i, j)
     string
     ]]--
 
+    assert(type(s) == "string", "First argument (s) passed to Sub must be a string.")
+
     if j < 1 then
         j = i
     end
@@ -198,6 +216,11 @@ function Pset(x, y, color)
     -------
     nothing
     ]]--
+
+    assert(type(x) == "number", "First argument (x) to Pset must be a number.")
+    assert(x >= 0, "First argument (x) to Pset must not be negative.")
+    assert(type(y) == "number", "Second argument (y) to Pset must be a number.")
+    assert(y >= 0, "Second argument (y) to Pset must not be negative.")
 
     local lx = x * g.screen.gamepixel.w
     local ly = y * g.screen.gamepixel.h
@@ -287,6 +310,15 @@ THE SOFTWARE.
     nothing
     ]]--
 
+    assert(type(sx) == "number", "First argument (sx) to Line must be a number.")
+    assert(sx >= 0, "First argument (sx) to Line must not be negative.")
+    assert(type(sy) == "number", "Second argument (sy) to Line must be a number.")
+    assert(sy >= 0, "Second argument (sy) to Line must not be negative.")
+    assert(type(tx) == "number", "Third argument (tx) to Line must be a number.")
+    assert(tx >= 0, "Third argument (tx) to Line must not be negative.")
+    assert(type(ty) == "number", "Fourth argument (ty) to Line must be a number.")
+    assert(ty >= 0, "Fourth argument (ty) to Line must not be negative.")
+
     if not color then color = g.colors.default_fg_color.rgb01 end
 
     local dx = tx - sx
@@ -369,6 +401,15 @@ function Rect(x, y, w, h, color)
     nothing
     ]]--
 
+    assert(type(x) == "number", "First argument (x) to Rect must be a number.")
+    assert(x >= 0, "First argument (x) to Rect must not be negative.")
+    assert(type(y) == "number", "Second argument (y) to Rect must be a number.")
+    assert(y >= 0, "Second argument (y) to Rect must not be negative.")
+    assert(type(w) == "number", "Third argument (w) to Rect must be a number.")
+    assert(w > 1, "Third argument (w) to Rect must be larger than 1.")
+    assert(type(h) == "number", "Fourth argument (h) to Rect must be a number.")
+    assert(h > 1, "Fourth argument (h) to Rect must be larger than 1.")
+
     local lx = (x * g.screen.gamepixel.w) + (g.screen.gamepixel.w / 2)
     local ly = (y * g.screen.gamepixel.h) + (g.screen.gamepixel.h / 2)
     local lw = (w - 1) * g.screen.gamepixel.w
@@ -406,6 +447,15 @@ function Rectfill(x, y, w, h, color)
     nothing
     ]]--
 
+    assert(type(x) == "number", "First argument (x) to Rectfill must be a number.")
+    assert(x >= 0, "First argument (x) to Rectfill must not be negative.")
+    assert(type(y) == "number", "Second argument (y) to Rectfill must be a number.")
+    assert(y >= 0, "Second argument (y) to Rectfill must not be negative.")
+    assert(type(w) == "number", "Third argument (w) to Rectfill must be a number.")
+    assert(w > 1, "Third argument (w) to Rectfill must be larger than 1.")
+    assert(type(h) == "number", "Fourth argument (h) to Rectfill must be a number.")
+    assert(h > 1, "Fourth argument (h) to Rectfill must be larger than 1.")
+
     local lx = x * g.screen.gamepixel.w
     local ly = y * g.screen.gamepixel.h
     local lw = w * g.screen.gamepixel.w
@@ -437,6 +487,13 @@ function Circ(x, y, r, color)
     -------
     nothing
     ]]--
+
+    assert(type(x) == "number", "First argument (x) to Circ must be a number.")
+    assert(x >= 0, "First argument (x) to Circ must not be negative.")
+    assert(type(y) == "number", "Second argument (y) to Circ must be a number.")
+    assert(y >= 0, "Second argument (y) to Circ must not be negative.")
+    assert(type(r) == "number", "Third argument (r) to Circ must be a number.")
+    assert(r > 0, "Third argument (r) to Circ must be larger than 0.")
 
     if not color then color = g.colors.default_fg_color.rgb01 end
 
@@ -484,6 +541,13 @@ function Circfill(x, y, r, color)
     nothing
     ]]--
 
+    assert(type(x) == "number", "First argument (x) to Circfill must be a number.")
+    assert(x >= 0, "First argument (x) to Circfill must not be negative.")
+    assert(type(y) == "number", "Second argument (y) to Circfill must be a number.")
+    assert(y >= 0, "Second argument (y) to Circfill must not be negative.")
+    assert(type(r) == "number", "Third argument (r) to Circfill must be a number.")
+    assert(r > 0, "Third argument (r) to Circfill must be larger than 0.")
+
     if not color then color = g.colors.default_fg_color.rgb01 end
 
     for ty=-r,r do
@@ -515,6 +579,15 @@ function Oval(x, y, rx, ry, color)
     color : palette.<color>
         Color of ellipse. Defaults to the default foreground colour.
     ]]--
+
+    assert(type(x) == "number", "First argument (x) to Oval must be a number.")
+    assert(x >= 0, "First argument (x) to Oval must not be negative.")
+    assert(type(y) == "number", "Second argument (y) to Oval must be a number.")
+    assert(y >= 0, "Second argument (y) to Oval must not be negative.")
+    assert(type(rx) == "number", "Third argument (rx) to Oval must be a number.")
+    assert(rx > 0, "Third argument (rx) to Oval must be larger than 0.")
+    assert(type(ry) == "number", "Fourth argument (ry) to Oval must be a number.")
+    assert(ry > 0, "Fourth argument (ry) to Oval must be larger than 0.")
 
     if not color then color = g.colors.default_fg_color.rgb01 end
 
@@ -582,6 +655,15 @@ function Ovalfill(x, y, rx, ry, color)
     color : palette.<color>
         Color of ellipse. Defaults to the default foreground colour.
     ]]--
+
+    assert(type(x) == "number", "First argument (x) to Ovalfill must be a number.")
+    assert(x >= 0, "First argument (x) to Ovalfill must not be negative.")
+    assert(type(y) == "number", "Second argument (y) to Ovalfill must be a number.")
+    assert(y >= 0, "Second argument (y) to Ovalfill must not be negative.")
+    assert(type(rx) == "number", "Third argument (rx) to Ovalfill must be a number.")
+    assert(rx > 0, "Third argument (rx) to Ovalfill must be larger than 0.")
+    assert(type(ry) == "number", "Fourth argument (ry) to Ovalfill must be a number.")
+    assert(ry > 0, "Fourth argument (ry) to Ovalfill must be larger than 0.")
 
     if not color then color = g.colors.default_fg_color.rgb01 end
 
