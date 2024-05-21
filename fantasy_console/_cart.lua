@@ -41,4 +41,5 @@ function Draw()
     Pset(20, 59, RedBold)
     Pset(10, 61, Cyan)
     Pset(20, 61, CyanBold)
+    Rect(10, 62, 10, 2, BlueBold)
 end
