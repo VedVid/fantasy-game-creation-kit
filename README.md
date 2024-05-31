@@ -3,7 +3,6 @@ This project is a work-in-progress game creation kit. Heavily inspired by fantas
 Under the hood, it's wrapper around Love2D.
 
 Goals:
-<<<<<<< HEAD
 - provide all the basic tools to create simple games
 - create API that will feel familiar to people who know PICO-8
 - make sure that the kit is extensible (e.g. can be used with third-party libraries)
@@ -13,7 +12,6 @@ Non-goals:
 - become PICO-8 compatible
 - implement full-fledged fantasy console (ergo, no hardware specs, no VM emulation, etc.)
 - implement severe limitations that would force small scale of games
-=======
 - provide all the basic tools to create simple games,
 - create API that will feel familiar to people who know PICO-8,
 - make sure that the kit is extensible (e.g. can be used with third-party libraries),
@@ -32,5 +30,4 @@ How to start:
 - start the app, either by:
 	- drag-and-drop `fantasy_console` directory on you Love2D installation, or
 	- by executing `start.bat` file (this assument that `fantasy_console` and `love` directory are in the same root directory).
->>>>>>> 12cb877... Readme improved
 
