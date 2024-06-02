@@ -741,7 +741,7 @@ end
 -------------------
 
 
-function Btn(button)
+function Btnp(button)
     return love.keyboard.isDown(button)
 end
 

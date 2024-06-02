@@ -8,7 +8,7 @@ function Init()
     rs = 4
 end
 
-function Update()
+function Input()
     if Btn("z") then
         rs = rs + 1
     elseif Btn("x") then
@@ -25,6 +25,10 @@ function Update()
     elseif Btn("down") then
         cy = cy + 1
     end
+end
+
+function Update()
+    do end
 end
 
 function Draw()

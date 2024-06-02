@@ -21,6 +21,7 @@ function love.keypressed(key, scancode, isrepeat)
     elseif key == "pagedown" then
         canvas.scale_down()
     end
+    Input()
 end
 
 function love.update()
