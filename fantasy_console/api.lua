@@ -736,6 +736,16 @@ function Ovalfill(x, y, rx, ry, color)
 end
 
 
+-------------------
+---------- INPUT --
+-------------------
+
+
+function Btn(button)
+    return love.keyboard.isDown(button)
+end
+
+
 --------------------
 ---------- COLORS --
 --------------------
