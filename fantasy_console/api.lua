@@ -107,7 +107,7 @@ function Split(s, delimiter)
     s : string
         Text to be split.
     delimiter : string = " "
-        Delimiter used to split the string.
+        Delimiter used to split the string. Defaults to space.
     
     Returns
     -------
@@ -187,6 +187,18 @@ end
 --------------------
 
 function Cls()
+    --[[
+    Function Cls clears the whole game screen.
+
+    Arguments
+    ---------
+    none are passed
+
+    Returns
+    -------
+    nothing
+    ]]--
+
     love.graphics.clear(g.colors.default_bg_color.rgb01)
 end
 
@@ -237,7 +249,7 @@ function Pset(x, y, color)
 end
 
 
-function Ppset(gamepixel)
+function Ppset(gamepixel)  -- deprecated, probably will not be present in 0.1
     --[[
     Function Pset creates new gamepixel and draws it on screen.
 
