@@ -741,14 +741,42 @@ end
 -------------------
 
 
-function Btnp(button)
-    love.keyboard.setKeyRepeat(false)
+function Btn(button)
+    --[[
+    Function Btnp sets repeat mode to true, then checks,
+    if button passed as argument is down.
+
+    Arguments
+    ---------
+    button : Love2d.KeyConstant
+        Should be valid KeyConstant value provided by Love2D.
+
+    Returns
+    -------
+    nothing
+    ]]--
+
+    love.keyboard.setKeyRepeat(true)
     return love.keyboard.isDown(button)
 end
 
 
-function Btn(button)
-    love.keyboard.setKeyRepeat(true)
+function Btnp(button)
+    --[[
+    Function Btnp sets repeat mode to false, then checks,
+    if button passed as argument is down.
+
+    Arguments
+    ---------
+    button : Love2d.KeyConstant
+        Should be valid KeyConstant value provided by Love2D.
+
+    Returns
+    -------
+    nothing
+    ]]--
+
+    love.keyboard.setKeyRepeat(false)
     return love.keyboard.isDown(button)
 end
 
