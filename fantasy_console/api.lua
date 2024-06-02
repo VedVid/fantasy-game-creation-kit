@@ -757,7 +757,7 @@ function Btn(button)
         True if button passed as argument is pressed, false otherwise.
     ]]--
 
-    love.keyboard.setKeyRepeat(true)
+    Brpt(true)
     return love.keyboard.isDown(button)
 end
 
@@ -778,7 +778,7 @@ function Btnp(button)
         True if button passed as argument is pressed, false otherwise.
     ]]--
 
-    love.keyboard.setKeyRepeat(false)
+    Brpt(false)
     return love.keyboard.isDown(button)
 end
 
