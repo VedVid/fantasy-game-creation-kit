@@ -783,6 +783,28 @@ function Btnp(button)
 end
 
 
+function Brpt(enabled)
+    --[[
+    Function Brpt allows to manually set key repeat mode to
+    `true` (repeating keypress on hold enabled) or `false`
+    (repeating keypress on hold disabled).
+
+    Arguments
+    ---------
+    enabled : boolean
+        Enables or disabled repeat-key-on-hold. It is passed to the
+        Love2D function.
+
+    Returns
+    -------
+    nothing
+    ]]--
+
+    assert(type(enabled) == "boolean", "First argument (enabled) to Brpt must be boolean value.")
+
+    love.keyboard.setKeyRepeat(enabled)
+end
+
 --------------------
 ---------- COLORS --
 --------------------
