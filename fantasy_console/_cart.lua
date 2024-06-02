@@ -9,9 +9,9 @@ function Init()
 end
 
 function Input()
-    if Btn("z") then
+    if Btnp("z") then
         rs = rs + 1
-    elseif Btn("x") then
+    elseif Btnp("x") then
         rs = rs - 1
         if rs <= 1 then rs = 2 end
     elseif Btn("left") then

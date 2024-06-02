@@ -742,6 +742,13 @@ end
 
 
 function Btnp(button)
+    love.keyboard.setKeyRepeat(false)
+    return love.keyboard.isDown(button)
+end
+
+
+function Btn(button)
+    love.keyboard.setKeyRepeat(true)
     return love.keyboard.isDown(button)
 end
 
