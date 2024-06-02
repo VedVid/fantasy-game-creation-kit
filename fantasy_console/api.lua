@@ -753,7 +753,8 @@ function Btn(button)
 
     Returns
     -------
-    nothing
+    boolean
+        True if button passed as argument is pressed, false otherwise.
     ]]--
 
     love.keyboard.setKeyRepeat(true)
@@ -773,7 +774,8 @@ function Btnp(button)
 
     Returns
     -------
-    nothing
+    boolean
+        True if button passed as argument is pressed, false otherwise.
     ]]--
 
     love.keyboard.setKeyRepeat(false)
