@@ -736,6 +736,75 @@ function Ovalfill(x, y, rx, ry, color)
 end
 
 
+-------------------
+---------- INPUT --
+-------------------
+
+
+function Btn(button)
+    --[[
+    Function Btnp sets repeat mode to true, then checks,
+    if button passed as argument is down.
+
+    Arguments
+    ---------
+    button : Love2d.KeyConstant
+        Should be valid KeyConstant value provided by Love2D.
+
+    Returns
+    -------
+    boolean
+        True if button passed as argument is pressed, false otherwise.
+    ]]--
+
+    Brpt(true)
+    return love.keyboard.isDown(button)
+end
+
+
+function Btnp(button)
+    --[[
+    Function Btnp sets repeat mode to false, then checks,
+    if button passed as argument is down.
+
+    Arguments
+    ---------
+    button : Love2d.KeyConstant
+        Should be valid KeyConstant value provided by Love2D.
+
+    Returns
+    -------
+    boolean
+        True if button passed as argument is pressed, false otherwise.
+    ]]--
+
+    Brpt(false)
+    return love.keyboard.isDown(button)
+end
+
+
+function Brpt(enabled)
+    --[[
+    Function Brpt allows to manually set key repeat mode to
+    `true` (repeating keypress on hold enabled) or `false`
+    (repeating keypress on hold disabled).
+
+    Arguments
+    ---------
+    enabled : boolean
+        Enables or disabled repeat-key-on-hold. It is passed to the
+        Love2D function.
+
+    Returns
+    -------
+    nothing
+    ]]--
+
+    assert(type(enabled) == "boolean", "First argument (enabled) to Brpt must be boolean value.")
+
+    love.keyboard.setKeyRepeat(enabled)
+end
+
 --------------------
 ---------- COLORS --
 --------------------
