@@ -1,0 +1,58 @@
+=====================================
+===== FANTASY GAME CREATION KIT =====
+=====================================
+
+
+Fantasy Game Creation Kit.
+v0.1
+(c) 2024 Tomasz Nowakowski
+Released under Free BSD license.
+
+
+ABOUT
+=====
+
+Fantasy Game Creation Kit aims to be exactly what the name suggests:
+game creation kit that encapsulates all basic tools necessary for
+creating simple games fast:
+- sprites editor,
+- map editor,
+- sounds editor,
+- code editor (maybe).
+
+It is implemented at the top of Love2D. Also, it is heavily inspired by fantasy consoles like PICO-8 and TIC-80.
+Some of the limitations specific to true fantasy consoles are
+already implemented, or will be implemented in the future.
+In contrast to the majority of fantasy consoles, the limitations
+are not as strict, and this kit might be easily extended by calling
+Love2D functions directly or by using 3rd-party libraries.
+
+Fantasy Game Creation Kit is not going to use virtual machine or
+simulate hardware like CPU, RAM, GPU.
+
+
+SPECIFICATIONS
+==============
+
+Display: 256x192 (AR 4:3)
+Palette: 16 colour palette, extensions are possible
+Input  : (planned) 4 directional keys, 4 action keys, 2 special keys
+Sprites: To be decided
+Map    : To be decided
+Sound  : To be decided
+Code   : Lua; there is planned support for other languages that
+             compile to Lua, like Moonscript
+
+
+GETTING STARTED
+===============
+
+Currently, games made with this kit needs to be ran like normal
+Love2D games: by dragging-and-dropping kit folder over the Love2D
+executable.
+
+The main functions (Init, Input, Update, Draw) need to
+be specified in _cart.lua file.
+
+In v0.1, the only implemented API functions are these related to
+the text, geometry drawing, and input handling.
