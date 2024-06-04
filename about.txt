@@ -12,23 +12,24 @@ Released under Free BSD license.
 ABOUT
 =====
 
-Fantasy Game Creation Kit aims to be exactly what the name suggests:
-game creation kit that encapsulates all basic tools necessary for
-creating simple games fast:
-- sprites editor,
-- map editor,
-- sounds editor,
-- code editor (maybe).
+The Fantasy Game Creation Kit aims to become exactly what the name suggests: a game creation kit that encapsulates all the basic tools necessary for creating simple games quickly.
+The planned tools include:
+- a sprites editor,
+- a map editor,
+- a sounds editor,
+- a code editor (maybe).
 
-It is implemented at the top of Love2D. Also, it is heavily inspired by fantasy consoles like PICO-8 and TIC-80.
-Some of the limitations specific to true fantasy consoles are
-already implemented, or will be implemented in the future.
-In contrast to the majority of fantasy consoles, the limitations
-are not as strict, and this kit might be easily extended by calling
-Love2D functions directly or by using 3rd-party libraries.
+Please note that only a limited API is supported right now, and none of the editors are implemented yet.
 
-Fantasy Game Creation Kit is not going to use virtual machine or
-simulate hardware like CPU, RAM, GPU.
+The kit is implemented on top of Love2D. It is also heavily inspired
+by fantasy consoles like PICO-8 and TIC-80. That said, it is not
+going to be a fantasy console sensu stricto: the planned limitations
+are not very strict, and this kit is not going to use a virtual
+machine or simulate hardware.
+
+"A framework designed to make a retro games" describes Fantasy
+Game Creation Kit more accurately.
+
 
 
 SPECIFICATIONS
@@ -47,12 +48,12 @@ Code   : Lua; there is planned support for other languages that
 GETTING STARTED
 ===============
 
-Currently, games made with this kit needs to be ran like normal
-Love2D games: by dragging-and-dropping kit folder over the Love2D
-executable.
+Currently, games made with this kit need to be run like normal
+Love2D games: by dragging and dropping the kit folder over
+the Love2D executable.
 
 The main functions (Init, Input, Update, Draw) need to
-be specified in _cart.lua file.
+be specified in the `_cart.lua` file.
 
-In v0.1, the only implemented API functions are these related to
-the text, geometry drawing, and input handling.
+In v0.1, the only implemented API functions are those related
+to text, geometry drawing, and input handling.
