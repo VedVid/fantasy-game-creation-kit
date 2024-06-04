@@ -57,3 +57,8 @@ be specified in the `_cart.lua` file.
 
 In v0.1, the only implemented API functions are those related
 to text, geometry drawing, and input handling.
+
+To get a sense of how the kit works, it is recommended to check
+the examples included in the main archive. To use them,
+you need to replace the original `_cart.lua` with one copied
+from the examples directory.
