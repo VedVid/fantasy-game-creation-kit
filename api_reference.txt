@@ -9,13 +9,11 @@ Text manipulation.
 Write(s, x, y, [color])
 =======================
 
-    Function Write uses the Love2D's print function under the
-    hood, but it does not expose all of its arguments to the
-    user. 
-    Rotation, scaling, and offset are set to the Love2D's
-    defaults.
+    The Function Write uses Love2D's print function under the hood,
+    but it does not expose all of its arguments to the user.
+    Rotation, scaling, and offset are set to Love2D's defaults.
 
-    Currently coords are passed 1:1 because pixel scaling
+    Currently, coordinates are passed 1:1 because pixel scaling
     is not implemented yet.
 
     Arguments
@@ -23,11 +21,11 @@ Write(s, x, y, [color])
     s : string
         Text to be printed.
     x : number
-        Position of text beginning at the x axis.
+        Position of the text beginning at the x-axis.
     y : number
-        Position of text beginning at the y axis.
+        Position of the text beginning at the y-axis.
     color : palette.<color>
-        Color of text. Defaults to the default foreground colour.
+        Color of the text. Defaults to the default foreground color.
     
     Returns
     -------
@@ -37,18 +35,19 @@ Write(s, x, y, [color])
 Join(ss, [delimiter])
 =====================
 
-    Function Join joins multiple strings into single string.
-    It is provided to make joining larger amount of strings into
-    single string easier than by using `..` operator.
+    The Join function joins multiple strings into a single string.
+    It is provided to make joining a larger amount of strings into
+    a single string easier than using the `..` operator.
 
     Arguments
     ---------
     ss : array of strings
-        Single table with all strings to be joined, e.g.
-        {"text1", "text2"}
+        A single table with all strings to be joined, e.g.
+        {"text1", "text2"}.
     delimiter : string = ""
-        Optional argument. It specifies what symbol or text will
-        be added between strings joined. Defaults to empty string.
+        An optional argument that specifies what symbol or text
+        will be added between the joined strings.
+        It defaults to an empty string.
     
     Returns
     -------
@@ -58,18 +57,19 @@ Join(ss, [delimiter])
 Split(s, [delimiter])
 =====================
 
-    Function Split takes single string and delimiter as arguments,
-    and tries to split the string on delimiter.
-    If delimiter is not provided, it defaults to single space.
-    If delimiter is set to empty string, this function returns the
-    string passed without changes.
+    The Split function takes a single string and a delimiter
+    as arguments, and tries to split the string on the delimiter.
+    If the delimiter is not provided, it defaults to a single space.
+    If the delimiter is set to an empty string, this function
+    returns the string passed without any changes.
 
     Arguments
     ---------
     s : string
-        Text to be split.
+        The text to be split.
     delimiter : string = " "
-        Delimiter used to split the string. Defaults to space.
+        The delimiter used to split the string. It defaults
+        to a space.
     
     Returns
     -------
@@ -79,8 +79,8 @@ Split(s, [delimiter])
 Sub(s, i, j)
 ============
 
-    Function Sub takes single string as arguument and i, j numbers
-    that defines the range of substring.
+    The Sub function takes a single string as an argument and
+    the numbers i and j that define the range of the substring.
 
     Arguments
     ---------
@@ -107,11 +107,11 @@ Functions related to the game screen.
 Cls()
 =====
 
-    Function Cls clears the whole game screen.
+    The Cls function clears the entire game screen.
 
     Arguments
     ---------
-    none are passed
+    No arguments are passed
 
     Returns
     -------
@@ -129,18 +129,18 @@ Functions that puts the various geometric shapes on the screen.
 Pset(x, y, [color])
 ===================
 
-    Function Pset draws new pixel on screen. It uses user-specified
-    coordinates and color.
+    The Pset function draws a new pixel on the screen. It uses
+    user-specified coordinates and color.
 
     Arguments
     ---------
     x : number
-        Position of pixel on horizontal axis.
+        The position of the pixel on the horizontal axis.
     y : number
-        Position of pixel on vertical axis.
+        The position of the pixel on the vertical axis.
     color : palette.<color>
-        Color of pixel to-bo-created. Defaults to the default
-        foreground colour.
+        The color of the pixel to be created. It defaults
+        to the default foreground color.
     
     Returns
     -------
@@ -150,12 +150,14 @@ Pset(x, y, [color])
 Ppset(gamepixel)  -- deprecated, probably will not be present in 0.1
 ================
 
-    Function Pset creates new gamepixel and draws it on screen.
+    The Pset function creates a new game pixel and draws
+    it on the screen.
 
     Arguments
     ---------
     gamepixel : gamepixel
-        Gamepixel instance. It encapsulates coordinates and color.
+        It is a game pixel instance. It encapsulates coordinates
+        and color.
     
     Returns
     -------
@@ -165,22 +167,22 @@ Ppset(gamepixel)  -- deprecated, probably will not be present in 0.1
 Line(sx, sy, tx, ty, [color])
 =============================
 
-    Function Line draws a line using Bresenham's algorithm from
-    {sx, sy} to {tx, ty}.
+    The Line function draws a line using Bresenham's algorithm
+    from {sx, sy} to {tx, ty}.
 
     Arguments
     ---------
     sx : number
-        Position of the starting point on the x axis.
+        The position of the starting point on the x-axis.
     sy : number
-        Position of the starting point on the y axis.
+        The position of the starting point on the y-axis.
     tx : number
-        Position of the end point on the x axis.
+        The position of the end point on the x-axis.
     ty : number
-        Position of the end point on the y axis.
+        The position of the end point on the y-axis.
     color : palette.<color>
-        Color of line to-bo-created. Defaults to the default
-        foreground colour.
+        The color of the line to be created. It defaults
+        to the default foreground color.
 
     Returns
     -------
@@ -190,21 +192,22 @@ Line(sx, sy, tx, ty, [color])
 Rect(x, y, w, h, [color])
 =========================
 
-    Function Rect creates empty (ie not filled) rectangle on screen.
+    The Rect function creates an empty (i.e., not filled)
+    rectangle on the screen.
 
     Arguments
     ---------
     x : number
-        Position of top-left rectangle corner on the x axis.
+        The position of the top-left rectangle corner on the x-axis.
     y : number
-        Position of top-left rectangle corner on the y axis.
+        The position of the top-left rectangle corner on the y-axis.
     w : number
-        Width of rectangle.
+        The width of the rectangle.
     h : number
-        Height of rectangle.
+        The height of the rectangle.
     color : palette.<color>
-        Color of pixel to-bo-created. Defaults to the default
-        foreground colour.
+        The color of the rectangle to be created. It defaults
+        to the default foreground color.
     
     Returns
     -------
@@ -214,20 +217,21 @@ Rect(x, y, w, h, [color])
 Rectfill(x, y, w, h, [color])
 =============================
 
-    Function Rectfill drawn filled rectangle on the screen.
+    The Rectfill function draws a filled rectangle on the screen.
 
     Arguments
     ---------
     x : number
-        Position of top-left rectangle corner on the x axis.
+        The position of the top-left rectangle corner on the x-axis.
     y : number
-        Position of top-left rectangle corner on the y axis.
+        The position of the top-left rectangle corner on the y-axis.
     w : number
-        Width of rectangle.
+        The width of the rectangle.
     h : number
-        Height of rectangle.
+        The height of the rectangle.
     color : palette.<color>
-        Color of pixel to-bo-created. Defaults to the default foreground colour.
+        The color of the rectangle to be created. It defaults
+        to the default foreground color.
     
     Returns
     -------
@@ -237,19 +241,20 @@ Rectfill(x, y, w, h, [color])
 Circ(x, y, r, [color])
 ======================
 
-    Function Circ creates empty (ie not filled) circle on the screen.
-    It uses midpoint circle alogrithm. 
+    The Circ function creates an empty (i.e., not filled) circle
+    on the screen. It uses the midpoint circle algorithm.
 
     Arguments
     ---------
     x : number
-        Position of circle center on the x axis.
+        The position of the circle center on the x-axis.
     y : number
-        Position of circle center on the y axis.
+        The position of the circle center on the y-axis.
     r : number
-        Radius.
+        The radius of the circle.
     color : palette.<color>
-        Color of circle. Defaults to the default foreground colour.
+        The color of the circle to be created. It defaults
+        to the default foreground color.
     
     Returns
     -------
@@ -259,19 +264,21 @@ Circ(x, y, r, [color])
 Circfill(x, y, r, [color])
 ==========================
 
-    Function Circfill draws filled circle on the screen. 
-    It reuses Circ function for the borders, and then adds the coloring.
+    The Circfill function draws a filled circle on the screen. 
+    It reuses the Circ function for the borders, and then adds
+    the coloring.
     
     Arguments
     ---------
     x : number
-        Position of circle center on the x axis.
+        The position of the circle center on the x-axis.
     y : number
-        Position of circle center on the y axis.
+        The position of the circle center on the y-axis.
     r : number
-        Radius.
+        The radius of the circle.
     color : palette.<color>
-        Color of circle. Defaults to the default foreground colour.
+        The color of the circle to be created. It defaults
+        to the default foreground color.
     
     Returns
     -------
@@ -281,41 +288,51 @@ Circfill(x, y, r, [color])
 Oval(x, y, rx, ry, [color])
 ===========================
 
-    Function Oval draws empty (ie not filled) ellipse on the screen.
-    It uses midpoint ellipse algorithm.
+    The Oval function draws an empty (i.e., not filled) ellipse
+    on the screen. It uses the midpoint ellipse algorithm.
 
     Arguments
     ---------
     x : number
-        Position of ellipse center on the x axis.
+        The position of the ellipse center on the x-axis.
     y : number
-        Position of ellipse center on the y axis.
+        The position of the ellipse center on the y-axis.
     rx : number
-        Length of radius on the x axis.
+        The length of the radius on the x-axis.
     ry : number
-        Length of radius on the y axis.
+        The length of the radius on the y-axis.
     color : palette.<color>
-        Color of ellipse. Defaults to the default foreground colour.
+        The color of the ellipse to be created. It defaults
+        to the default foreground color.
+
+    Returns
+    -------
+    nothing
 
 
 Ovalfill(x, y, rx, ry, [color])
 ===============================
 
-    Function Ovalfill draws filled ellipse on the screen.
-    It uses slightly modified midpoint ellipse algorithm.
+    The Ovalfill function draws a filled ellipse on the screen.
+    It uses a slightly modified midpoint ellipse algorithm.
 
     Arguments
     ---------
     x : number
-        Position of ellipse center on the x axis.
+        The position of the ellipse center on the x-axis.
     y : number
-        Position of ellipse center on the y axis.
+        The position of the ellipse center on the y-axis.
     rx : number
-        Length of radius on the x axis.
+        The length of the radius on the x-axis.
     ry : number
-        Length of radius on the y axis.
+        The length of the radius on the y-axis.
     color : palette.<color>
-        Color of ellipse. Defaults to the default foreground colour.
+        The color of the ellipse to be created. It defaults
+        to the default foreground color.
+
+    Returns
+    -------
+    nothing
 
 
 -------------------
@@ -324,55 +341,57 @@ Ovalfill(x, y, rx, ry, [color])
 
 
 Functions related to game input.
-Currently only keyboard is supported.
+Currently only keyboard input is supported.
 
 
 Btn(button)
 ===========
 
-    Function Btnp sets repeat mode to true, then checks,
-    if button passed as argument is down.
+    The Btnp function sets the repeat mode to true, then checks
+    if the button passed as an argument is down.
 
     Arguments
     ---------
     button : Love2d.KeyConstant
-        Should be valid KeyConstant value provided by Love2D.
+        It should be a valid KeyConstant value provided by Love2D.
 
     Returns
     -------
     boolean
-        True if button passed as argument is pressed, false otherwise.
+        It returns true if the button passed as an argument
+        is pressed, false otherwise.
 
 
 Btnp(button)
 ============
 
-    Function Btnp sets repeat mode to false, then checks,
-    if button passed as argument is down.
+    The Btnp function sets the repeat mode to false, then checks
+    if the button passed as an argument is down.
 
     Arguments
     ---------
     button : Love2d.KeyConstant
-        Should be valid KeyConstant value provided by Love2D.
+        It should be a valid KeyConstant value provided by Love2D.
 
     Returns
     -------
     boolean
-        True if button passed as argument is pressed, false otherwise.
+        It returns true if the button passed as an argument
+        is pressed, false otherwise.
 
 
 Brpt(enabled)
 =============
 
-    Function Brpt allows to manually set key repeat mode to
-    `true` (repeating keypress on hold enabled) or `false`
-    (repeating keypress on hold disabled).
+    The Brpt function allows you to manually set the key repeat mode
+    to true (enabling repeating keypress on hold) or false
+    (disabling repeating keypress on hold).
 
     Arguments
     ---------
     enabled : boolean
-        Enables or disabled repeat-key-on-hold. It is passed to the
-        Love2D function.
+        It enables or disables the repeat-key-on-hold. It is passed
+        to the Love2D function.
 
     Returns
     -------
@@ -383,13 +402,17 @@ Brpt(enabled)
 ---------- COLORS --
 --------------------
 
-There are 8 main colors, and every color has "Bold" (brighter)
-version. Palette uses color names from the classic 16-color
-terminal palette, but the colors itself are not reflection
-of these colors. Actually, the palette scheme is slightly modified
-Japanesque palette.
+There are 8 main colors, and every color has a "Bold" (brighter) version. The Palette uses color names from the classic 16-color
+terminal palette, but the colors themselves are not a totally
+accurate reflection of the original terminal colors.
+
+Actually, the palette scheme is a slightly modified Japanesque
+palette.
+
 Every color consists of 4 values: red, blue, green, and alpha.
 Every value must be between 0 and 1.
+
+It is possible to create new colors and pass them to API functions.
 
 
 Color = {r 0..1, g 0..1, b 0..1, alpha 0..1}
