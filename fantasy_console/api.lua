@@ -7,11 +7,6 @@ requiring user to write repeatedly module name over and over.
 ]]--
 
 
--- TODO: check below
--- usub might be not required anymore, since only
--- ASCII strings are supported
-local usub = require "stringEx"
-
 local gamepixel = require "gamepixel"
 local g = require "globals"
 local palette = require "palette"
@@ -143,26 +138,11 @@ end
 
 function Sub(s, i, j)
     --[[
-    Function Sub uses a third-party implementation of "usub" string
-    method, provided by stringEx library by losttoken. It is
-    released under the terms of MIT license.
-
-    Please see license at the top of stringEx.lua file.
-
-    https://github.com/losttoken/lua-utf8-string
-    accessed 20240506
-
-    Unfortunately, this function can not be easily tested with
-    standalone Lua interpreter, because:
-    - Love2D uses LuaJIT
-    - LuaJIT does not provide binaries
-    - LuaJIT is compatible with Lua 5.1 and not with Lua 5.3
-    - Lua 5.1 does not support UTF-8
-
-    I am not sure if I like how j smaller than 1 is handled
-    (here, in Sub function, not in the stringEx library),
-    but first of all I do not want this function to simply crash
-    on users.
+    Function Sub takes string, first index, and second index.
+    Previously this function has been using a third-party
+    implementation of substring functionality provided by
+    stringEx library, but since I dropped support for unicode, it
+    is not necessary and I can rely on the Lua standard library.
 
     Arguments
     ---------
@@ -185,7 +165,7 @@ function Sub(s, i, j)
         j = i
     end
 
-    local result = string.usub(s, math.floor(i), math.floor(j))
+    local result = string.sub(s, math.floor(i), math.floor(j))
     return result
 end
 
