@@ -41,14 +41,7 @@ function Update()
     if game_over == true then
         return
     end
-    snake_x = snake_x + (x_dir * 8)
-    snake_y = snake_y + (y_dir * 8)
-    if snake_x <= map_x_min or snake_x >= map_x_max - 8 then
-        game_over = true
-    end
-    if snake_y <= map_y_min or snake_y >= map_y_max - 8 then
-        game_over = true
-    end
+    Update_snake()
 end
 
 function Draw()
@@ -80,4 +73,16 @@ end
 
 function Draw_snake()
     Rectfill(snake_x, snake_y, 8, 8, Green)
+end
+
+
+function Update_snake()
+    snake_x = snake_x + (x_dir * 8)
+    snake_y = snake_y + (y_dir * 8)
+    if snake_x <= map_x_min or snake_x >= map_x_max - 8 then
+        game_over = true
+    end
+    if snake_y <= map_y_min or snake_y >= map_y_max - 8 then
+        game_over = true
+    end
 end
