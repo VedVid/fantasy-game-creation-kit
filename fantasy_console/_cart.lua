@@ -34,4 +34,5 @@ end
 function Draw()
     Cls()
     Rect(cx, cy, rs, rs, BlueBold)
+    Write("Hello, World!", 4, 10)
 end
