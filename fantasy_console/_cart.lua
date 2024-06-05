@@ -81,8 +81,13 @@ function Update_snake()
     snake_y = snake_y + (y_dir * 8)
     if snake_x <= map_x_min or snake_x >= map_x_max - 8 then
         game_over = true
+        return
     end
     if snake_y <= map_y_min or snake_y >= map_y_max - 8 then
         game_over = true
+        return
+    end
+    if snake_x == fruit_x and snake_y == fruit_y then
+        score = score + 10
     end
 end
