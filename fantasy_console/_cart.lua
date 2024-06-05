@@ -11,6 +11,7 @@ local map_x_min = 0
 local map_x_max = 256
 local map_y_min = 8
 local map_y_max = 192
+local started = false
 local game_over = false
 
 function Init()
@@ -21,6 +22,11 @@ function Init()
 end
 
 function Input()
+    if started == false then
+        if Btn("space") then
+            started = true
+        end
+    end
     if Btn("left") then
         x_dir = -1
         y_dir = 0
@@ -37,7 +43,7 @@ function Input()
 end
 
 function Update()
-    if game_over == true then
+    if game_over == true or started == false then
         return
     end
     Update_snake()
@@ -49,6 +55,9 @@ function Draw()
     Draw_score()
     Draw_fruit()
     Draw_snake()
+    if started == false then
+        Write("Press [space] to start", 80, 1)
+    end
     if game_over == true then
         Write("GAME OVER", 100, 1)
     end
