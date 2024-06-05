@@ -15,8 +15,7 @@ local game_over = false
 
 function Init()
     x_dir = 1
-    fruit_x = 3 * 8
-    fruit_y = 3 * 8
+    Update_fruit()
     snake_x = 8 * 8
     snake_y = 8 * 8
 end
@@ -89,5 +88,18 @@ function Update_snake()
     end
     if snake_x == fruit_x and snake_y == fruit_y then
         score = score + 10
+        Update_fruit()
+    end
+end
+
+
+function Update_fruit()
+    while true do
+        fruit_x = math.random(0, 256)
+        fruit_y = math.random(8, 192)
+        if (fruit_x ~= snake_x or fruit_y ~= snake_y) and
+        (fruit_x % 8 == 0 and fruit_y % 8 == 0) then
+            break
+        end
     end
 end
