@@ -179,6 +179,8 @@ end
 function canvas.set_font()
     --[[
     This method sets font size taking into account global variables.
+    It also sets the filtering to the "nearest" to ensure pixelated
+    look.
     In future, it would be good to use this function to set
     totally new font based on otf / ttf / bmp font.
 
@@ -192,7 +194,8 @@ function canvas.set_font()
     ]]--
 
     g.font = nil
-    g.font = love.graphics.newFont(g.screen.font_size)
+    g.font = love.graphics.newFont(g.font_name, g.screen.font_size)
+    g.font:setFilter("nearest")
     love.graphics.setFont(g.font)
 end
 
