@@ -2,10 +2,13 @@ require "api"
 
 local cx, cy
 local rs
+local s
 
 function Init()
     cx, cy = 1, 1
     rs = 4
+    s = "Full Fledged String"
+    s = Sub(s, 6, 12)
 end
 
 function Input()
@@ -35,4 +38,9 @@ function Draw()
     Cls()
     Rect(cx, cy, rs, rs, BlueBold)
     Write("Hello, Worldy!", 4, 10)
+    Write("Valid: abcdefghijklmnopqrstuvwxyz", 4, 18)
+    Write("Valid: ABCDEFGHIJKLMNOPQRSTUVWXYZ", 4, 26)
+    Write("Valid:  !#$%&'()*+,-./0123456789:;<=>?", 4, 34)
+    Write('Valid: "@[\\]^_`{|}~', 4, 42)
+    Write(s, 4, 50)
 end

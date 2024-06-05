@@ -19,7 +19,7 @@ Write(s, x, y, [color])
     Arguments
     ---------
     s : string
-        Text to be printed.
+        Text to be printed. It has to be a valid ASCII string.
     x : number
         Position of the text beginning at the x-axis.
     y : number
@@ -42,7 +42,7 @@ Join(ss, [delimiter])
     Arguments
     ---------
     ss : array of strings
-        A single table with all strings to be joined, e.g.
+        A single table with all ASCII strings to be joined, e.g.
         {"text1", "text2"}.
     delimiter : string = ""
         An optional argument that specifies what symbol or text
@@ -66,7 +66,7 @@ Split(s, [delimiter])
     Arguments
     ---------
     s : string
-        The text to be split.
+        The text to be split.  It has to be a valid ASCII string.
     delimiter : string = " "
         The delimiter used to split the string. It defaults
         to a space.
@@ -85,7 +85,7 @@ Sub(s, i, j)
     Arguments
     ---------
     s : string
-        Base string.
+        Base string.  It has to be a valid ASCII string.
     i : number
         Start of the substring (i included).
     j : number
