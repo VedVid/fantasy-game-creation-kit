@@ -12,6 +12,7 @@ local usub = require "stringEx"
 local gamepixel = require "gamepixel"
 local g = require "globals"
 local palette = require "palette"
+local utils = require "utils"
 
 
 ------------------
@@ -52,8 +53,7 @@ function Write(s, x, y, color)
     assert(type(y) == "number", "Third argument (y) to Write must be a number.")
     assert(y >= 0, "Third argument (y) to Write must not be negative.")
 
-    local tmp = string.gsub(s, "[\128-\255]", "")
-    assert(s == tmp, "First argument (s) to Write must be a valid ASCII string.")
+    assert(utils.check_if_string_is_valid_ascii(s), "First argument (s) to Write must be a valid ASCII string.")
 
     local lx = math.floor(x * g.screen.gamepixel.w)
     local ly = math.floor(y * g.screen.gamepixel.h)
