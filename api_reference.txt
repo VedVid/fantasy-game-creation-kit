@@ -147,23 +147,6 @@ Pset(x, y, [color])
     nothing
 
 
-Ppset(gamepixel)  -- deprecated, probably will not be present in 0.1
-================
-
-    The Pset function creates a new game pixel and draws
-    it on the screen.
-
-    Arguments
-    ---------
-    gamepixel : gamepixel
-        It is a game pixel instance. It encapsulates coordinates
-        and color.
-    
-    Returns
-    -------
-    nothing
-
-
 Line(sx, sy, tx, ty, [color])
 =============================
 

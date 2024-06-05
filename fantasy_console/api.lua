@@ -249,32 +249,6 @@ function Pset(x, y, color)
 end
 
 
-function Ppset(gamepixel)  -- deprecated, probably will not be present in 0.1
-    --[[
-    Function Pset creates new gamepixel and draws it on screen.
-
-    Arguments
-    ---------
-    gamepixel : gamepixel
-        Gamepixel instance. It encapsulates coordinates and color.
-    
-    Returns
-    -------
-    nothing
-    ]]--
-
-    love.graphics.setColor(unpack(gamepixel.color.rgb01))
-    love.graphics.rectangle(
-        "fill",
-        gamepixel.x * g.screen.gamepixel.w,
-        gamepixel.y * g.screen.gamepixel.h,
-        g.screen.gamepixel.w,
-        g.screen.gamepixel.h
-    )
-    love.graphics.setColor(unpack(g.colors.default_fg_color.rgb01))
-end
-
-
 function Line(sx, sy, tx, ty, color)
     -- This is a translation of bresenham algorithm by Petr Viktorin,
     -- written in Python, released under the MIT license.
