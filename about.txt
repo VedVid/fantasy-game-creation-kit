@@ -12,14 +12,17 @@ Released under Free BSD license.
 ABOUT
 =====
 
-The Fantasy Game Creation Kit aims to become exactly what the name suggests: a game creation kit that encapsulates all the basic tools necessary for creating simple games quickly.
+The Fantasy Game Creation Kit aims to become exactly what the name
+suggests: a game creation kit that encapsulates all the basic tools
+necessary for creating simple games quickly.
 The planned tools include:
 - a sprites editor,
 - a map editor,
 - a sounds editor,
 - a code editor (maybe).
 
-Please note that only a limited API is supported right now, and none of the editors are implemented yet.
+Please note that only a limited API is supported right now, and none
+of the editors are implemented yet.
 
 The kit is implemented on top of Love2D. It is also heavily inspired
 by fantasy consoles like PICO-8 and TIC-80. That said, it is not
