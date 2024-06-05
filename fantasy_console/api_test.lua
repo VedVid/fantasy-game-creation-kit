@@ -45,6 +45,14 @@ function TestJoin:test__should_return_initial_string__when_table_with_single_scr
     luaunit.assertEquals(result, "abcd")
 end
 
+
+function TestJoin:test__should_error__when_table_contains_utf8_strings()
+    local strings = {"€Иąćężźệó呐㗂", "abcd"}
+
+    luaunit.assertErrorMsgContains("ASCII", Join, strings)
+end
+
+
 --[[ End of TestJoin ]]
 
 
@@ -107,6 +115,14 @@ function TestSplit:test__should_return_original_string__when_using_delimiter_not
 
     luaunit.assertEquals(result[1], helloworld)
 end
+
+
+function TestSplit:test__should_error__when_string_is_utf8()
+    local s = "Hello€ World"
+
+    luaunit.assertErrorMsgContains("ASCII", Split, s, " ")
+end
+
 
 --[[ End of TestSplit ]]
 
