@@ -46,11 +46,14 @@ function Write(s, x, y, color)
     nothing
     ]]--
 
-    assert(type(s) == "string", "First argument (s) to Write must be a string.")
+    assert(type(s) == "string", "First argument (s) to Write must be a valid ASCII string.")
     assert(type(x) == "number", "Second argument (x) to Write must be a number.")
     assert(x >= 0, "Second argument (x) to Write must not be negative.")
     assert(type(y) == "number", "Third argument (y) to Write must be a number.")
     assert(y >= 0, "Third argument (y) to Write must not be negative.")
+
+    local tmp = string.gsub(s, "[\128-\255]", "")
+    assert(s == tmp, "First argument (s) to Write must be a valid ASCII string.")
 
     local lx = math.floor(x * g.screen.gamepixel.w)
     local ly = math.floor(y * g.screen.gamepixel.h)
