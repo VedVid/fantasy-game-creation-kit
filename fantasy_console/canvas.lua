@@ -192,7 +192,7 @@ function canvas.set_font()
     ]]--
 
     g.font = nil
-    g.font = love.graphics.newFont(g.screen.font_size)
+    g.font = love.graphics.newFont(g.font_name, g.screen.font_size)
     love.graphics.setFont(g.font)
 end
 
