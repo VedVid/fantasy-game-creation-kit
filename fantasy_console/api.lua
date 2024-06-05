@@ -7,6 +7,9 @@ requiring user to write repeatedly module name over and over.
 ]]--
 
 
+-- TODO: check below
+-- usub might be not required anymore, since only
+-- ASCII strings are supported
 local usub = require "stringEx"
 
 local gamepixel = require "gamepixel"
@@ -34,7 +37,7 @@ function Write(s, x, y, color)
     Arguments
     ---------
     s : string
-        Text to be printed.
+        Text to be printed. Must be a valid ASCII string.
     x : number
         Position of text beginning at the x axis.
     y : number
@@ -52,7 +55,6 @@ function Write(s, x, y, color)
     assert(x >= 0, "Second argument (x) to Write must not be negative.")
     assert(type(y) == "number", "Third argument (y) to Write must be a number.")
     assert(y >= 0, "Third argument (y) to Write must not be negative.")
-
     assert(utils.check_if_string_is_valid_ascii(s), "First argument (s) to Write must be a valid ASCII string.")
 
     local lx = math.floor(x * g.screen.gamepixel.w)
@@ -73,7 +75,7 @@ function Join(ss, delimiter)
     Arguments
     ---------
     ss : array of strings
-        Single table with all strings to be joined, e.g.
+        Single table with all ASCII strings to be joined, e.g.
         {"text1", "text2"}
     delimiter : string = ""
         Optional argument. It specifies what symbol or text will
@@ -86,7 +88,8 @@ function Join(ss, delimiter)
 
     assert(type(ss) == "table", "First argument (ss) to Join must be a table.")
     for _, element in ipairs(ss) do
-        assert(type(element) == "string", "Every element of table passed to Join must be a string.")
+        assert(type(element) == "string", "Every element of table passed to Join must be a valid ASCII string.")
+        assert(utils.check_if_string_is_valid_ascii(element), "Every element of table passed to Join must be a valid ASCII string.")
     end
 
     if not delimiter then
@@ -108,7 +111,7 @@ function Split(s, delimiter)
     Arguments
     ---------
     s : string
-        Text to be split.
+        Text to be split. Must be a valid ASCII string.
     delimiter : string = " "
         Delimiter used to split the string. Defaults to space.
     
@@ -118,6 +121,7 @@ function Split(s, delimiter)
     ]]--
 
     assert(type(s) == "string", "First argument (s) passed to Split must be a string.")
+    assert(utils.check_if_string_is_valid_ascii(s), "First argument (s) passed to Split must be a valid ASCII string.")
     if delimiter then
         assert(type(delimiter) == "string", "If second argument (delimiter) is passed to Split, it must be a string.")
     end
@@ -163,7 +167,7 @@ function Sub(s, i, j)
     Arguments
     ---------
     s : string
-        Base string.
+        Base string. Must be a valid ASCII string.
     i : number
         Start of the substring (i included).
     j : number
@@ -174,7 +178,8 @@ function Sub(s, i, j)
     string
     ]]--
 
-    assert(type(s) == "string", "First argument (s) passed to Sub must be a string.")
+    assert(type(s) == "string", "First argument (s) passed to Sub must be a valid ASCII string.")
+    assert(utils.check_if_string_is_valid_ascii(s), "First argument (s) passed to Sub must be a valid ASCII string.")
 
     if j < 1 then
         j = i
