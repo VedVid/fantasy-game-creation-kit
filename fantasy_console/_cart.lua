@@ -33,7 +33,8 @@ function Input()
 end
 
 function Update()
-    do end
+    snake_x = snake_x + (x_dir * 8)
+    snake_y = snake_y + (y_dir * 8)
 end
 
 function Draw()
