@@ -88,6 +88,12 @@ function Update_snake()
     end
     if snake_x[1] == fruit_x and snake_y[1] == fruit_y then
         score = score + 10
+        for i = #snake_x + 1, 2, -1 do
+            snake_x[i] = snake_x[i-1]
+            snake_y[i] = snake_y[i-1]
+        end
+        snake_x[1] = fruit_x
+        snake_y[1] = fruit_y
         Update_fruit()
     end
 end
