@@ -129,23 +129,34 @@ end
 
 --[[ Start of TestSub  ]]
 
--- Unfortunately, due the number of reasons related to
--- UTF-8 implementation (see api.Sub block comment for details),
--- Sub function can not be easily tested within this environment.
--- Still, I performed a couple of manual tests that I want to
--- document here.
--- - Test 1
---   - git commit: 042a8d65bdfe499ea1ad9dd0f3aca7e4f508b6d0
---   - test case: Sub("Hello from Love2D!", 1, 5)
---   - expected result: "Hello"
---   - returned result: "Hello"
---   - OK
--- - Test 2
---   - git commit: bf7557296240a133bb5a95889865ef8c0eff3119
---   - test case: Sub("Hello from Love2D!", 1, -4)
---   - expected result: "H"
---   - returned result: "H"
---   - OK
+
+TestSub = {}
+
+
+function TestSub:test__should_return_correct_string__when_indexes_are_correct()
+    local s = "Hello from Love2D!"
+
+    local result = Sub(s, 1, 5)
+
+    luaunit.assertEquals(result, "Hello")
+end
+
+
+function TestSub:test__should_return_one_letter__when_second_index_is_smaller_than_first_one()
+    local s = "Hello from Love2D!"
+
+    local result = Sub(s, 1, -4)
+
+    luaunit.assertEquals(result, "H")
+end
+
+
+function TestSub:test__should_error__when_utf8_string_detected()
+    local s = "H€llo fróm Löve2D!"
+
+    luaunit.assertErrorMsgContains("ASCII", Sub, s, 1, 5)
+end
+
 
 --[[ End of TestSub ]]
 
