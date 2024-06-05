@@ -6,12 +6,11 @@ local globals = {}
 globals.min_dt = 1/30
 globals.next_time = 0
 
---globals.font_name = "Clarity.ttf"
+globals.font_name = "Clarity.ttf"
 --globals.font_name = "Pixuf.ttf"
 --globals.font_name = "Monogram.ttf"
 --globals.font_name = "Covenant5x5.ttf"
 --globals.font_name = "Mini3x5.ttf"
-globals.font_name = "Volt5x5.ttf"
 globals.font = nil
 
 globals.screen = {}

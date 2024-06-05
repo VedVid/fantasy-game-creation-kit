@@ -5,7 +5,6 @@ local rs
 
 local font1 = love.graphics.newFont("Clarity.ttf", 5*8)
 local font2 = love.graphics.newFont("Pixuf.ttf", 5*8)
-local font3 = love.graphics.newFont("Monogram.ttf", 5*8)
 local font4 = love.graphics.newFont("Covenant5x5.ttf", 5*8)
 local font5 = love.graphics.newFont("Mini3x5.ttf", 5*8)
 
@@ -44,8 +43,6 @@ function Draw()
     Write("Hello, Worldy!", 4, 10)
     love.graphics.setFont(font2)
     Write("Hello, Worldy!", 4, 22)
-    love.graphics.setFont(font3)
-    Write("Hello, Worldy!", 4, 34)
     love.graphics.setFont(font4)
     Write("Hello, Worldy!", 4, 46)
     love.graphics.setFont(font5)
