@@ -130,18 +130,6 @@ end
 --   - expected result: "H"
 --   - returned result: "H"
 --   - OK
--- - Test 3
---   - git commit: acb9a4294bdf24b8fd20f91dbbcada669883aa9f
---   - test case: Sub("大日本國璽", 1, 1)
---   - expected result: "大"
---   - returned result: "大"
---   - OK
--- - Test 4
---   - git commit: 4ff077d96cbb9b5e18e8f9839f678d26f7214a26
---   - test case: Sub("Česká", 2, 5)
---   - expected result: "eská"
---   - returned result: "eská"
---   - OK
 
 --[[ End of TestSub ]]
 
