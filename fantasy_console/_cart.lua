@@ -72,6 +72,9 @@ end
 
 function Draw_snake()
     Rectfill(snake_x[1], snake_y[1], 8, 8, Green)
+    for i = 2, #snake_x do
+        Rectfill(snake_x[i], snake_y[i], 8, 8, GreenBold)
+    end
 end
 
 
