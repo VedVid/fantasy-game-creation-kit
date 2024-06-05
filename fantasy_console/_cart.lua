@@ -86,6 +86,15 @@ function Update_snake()
     snake_x[1] = snake_x[1] + (x_dir * 8)
     snake_y[1] = snake_y[1] + (y_dir * 8)
 
+    for i = 2, #snake_x do
+        tmp_x_2 = snake_x[i]
+        tmp_y_2 = snake_y[i]
+        snake_x[i] = tmp_x_1
+        snake_y[i] = tmp_y_1
+        tmp_x_1 = tmp_x_2
+        tmp_y_1 = tmp_y_2
+    end
+
     if snake_x[1] <= map_x_min or snake_x[1] >= map_x_max - 8 then
         game_over = true
         return
@@ -105,15 +114,6 @@ function Update_snake()
         snake_x[1] = fruit_x
         snake_y[1] = fruit_y
         Update_fruit()
-    end
-
-    for i = 2, #snake_x do
-        tmp_x_2 = snake_x[i]
-        tmp_y_2 = snake_y[i]
-        snake_x[i] = tmp_x_1
-        snake_y[i] = tmp_y_1
-        tmp_x_1 = tmp_x_2
-        tmp_y_1 = tmp_y_2
     end
 end
 
