@@ -6,6 +6,7 @@ local globals = {}
 globals.min_dt = 1/30
 globals.next_time = 0
 
+globals.font_name = "Pixuf.ttf"
 globals.font = nil
 
 globals.screen = {}

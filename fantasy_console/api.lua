@@ -7,11 +7,10 @@ requiring user to write repeatedly module name over and over.
 ]]--
 
 
-local usub = require "stringEx"
-
 local gamepixel = require "gamepixel"
 local g = require "globals"
 local palette = require "palette"
+local utils = require "utils"
 
 
 ------------------
@@ -33,7 +32,7 @@ function Write(s, x, y, color)
     Arguments
     ---------
     s : string
-        Text to be printed.
+        Text to be printed. Must be a valid ASCII string.
     x : number
         Position of text beginning at the x axis.
     y : number
@@ -46,11 +45,12 @@ function Write(s, x, y, color)
     nothing
     ]]--
 
-    assert(type(s) == "string", "First argument (s) to Write must be a string.")
+    assert(type(s) == "string", "First argument (s) to Write must be a valid ASCII string.")
     assert(type(x) == "number", "Second argument (x) to Write must be a number.")
     assert(x >= 0, "Second argument (x) to Write must not be negative.")
     assert(type(y) == "number", "Third argument (y) to Write must be a number.")
     assert(y >= 0, "Third argument (y) to Write must not be negative.")
+    assert(utils.check_if_string_is_valid_ascii(s), "First argument (s) to Write must be a valid ASCII string.")
 
     local lx = math.floor(x * g.screen.gamepixel.w)
     local ly = math.floor(y * g.screen.gamepixel.h)
@@ -70,7 +70,7 @@ function Join(ss, delimiter)
     Arguments
     ---------
     ss : array of strings
-        Single table with all strings to be joined, e.g.
+        Single table with all ASCII strings to be joined, e.g.
         {"text1", "text2"}
     delimiter : string = ""
         Optional argument. It specifies what symbol or text will
@@ -83,7 +83,8 @@ function Join(ss, delimiter)
 
     assert(type(ss) == "table", "First argument (ss) to Join must be a table.")
     for _, element in ipairs(ss) do
-        assert(type(element) == "string", "Every element of table passed to Join must be a string.")
+        assert(type(element) == "string", "Every element of table passed to Join must be a valid ASCII string.")
+        assert(utils.check_if_string_is_valid_ascii(element), "Every element of table passed to Join must be a valid ASCII string.")
     end
 
     if not delimiter then
@@ -105,9 +106,9 @@ function Split(s, delimiter)
     Arguments
     ---------
     s : string
-        Text to be split.
+        Text to be split. Must be a valid ASCII string.
     delimiter : string = " "
-        Delimiter used to split the string.
+        Delimiter used to split the string. Defaults to space.
     
     Returns
     -------
@@ -115,6 +116,7 @@ function Split(s, delimiter)
     ]]--
 
     assert(type(s) == "string", "First argument (s) passed to Split must be a string.")
+    assert(utils.check_if_string_is_valid_ascii(s), "First argument (s) passed to Split must be a valid ASCII string.")
     if delimiter then
         assert(type(delimiter) == "string", "If second argument (delimiter) is passed to Split, it must be a string.")
     end
@@ -136,31 +138,16 @@ end
 
 function Sub(s, i, j)
     --[[
-    Function Sub uses a third-party implementation of "usub" string
-    method, provided by stringEx library by losttoken. It is
-    released under the terms of MIT license.
-
-    Please see license at the top of stringEx.lua file.
-
-    https://github.com/losttoken/lua-utf8-string
-    accessed 20240506
-
-    Unfortunately, this function can not be easily tested with
-    standalone Lua interpreter, because:
-    - Love2D uses LuaJIT
-    - LuaJIT does not provide binaries
-    - LuaJIT is compatible with Lua 5.1 and not with Lua 5.3
-    - Lua 5.1 does not support UTF-8
-
-    I am not sure if I like how j smaller than 1 is handled
-    (here, in Sub function, not in the stringEx library),
-    but first of all I do not want this function to simply crash
-    on users.
+    Function Sub takes string, first index, and second index.
+    Previously this function has been using a third-party
+    implementation of substring functionality provided by
+    stringEx library, but since I dropped support for unicode, it
+    is not necessary and I can rely on the Lua standard library.
 
     Arguments
     ---------
     s : string
-        Base string.
+        Base string. Must be a valid ASCII string.
     i : number
         Start of the substring (i included).
     j : number
@@ -171,13 +158,14 @@ function Sub(s, i, j)
     string
     ]]--
 
-    assert(type(s) == "string", "First argument (s) passed to Sub must be a string.")
+    assert(type(s) == "string", "First argument (s) passed to Sub must be a valid ASCII string.")
+    assert(utils.check_if_string_is_valid_ascii(s), "First argument (s) passed to Sub must be a valid ASCII string.")
 
     if j < 1 then
         j = i
     end
 
-    local result = string.usub(s, math.floor(i), math.floor(j))
+    local result = string.sub(s, math.floor(i), math.floor(j))
     return result
 end
 
@@ -187,6 +175,18 @@ end
 --------------------
 
 function Cls()
+    --[[
+    Function Cls clears the whole game screen.
+
+    Arguments
+    ---------
+    none are passed
+
+    Returns
+    -------
+    nothing
+    ]]--
+
     love.graphics.clear(g.colors.default_bg_color.rgb01)
 end
 
@@ -230,32 +230,6 @@ function Pset(x, y, color)
         "fill",
         lx,
         ly,
-        g.screen.gamepixel.w,
-        g.screen.gamepixel.h
-    )
-    love.graphics.setColor(unpack(g.colors.default_fg_color.rgb01))
-end
-
-
-function Ppset(gamepixel)
-    --[[
-    Function Pset creates new gamepixel and draws it on screen.
-
-    Arguments
-    ---------
-    gamepixel : gamepixel
-        Gamepixel instance. It encapsulates coordinates and color.
-    
-    Returns
-    -------
-    nothing
-    ]]--
-
-    love.graphics.setColor(unpack(gamepixel.color.rgb01))
-    love.graphics.rectangle(
-        "fill",
-        gamepixel.x * g.screen.gamepixel.w,
-        gamepixel.y * g.screen.gamepixel.h,
         g.screen.gamepixel.w,
         g.screen.gamepixel.h
     )
@@ -735,6 +709,75 @@ function Ovalfill(x, y, rx, ry, color)
     end
 end
 
+
+-------------------
+---------- INPUT --
+-------------------
+
+
+function Btn(button)
+    --[[
+    Function Btnp sets repeat mode to true, then checks,
+    if button passed as argument is down.
+
+    Arguments
+    ---------
+    button : Love2d.KeyConstant
+        Should be valid KeyConstant value provided by Love2D.
+
+    Returns
+    -------
+    boolean
+        True if button passed as argument is pressed, false otherwise.
+    ]]--
+
+    Brpt(true)
+    return love.keyboard.isDown(button)
+end
+
+
+function Btnp(button)
+    --[[
+    Function Btnp sets repeat mode to false, then checks,
+    if button passed as argument is down.
+
+    Arguments
+    ---------
+    button : Love2d.KeyConstant
+        Should be valid KeyConstant value provided by Love2D.
+
+    Returns
+    -------
+    boolean
+        True if button passed as argument is pressed, false otherwise.
+    ]]--
+
+    Brpt(false)
+    return love.keyboard.isDown(button)
+end
+
+
+function Brpt(enabled)
+    --[[
+    Function Brpt allows to manually set key repeat mode to
+    `true` (repeating keypress on hold enabled) or `false`
+    (repeating keypress on hold disabled).
+
+    Arguments
+    ---------
+    enabled : boolean
+        Enables or disabled repeat-key-on-hold. It is passed to the
+        Love2D function.
+
+    Returns
+    -------
+    nothing
+    ]]--
+
+    assert(type(enabled) == "boolean", "First argument (enabled) to Brpt must be boolean value.")
+
+    love.keyboard.setKeyRepeat(enabled)
+end
 
 --------------------
 ---------- COLORS --
