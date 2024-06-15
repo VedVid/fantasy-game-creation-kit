@@ -15,17 +15,12 @@ This software uses the following programs, libraries and resources:
    https://github.com/bluebird75/luaunit  [available as of 20240521]
    BSD license – full text available in the `licenses` directory
 
-4. stringEx
-   Library providing unicode-aware substring functionality.
-   https://github.com/losttoken/lua-utf8-string  [available as of 20240521]
-   MIT license – full text available in the `licenses` directory
-
-5. bresenham by Petr Viktorin
+4. bresenham by Petr Viktorin
    I translated Bresenham's Line algorithm originally implemented in Python to Lua. I did not make more changes than necessary (storing data in table instead of yielding results).
    https://github.com/encukou/bresenham  [available as of 20240521]
    MIT license – full text available in the `licenses` directory
 
-6. "Pixuf" font
+5. "Pixuf" font
    ttf font by erytau.
    https://erytau.itch.io/pixuf  [available as of 20240605]
    CC BY 4.0 – full text available in the `licenses` directory
