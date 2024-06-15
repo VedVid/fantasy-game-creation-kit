@@ -1,4 +1,4 @@
-This project is a work-in-progress game creation kit. Heavily inspired by fantasy consoles like PICO-8 and TIC-80. This project aims to provide all the tools usually found in fantasy consoles, such as sprite editor, map editor, sound editor, and simple, rather high level API.
+This project is a work-in-progress game creation kit. Heavily inspired by fantasy consoles like PICO-8 and TIC-80. This project aims to provide all the tools usually found in fantasy consoles, such as sprite editor, map editor, sound editor, and API, without imposing harsh limitations on user such as code tokens limit.
 
 Under the hood, it's wrapper around Love2D.
 
@@ -20,6 +20,7 @@ How to start:
 - use the `_cart.lua` to program your app,
 - start the app, either by:
 	- drag-and-drop `fantasy_console` directory on you Love2D installation, or
-	- by executing `start.bat` file (this assument that `fantasy_console` and `love` directory are in the same root directory).
+	- by executing `start.bat` file (this assumes that `fantasy_console` and `love` directory are in the same root directory).
+
 
 
