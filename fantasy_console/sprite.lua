@@ -30,9 +30,16 @@ end
 
 
 function sprite.initialize_blank_sprites()
+	local tmp_table = {}
 	for i = 1, g.sprites_amount do
 		local spr = sprite.new_blank_sprite()
-		table.insert(data_sprites.sprites, spr)
+		table.insert(tmp_table, spr)
+	end
+	local s = "local data = {}\n\n" .. tmp_table .. "\n\nreturn data\n"
+	local f = io.open("data/sprites.lua", "w")
+	if f then
+		f:write(s)
+		f:close()
 	end
 end
 
