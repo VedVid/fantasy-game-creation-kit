@@ -1,4 +1,4 @@
-local cartdata = require "_cartdata"
+local data_sprites = require "data/sprites"
 local g = require "globals"
 
 local sprite = {}
@@ -20,19 +20,19 @@ end
 
 function sprite.set_pixel_color(sprite_no, pix_x, pix_y, color)
 	-- tables are passed as reference, so it should update, not?
-	local sprite = sprite.get_sprite_from_cartdata(sprite_no)
-	sprite.colors[pix_x][pix_y] = color
+	local spr = sprite.get_sprite_from_cartdata(sprite_no)
+	spr.colors[pix_x][pix_y] = color
 end
 
-function sprite.get_sprite_from_cartdata(sprite)
-	return cartdata.sprites[sprite]
+function sprite.get_sprite_from_cartdata(spr)
+	return data_sprites.sprites[spr]
 end
 
 
 function sprite.initialize_blank_sprites()
 	for i = 1, g.sprites_amount do
 		local spr = sprite.new_blank_sprite()
-		table.insert(cartdata.sprites, spr)
+		table.insert(data_sprites.sprites, spr)
 	end
 end
 

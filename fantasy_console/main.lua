@@ -1,6 +1,6 @@
 require "_cart"
 local canvas = require "canvas"
-local cartdata = require "_cartdata"
+local data_sprites = require "data/sprites"
 local g = require "globals"
 local sprite = require "sprite"
 
@@ -13,11 +13,11 @@ function love.load()
     canvas.set_font()
     canvas.set_line_style()
     canvas.set_line_width()
-    if #cartdata.sprites == 0 then
+    if #data_sprites.sprites == 0 then
         sprite.initialize_blank_sprites()
-    elseif #cartdata.sprites < g.sprites_amount then
+    elseif #data_sprites.sprites < g.sprites_amount then
         error("sprites table in _cartdata.lua is partially filled. Data corruption possible.")
-    elseif #cartdata.sprites > g.sprites_amount then
+    elseif #data_sprites.sprites > g.sprites_amount then
         error("sprites table in _cartdata.lua holds too many sprites. Something wrong happened.")
     end
     g.next_time = love.timer.getTime()
