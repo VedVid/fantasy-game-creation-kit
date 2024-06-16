@@ -26,4 +26,6 @@ globals.colors = {}
 globals.colors.default_fg_color = palette.white
 globals.colors.default_bg_color = palette.black
 
+globals.sprites_amount = 512
+
 return globals

@@ -5,7 +5,7 @@ local sprite = {}
 
 sprite.default_color = g.colors.default_bg_color
 
-function sprite.new_sprite()
+function sprite.new_blank_sprite()
 	local new_sprite = {}
 	new_sprite.colors = {}
 	for y = 1, 8 do
@@ -15,7 +15,7 @@ function sprite.new_sprite()
 		end
 		table.insert(new_sprite.colors, tmp_colors)
 	end
-	return new_sprite()
+	return new_sprite
 end
 
 function sprite.set_pixel_color(sprite_no, pix_x, pix_y, color)
@@ -27,3 +27,13 @@ end
 function sprite.get_sprite_from_cartdata(sprite)
 	return cartdata.sprites[sprite]
 end
+
+
+function sprite.initialize_blank_sprites()
+	for i = 1, g.sprites_amount do
+		local spr = sprite.new_blank_sprite()
+		table.insert(cartdata.sprites, spr)
+	end
+end
+
+return sprite
