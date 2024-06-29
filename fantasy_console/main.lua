@@ -13,14 +13,14 @@ function love.load()
     canvas.set_font()
     canvas.set_line_style()
     canvas.set_line_width()
---    if #data_sprites.sprites == 0 then
---        sprite.initialize_blank_sprites()
---    elseif #data_sprites.sprites < g.sprites_amount then
---        error("sprites table in _cartdata.lua is partially filled. Data corruption possible.")
---    elseif #data_sprites.sprites > g.sprites_amount then
---        error("sprites table in _cartdata.lua holds too many sprites. Something wrong happened.")
---    end
-    sprite.initialize_blank_sprites()
+    local all_sprites = sprite.get_all_sprites()
+    if #all_sprites == 0 then
+        sprite.initialize_blank_sprites()
+    elseif #all_sprites < g.sprites_amount then
+        error("sprites table in _cartdata.lua is partially filled. Data corruption possible.")
+    elseif #all_sprites > g.sprites_amount then
+        error("sprites table in _cartdata.lua holds too many sprites. Something wrong happened.")
+    end
     g.next_time = love.timer.getTime()
     Init()
 end

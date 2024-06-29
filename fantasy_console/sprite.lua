@@ -25,10 +25,17 @@ end
 --	spr.colors[pix_x][pix_y] = color
 --end
 
---function sprite.get_sprite_from_cartdata(spr)
+function sprite.get_sprite_from_cartdata(spr)
 --	return data_sprites.sprites[spr]
---end
+end
 
+function sprite.get_all_sprites()
+	local f = assert(io.open(g.sprites_path, "r"))
+	local t = f:read("*all")
+	io.close(f)
+	local lua_sprite_table = json.decode(t)
+	return lua_sprite_table
+end
 
 function sprite.initialize_blank_sprites()
 	local tmp_table = {}
@@ -38,7 +45,7 @@ function sprite.initialize_blank_sprites()
 	end
 	local json_sprite_table = json.encode(tmp_table)
 	-- !! DANGEROUS – it'll remove all data in sprites.json!
-	local f = assert(io.open("data/sprites.json", "w+"))
+	local f = assert(io.open(g.sprites_path, "w+"))
 	io.output(f)
 	io.write(json_sprite_table)
 	io.close(f)
