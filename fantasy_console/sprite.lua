@@ -1,4 +1,5 @@
-local data_sprites = require "data/sprites"
+--local data_sprites = require "data/sprites"
+local json = require "json"
 local g = require "globals"
 
 local sprite = {}
@@ -18,15 +19,15 @@ function sprite.new_blank_sprite()
 	return new_sprite
 end
 
-function sprite.set_pixel_color(sprite_no, pix_x, pix_y, color)
-	-- tables are passed as reference, so it should update, not?
-	local spr = sprite.get_sprite_from_cartdata(sprite_no)
-	spr.colors[pix_x][pix_y] = color
-end
+--function sprite.set_pixel_color(sprite_no, pix_x, pix_y, color)
+--	-- tables are passed as reference, so it should update, not?
+--	local spr = sprite.get_sprite_from_cartdata(sprite_no)
+--	spr.colors[pix_x][pix_y] = color
+--end
 
-function sprite.get_sprite_from_cartdata(spr)
-	return data_sprites.sprites[spr]
-end
+--function sprite.get_sprite_from_cartdata(spr)
+--	return data_sprites.sprites[spr]
+--end
 
 
 function sprite.initialize_blank_sprites()
@@ -35,12 +36,12 @@ function sprite.initialize_blank_sprites()
 		local spr = sprite.new_blank_sprite()
 		table.insert(tmp_table, spr)
 	end
-	local s = "local data = {}\n\n" .. tmp_table .. "\n\nreturn data\n"
-	local f = io.open("data/sprites.lua", "w")
-	if f then
-		f:write(s)
-		f:close()
-	end
+	local json_sprite_table = json.encode(tmp_table)
+	-- !! DANGEROUS – it'll remove all data in sprites.json!
+	local f = assert(io.open("data/sprites.json", "w+"))
+	io.output(f)
+	io.write(json_sprite_table)
+	io.close(f)
 end
 
 return sprite
