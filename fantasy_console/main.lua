@@ -22,6 +22,22 @@ function love.load()
         error("sprites table in _cartdata.lua holds too many sprites. Something wrong happened.")
     end
     g.next_time = love.timer.getTime()
+    -- !@!!!!!!
+    local ssss = sprite.get_sprite(1)
+    local colors = ssss["colors"]
+    for _, color in pairs(colors) do
+        for _, v in pairs(color) do
+            --print(row)
+            print()
+            for k, d in pairs(v) do
+                if k == "hex" then
+                    print(d)
+                end
+            end
+        end
+        --print(color)
+    end
+    -- !!!!!!!
     Init()
 end
 
