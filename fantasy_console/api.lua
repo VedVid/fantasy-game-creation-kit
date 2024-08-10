@@ -10,6 +10,7 @@ requiring user to write repeatedly module name over and over.
 local gamepixel = require "gamepixel"
 local g = require "globals"
 local palette = require "palette"
+local sprite = require "sprite"
 local utils = require "utils"
 
 
@@ -713,6 +714,26 @@ end
 ----------------------
 ---------- SPRITES --
 ----------------------
+
+
+function Spr(num, x, y)
+    local current_sprite = sprite.get_sprite(num)
+    local colors = current_sprite["colors"]
+	for _, color in pairs(colors) do
+		for _, v in pairs(color) do
+			-- row
+			for k, d in pairs(v) do
+				if k == "hex" then
+                    print(d)
+                    local c = palette.find_color_by_hex(d)
+                    print(c.hex)
+					Pset(x, y, c.rgb01)
+				end
+			end
+		end
+		--color
+	end
+end
 
 
 -------------------

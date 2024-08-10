@@ -25,8 +25,8 @@ end
 --	spr.colors[pix_x][pix_y] = color
 --end
 
-function sprite.get_sprite(spr)
-	return sprite.get_all_sprites()[spr]
+function sprite.get_sprite(num)
+	return sprite.get_all_sprites()[num]
 end
 
 function sprite.get_all_sprites()
