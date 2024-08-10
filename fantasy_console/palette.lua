@@ -117,6 +117,23 @@ palette.colors = {
 }
 
 function palette.find_color_by_hex(hexc)
+    --[[
+    Method find_color_by_hex searches through palette.colors trying
+    to find color that matches hex color passed as `hexc` argument.
+    This functionality is used by API functions that read color
+    values from the external files like `data/sprites.json`.
+    Errors if no color matches passed hex code.
+
+    Arguments
+    ---------
+    hexc : string
+        Color in hexadecimal format.
+
+    Returns
+    -------
+    palette.<color>
+    ]]--
+
     for _, color in pairs(palette.colors) do
         if color.hex == hexc then
             return color
