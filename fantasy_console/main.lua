@@ -17,9 +17,9 @@ function love.load()
     if #all_sprites == 0 then
         sprite.initialize_blank_sprites()
     elseif #all_sprites < g.sprites_amount then
-        error("sprites table in _cartdata.lua is partially filled. Data corruption possible.")
+        error("sprites table in data/sprites.json is partially filled. Data corruption possible.")
     elseif #all_sprites > g.sprites_amount then
-        error("sprites table in _cartdata.lua holds too many sprites. Something wrong happened.")
+        error("sprites table in data/sprites.json holds too many sprites. Something wrong happened.")
     end
     g.next_time = love.timer.getTime()
     -- !@!!!!!!
