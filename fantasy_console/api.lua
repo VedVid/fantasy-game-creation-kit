@@ -719,6 +719,8 @@ end
 function Spr(num, x, y)
     local current_sprite = sprite.get_sprite(num)
     local colors = current_sprite["colors"]
+    local nx = x
+    local ny = y
 	for _, color in pairs(colors) do
 		for _, v in pairs(color) do
 			-- row
@@ -727,10 +729,13 @@ function Spr(num, x, y)
                     print(d)
                     local c = palette.find_color_by_hex(d)
                     print(c.hex)
-					Pset(x, y, c.rgb01)
+					Pset(nx, ny, c.rgb01)
 				end
 			end
+            nx = nx + 1
 		end
+        ny = ny + 1
+        nx = x
 		--color
 	end
 end
