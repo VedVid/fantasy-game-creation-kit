@@ -748,10 +748,7 @@ function Spr(num, x, y)
 			-- row
 			for k, d in pairs(v) do
 				if k == "hex" then
-                    print(d)
-                    local c = palette.find_color_by_hex(d)
-                    print(c.hex)
-					Pset(nx, ny, c.rgb01)
+					Pset(nx, ny, palette.find_color_by_hex(d).rgb01)
 				end
 			end
             nx = nx + 1
