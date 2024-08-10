@@ -717,6 +717,28 @@ end
 
 
 function Spr(num, x, y)
+    --[[
+    Function Spr allows to draw a sprite on on the specific coordinates.
+    Please note that this function, unlike its equivalent from PICO-8,
+    does not allow to specify a range of sprites to draw.
+
+    Arguments
+    ---------
+    num : number
+        Number of sprite in the spreadsheet. You should be able to
+        determine sprite number looking at the GUI of the sprites
+        editor.
+    
+    x : number
+        Position of top-left sprite corner on the x axis.
+    y : number
+        Position of top-left sprite corner on the y axis.
+
+    Returns
+    -------
+    nothing
+    ]]--
+
     local current_sprite = sprite.get_sprite(num)
     local colors = current_sprite["colors"]
     local nx = x
