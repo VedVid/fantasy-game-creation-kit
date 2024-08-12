@@ -17,5 +17,6 @@ end
 
 
 function Draw()
-    do end
+    Spr(1, 1, 1)
+    Pset(0, 1, Blue)
 end
