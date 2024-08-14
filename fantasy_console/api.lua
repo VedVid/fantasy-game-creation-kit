@@ -739,6 +739,14 @@ function Spr(num, x, y)
     nothing
     ]]--
 
+    assert(type(num) == "number", "First argument (num) to Spr must be a number.")
+    assert(num > 0, "First argument (num) to Spr must be a number larger than 0.")
+    assert(num <= g.sprites_amount, "First argument (num) to Spr must be a number not larger than " .. g.sprites_amount .. ".")
+    assert(type(x) == "number", "Second argument (x) to Spr must be a number.")
+    assert(x >= 0, "Second argument (x) to Spr must not be negative.")
+    assert(type(y) == "number", "Third argument (y) to Spr must be a number.")
+    assert(y >= 0, "Third argument (y) to Spr must not be negative.")
+
     local current_sprite = sprite.get_sprite(num)
     local colors = current_sprite["colors"]
     local nx = x
