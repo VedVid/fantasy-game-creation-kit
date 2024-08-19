@@ -67,4 +67,30 @@ end
 --[[ End of TestGetSprite ]]
 
 
+--[[ Start of TestGetAllSprites ]]
+
+TestGetAllSprites = {}
+
+function TestGetAllSprites:test__should_error__when_there_is_no_sprites_file()
+    g.sprites_path = "some/incorrect/path/to/sprites.json"
+
+    luaunit.assertErrorMsgContains(
+        "No such file or directory",
+        sprite.get_all_sprites
+    )
+end
+
+
+function TestGetAllSprites:test__should_return_sprite_table__when_file_is_present()
+    g.sprites_path = g.sprites_path_test
+
+    local sprites_table = sprite.get_all_sprites()
+
+    luaunit.assertNotNil(sprites_table)
+end
+
+
+--[[ End of TestGetAllSprites ]]
+
+
 os.exit(luaunit.LuaUnit.run())
