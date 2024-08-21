@@ -93,7 +93,7 @@ end
 --[[ End of TestGetAllSprites ]]
 
 
---[[ Start of TestNewBlankSprite]]
+--[[ Start of TestNewBlankSprite ]]
 
 TestNewBlankSprite = {}
 
@@ -113,6 +113,9 @@ function TestNewBlankSprite:test__should_return_sprite_consisting_of_only_defaul
         luaunit.assertEquals(hexcode, sprite.default_color.hex)
     end
 end
+
+
+--[[ End of TestNewBlankSprite ]]
 
 
 os.exit(luaunit.LuaUnit.run())
