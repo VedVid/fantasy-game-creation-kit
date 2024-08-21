@@ -10,6 +10,7 @@ requiring user to write repeatedly module name over and over.
 local gamepixel = require "gamepixel"
 local g = require "globals"
 local palette = require "palette"
+local sprite = require "sprite"
 local utils = require "utils"
 
 
@@ -707,6 +708,63 @@ function Ovalfill(x, y, rx, ry, color)
             d2 = d2 + dx - dy + (rx * rx)
         end
     end
+end
+
+
+----------------------
+---------- SPRITES --
+----------------------
+
+
+function Spr(num, x, y)
+    --[[
+    Function Spr allows to draw a sprite on on the specific coordinates.
+    Please note that this function, unlike its equivalent from PICO-8,
+    does not allow to specify a range of sprites to draw.
+
+    Arguments
+    ---------
+    num : number
+        Number of sprite in the spreadsheet. You should be able to
+        determine sprite number looking at the GUI of the sprites
+        editor.
+    
+    x : number
+        Position of top-left sprite corner on the x axis.
+    y : number
+        Position of top-left sprite corner on the y axis.
+
+    Returns
+    -------
+    nothing
+    ]]--
+
+    assert(type(num) == "number", "First argument (num) to Spr must be a number.")
+    assert(num > 0, "First argument (num) to Spr must be a number larger than 0.")
+    assert(num <= g.sprites_amount, "First argument (num) to Spr must be a number not larger than " .. g.sprites_amount .. ".")
+    assert(type(x) == "number", "Second argument (x) to Spr must be a number.")
+    assert(x >= 0, "Second argument (x) to Spr must not be negative.")
+    assert(type(y) == "number", "Third argument (y) to Spr must be a number.")
+    assert(y >= 0, "Third argument (y) to Spr must not be negative.")
+
+    local current_sprite = sprite.get_sprite(num)
+    local colors = current_sprite["colors"]
+    local nx = x
+    local ny = y
+	for _, color in pairs(colors) do
+		for _, v in pairs(color) do
+			-- row
+			for k, d in pairs(v) do
+				if k == "hex" then
+					Pset(nx, ny, palette.find_color_by_hex(d).rgb01)
+				end
+			end
+            nx = nx + 1
+		end
+        ny = ny + 1
+        nx = x
+		--color
+	end
 end
 
 

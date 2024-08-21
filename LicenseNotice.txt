@@ -24,3 +24,8 @@ This software uses the following programs, libraries and resources:
    ttf font by erytau.
    https://erytau.itch.io/pixuf  [available as of 20240605]
    CC BY 4.0 – full text available in the `licenses` directory
+
+6. json.lua
+   Simple json serialization library for Lua, by rxi.
+   https://github.com/rxi/json.lua  [available as of 20240629]
+   MIT license – full text available in the `licenses` directory

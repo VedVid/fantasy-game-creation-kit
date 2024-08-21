@@ -17,7 +17,7 @@ Graphics:
 * [x] pset
 * [x] rect
 * [x] rectfill
-* [ ] spr
+* [x] spr
 * [ ] sspr
 Not sure if it will be implemented:
 - clip
@@ -49,8 +49,8 @@ Not sure if ti will be implemented (e.g. because it's natively supported by Lua)
 - unpack
 
 Input:
-- [] btn
-- [] btnp
+* [x] btn
+* [x] btnp
 
 Sound:
 - not sure about that yet, I'd need to implement sound and have a concept for sound editor first
@@ -130,6 +130,7 @@ Challanges:
 	- implement basic API based on PICO-8 API
 	- remove redundancy between API and Lua
 	- fill the gaps
+
 
 
 
