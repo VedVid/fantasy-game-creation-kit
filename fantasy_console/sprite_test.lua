@@ -118,4 +118,30 @@ end
 --[[ End of TestNewBlankSprite ]]
 
 
+--[[ Start of TestInitializeBlankSprites ]]
+
+TestInitializeBlankSprites = {}
+
+function TestInitializeBlankSprites:test__should_initialize_blank_sprites_correctly__when_there_is_no_sprites_file_present()
+    g.sprites_path = g.sprites_path_test
+    os.remove(g.sprites_path_test)
+    local f = io.open(g.sprites_path, "r")
+    if f ~= nil then
+        io.close(f)
+        error('Test file sprites_test.json is not removed! Tests aborted.')
+    end
+
+    sprite.initialize_blank_sprites()
+
+    local f = io.open(g.sprites_path, "r")
+    if f == nil then
+        error('Test file sprites_test.json has not been created! Tests aborted.')
+    end
+    io.close(f)
+end
+
+
+--[[ Stop of TestInitializeBlankSprites ]]
+
+
 os.exit(luaunit.LuaUnit.run())
