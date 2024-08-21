@@ -28,9 +28,6 @@ function sprite.get_sprite(num)
     sprite
     ]]--
 
-	-- TODO: what should happen when there is no such sprite?
-	-- Currently I think it panics.
-	-- TODO: does it gets the correct sprite, or is it off by 1?
 	if num <= 0 then
 		error("Invalid sprite number: " .. num .. " is smaller than 1.")
 	elseif num > g.sprites_amount then
