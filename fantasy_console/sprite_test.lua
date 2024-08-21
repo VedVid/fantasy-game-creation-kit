@@ -107,7 +107,11 @@ end
 function TestNewBlankSprite:test__should_return_sprite_consisting_of_only_default_color_pixels()
     local new_sprite = sprite.new_blank_sprite()
 
-    
+    local colors = sprite.return_sprite_colors(new_sprite)
+
+    for _, hexcode in ipairs(colors) do
+        luaunit.assertEquals(hexcode, sprite.default_color.hex)
+    end
 end
 
 
