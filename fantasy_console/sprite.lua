@@ -116,10 +116,11 @@ function sprite.initialize_blank_sprites()
 	io.close(f)
 end
 
-function sprite.print_sprite_colors(spr)
+function sprite.return_sprite_colors(spr, add_print)
 	--[[
-    Method print_sprite_colors prints hex value of every pixel
+    Method return_sprite_colors returns hex value of every pixel
 	in specific sprite. Used only for debugging purposes.
+	Optionally, printing hex values to console might be enabled.
 
     Arguments
     ---------
@@ -128,23 +129,32 @@ function sprite.print_sprite_colors(spr)
 		we want to return in order from the beginning
 		of the sprites.json file.
 
+	add_print : boolean
+		If true value passed, then every hex value will be printed
+		to the console.
+
     Returns
     -------
-    nothing
+    table of hex values
     ]]--
 
 	local colors = spr["colors"]
+	local hex_values = {}
 	for _, color in pairs(colors) do
 		for _, v in pairs(color) do
 			-- row
 			for k, d in pairs(v) do
 				if k == "hex" then
-					print(d)
+					if add_print then
+						print(d)
+					end
+					table.insert(hex_values, d)
 				end
 			end
 		end
 		--print(color)
 	end
+	return hex_values
 end
 
 return sprite

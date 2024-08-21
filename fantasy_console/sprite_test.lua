@@ -93,4 +93,22 @@ end
 --[[ End of TestGetAllSprites ]]
 
 
+--[[ Start of TestNewBlankSprite]]
+
+TestNewBlankSprite = {}
+
+function TestNewBlankSprite:test__should_return_sprite__when_called()
+    local new_sprite = sprite.new_blank_sprite()
+
+    luaunit.assertNotNil(new_sprite)
+end
+
+
+function TestNewBlankSprite:test__should_return_sprite_consisting_of_only_default_color_pixels()
+    local new_sprite = sprite.new_blank_sprite()
+
+    
+end
+
+
 os.exit(luaunit.LuaUnit.run())
