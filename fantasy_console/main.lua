@@ -10,7 +10,6 @@ local mode = nil
 
 function love.load(args)
     mode = args[1] or "playing"
-    print(mode)
     canvas.get_player_screen_dimension()
     canvas.set_global_screen_variables(canvas.default_scale)
     canvas.set_window_size()
