@@ -6,6 +6,24 @@ local g = require "globals"
 local editor = {}
 
 editor.current_tab = 1
+editor.colors = {
+	{Black, 150, 30},
+	{BlackBold, 158, 30},
+	{Blue, 166, 30},
+	{BlueBold, 174, 30},
+	{Cyan, 150, 38},
+	{CyanBold, 158, 38},
+	{Green, 166, 38},
+	{GreenBold, 174, 38},
+	{Pink, 150, 46},
+	{PinkBold, 158, 46},
+	{Red, 166, 46},
+	{RedBold, 174, 46},
+	{Yellow, 150, 54},
+	{YellowBold, 158, 54},
+	{White, 166, 54},
+	{WhiteBold, 174, 54}
+}
 
 function editor.set_current_tab(num)
 	editor.current_tab = num
@@ -38,5 +56,10 @@ function editor.draw_all_sprites()
 	end
 end
 
+function editor.draw_colors()
+	for _, v in ipairs(editor.colors) do
+		Rectfill(v[2], v[3], g.sprites.size_w, g.sprites.size_h, v[1])
+	end
+end
 
 return editor

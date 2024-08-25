@@ -69,6 +69,7 @@ function love.draw()
     elseif mode == "sprites" then
         love.graphics.clear(g.colors.default_fg_color.rgb01)
         sprite_editor.draw_all_sprites()
+        sprite_editor.draw_colors()
     end
     local current_time = love.timer.getTime()
     if g.next_time <= current_time then
