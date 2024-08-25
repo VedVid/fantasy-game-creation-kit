@@ -30,8 +30,8 @@ function sprite.get_sprite(num)
 
 	if num <= 0 then
 		error("Invalid sprite number: " .. num .. " is smaller than 1.")
-	elseif num > g.sprites_amount then
-		error("Invalid sprite number: " .. num .. " is larger than total number of sprites (" .. g.sprites_amount .. ")")
+	elseif num > g.sprites.amount then
+		error("Invalid sprite number: " .. num .. " is larger than total number of sprites (" .. g.sprites.amount .. ")")
 	end
 
 	return sprite.get_all_sprites()[num]
@@ -51,7 +51,7 @@ function sprite.get_all_sprites()
     table of sprites
     ]]--
 
-	local f = assert(io.open(g.sprites_path, "r"))
+	local f = assert(io.open(g.sprites.path, "r"))
 	local t = f:read("*all")
 	io.close(f)
 	local lua_sprite_table = json.decode(t)
@@ -90,7 +90,7 @@ end
 function sprite.initialize_blank_sprites()
 	--[[
     Method initialize_blank_sprites, using new_blank_sprite
-	method, a table that consists of amount specified in sprites_amount
+	method, a table that consists of amount specified in sprites.amount
 	global variable of blank sprites, when necessary
 	(so, when colors.json does not exist and needs to be created).
 
@@ -104,13 +104,13 @@ function sprite.initialize_blank_sprites()
     ]]--
 
 	local tmp_table = {}
-	for i = 1, g.sprites_amount do
+	for i = 1, g.sprites.amount do
 		local spr = sprite.new_blank_sprite()
 		table.insert(tmp_table, spr)
 	end
 	local json_sprite_table = json.encode(tmp_table)
 	-- !! DANGEROUS – it'll remove all data in sprites.json!
-	local f = assert(io.open(g.sprites_path, "w+"))
+	local f = assert(io.open(g.sprites.path, "w+"))
 	io.output(f)
 	io.write(json_sprite_table)
 	io.close(f)

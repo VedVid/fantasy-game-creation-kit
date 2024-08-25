@@ -741,7 +741,7 @@ function Spr(num, x, y)
 
     assert(type(num) == "number", "First argument (num) to Spr must be a number.")
     assert(num > 0, "First argument (num) to Spr must be a number larger than 0.")
-    assert(num <= g.sprites_amount, "First argument (num) to Spr must be a number not larger than " .. g.sprites_amount .. ".")
+    assert(num <= g.sprites.amount, "First argument (num) to Spr must be a number not larger than " .. g.sprites.amount .. ".")
     assert(type(x) == "number", "Second argument (x) to Spr must be a number.")
     assert(x >= 0, "Second argument (x) to Spr must not be negative.")
     assert(type(y) == "number", "Third argument (y) to Spr must be a number.")
