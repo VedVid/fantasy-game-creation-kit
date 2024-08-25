@@ -5,7 +5,10 @@ local g = require "globals"
 local sprite = require "sprite"
 
 
-function love.load()
+local mode = nil
+
+function love.load(args)
+    mode = args[1] or "playing"
     canvas.get_player_screen_dimension()
     canvas.set_global_screen_variables(canvas.default_scale)
     canvas.set_window_size()
@@ -22,7 +25,11 @@ function love.load()
         error("sprites table in data/sprites.json holds too many sprites. Something wrong happened.")
     end
     g.next_time = love.timer.getTime()
-    Init()
+    if mode == "playing" then
+        Init()
+    elseif mode == "sprites" then
+        do end
+    end
 end
 
 function love.keypressed(key, scancode, isrepeat)
@@ -31,17 +38,29 @@ function love.keypressed(key, scancode, isrepeat)
     elseif key == "pagedown" then
         canvas.scale_down()
     end
-    Input()
+    if mode == "playing" then
+        Input()
+    elseif mode == "sprites" then
+        do end
+    end
 end
 
 function love.update()
     g.next_time = g.next_time + g.min_dt
-    Update()
+    if mode == "playing" then
+        Update()
+    elseif mode == "sprites" then
+        do end
+    end
 end
 
 function love.draw()
     canvas.set_background_color()
-    Draw()
+    if mode == "playing" then
+        Draw()
+    elseif mode == "sprites" then
+        do end
+    end
     local current_time = love.timer.getTime()
     if g.next_time <= current_time then
         g.next_time = current_time
