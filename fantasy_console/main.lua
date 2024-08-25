@@ -3,12 +3,14 @@ local canvas = require "canvas"
 --local data_sprites = require "data/sprites"
 local g = require "globals"
 local sprite = require "sprite"
+local sprite_editor = require "sprite_editor"
 
 
 local mode = nil
 
 function love.load(args)
     mode = args[1] or "playing"
+    print(mode)
     canvas.get_player_screen_dimension()
     canvas.set_global_screen_variables(canvas.default_scale)
     canvas.set_window_size()
@@ -55,11 +57,13 @@ function love.update()
 end
 
 function love.draw()
+    require("jit.p").start()
     canvas.set_background_color()
     if mode == "playing" then
         Draw()
     elseif mode == "sprites" then
-        do end
+        love.graphics.clear(g.colors.default_fg_color.rgb01)
+        sprite_editor.draw_all_sprites(1)
     end
     local current_time = love.timer.getTime()
     if g.next_time <= current_time then
@@ -67,4 +71,5 @@ function love.draw()
         return
     end
     love.timer.sleep(g.next_time - current_time)
+    require("jit.p").stop()
 end

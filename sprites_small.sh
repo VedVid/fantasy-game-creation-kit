@@ -1,1 +1,1 @@
-love ./fantasy_console --sprites
+love ./fantasy_console sprites
