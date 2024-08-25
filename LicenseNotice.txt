@@ -29,3 +29,9 @@ This software uses the following programs, libraries and resources:
    Simple json serialization library for Lua, by rxi.
    https://github.com/rxi/json.lua  [available as of 20240629]
    MIT license – full text available in the `licenses` directory
+
+7. ProFi
+   Profiling library by Luke Perkin.
+   https://gist.github.com/perky/2838755/  [available as of 20240825]
+   MIT license
+   No external license file provided.
