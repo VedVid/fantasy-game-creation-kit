@@ -43,7 +43,13 @@ function love.keypressed(key, scancode, isrepeat)
     if mode == "playing" then
         Input()
     elseif mode == "sprites" then
-        do end
+        if key == "1" then
+            sprite_editor.set_current_tab(1)
+        elseif key == "2" then
+            sprite_editor.set_current_tab(2)
+        elseif key == "3" then
+            sprite_editor.set_current_tab(3)
+        end
     end
 end
 
@@ -62,7 +68,7 @@ function love.draw()
         Draw()
     elseif mode == "sprites" then
         love.graphics.clear(g.colors.default_fg_color.rgb01)
-        sprite_editor.draw_all_sprites(1)
+        sprite_editor.draw_all_sprites(3)
     end
     local current_time = love.timer.getTime()
     if g.next_time <= current_time then
