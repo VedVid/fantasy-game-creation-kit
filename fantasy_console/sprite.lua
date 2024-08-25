@@ -34,7 +34,7 @@ function sprite.get_sprite(num)
 		error("Invalid sprite number: " .. num .. " is larger than total number of sprites (" .. g.sprites.amount .. ")")
 	end
 
-	return sprite.get_all_sprites()[num]
+	return g.sprites.sprites[num]
 end
 
 function sprite.get_all_sprites()

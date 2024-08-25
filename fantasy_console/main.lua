@@ -18,12 +18,12 @@ function love.load(args)
     canvas.set_font()
     canvas.set_line_style()
     canvas.set_line_width()
-    local all_sprites = sprite.get_all_sprites()
-    if #all_sprites == 0 then
+    g.sprites.sprites = sprite.get_all_sprites()
+    if #g.sprites.sprites == 0 then
         sprite.initialize_blank_sprites()
-    elseif #all_sprites < g.sprites.amount then
+    elseif #g.sprites.sprites < g.sprites.amount then
         error("sprites table in data/sprites.json is partially filled. Data corruption possible.")
-    elseif #all_sprites > g.sprites.amount then
+    elseif #g.sprites.sprites > g.sprites.amount then
         error("sprites table in data/sprites.json holds too many sprites. Something wrong happened.")
     end
     g.next_time = love.timer.getTime()
