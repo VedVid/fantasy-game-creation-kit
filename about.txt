@@ -15,14 +15,13 @@ ABOUT
 The Fantasy Game Creation Kit aims to become exactly what the name
 suggests: a game creation kit that encapsulates all the basic tools
 necessary for creating simple games quickly.
-The planned tools include:
-- a sprites editor,
+This kit has sprite editor, and geometry and strings API implemented.
+Other planned tools include:
 - a map editor,
 - a sounds editor,
 - a code editor (maybe).
 
-Please note that only a limited API is supported right now, and none
-of the editors are implemented yet.
+Please note that only a limited API is supported right now.
 
 The kit is implemented on top of Love2D. It is also heavily inspired
 by fantasy consoles like PICO-8 and TIC-80. That said, it is not
@@ -41,7 +40,7 @@ SPECIFICATIONS
 Display: 256x192 (AR 4:3)
 Palette: 16 colour palette, extensions are possible
 Input  : (planned) 4 directional keys, 4 action keys, 2 special keys
-Sprites: To be decided
+Sprites: 512 sprites
 Map    : To be decided
 Sound  : To be decided
 Code   : Lua; there is planned support for other languages that
@@ -51,15 +50,16 @@ Code   : Lua; there is planned support for other languages that
 GETTING STARTED
 ===============
 
-Currently, games made with this kit need to be run like normal
-Love2D games: by dragging and dropping the kit folder over
-the Love2D executable.
+Game is shipped with various start scripts:
+- `start` script runs `_cart.lua` file
+- `sprites` script runs sprite editor.
 
 The main functions (Init, Input, Update, Draw) need to
 be specified in the `_cart.lua` file.
 
-In v0.1, the only implemented API functions are those related
+In v0.2, the only implemented API functions are those related
 to text, geometry drawing, and input handling.
+Sprites editor is also present.
 
 To get a sense of how the kit works, it is recommended to check
 the examples included in the main archive. To use them,
