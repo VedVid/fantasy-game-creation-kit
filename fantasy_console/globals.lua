@@ -26,6 +26,8 @@ globals.colors = {}
 globals.colors.default_fg_color = palette.white
 globals.colors.default_bg_color = palette.black
 
+globals.sprites_size_w = 8
+globals.sprites_size_h = 8
 globals.sprites_amount = 512
 globals.sprites_path_test = "data/sprites_test.json"
 globals.sprites_path = "fantasy_console/data/sprites.json"

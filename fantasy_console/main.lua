@@ -57,7 +57,6 @@ function love.update()
 end
 
 function love.draw()
-    require("jit.p").start()
     canvas.set_background_color()
     if mode == "playing" then
         Draw()
@@ -71,5 +70,4 @@ function love.draw()
         return
     end
     love.timer.sleep(g.next_time - current_time)
-    require("jit.p").stop()
 end
