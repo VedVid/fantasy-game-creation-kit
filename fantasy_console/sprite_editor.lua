@@ -6,6 +6,8 @@ local g = require "globals"
 local editor = {}
 
 editor.current_tab = 1
+editor.current_sprite = 1
+
 editor.colors = {
 	{Black, 150, 30},
 	{BlackBold, 158, 30},
@@ -34,9 +36,10 @@ function editor.draw_all_sprites()
 	local rows = 6
 	local tab = editor.current_tab
 
-	local start = 1
+	local start = 0
 	if tab > 1 then
 		start = cols * rows * (tab - 1)
+		-- start = start - 1 ???
 	end
 
 	local x = g.sprites.size_w
