@@ -111,7 +111,9 @@ function editor.draw_all_sprites()
 		end
 	end
 
-	Rect(sprite_border.x, sprite_border.y, g.sprites.size_w + 2, g.sprites.size_h + 2, PinkBold)
+	if sprite_border.x then
+		Rect(sprite_border.x, sprite_border.y, g.sprites.size_w + 2, g.sprites.size_h + 2, PinkBold)
+	end
 end
 
 function editor.draw_current_sprite()
