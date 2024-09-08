@@ -245,19 +245,19 @@ function editor.handle_mousepresses(x, y, mousebutton)
 		local col = math.floor(x / g.screen.gamepixel.w / g.sprites.size_w)
 		local row = math.floor((y / g.screen.gamepixel.h / g.sprites.size_h) - 16)
 		if editor.current_tab == 3 then
-			local current_sprite_temp = col * row * 3
+			local current_sprite_temp = ((row - 1) * 30) + col + 360
 			if current_sprite_temp > 512 then
-				print(current_sprite_temp)
 				return
 			end
 			editor.current_sprite = current_sprite_temp
+			print(editor.current_sprite)
+			return
 		else
-			editor.current_sprite = col * row * editor.current_tab
+			editor.current_sprite = (((row - 1) * 30) + col) + (180 * (editor.current_tab - 1))
 			print(editor.current_sprite)
 			return
 		end
 	end
-
 end
 
 return editor
