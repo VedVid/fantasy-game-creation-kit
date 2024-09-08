@@ -218,10 +218,10 @@ function editor.handle_mousepresses(x, y, mousebutton)
 		(editor.all_sprites_y_start - (7 * g.sprites.size_h)) * g.screen.gamepixel.h,
 		(editor.all_sprites_y_start - g.sprites.size_h) * g.screen.gamepixel.h
 	) then
-		-- There is definitely _too_ much magic below, but I found it difficult
-		-- to find a generic solution. The solution below is ugly and can
-		-- cause issues during changing anything related to spritesheet location
-		-- or form, but it works on every scale I tested it. 
+		-- There is definitely _too_ much magic in these two lines below,
+		-- but I found it difficult to find a generic solution. The solution
+		-- below is ugly and can cause issues during changing anything related
+		-- to spritesheet location or form, but it works on every scale I tested it. 
 		-- I'll try to explain how it works.
 		-- 1. We get x and y; these are raw pixel mouse coords caught by Love2D
 		-- 2. We dividing the coords by g.screen.gamepixel.w / .h to obtain
