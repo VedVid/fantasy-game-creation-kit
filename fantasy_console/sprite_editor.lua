@@ -210,14 +210,6 @@ function editor.handle_mousepresses(x, y, mousebutton)
 		end
 	end
 
-	print()
-	print('x      : ' .. x)
-	print('x_start: ' .. editor.all_sprites_x_start * g.screen.gamepixel.w)
-	print('x_final: ' .. (editor.all_sprites_x_start + (30 * g.sprites.size_w)) * g.screen.gamepixel.w)
-	print('y      : ' .. y)
-	print('y_start: ' .. (editor.all_sprites_y_start - (6 * g.sprites.size_h)) * g.screen.gamepixel.h)
-	print('y_final: ' .. editor.all_sprites_y_start * g.screen.gamepixel.h)
-
 	if utils.mouse_box_bound_check(
 		x,
 		editor.all_sprites_x_start * g.screen.gamepixel.w,
@@ -250,11 +242,9 @@ function editor.handle_mousepresses(x, y, mousebutton)
 				return
 			end
 			editor.current_sprite = current_sprite_temp
-			print(editor.current_sprite)
 			return
 		else
 			editor.current_sprite = (((row - 1) * 30) + col) + (180 * (editor.current_tab - 1))
-			print(editor.current_sprite)
 			return
 		end
 	end
