@@ -195,16 +195,35 @@ function editor.handle_mousepresses(x, y, mousebutton)
 	for i, color in ipairs(editor.colors) do
 		if utils.mouse_box_bound_check(
 			x,
-			color[2],
+			color[2] * g.screen.gamepixel.w,
 			(color[2] + g.sprites.size_w) * g.screen.gamepixel.w,
 			y,
-			color[3],
+			color[3] * g.screen.gamepixel.h,
 			(color[3] + g.sprites.size_h) * g.screen.gamepixel.h
 		) then
 			editor.set_current_color(i)
 			return
 		end
 	end
+
+	if utils.mouse_box_bound_check(
+		x,
+		editor.all_sprites_x_start * g.screen.gamepixel.w,
+		(editor.all_sprites_x_start + (30 * g.sprites.size_w)) * g.screen.gamepixel.w,
+		y,
+		(editor.all_sprites_y_start - (7 * g.sprites.size_h)) * g.screen.gamepixel.h,
+		(editor.all_sprites_y_start - g.sprites.size_h) * g.screen.gamepixel.h
+	) then
+		print('click')
+		return
+	end
+	print()
+	print('x      : ' .. x)
+	print('x_start: ' .. editor.all_sprites_x_start * g.screen.gamepixel.w)
+	print('x_final: ' .. (editor.all_sprites_x_start + (30 * g.sprites.size_w)) * g.screen.gamepixel.w)
+	print('y      : ' .. y)
+	print('y_start: ' .. (editor.all_sprites_y_start - (6 * g.sprites.size_h)) * g.screen.gamepixel.h)
+	print('y_final: ' .. editor.all_sprites_y_start * g.screen.gamepixel.h)
 end
 
 return editor
