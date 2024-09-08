@@ -9,6 +9,7 @@ local editor = {}
 
 editor.current_tab = 1
 editor.current_sprite = 1
+editor.current_color = 1
 
 editor.colors_x_start = 152
 editor.colors_y_start = 30
@@ -49,18 +50,18 @@ table.insert(editor.tab_buttons.buttons, editor.all_sprites_tab_3)
 editor.colors = {
 	{Black, editor.colors_x_start, editor.colors_y_start},
 	{BlackBold, editor.colors_x_start + 8, editor.colors_y_start},
-	{Blue, editor.colors_x_start + 16, editor.colors_y_start},
-	{BlueBold, editor.colors_x_start + 24, editor.colors_y_start},
-	{Cyan, editor.colors_x_start, editor.colors_y_start + 8},
-	{CyanBold, editor.colors_x_start + 8, editor.colors_y_start + 8},
-	{Green, editor.colors_x_start + 16, editor.colors_y_start + 8},
-	{GreenBold, editor.colors_x_start + 24, editor.colors_y_start + 8},
-	{Pink, editor.colors_x_start, editor.colors_y_start + 16},
-	{PinkBold, editor.colors_x_start + 8, editor.colors_y_start + 16},
-	{Red, editor.colors_x_start + 16, editor.colors_y_start + 16},
-	{RedBold, editor.colors_x_start + 24, editor.colors_y_start + 16},
-	{Yellow, editor.colors_x_start, editor.colors_y_start + 24},
-	{YellowBold, editor.colors_x_start + 8, editor.colors_y_start + 24},
+	{Red, editor.colors_x_start + 16, editor.colors_y_start},
+	{RedBold, editor.colors_x_start + 24, editor.colors_y_start},
+	{Green, editor.colors_x_start, editor.colors_y_start + 8},
+	{GreenBold, editor.colors_x_start + 8, editor.colors_y_start + 8},
+	{Yellow, editor.colors_x_start + 16, editor.colors_y_start + 8},
+	{YellowBold, editor.colors_x_start + 24, editor.colors_y_start + 8},
+	{Blue, editor.colors_x_start, editor.colors_y_start + 16},
+	{BlueBold, editor.colors_x_start + 8, editor.colors_y_start + 16},
+	{Pink, editor.colors_x_start + 16, editor.colors_y_start + 16},
+	{PinkBold, editor.colors_x_start + 24, editor.colors_y_start + 16},
+	{Cyan, editor.colors_x_start, editor.colors_y_start + 24},
+	{CyanBold, editor.colors_x_start + 8, editor.colors_y_start + 24},
 	{White, editor.colors_x_start + 16, editor.colors_y_start + 24},
 	{WhiteBold, editor.colors_x_start + 24, editor.colors_y_start + 24}
 }
@@ -128,15 +129,22 @@ function editor.draw_current_sprite()
 end
 
 function editor.draw_colors()
+	Rect(
+		editor.colors_x_start - 1,
+		editor.colors_y_start - 1,
+		(g.sprites.size_w * 4) + 2,
+		(g.sprites.size_h * 4) + 2,
+		Cyan
+	  )
 	for _, v in ipairs(editor.colors) do
 		Rectfill(v[2], v[3], g.sprites.size_w, g.sprites.size_h, v[1])
 	end
 	Rect(
-	  editor.colors_x_start - 1,
-	  editor.colors_y_start - 1,
-	  (g.sprites.size_w * 4) + 2,
-	  (g.sprites.size_h * 4) + 2,
-	  Cyan
+		editor.colors[editor.current_color][2]-1,
+		editor.colors[editor.current_color][3]-1,
+		g.sprites.size_w + 2,
+		g.sprites.size_h + 2,
+		Pink
 	)
 end
 
