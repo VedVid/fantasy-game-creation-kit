@@ -16,6 +16,32 @@ editor.current_sprite_y_start = 30
 editor.all_sprites_x_start = 8
 editor.all_sprites_y_start = 192
 
+editor.tab_buttons = {}
+editor.tab_buttons.border_color = Cyan
+editor.tab_buttons.border_color_active = PinkBold
+editor.tab_buttons.background_color = BlackBold
+editor.tab_buttons.background_color_active = WhiteBold
+editor.tab_buttons.buttons = {}
+editor.all_sprites_tab_1 = {}
+editor.all_sprites_tab_1.w = 21
+editor.all_sprites_tab_1.h = 11
+editor.all_sprites_tab_1.x = editor.all_sprites_x_start + 4
+editor.all_sprites_tab_1.y = editor.all_sprites_y_start - 67
+table.insert(editor.tab_buttons.buttons, editor.all_sprites_tab_1)
+editor.all_sprites_tab_2 = {}
+editor.all_sprites_tab_2.w = 21
+editor.all_sprites_tab_2.h = 11
+editor.all_sprites_tab_2.x = editor.all_sprites_tab_1.x + editor.all_sprites_tab_1.w
+editor.all_sprites_tab_2.y = editor.all_sprites_y_start - 67
+table.insert(editor.tab_buttons.buttons, editor.all_sprites_tab_2)
+editor.all_sprites_tab_3 = {}
+editor.all_sprites_tab_3.w = 21
+editor.all_sprites_tab_3.h = 11
+editor.all_sprites_tab_3.x = editor.all_sprites_tab_2.x + editor.all_sprites_tab_2.w
+editor.all_sprites_tab_3.y = editor.all_sprites_y_start - 67
+table.insert(editor.tab_buttons.buttons, editor.all_sprites_tab_3)
+
+
 editor.colors = {
 	{Black, editor.colors_x_start, editor.colors_y_start},
 	{BlackBold, editor.colors_x_start + 8, editor.colors_y_start},
@@ -100,6 +126,31 @@ end
 function editor.draw_colors()
 	for _, v in ipairs(editor.colors) do
 		Rectfill(v[2], v[3], g.sprites.size_w, g.sprites.size_h, v[1])
+	end
+end
+
+function editor.draw_spritesheet_buttons()
+	for i, button in ipairs(editor.tab_buttons.buttons) do
+		local border_color = editor.tab_buttons.border_color
+		local background_color = editor.tab_buttons.background_color
+		if i == editor.current_tab then
+			border_color = editor.tab_buttons.border_color_active
+			background_color = editor.tab_buttons.background_color_active
+		end
+		Rectfill(
+			button.x,
+			button.y,
+			button.w,
+			button.h,
+			background_color
+		)
+		Line(
+			button.x,
+			button.y,
+			button.x + button.w - 1,
+			button.y,
+			border_color)
+		Write("Tab " .. i, button.x + 2, button.y + 3)
 	end
 end
 

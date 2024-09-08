@@ -70,6 +70,7 @@ function love.draw()
         sprite_editor.draw_all_sprites()
         sprite_editor.draw_colors()
         sprite_editor.draw_current_sprite()
+        sprite_editor.draw_spritesheet_buttons()
     end
     local current_time = love.timer.getTime()
     if g.next_time <= current_time then
