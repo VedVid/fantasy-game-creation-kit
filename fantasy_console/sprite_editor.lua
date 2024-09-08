@@ -70,8 +70,12 @@ function editor.set_current_tab(num)
 	editor.current_tab = num
 end
 
-function editor.set_current_sprite(sprite_num)
-	editor.current_sprite = sprite_num
+function editor.set_current_sprite(num)
+	editor.current_sprite = num
+end
+
+function editor.set_current_color(num)
+	editor.current_color = num
 end
 
 function editor.draw_all_sprites()
