@@ -226,7 +226,26 @@ function editor.handle_mousepresses(x, y, mousebutton)
 		(editor.all_sprites_y_start - (7 * g.sprites.size_h)) * g.screen.gamepixel.h,
 		(editor.all_sprites_y_start - g.sprites.size_h) * g.screen.gamepixel.h
 	) then
-
+		-- There is definitely _too_ much magic below, but I found it difficult
+		-- to find a generic solution. The solution below is ugly and can
+		-- cause issues during changing anything related to spritesheet location
+		-- or form, but it works on every scale I tested it. 
+		-- I'll try to explain how it works.
+		-- 1. We get x and y; these are raw pixel mouse coords caught by Love2D
+		-- 2. We dividing the coords by g.screen.gamepixel.w / .h to obtain
+		--    the correct resolution in gamepixels.
+		-- 3. Since we want to get columns and rows, and every sprite cell is equal
+	    --    to g.sprites.size_w x g.sprites.size_h, we need to divide the
+		--    coords in gamepixels divide by g.sprites.size_w / _h.
+		-- 4. Columns span from the second tile from the edge, so we can leave that.
+		-- 5. Rows are placed near the bottom from the screen, so we need to subtract
+		--    amount of _rows_ from the top of the screen.
+		-- 6. Finally, we truncate the results. So first tile instead of, said,
+		--    1.95x1.35 returns 1x1
+		local col = math.floor(x / g.screen.gamepixel.w / g.sprites.size_w)
+		local row = math.floor((y / g.screen.gamepixel.h / g.sprites.size_h) - 16)
+		print(col)
+		print(row)
 	end
 
 end
