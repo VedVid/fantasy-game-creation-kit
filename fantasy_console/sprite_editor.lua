@@ -9,23 +9,30 @@ local editor = {}
 editor.current_tab = 1
 editor.current_sprite = 1
 
+editor.colors_x_start = 152
+editor.colors_y_start = 30
+editor.current_sprite_x_start = 45
+editor.current_sprite_y_start = 30
+editor.all_sprites_x_start = 8
+editor.all_sprites_y_start = 192
+
 editor.colors = {
-	{Black, 150, 30},
-	{BlackBold, 158, 30},
-	{Blue, 166, 30},
-	{BlueBold, 174, 30},
-	{Cyan, 150, 38},
-	{CyanBold, 158, 38},
-	{Green, 166, 38},
-	{GreenBold, 174, 38},
-	{Pink, 150, 46},
-	{PinkBold, 158, 46},
-	{Red, 166, 46},
-	{RedBold, 174, 46},
-	{Yellow, 150, 54},
-	{YellowBold, 158, 54},
-	{White, 166, 54},
-	{WhiteBold, 174, 54}
+	{Black, editor.colors_x_start, editor.colors_y_start},
+	{BlackBold, editor.colors_x_start + 8, editor.colors_y_start},
+	{Blue, editor.colors_x_start + 16, editor.colors_y_start},
+	{BlueBold, editor.colors_x_start + 24, editor.colors_y_start},
+	{Cyan, editor.colors_x_start, editor.colors_y_start + 8},
+	{CyanBold, editor.colors_x_start + 8, editor.colors_y_start + 8},
+	{Green, editor.colors_x_start + 16, editor.colors_y_start + 8},
+	{GreenBold, editor.colors_x_start + 24, editor.colors_y_start + 8},
+	{Pink, editor.colors_x_start, editor.colors_y_start + 16},
+	{PinkBold, editor.colors_x_start + 8, editor.colors_y_start + 16},
+	{Red, editor.colors_x_start + 16, editor.colors_y_start + 16},
+	{RedBold, editor.colors_x_start + 24, editor.colors_y_start + 16},
+	{Yellow, editor.colors_x_start, editor.colors_y_start + 24},
+	{YellowBold, editor.colors_x_start + 8, editor.colors_y_start + 24},
+	{White, editor.colors_x_start + 16, editor.colors_y_start + 24},
+	{WhiteBold, editor.colors_x_start + 24, editor.colors_y_start + 24}
 }
 
 function editor.set_current_tab(num)
@@ -47,9 +54,8 @@ function editor.draw_all_sprites()
 		-- start = start - 1 ???
 	end
 
-	local x = g.sprites.size_w
-	local y = 192 - ((rows + 1) * g.sprites.size_h)
-	-- 192 is arbitrarily set number, innit?
+	local x = editor.all_sprites_x_start
+	local y = editor.all_sprites_y_start - ((rows + 1) * g.sprites.size_h)
 
 	for i=1, cols*rows do
 		local sprite_number = start + i
@@ -67,8 +73,6 @@ end
 
 function editor.draw_current_sprite()
 	local sprite = editor.current_sprite
-	local start_x = g.sprites.size_w
-	local start_y = 30
 	local cols = 8  -- every sprite is 8x8, so we wrap after 8th column every time
 	local col = 0
 	local row = 0
@@ -76,8 +80,8 @@ function editor.draw_current_sprite()
 	local sprite_colors = s.return_sprite_colors(real_sprite, "rgb01")
 
 	for _, rgb_color_table in ipairs(sprite_colors) do
-		local cur_x = start_x + (col * g.sprites.size_w)
-		local cur_y = start_y + (row * g.sprites.size_h)
+		local cur_x = editor.current_sprite_x_start + (col * g.sprites.size_w)
+		local cur_y = editor.current_sprite_y_start+ (row * g.sprites.size_h)
 		Rectfill(
 			cur_x,
 			cur_y,
