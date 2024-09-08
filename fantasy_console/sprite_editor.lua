@@ -92,18 +92,26 @@ function editor.draw_all_sprites()
 	local x = editor.all_sprites_x_start
 	local y = editor.all_sprites_y_start - ((rows + 1) * g.sprites.size_h)
 
+	local sprite_border = {}
+
 	for i=1, cols*rows do
 		local sprite_number = start + i
 		if sprite_number > g.sprites.amount then
 			break
 		end
 		Spr(start + i, x, y)
+		if sprite_number == editor.current_sprite then
+			sprite_border.x = x - 1
+			sprite_border.y = y - 1
+		end
 		x = x + g.sprites.size_w
 		if x >= g.screen.size.gamepixels.w - (1.5 * g.sprites.size_w) then
 			x = g.sprites.size_w
 			y = y + g.sprites.size_h
 		end
 	end
+
+	Rect(sprite_border.x, sprite_border.y, g.sprites.size_w + 2, g.sprites.size_h + 2, PinkBold)
 end
 
 function editor.draw_current_sprite()
