@@ -167,7 +167,7 @@ function sprite.return_sprite_colors(spr, returned_values, add_print)
 				elseif returned_values == "rgb01" then
 					if k == "rgb01" then
 						if add_print then
-							print("r: " .. d[1] .. "g: " .. d[2] .. "b: " .. d[3] .. "a: " .. d[4])
+							print("r:" .. d[1] .. " g:" .. d[2] .. " b:" .. d[3] .. " a:" .. d[4])
 						end
 						table.insert(values_to_return, d)
 					end

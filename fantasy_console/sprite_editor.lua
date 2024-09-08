@@ -75,10 +75,6 @@ function editor.draw_current_sprite()
 	local real_sprite = s.get_sprite(sprite)
 	local sprite_colors = s.return_sprite_colors(real_sprite, "rgb01", true)
 	for i, v in ipairs(sprite_colors) do
-		if i % cols == 0 then
-			col = 0
-			row = row + 1
-		end
 		local cur_x = start_x + (col * g.sprites.size_w)
 		local cur_y = start_y + (row * g.sprites.size_h)
 		Rectfill(
@@ -88,6 +84,11 @@ function editor.draw_current_sprite()
 			g.sprites.size_h,
 			v
 		)
+		col = col + 1
+		if col % cols == 0 then
+			col = 0
+			row = row + 1
+		end
 	end
 end
 
