@@ -116,9 +116,9 @@ function sprite.initialize_blank_sprites()
 	io.close(f)
 end
 
-function sprite.return_sprite_colors(spr, add_print)
+function sprite.return_sprite_colors(spr, returned_values, add_print)
 	--[[
-    Method return_sprite_colors returns hex value of every pixel
+    Method return_sprite_colors returns hex value or rgb table of every pixel
 	in specific sprite. Used only for debugging purposes.
 	Optionally, printing hex values to console might be enabled.
 
@@ -128,6 +128,11 @@ function sprite.return_sprite_colors(spr, add_print)
 	    The number indicating the location of the sprite that
 		we want to return in order from the beginning
 		of the sprites.json file.
+	
+	returned_values : string
+		"hex": table of hex values will be returned
+		"rgb01": table of rgb01 tables will be returned
+		default in nil: "hex"
 
 	add_print : boolean
 		If true value passed, then every hex value will be printed
@@ -135,26 +140,43 @@ function sprite.return_sprite_colors(spr, add_print)
 
     Returns
     -------
-    table of hex values
+    table of hex values or table of rgb tables
     ]]--
 
+	if not returned_values then
+		returned_values = "hex"
+	end
+
+	if returned_values ~= "hex" and returned_values ~= "rgb01" then
+		error("Incorrect value passed to `returned_values` parameter")
+	end
+
 	local colors = spr["colors"]
-	local hex_values = {}
+	local values_to_return = {}
 	for _, color in pairs(colors) do
 		for _, v in pairs(color) do
 			-- row
 			for k, d in pairs(v) do
-				if k == "hex" then
-					if add_print then
-						print(d)
+				if returned_values == "hex" then
+					if k == "hex" then
+						if add_print then
+							print(d)
+						end
+						table.insert(values_to_return, d)
 					end
-					table.insert(hex_values, d)
+				elseif returned_values == "rgb01" then
+					if k == "rgb01" then
+						if add_print then
+							print("r: " .. d[1] .. "g: " .. d[2] .. "b: " .. d[3] .. "a: " .. d[4])
+						end
+						table.insert(values_to_return, d)
+					end
 				end
 			end
 		end
 		--print(color)
 	end
-	return hex_values
+	return values_to_return
 end
 
 return sprite
