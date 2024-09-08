@@ -2,6 +2,7 @@ require "api"
 
 local g = require "globals"
 local s = require "sprite"
+local utils = require "utils"
 
 
 local editor = {}
@@ -159,7 +160,14 @@ end
 
 function editor.handle_mousepresses(x, y, mousebutton)
 	for  i, button in ipairs(editor.tab_buttons.buttons) do
-		if x >= button.x * g.screen.gamepixel.w and x <= (button.x + button.w) * g.screen.gamepixel.w and y >= button.y * g.screen.gamepixel.h and y <= (button.y + button.h) * g.screen.gamepixel.h then
+		if utils.mouse_box_bound_check(
+			x,
+			button.x * g.screen.gamepixel.w,
+			(button.x + button.w) * g.screen.gamepixel.w,
+			y,
+			button.y * g.screen.gamepixel.h,
+			(button.y + button.h) * g.screen.gamepixel.h
+		) then
 			editor.current_tab = i
 			return
 		end
