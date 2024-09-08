@@ -131,6 +131,13 @@ function editor.draw_colors()
 	for _, v in ipairs(editor.colors) do
 		Rectfill(v[2], v[3], g.sprites.size_w, g.sprites.size_h, v[1])
 	end
+	Rect(
+	  editor.colors_x_start - 1,
+	  editor.colors_y_start - 1,
+	  (g.sprites.size_w * 4) + 2,
+	  (g.sprites.size_h * 4) + 2,
+	  Cyan
+	)
 end
 
 function editor.draw_spritesheet_buttons()
