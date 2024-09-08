@@ -35,3 +35,8 @@ This software uses the following programs, libraries and resources:
    https://gist.github.com/perky/2838755/  [available as of 20240825]
    MIT license
    No external license file provided.
+
+8. pprint.lua
+   Pretty printer for Lua, by Chen Tao.
+   https://github.com/jagt/pprint.lua  [available as of 20240908]
+   Unlicense – full text available in the `licenses` directory
