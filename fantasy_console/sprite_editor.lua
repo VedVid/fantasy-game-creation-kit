@@ -187,7 +187,21 @@ function editor.handle_mousepresses(x, y, mousebutton)
 			button.y * g.screen.gamepixel.h,
 			(button.y + button.h) * g.screen.gamepixel.h
 		) then
-			editor.current_tab = i
+			editor.set_current_tab(i)
+			return
+		end
+	end
+
+	for i, color in ipairs(editor.colors) do
+		if utils.mouse_box_bound_check(
+			x,
+			color[2],
+			(color[2] + g.sprites.size_w) * g.screen.gamepixel.w,
+			y,
+			color[3],
+			(color[3] + g.sprites.size_h) * g.screen.gamepixel.h
+		) then
+			editor.set_current_color(i)
 			return
 		end
 	end
