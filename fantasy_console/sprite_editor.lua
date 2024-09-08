@@ -158,7 +158,7 @@ function editor.draw_colors()
 		editor.colors[editor.current_color][3]-1,
 		g.sprites.size_w + 2,
 		g.sprites.size_h + 2,
-		Pink
+		PinkBold
 	)
 end
 
