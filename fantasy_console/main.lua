@@ -41,14 +41,12 @@ function love.keypressed(key, scancode, isrepeat)
     end
     if mode == "playing" then
         Input()
-    elseif mode == "sprites" then
-        if key == "1" then
-            sprite_editor.set_current_tab(1)
-        elseif key == "2" then
-            sprite_editor.set_current_tab(2)
-        elseif key == "3" then
-            sprite_editor.set_current_tab(3)
-        end
+    end  -- More modes might come here
+end
+
+function love.mousepressed(x, y, button, istouch, presses)
+    if mode == "sprites" then
+        sprite_editor.handle_mousepresses(x, y, button)
     end
 end
 

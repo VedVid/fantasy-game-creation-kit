@@ -27,18 +27,21 @@ editor.all_sprites_tab_1.w = 21
 editor.all_sprites_tab_1.h = 11
 editor.all_sprites_tab_1.x = editor.all_sprites_x_start + 4
 editor.all_sprites_tab_1.y = editor.all_sprites_y_start - 67
+editor.all_sprites_tab_1.txt = "Tab 1"
 table.insert(editor.tab_buttons.buttons, editor.all_sprites_tab_1)
 editor.all_sprites_tab_2 = {}
 editor.all_sprites_tab_2.w = 21
 editor.all_sprites_tab_2.h = 11
 editor.all_sprites_tab_2.x = editor.all_sprites_tab_1.x + editor.all_sprites_tab_1.w
 editor.all_sprites_tab_2.y = editor.all_sprites_y_start - 67
+editor.all_sprites_tab_2.txt = "Tab 2"
 table.insert(editor.tab_buttons.buttons, editor.all_sprites_tab_2)
 editor.all_sprites_tab_3 = {}
 editor.all_sprites_tab_3.w = 21
 editor.all_sprites_tab_3.h = 11
 editor.all_sprites_tab_3.x = editor.all_sprites_tab_2.x + editor.all_sprites_tab_2.w
 editor.all_sprites_tab_3.y = editor.all_sprites_y_start - 67
+editor.all_sprites_tab_3.txt = "Tab 3"
 table.insert(editor.tab_buttons.buttons, editor.all_sprites_tab_3)
 
 
@@ -150,7 +153,16 @@ function editor.draw_spritesheet_buttons()
 			button.x + button.w - 1,
 			button.y,
 			border_color)
-		Write("Tab " .. i, button.x + 2, button.y + 3)
+		Write(button.txt, button.x + 2, button.y + 3)
+	end
+end
+
+function editor.handle_mousepresses(x, y, mousebutton)
+	for  i, button in ipairs(editor.tab_buttons.buttons) do
+		if x >= button.x * g.screen.gamepixel.w and x <= (button.x + button.w) * g.screen.gamepixel.w and y >= button.y * g.screen.gamepixel.h and y <= (button.y + button.h) * g.screen.gamepixel.h then
+			editor.current_tab = i
+			return
+		end
 	end
 end
 
