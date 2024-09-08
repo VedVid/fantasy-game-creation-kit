@@ -178,6 +178,10 @@ function editor.draw_spritesheet_buttons()
 end
 
 function editor.handle_mousepresses(x, y, mousebutton)
+	-- This could be probably improved by basic bound checking
+	-- around the tabs and colors, instead of iterating over all
+	-- buttons from the very start.
+
 	for  i, button in ipairs(editor.tab_buttons.buttons) do
 		if utils.mouse_box_bound_check(
 			x,
@@ -206,6 +210,14 @@ function editor.handle_mousepresses(x, y, mousebutton)
 		end
 	end
 
+	print()
+	print('x      : ' .. x)
+	print('x_start: ' .. editor.all_sprites_x_start * g.screen.gamepixel.w)
+	print('x_final: ' .. (editor.all_sprites_x_start + (30 * g.sprites.size_w)) * g.screen.gamepixel.w)
+	print('y      : ' .. y)
+	print('y_start: ' .. (editor.all_sprites_y_start - (6 * g.sprites.size_h)) * g.screen.gamepixel.h)
+	print('y_final: ' .. editor.all_sprites_y_start * g.screen.gamepixel.h)
+
 	if utils.mouse_box_bound_check(
 		x,
 		editor.all_sprites_x_start * g.screen.gamepixel.w,
@@ -214,16 +226,9 @@ function editor.handle_mousepresses(x, y, mousebutton)
 		(editor.all_sprites_y_start - (7 * g.sprites.size_h)) * g.screen.gamepixel.h,
 		(editor.all_sprites_y_start - g.sprites.size_h) * g.screen.gamepixel.h
 	) then
-		print('click')
-		return
+
 	end
-	print()
-	print('x      : ' .. x)
-	print('x_start: ' .. editor.all_sprites_x_start * g.screen.gamepixel.w)
-	print('x_final: ' .. (editor.all_sprites_x_start + (30 * g.sprites.size_w)) * g.screen.gamepixel.w)
-	print('y      : ' .. y)
-	print('y_start: ' .. (editor.all_sprites_y_start - (6 * g.sprites.size_h)) * g.screen.gamepixel.h)
-	print('y_final: ' .. editor.all_sprites_y_start * g.screen.gamepixel.h)
+
 end
 
 return editor
