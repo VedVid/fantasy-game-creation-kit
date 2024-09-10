@@ -11,6 +11,8 @@ editor.current_tab = 1
 editor.current_sprite = 1
 editor.current_color = 1
 
+-- When user changes sprite by drawing, then the changes should be
+-- automatically added to current_sprite_data
 editor.current_sprite_data = nil
 -- ^^^ number: <number>, rgb01: <table of numbers>, hex: <string>
 
