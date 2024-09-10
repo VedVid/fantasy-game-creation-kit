@@ -73,6 +73,11 @@ function editor.set_current_tab(num)
 end
 
 function editor.set_current_sprite(num)
+	if editor.current_sprite_data == nil then
+		editor.current_sprite_data = s.return_sprite_colors(
+			s.get_sprite(editor.current_sprite), "palette"
+		)
+	end
 	s.set_sprite(editor.current_sprite, editor.current_sprite_data)
 	editor.current_sprite = num
 	editor.current_sprite_data = s.return_sprite_colors(
