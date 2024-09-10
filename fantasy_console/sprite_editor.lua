@@ -11,6 +11,8 @@ editor.current_tab = 1
 editor.current_sprite = 1
 editor.current_color = 1
 
+editor.current_sprite_data = nil
+
 editor.colors_x_start = 152
 editor.colors_y_start = 30
 editor.current_sprite_x_start = 45
@@ -72,6 +74,10 @@ end
 
 function editor.set_current_sprite(num)
 	editor.current_sprite = num
+	editor.current_sprite_data = s.return_sprite_colors(
+		s.get_sprite(editor.current_sprite), "palette"
+	)
+	-- ^^^ number: <number>, rgb01: <table of numbers>, hex: <string>
 end
 
 function editor.set_current_color(num)
@@ -117,12 +123,12 @@ function editor.draw_all_sprites()
 end
 
 function editor.draw_current_sprite()
-	local sprite = editor.current_sprite
 	local cols = 8  -- every sprite is 8x8, so we wrap after 8th column every time
 	local col = 0
 	local row = 0
-	local real_sprite = s.get_sprite(sprite)
-	local sprite_colors = s.return_sprite_colors(real_sprite, "rgb01")
+	local sprite_colors = s.return_sprite_colors(
+		s.get_sprite(editor.current_sprite), "rgb01"
+	)
 
 	for _, rgb_color_table in ipairs(sprite_colors) do
 		local cur_x = editor.current_sprite_x_start + (col * g.sprites.size_w)

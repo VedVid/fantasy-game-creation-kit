@@ -132,7 +132,8 @@ function sprite.return_sprite_colors(spr, returned_values, add_print)
 	returned_values : string
 		"hex": table of hex values will be returned
 		"rgb01": table of rgb01 tables will be returned
-		default in nil: "hex"
+		"palette": full palette data, including color number, rgb01, and hex code
+		default if nil: "hex"
 
 	add_print : boolean
 		If true value passed, then every hex value will be printed
@@ -147,12 +148,18 @@ function sprite.return_sprite_colors(spr, returned_values, add_print)
 		returned_values = "hex"
 	end
 
-	if returned_values ~= "hex" and returned_values ~= "rgb01" then
+	if returned_values ~= "hex" and returned_values ~= "rgb01" and returned_values ~= "palette" then
 		error("Incorrect value passed to `returned_values` parameter")
 	end
 
 	local colors = spr["colors"]
+
+	if returned_values == "palette" then
+		return colors
+	end
+
 	local values_to_return = {}
+
 	for _, color in pairs(colors) do
 		for _, v in pairs(color) do
 			-- row
