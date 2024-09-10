@@ -118,8 +118,8 @@ end
 
 function sprite.return_sprite_colors(spr, returned_values, add_print)
 	--[[
-    Method return_sprite_colors returns hex value or rgb table of every pixel
-	in specific sprite. Used only for debugging purposes.
+    Method return_sprite_colors returns hex value, rgb table, or raw json data
+	of every pixel in specific sprite. Used only for debugging purposes.
 	Optionally, printing hex values to console might be enabled.
 
     Arguments
