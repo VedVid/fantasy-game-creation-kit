@@ -51,19 +51,22 @@ function sprite.set_sprite(num, data)
 	-- Also, I'm just replacing sprite in-place, I'm not sure if it doesn't
 	-- create a memory leak.
 	local sprites_table = sprite.get_all_sprites()
-	print("old data:")
-	print(sprites_table[num])
-	print(sprites_table[num][1])
-	print()
-	print("argument data:")
-	print(data)
-	print(data[1])
-	sprites_table[num] = data
-	print()
-	print("new data:")
-	print(sprites_table[num])
-	print(sprites_table[num][1])
-	print()
+	--print("old data:")
+	--print(sprites_table[num]["colors"][1][1]["hex"])
+	--for k, v in pairs(sprites_table[num][1][1]) do print(k); print(v); end
+	--print()
+	--print("argument data:")
+	--for k, v in pairs(data) do print(k); print(v); end
+	--print()
+	--for k, v in pairs(data[1]) do print(k); print(v); end
+	--print()
+	--for k, v in pairs(data[1][1]) do print(k); print(v); end
+	sprites_table[num]["colors"] = data
+	--print()
+	--print("new data:")
+	--print(sprites_table[num])
+	--print(sprites_table[num][1])
+	--print()
 	local json_sprites_table = json.encode(sprites_table)
 	-- !! DANGEROUS – it'll remove all data in sprites.json!
 	local f = assert(io.open(g.sprites.path, "w+"))
