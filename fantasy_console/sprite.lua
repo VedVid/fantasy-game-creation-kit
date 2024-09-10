@@ -45,11 +45,17 @@ function sprite.set_sprite(num, data)
 	end
 
 	-- THIS BELOW IS TOTALLY STUPID AND NEEDS TO BE IMPROVED
-	-- To replace single sprite, it loads all sprites from json / memory (to be
-	-- decided), replaces single sprite, deleted sprites.json file,
+	-- To replace single sprite, it loads all sprites from json,
+	-- replaces single sprite, deleted sprites.json file,
 	-- then creates new one with newer data.
 	-- Also, I'm just replacing sprite in-place, I'm not sure if it doesn't
 	-- create a memory leak.
+	-- ALSO, SPRITES ARE LOADED TO MEMEMORY ON START. This function
+	-- DOES NOT update sprites-in-memory.
+	-- Eiter add 
+	--     g.sprites.sprites = sprites_table
+	-- or save data on-the-fly to memory, and to json only later
+	-- (after closing "sprites" menu or hitting "SAVE" button or something like that)
 	local sprites_table = sprite.get_all_sprites()
 	sprites_table[num]["colors"] = data
 	local json_sprites_table = json.encode(sprites_table)
