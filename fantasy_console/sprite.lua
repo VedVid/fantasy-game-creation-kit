@@ -37,6 +37,29 @@ function sprite.get_sprite(num)
 	return g.sprites.sprites[num]
 end
 
+function sprite.set_sprite(num, data)
+	if num <= 0 then
+		error("Invalid sprite number: " .. num .. " is smaller than 1.")
+	elseif num > g.sprites.amount then
+		error("Invalid sprite number: " .. num .. " is larger than total number of sprites (" .. g.sprites.amount .. ")")
+	end
+
+	-- THIS BELOW IS TOTALLY STUPID AND NEEDS TO BE IMPROVED
+	-- To replace single sprite, it loads all sprites from json / memory (to be
+	-- decided), replaces single sprite, deleted sprites.json file,
+	-- then creates new one with newer data.
+	-- Also, I'm just replacing sprite in-place, I'm not sure if it doesn't
+	-- create a memory leak.
+	local sprites_table = sprite.get_all_sprites()
+	sprites_table[num] = data
+	local json_sprites_table = json.encode(sprites_table)
+	-- !! DANGEROUS – it'll remove all data in sprites.json!
+	local f = assert(io.open(g.sprites.path, "w+"))
+	io.output(f)
+	io.write(json_sprites_table)
+	io.close(f)
+end
+
 function sprite.get_all_sprites()
 	--[[
     Method get_all_sprites decodes (using json library by rxi)

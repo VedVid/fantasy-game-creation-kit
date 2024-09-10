@@ -73,6 +73,7 @@ function editor.set_current_tab(num)
 end
 
 function editor.set_current_sprite(num)
+	s.set_sprite(editor.current_sprite, editor.current_sprite_data)
 	editor.current_sprite = num
 	editor.current_sprite_data = s.return_sprite_colors(
 		s.get_sprite(editor.current_sprite), "palette"
@@ -257,10 +258,12 @@ function editor.handle_mousepresses(x, y, mousebutton)
 			if current_sprite_temp > 512 then
 				return
 			end
-			editor.current_sprite = current_sprite_temp
+			editor.set_current_sprite(current_sprite_temp)
 			return
 		else
-			editor.current_sprite = (((row - 1) * 30) + col) + (180 * (editor.current_tab - 1))
+			editor.set_current_sprite(
+				(((row - 1) * 30) + col) + (180 * (editor.current_tab - 1))
+			)
 			return
 		end
 	end
