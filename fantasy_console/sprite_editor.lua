@@ -12,6 +12,7 @@ editor.current_sprite = 1
 editor.current_color = 1
 
 editor.current_sprite_data = nil
+-- ^^^ number: <number>, rgb01: <table of numbers>, hex: <string>
 
 editor.colors_x_start = 152
 editor.colors_y_start = 30
