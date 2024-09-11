@@ -20,6 +20,7 @@ editor.colors_x_start = 152
 editor.colors_y_start = 30
 editor.current_sprite_x_start = 45
 editor.current_sprite_y_start = 30
+editor.current_sprite_border_color = Cyan
 editor.all_sprites_x_start = 8
 editor.all_sprites_y_start = 192
 
@@ -138,6 +139,14 @@ function editor.draw_current_sprite()
 	local sprite_colors = s.return_sprite_colors(
 		s.get_sprite(editor.current_sprite), "rgb01"
 	)
+
+	Rect(
+		editor.current_sprite_x_start - 1,
+		editor.current_sprite_y_start - 1,
+		(g.sprites.size_w ^ 2) + 2,
+		(g.sprites.size_h ^ 2) + 2,
+		Cyan
+	  )
 
 	for _, rgb_color_table in ipairs(sprite_colors) do
 		local cur_x = editor.current_sprite_x_start + (col * g.sprites.size_w)
@@ -300,6 +309,7 @@ function editor.handle_mousepresses(x, y, mousebutton)
 		--    the first sprite has coords from 0.1 to 1.0.
 		local sprite_x = math.ceil(((x / g.screen.gamepixel.w) - editor.current_sprite_x_start) / g.sprites.size_w)
 		local sprite_y = math.ceil(((y / g.screen.gamepixel.h) - editor.current_sprite_y_start) / g.sprites.size_h)
+		do print("color pixel there") end
 	end
 end
 
