@@ -57,6 +57,9 @@ function sprite.set_sprite(num, data)
 	-- or save data on-the-fly to memory, and to json only later
 	-- (after closing "sprites" menu or hitting "SAVE" button or something like that)
 	local sprites_table = sprite.get_all_sprites()
+	--print(sprites_table[num]["colors"][1][1]["hex"])
+	--print(g.sprites.sprites[num]["colors"][1][1]["hex"])
+	--data above is equal
 	sprites_table[num]["colors"] = data
 	local json_sprites_table = json.encode(sprites_table)
 	-- !! DANGEROUS – it'll remove all data in sprites.json!
