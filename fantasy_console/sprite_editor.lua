@@ -275,6 +275,17 @@ function editor.handle_mousepresses(x, y, mousebutton)
 			return
 		end
 	end
+
+	if utils.mouse_box_bound_check(
+		x,
+		editor.current_sprite_x_start * g.screen.gamepixel.w,
+		(editor.current_sprite_x_start + (8 * g.sprites.size_w)) * g.screen.gamepixel.w,
+		y,
+		editor.current_sprite_y_start * g.screen.gamepixel.h,
+		(editor.current_sprite_y_start + (8 * g.sprites.size_h)) * g.screen.gamepixel.h
+	) then
+		print("im in")
+	end
 end
 
 return editor
