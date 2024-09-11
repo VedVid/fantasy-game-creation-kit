@@ -207,6 +207,7 @@ function editor.handle_mousepresses(x, y, mousebutton)
 	-- around the tabs and colors, instead of iterating over all
 	-- buttons from the very start.
 
+	-- Check if mouse is over tab buttons.
 	for  i, button in ipairs(editor.tab_buttons.buttons) do
 		if utils.mouse_box_bound_check(
 			x,
@@ -221,6 +222,7 @@ function editor.handle_mousepresses(x, y, mousebutton)
 		end
 	end
 
+	-- Check if mouse is over list of colors.
 	for i, color in ipairs(editor.colors) do
 		if utils.mouse_box_bound_check(
 			x,
@@ -235,6 +237,7 @@ function editor.handle_mousepresses(x, y, mousebutton)
 		end
 	end
 
+	-- Check if mouse is over sprites list.
 	if utils.mouse_box_bound_check(
 		x,
 		editor.all_sprites_x_start * g.screen.gamepixel.w,
@@ -276,6 +279,7 @@ function editor.handle_mousepresses(x, y, mousebutton)
 		end
 	end
 
+	-- Check if mouse is over current sprite.
 	if utils.mouse_box_bound_check(
 		x,
 		editor.current_sprite_x_start * g.screen.gamepixel.w,
