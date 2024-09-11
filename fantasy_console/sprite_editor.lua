@@ -288,7 +288,8 @@ function editor.handle_mousepresses(x, y, mousebutton)
 		editor.current_sprite_y_start * g.screen.gamepixel.h,
 		(editor.current_sprite_y_start + (8 * g.sprites.size_h)) * g.screen.gamepixel.h
 	) then
-		print("im in")
+		local sprite_x = math.ceil(((x / g.screen.gamepixel.w) - editor.current_sprite_x_start) / g.sprites.size_w)
+		local sprite_y = math.ceil(((y / g.screen.gamepixel.h) - editor.current_sprite_y_start) / g.sprites.size_h)
 	end
 end
 
