@@ -50,18 +50,13 @@ function sprite.set_sprite(num, data)
 	-- then creates new one with newer data.
 	-- Also, I'm just replacing sprite in-place, I'm not sure if it doesn't
 	-- create a memory leak.
-	-- ALSO, SPRITES ARE LOADED TO MEMEMORY ON START. This function
-	-- DOES NOT update sprites-in-memory.
-	-- Eiter add 
-	--     g.sprites.sprites = sprites_table
-	-- or save data on-the-fly to memory, and to json only later
-	-- (after closing "sprites" menu or hitting "SAVE" button or something like that)
-	local sprites_table = sprite.get_all_sprites()
-	--print(sprites_table[num]["colors"][1][1]["hex"])
-	--print(g.sprites.sprites[num]["colors"][1][1]["hex"])
-	--data above is equal
-	sprites_table[num]["colors"] = data
-	local json_sprites_table = json.encode(sprites_table)
+
+	-- Please note that this function creates new file on every call.
+	-- It would be wiser to update in-memory sprites only, and to save the
+	-- modified data to disk only later, e.g. when closing the app, or
+	-- when hitting the "Save button".
+	g.sprites.sprites[num]["colors"] = data
+	local json_sprites_table = json.encode(g.sprites.sprites)
 	-- !! DANGEROUS – it'll remove all data in sprites.json!
 	local f = assert(io.open(g.sprites.path, "w+"))
 	io.output(f)
