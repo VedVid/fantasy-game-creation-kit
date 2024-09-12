@@ -7,9 +7,20 @@ local utils = require "utils"
 
 local editor = {}
 
+editor.modes = {}
+editor.modes.point = "point"
+editor.modes.line = "line"
+editor.modes.rect = "rect"
+editor.modes.rectfill = "rectfill"
+editor.modes.circ = "circ"
+editor.modes.circfill = "circfill"
+editor.modes.oval = "oval"
+editor.modes.ovalfill = "ovalfill"
+
 editor.current_tab = 1
 editor.current_sprite = 1
 editor.current_color = 1
+editor.current_mode = editor.modes.point
 
 -- When user changes sprite by drawing, then the changes should be
 -- automatically added to current_sprite_data
