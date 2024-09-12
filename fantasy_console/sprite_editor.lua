@@ -2,6 +2,7 @@ require "api"
 
 local g = require "globals"
 local s = require "sprite"
+local palette = require "palette"
 local utils = require "utils"
 
 
@@ -65,22 +66,22 @@ table.insert(editor.tab_buttons.buttons, editor.all_sprites_tab_3)
 
 
 editor.colors = {
-	{Black, editor.colors_x_start, editor.colors_y_start},
-	{BlackBold, editor.colors_x_start + 8, editor.colors_y_start},
-	{Red, editor.colors_x_start + 16, editor.colors_y_start},
-	{RedBold, editor.colors_x_start + 24, editor.colors_y_start},
-	{Green, editor.colors_x_start, editor.colors_y_start + 8},
-	{GreenBold, editor.colors_x_start + 8, editor.colors_y_start + 8},
-	{Yellow, editor.colors_x_start + 16, editor.colors_y_start + 8},
-	{YellowBold, editor.colors_x_start + 24, editor.colors_y_start + 8},
-	{Blue, editor.colors_x_start, editor.colors_y_start + 16},
-	{BlueBold, editor.colors_x_start + 8, editor.colors_y_start + 16},
-	{Pink, editor.colors_x_start + 16, editor.colors_y_start + 16},
-	{PinkBold, editor.colors_x_start + 24, editor.colors_y_start + 16},
-	{Cyan, editor.colors_x_start, editor.colors_y_start + 24},
-	{CyanBold, editor.colors_x_start + 8, editor.colors_y_start + 24},
-	{White, editor.colors_x_start + 16, editor.colors_y_start + 24},
-	{WhiteBold, editor.colors_x_start + 24, editor.colors_y_start + 24}
+	{palette.black, editor.colors_x_start, editor.colors_y_start},
+	{palette.black_bold, editor.colors_x_start + 8, editor.colors_y_start},
+	{palette.red, editor.colors_x_start + 16, editor.colors_y_start},
+	{palette.red_bold, editor.colors_x_start + 24, editor.colors_y_start},
+	{palette.green, editor.colors_x_start, editor.colors_y_start + 8},
+	{palette.green_bold, editor.colors_x_start + 8, editor.colors_y_start + 8},
+	{palette.yellow, editor.colors_x_start + 16, editor.colors_y_start + 8},
+	{palette.yellow_bold, editor.colors_x_start + 24, editor.colors_y_start + 8},
+	{palette.blue, editor.colors_x_start, editor.colors_y_start + 16},
+	{palette.blue_bold, editor.colors_x_start + 8, editor.colors_y_start + 16},
+	{palette.magenta, editor.colors_x_start + 16, editor.colors_y_start + 16},
+	{palette.magenta_bold, editor.colors_x_start + 24, editor.colors_y_start + 16},
+	{palette.cyan, editor.colors_x_start, editor.colors_y_start + 24},
+	{palette.cyan_bold, editor.colors_x_start + 8, editor.colors_y_start + 24},
+	{palette.white, editor.colors_x_start + 16, editor.colors_y_start + 24},
+	{palette.white_bold, editor.colors_x_start + 24, editor.colors_y_start + 24}
 }
 
 function editor.set_current_tab(num)
@@ -186,7 +187,7 @@ function editor.draw_colors()
 		Cyan
 	  )
 	for _, v in ipairs(editor.colors) do
-		Rectfill(v[2], v[3], g.sprites.size_w, g.sprites.size_h, v[1])
+		Rectfill(v[2], v[3], g.sprites.size_w, g.sprites.size_h, v[1]["rgb01"])
 	end
 	Rect(
 		editor.colors[editor.current_color][2]-1,
@@ -320,7 +321,11 @@ function editor.handle_mousepresses(x, y, mousebutton)
 		--    the first sprite has coords from 0.1 to 1.0.
 		local sprite_x = math.ceil(((x / g.screen.gamepixel.w) - editor.current_sprite_x_start) / g.sprites.size_w)
 		local sprite_y = math.ceil(((y / g.screen.gamepixel.h) - editor.current_sprite_y_start) / g.sprites.size_h)
-		do print("color pixel there") end
+		if editor.current_mode == editor.modes.point then
+			print(editor.current_color)
+			print(editor.colors[editor.current_color][1]["number"])
+			g.sprites.sprites[editor.current_sprite]["colors"][sprite_y][sprite_x] = editor.colors[editor.current_color]
+		end
 	end
 end
 
