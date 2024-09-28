@@ -145,7 +145,6 @@ function editor.draw_all_sprites()
 end
 
 function editor.draw_current_sprite()
-	local cols = 8  -- every sprite is 8x8, so we wrap after 8th column every time
 	local col = 0
 	local row = 0
 
@@ -163,7 +162,6 @@ function editor.draw_current_sprite()
 		Cyan
 	  )
 
-	local iii = 1
 	for _, line in ipairs(editor.current_sprite_data) do
 	local cur_y = editor.current_sprite_y_start + (row * g.sprites.size_h)
 		for _, v in ipairs(line) do
@@ -179,19 +177,6 @@ function editor.draw_current_sprite()
 		end
 		col = 0
 		row = row + 1
-		if iii == 1 then
-			local pprint = require "pprint"
-			--pprint(color_table)
-			--pprint(color_table[8][k])
-			--pprint(editor.current_sprite_data)
-			--pprint(color_table[9])
-			--print()
-			--print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-			--print("---END---------------------------------")
-			--print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-			--print(#editor.current_sprite_data)
-			iii = 2
-		end
 	end
 end
 
