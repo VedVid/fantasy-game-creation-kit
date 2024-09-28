@@ -36,6 +36,20 @@ editor.current_sprite_border_color = Cyan
 editor.all_sprites_x_start = 8
 editor.all_sprites_y_start = 192
 
+editor.save_button = {}
+editor.save_button.w = 25
+editor.save_button.h = 11
+editor.save_button.x = editor.colors_x_start + (g.sprites.size_w * 4) - editor.save_button.w - 1
+editor.save_button.y = editor.colors_y_start + (g.sprites.size_h * 4) + editor.save_button.h - 8
+editor.save_button.border_color = Cyan
+editor.save_button.border_color_active = PinkBold
+editor.save_button.background_color = BlackBold
+editor.save_button.background_color_active = WhiteBold
+editor.save_button.has_been_pressed = 0
+editor.save_button.has_been_pressed_max = math.floor(g.min_dt * 1000)
+editor.save_button.text = "Save"
+editor.save_button.text_active = "Saved!"
+
 editor.tab_buttons = {}
 editor.tab_buttons.border_color = Cyan
 editor.tab_buttons.border_color_active = PinkBold
@@ -201,6 +215,39 @@ function editor.draw_colors()
 	)
 end
 
+function editor.draw_save_button()
+	local border_color = editor.save_button.border_color
+	local background_color = editor.save_button.background_color
+	local text = editor.save_button.text
+	if editor.save_button.has_been_pressed > 0 then
+		border_color = editor.save_button.border_color_active
+		background_color = editor.save_button.background_color_active
+		text = editor.save_button.text_active
+	end
+	Rect(
+		editor.save_button.x - 1,
+		editor.save_button.y - 1,
+		editor.save_button.w + 2,
+		editor.save_button.h + 2,
+		border_color
+	)
+	Rectfill(
+		editor.save_button.x,
+		editor.save_button.y,
+		editor.save_button.w,
+		editor.save_button.h,
+		background_color
+	)
+	Write(text, editor.save_button.x + 2, editor.save_button.y + 2)
+end
+
+function editor.update_save_button()
+	print(editor.save_button.has_been_pressed)
+	if editor.save_button.has_been_pressed > 0 then
+		editor.save_button.has_been_pressed = editor.save_button.has_been_pressed - 1
+	end
+end
+
 function editor.draw_spritesheet_buttons()
 	for i, button in ipairs(editor.tab_buttons.buttons) do
 		local border_color = editor.tab_buttons.border_color
@@ -327,6 +374,19 @@ function editor.handle_mousepresses(x, y, mousebutton)
 		if editor.current_mode == editor.modes.point then
 			g.sprites.sprites[editor.current_sprite]["colors"][sprite_y][sprite_x] = editor.colors[editor.current_color][1]
 		end
+	end
+
+	-- Check if mouse is over save button.
+	if utils.mouse_box_bound_check(
+		x,
+		editor.save_button.x * g.screen.gamepixel.w,
+		(editor.save_button.x + editor.save_button.w) * g.screen.gamepixel.w,
+		y,
+		editor.save_button.y * g.screen.gamepixel.h,
+		(editor.save_button.y + editor.save_button.h) * g.screen.gamepixel.h
+	) then
+		s.set_sprite(editor.current_sprite, editor.current_sprite_data)
+		editor.save_button.has_been_pressed = editor.save_button.has_been_pressed_max
 	end
 end
 
