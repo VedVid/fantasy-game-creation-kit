@@ -182,6 +182,15 @@ function sprite.return_sprite_colors(spr, returned_values, add_print)
 	local colors = spr["colors"]
 
 	if returned_values == "palette" then
+		local pprint = require "pprint"
+		-- to idzie całymi liniami
+		-- `colors[1]` to cały pasek
+		pprint(colors[1])
+		print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+		print("---END---------------------------------")
+		print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+		print(#colors)
+		print()
 		return colors
 	end
 

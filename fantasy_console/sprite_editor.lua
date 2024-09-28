@@ -182,12 +182,14 @@ function editor.draw_current_sprite()
 		if iii == 1 then
 			local pprint = require "pprint"
 			--pprint(color_table)
-			pprint(color_table[8][k])
-			print()
-			print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-			print("---END---------------------------------")
-			print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-			print(#editor.current_sprite_data)
+			--pprint(color_table[8][k])
+			--pprint(editor.current_sprite_data)
+			--pprint(color_table[9])
+			--print()
+			--print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+			--print("---END---------------------------------")
+			--print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+			--print(#editor.current_sprite_data)
 			iii = 2
 		end
 	end
