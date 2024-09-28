@@ -148,9 +148,12 @@ function editor.draw_current_sprite()
 	local cols = 8  -- every sprite is 8x8, so we wrap after 8th column every time
 	local col = 0
 	local row = 0
-	local sprite_colors = s.return_sprite_colors(
-		s.get_sprite(editor.current_sprite), "rgb01"
-	)
+
+	if editor.current_sprite_data == nil then
+		editor.current_sprite_data = s.return_sprite_colors(
+			s.get_sprite(editor.current_sprite), "palette"
+		)
+	end
 
 	Rect(
 		editor.current_sprite_x_start - 1,
@@ -160,20 +163,32 @@ function editor.draw_current_sprite()
 		Cyan
 	  )
 
-	for _, rgb_color_table in ipairs(sprite_colors) do
+	local iii = 1
+	for k, color_table in ipairs(editor.current_sprite_data) do
 		local cur_x = editor.current_sprite_x_start + (col * g.sprites.size_w)
-		local cur_y = editor.current_sprite_y_start+ (row * g.sprites.size_h)
+		local cur_y = editor.current_sprite_y_start + (row * g.sprites.size_h)
 		Rectfill(
 			cur_x,
 			cur_y,
 			g.sprites.size_w,
 			g.sprites.size_h,
-			rgb_color_table
+			color_table[k]["rgb01"]
 		)
 		col = col + 1
 		if col % cols == 0 then
 			col = 0
 			row = row + 1
+		end
+		if iii == 1 then
+			local pprint = require "pprint"
+			--pprint(color_table)
+			pprint(color_table[8][k])
+			print()
+			print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+			print("---END---------------------------------")
+			print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+			print(#editor.current_sprite_data)
+			iii = 2
 		end
 	end
 end
