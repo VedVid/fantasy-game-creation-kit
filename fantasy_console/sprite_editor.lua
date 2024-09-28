@@ -333,10 +333,10 @@ function editor.handle_mousepresses(x, y, mousebutton)
 			print(g.sprites.sprites[editor.current_sprite]["colors"][sprite_y][sprite_x])
 			local tmp = g.sprites.sprites[editor.current_sprite]["colors"][sprite_y][sprite_x]
 			local pprint = require "pprint"
-			pprint(tmp[1])
-			pprint(editor.colors[editor.current_color][1])
+			pprint(tmp[2])
+			pprint(editor.colors[editor.current_color][2])
 			print()
-			g.sprites.sprites[editor.current_sprite]["colors"][sprite_y][sprite_x] = editor.colors[editor.current_color]
+			g.sprites.sprites[editor.current_sprite]["colors"][sprite_y][sprite_x] = editor.colors[editor.current_color][1]
 		end
 	end
 end
