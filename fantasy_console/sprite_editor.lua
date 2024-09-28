@@ -177,6 +177,7 @@ function editor.draw_current_sprite()
 			)
 			col = col + 1
 		end
+		col = 0
 		row = row + 1
 		if iii == 1 then
 			local pprint = require "pprint"
