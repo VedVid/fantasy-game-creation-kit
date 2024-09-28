@@ -325,17 +325,6 @@ function editor.handle_mousepresses(x, y, mousebutton)
 		local sprite_x = math.ceil(((x / g.screen.gamepixel.w) - editor.current_sprite_x_start) / g.sprites.size_w)
 		local sprite_y = math.ceil(((y / g.screen.gamepixel.h) - editor.current_sprite_y_start) / g.sprites.size_h)
 		if editor.current_mode == editor.modes.point then
-			print("editor.current_color:")
-			print(editor.current_color)
-			print("editor.colors[editor.current_color][1]['number']")
-			print(editor.colors[editor.current_color][1]["number"])
-			print("g.sprites.sprites[editor.current_sprite]['colors'][sprite_y][sprite_x]")
-			print(g.sprites.sprites[editor.current_sprite]["colors"][sprite_y][sprite_x])
-			local tmp = g.sprites.sprites[editor.current_sprite]["colors"][sprite_y][sprite_x]
-			local pprint = require "pprint"
-			pprint(tmp[2])
-			pprint(editor.colors[editor.current_color][2])
-			print()
 			g.sprites.sprites[editor.current_sprite]["colors"][sprite_y][sprite_x] = editor.colors[editor.current_color][1]
 		end
 	end
