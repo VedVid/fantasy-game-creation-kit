@@ -164,21 +164,20 @@ function editor.draw_current_sprite()
 	  )
 
 	local iii = 1
-	for k, color_table in ipairs(editor.current_sprite_data) do
-		local cur_x = editor.current_sprite_x_start + (col * g.sprites.size_w)
-		local cur_y = editor.current_sprite_y_start + (row * g.sprites.size_h)
-		Rectfill(
-			cur_x,
-			cur_y,
-			g.sprites.size_w,
-			g.sprites.size_h,
-			color_table[k]["rgb01"]
-		)
-		col = col + 1
-		if col % cols == 0 then
-			col = 0
-			row = row + 1
+	for _, line in ipairs(editor.current_sprite_data) do
+	local cur_y = editor.current_sprite_y_start + (row * g.sprites.size_h)
+		for _, v in ipairs(line) do
+			local cur_x = editor.current_sprite_x_start + (col * g.sprites.size_w)
+			Rectfill(
+				cur_x,
+				cur_y,
+				g.sprites.size_w,
+				g.sprites.size_h,
+				v["rgb01"]
+			)
+			col = col + 1
 		end
+		row = row + 1
 		if iii == 1 then
 			local pprint = require "pprint"
 			--pprint(color_table)
