@@ -25,7 +25,7 @@ editor.current_tab = 1
 editor.current_sprite = 1
 editor.current_color = 1
 editor.current_mode = editor.modes.point
-editor.current_toggle = editor.toggle.press
+editor.current_toggle = editor.toggle.hold
 
 -- When user changes sprite by drawing, then the changes should be
 -- automatically added to current_sprite_data
@@ -318,7 +318,7 @@ function editor.handle_mouseholding(x, y)
 end
 
 
-function editor.handle_mousepresses(x, y, mousebutton)
+function editor.handle_mousepresses(x, y)
 	-- This could be probably improved by basic bound checking
 	-- around the tabs and colors, instead of iterating over all
 	-- buttons from the very start.
@@ -401,6 +401,28 @@ function editor.handle_mousepresses(x, y, mousebutton)
 		end
 	end
 
+	-- Check if mouse is over save button.
+	if utils.mouse_box_bound_check(
+		x,
+		editor.save_button.x * g.screen.gamepixel.w,
+		(editor.save_button.x + editor.save_button.w) * g.screen.gamepixel.w,
+		y,
+		editor.save_button.y * g.screen.gamepixel.h,
+		(editor.save_button.y + editor.save_button.h) * g.screen.gamepixel.h
+	) then
+		s.set_sprite(editor.current_sprite, editor.current_sprite_data)
+		editor.save_button.has_been_pressed = editor.save_button.has_been_pressed_max
+	end
+
+	-- Checks above are universal, they should be handled the same way no matter
+	-- if you are using "hold" or "click" mode.
+	-- The checks below are specific to the mode, though, the function exits early
+	-- if there incompatible mode is enabled.
+
+	if editor.current_toggle == editor.toggle.hold then
+		return
+	end
+
 	-- Check if mouse is over current sprite.
 	if utils.mouse_box_bound_check(
 		x,
@@ -428,19 +450,6 @@ function editor.handle_mousepresses(x, y, mousebutton)
 				print("Warning: " .. res)
 			end
 		end
-	end
-
-	-- Check if mouse is over save button.
-	if utils.mouse_box_bound_check(
-		x,
-		editor.save_button.x * g.screen.gamepixel.w,
-		(editor.save_button.x + editor.save_button.w) * g.screen.gamepixel.w,
-		y,
-		editor.save_button.y * g.screen.gamepixel.h,
-		(editor.save_button.y + editor.save_button.h) * g.screen.gamepixel.h
-	) then
-		s.set_sprite(editor.current_sprite, editor.current_sprite_data)
-		editor.save_button.has_been_pressed = editor.save_button.has_been_pressed_max
 	end
 end
 
