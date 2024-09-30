@@ -46,6 +46,7 @@ end
 
 function love.mousepressed(x, y, button, istouch, presses)
     if mode == "sprites" then
+        sprite_editor.handle_pressing_universal_buttons(x, y)
         if sprite_editor.current_toggle == sprite_editor.toggle.press then
             sprite_editor.handle_mousepresses(x, y)
         end
@@ -55,7 +56,6 @@ end
 function love.mousemoved(x, y, dx, dy)
     if mode == "sprites" then
         if sprite_editor.current_toggle == sprite_editor.toggle.hold then
-            sprite_editor.handle_mousepresses(x, y)
             sprite_editor.handle_mouseholding(x, y)
         end
     end
@@ -80,6 +80,7 @@ function love.draw()
         sprite_editor.draw_all_sprites()
         sprite_editor.draw_colors()
         sprite_editor.draw_save_button()
+        sprite_editor.draw_toggle_button()
         sprite_editor.draw_current_sprite()
     end
     local current_time = love.timer.getTime()
