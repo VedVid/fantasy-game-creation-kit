@@ -17,11 +17,15 @@ editor.modes.circ = "circ"
 editor.modes.circfill = "circfill"
 editor.modes.oval = "oval"
 editor.modes.ovalfill = "ovalfill"
+editor.toggle = {}
+editor.toggle.press = "press"
+editor.toggle.hold = "hold"
 
 editor.current_tab = 1
 editor.current_sprite = 1
 editor.current_color = 1
 editor.current_mode = editor.modes.point
+editor.current_toggle = editor.toggle.press
 
 -- When user changes sprite by drawing, then the changes should be
 -- automatically added to current_sprite_data

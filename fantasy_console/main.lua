@@ -46,13 +46,17 @@ end
 
 function love.mousepressed(x, y, button, istouch, presses)
     if mode == "sprites" then
-        sprite_editor.handle_mousepresses(x, y, button)
+        if sprite_editor.current_toggle == sprite_editor.toggle.press then
+            sprite_editor.handle_mousepresses(x, y, button)
+        end
     end
 end
 
 function love.mousemoved(x, y, dx, dy)
     if mode == "sprites" then
-        sprite_editor.handle_mouseholding(x, y)
+        if sprite_editor.current_toggle == sprite_editor.toggle.hold then
+            sprite_editor.handle_mouseholding(x, y)
+        end
     end
 end
 
