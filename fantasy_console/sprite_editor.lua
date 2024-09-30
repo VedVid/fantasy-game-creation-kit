@@ -295,7 +295,6 @@ function editor.draw_toggle_button()
 end
 
 function editor.update_save_button()
-	print(editor.save_button.has_been_pressed)
 	if editor.save_button.has_been_pressed > 0 then
 		editor.save_button.has_been_pressed = editor.save_button.has_been_pressed - 1
 	end
