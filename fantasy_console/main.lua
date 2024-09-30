@@ -50,6 +50,12 @@ function love.mousepressed(x, y, button, istouch, presses)
     end
 end
 
+function love.mousemoved(x, y, dx, dy)
+    if mode == "sprites" then
+        sprite_editor.handle_mouseholding(x, y)
+    end
+end
+
 function love.update()
     g.next_time = g.next_time + g.min_dt
     if mode == "playing" then
