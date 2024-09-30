@@ -278,6 +278,13 @@ function editor.draw_spritesheet_buttons()
 end
 
 function editor.handle_mouseholding(x, y)
+
+	-- This closure is used later to use within pcall to emulate
+	-- behaviour similar to try-except
+	local function replace_sprite_pixel(sprite_1_x, sprite_1_y)
+		g.sprites.sprites[editor.current_sprite]["colors"][sprite_1_y][sprite_1_x] = editor.colors[editor.current_color][1]
+	end
+
 	if love.mouse.isDown(1, 2) then
 		-- Check if mouse is over current sprite.
 		if utils.mouse_box_bound_check(
@@ -301,7 +308,10 @@ function editor.handle_mouseholding(x, y)
 			local sprite_x = math.ceil(((x / g.screen.gamepixel.w) - editor.current_sprite_x_start) / g.sprites.size_w)
 			local sprite_y = math.ceil(((y / g.screen.gamepixel.h) - editor.current_sprite_y_start) / g.sprites.size_h)
 			if editor.current_mode == editor.modes.point then
-				g.sprites.sprites[editor.current_sprite]["colors"][sprite_y][sprite_x] = editor.colors[editor.current_color][1]
+				local ok, res = pcall(replace_sprite_pixel, sprite_x, sprite_y)
+				if not ok then
+					print("Warning: " .. res)
+				end
 			end
 		end
 	end
@@ -312,6 +322,12 @@ function editor.handle_mousepresses(x, y, mousebutton)
 	-- This could be probably improved by basic bound checking
 	-- around the tabs and colors, instead of iterating over all
 	-- buttons from the very start.
+
+	-- This closure is used later to use within pcall to emulate
+	-- behaviour similar to try-except
+	local function replace_sprite_pixel(sprite_1_x, sprite_1_y)
+		g.sprites.sprites[editor.current_sprite]["colors"][sprite_1_y][sprite_1_x] = editor.colors[editor.current_color][1]
+	end
 
 	-- Check if mouse is over tab buttons.
 	for  i, button in ipairs(editor.tab_buttons.buttons) do
@@ -407,7 +423,10 @@ function editor.handle_mousepresses(x, y, mousebutton)
 		local sprite_x = math.ceil(((x / g.screen.gamepixel.w) - editor.current_sprite_x_start) / g.sprites.size_w)
 		local sprite_y = math.ceil(((y / g.screen.gamepixel.h) - editor.current_sprite_y_start) / g.sprites.size_h)
 		if editor.current_mode == editor.modes.point then
-			g.sprites.sprites[editor.current_sprite]["colors"][sprite_y][sprite_x] = editor.colors[editor.current_color][1]
+			local ok, res = pcall(replace_sprite_pixel, sprite_x, sprite_y)
+			if not ok then
+				print("Warning: " .. res)
+			end
 		end
 	end
 
