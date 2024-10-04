@@ -80,7 +80,6 @@ function love.draw()
         sprite_editor.draw_all_sprites()
         sprite_editor.draw_colors()
         sprite_editor.draw_save_button()
-        sprite_editor.draw_toggle_button()
         sprite_editor.draw_current_sprite()
     end
     local current_time = love.timer.getTime()

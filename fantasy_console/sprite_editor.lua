@@ -54,16 +54,6 @@ editor.save_button.has_been_pressed_max = math.floor(g.min_dt * 1000)
 editor.save_button.text = "Save"
 editor.save_button.text_active = "Saved!"
 
-editor.toggle_button = {}
-editor.toggle_button.w = 45
-editor.toggle_button.h = 11
-editor.toggle_button.x = editor.colors_x_start + (g.sprites.size_w * 4) - editor.toggle_button.w + 13
-editor.toggle_button.y = editor.colors_y_start + (g.sprites.size_h * 4) + editor.toggle_button.h + 6
-editor.toggle_button.border_color = Cyan
-editor.toggle_button.accent_color = PinkBold
-editor.toggle_button.background_color = BlackBold
-editor.toggle_button.text = "click or hold"
-
 editor.tab_buttons = {}
 editor.tab_buttons.border_color = Cyan
 editor.tab_buttons.border_color_active = PinkBold
@@ -135,12 +125,12 @@ function editor.set_current_color(num)
 	editor.current_color = num
 end
 
-function editor.set_current_toggle_mode()
-	if editor.current_toggle == editor.toggle.hold then
-		editor.current_toggle = editor.toggle.press
-	else 
+function editor.switch_current_toggle_mode()
+	if editor.current_mode == editor.modes.point then
 		editor.current_toggle = editor.toggle.hold
+		return
 	end
+	editor.current_toggle = editor.toggle.press
 end
 
 function editor.draw_all_sprites()
@@ -263,37 +253,6 @@ function editor.draw_save_button()
 	Write(text, editor.save_button.x + 2, editor.save_button.y + 2)
 end
 
-function editor.draw_toggle_button()
-	Rect(
-		editor.toggle_button.x - 1,
-		editor.toggle_button.y - 1,
-		editor.toggle_button.w + 2,
-		editor.toggle_button.h + 2,
-		editor.toggle_button.border_color
-	)
-	Rectfill(
-		editor.toggle_button.x,
-		editor.toggle_button.y,
-		editor.toggle_button.w,
-		editor.toggle_button.h,
-		editor.toggle_button.background_color
-	)
-	Write(editor.toggle_button.text, editor.toggle_button.x + 2, editor.toggle_button.y + 2)
-	local button_x_offset_start = 1
-	local button_x_offset_end = 16
-	if editor.current_toggle == editor.toggle.hold then
-		button_x_offset_start = 27
-		button_x_offset_end = 42
-	end
-	Line(
-		editor.toggle_button.x + button_x_offset_start,
-		editor.toggle_button.y + 9,
-		editor.toggle_button.x + button_x_offset_end,
-		editor.toggle_button.y + 9,
-		editor.toggle_button.accent_color
-	)
-end
-
 function editor.update_save_button()
 	if editor.save_button.has_been_pressed > 0 then
 		editor.save_button.has_been_pressed = editor.save_button.has_been_pressed - 1
@@ -371,18 +330,6 @@ function editor.handle_pressing_universal_buttons(x, y)
 	) then
 		s.set_sprite(editor.current_sprite, editor.current_sprite_data)
 		editor.save_button.has_been_pressed = editor.save_button.has_been_pressed_max
-	end
-
-	-- Check if mouse is over toggle button.
-	if utils.mouse_box_bound_check(
-		x,
-		editor.toggle_button.x * g.screen.gamepixel.w,
-		(editor.toggle_button.x + editor.toggle_button.w) * g.screen.gamepixel.w,
-		y,
-		editor.toggle_button.y * g.screen.gamepixel.h,
-		(editor.toggle_button.y + editor.toggle_button.h) * g.screen.gamepixel.h
-	) then
-		editor.set_current_toggle_mode()
 	end
 
 	-- Check if mouse is over sprites list.
