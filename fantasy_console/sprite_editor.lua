@@ -54,6 +54,36 @@ editor.save_button.has_been_pressed_max = math.floor(g.min_dt * 1000)
 editor.save_button.text = "Save"
 editor.save_button.text_active = "Saved!"
 
+editor.mode_buttons_w = 7
+editor.mode_buttons_h = 7
+
+editor.point_mode_button = {}
+editor.point_mode_button.w = editor.mode_buttons_w
+editor.point_mode_button.h = editor.mode_buttons_h
+editor.point_mode_button.x = editor.colors_x_start + (g.sprites.size_w * 4) - editor.point_mode_button.w - 25
+editor.point_mode_button.y = editor.colors_y_start + (g.sprites.size_h * 4) + editor.point_mode_button.h + 10
+editor.point_mode_button.pattern = {
+--	{0, 0, 0, 0, 0, 0, 0},
+--	{0, 0, 0, 0, 0, 0, 0},
+--	{0, 0, 0, 0, 0, 0, 0},
+--	{0, 0, 0, 1, 0, 0, 0},
+--	{0, 0, 0, 0, 0, 0, 0},
+--	{0, 0, 0, 0, 0, 0, 0},
+--	{0, 0, 0, 0, 0, 0, 0},
+	{0, 0, 0, 0, 0, 0, 0},
+	{0, 0, 0, 0, 0, 0, 0},
+	{0, 0, 0, 0, 0, 0, 0},
+	{0, 0, 0, 1, 0, 0, 0},
+	{0, 0, 0, 0, 0, 0, 0},
+	{0, 0, 0, 0, 0, 0, 0},
+	{0, 0, 0, 0, 0, 0, 0},
+}
+editor.point_mode_button.border_color = Cyan
+editor.point_mode_button.border_color_active = PinkBold
+editor.point_mode_button.background_color = BlackBold
+editor.point_mode_button.background_color_active = WhiteBold
+editor.point_mode_button.pattern_color = Yellow
+
 editor.tab_buttons = {}
 editor.tab_buttons.border_color = Cyan
 editor.tab_buttons.border_color_active = PinkBold
@@ -123,6 +153,10 @@ end
 
 function editor.set_current_color(num)
 	editor.current_color = num
+end
+
+function editor.set_current_mode(mode)
+	editor.current_mode = mode
 end
 
 function editor.switch_current_toggle_mode()
@@ -259,6 +293,54 @@ function editor.update_save_button()
 	end
 end
 
+function editor.draw_modes_buttons()
+	editor.draw_point_mode_button()
+end
+
+function editor.draw_button_pattern(button)
+	local x = button.x
+	local y = button.y
+	for _, row in ipairs(button.pattern) do
+		for _, pixel in ipairs(row) do
+			if pixel == 0 then
+				do end
+			elseif pixel == 1 then
+				Pset(x, y, button.pattern_color)
+			end
+			x = x + 1
+			if x > button.x + button.w - 1 then
+				x = button.x
+				y = y + 1
+			end
+		end
+	end
+end
+
+function editor.draw_point_mode_button()
+	local border_color = editor.point_mode_button.border_color
+	local background_color = editor.point_mode_button.background_color
+	if editor.current_mode == editor.modes.point then
+		border_color = editor.point_mode_button.border_color_active
+		background_color = editor.point_mode_button.background_color_active
+	end
+	Rect(
+		editor.point_mode_button.x - 1,
+		editor.point_mode_button.y - 1,
+		editor.point_mode_button.w + 2,
+		editor.point_mode_button.h + 2,
+		border_color
+	)
+	Rectfill(
+		editor.point_mode_button.x,
+		editor.point_mode_button.y,
+		editor.point_mode_button.w,
+		editor.point_mode_button.h,
+		background_color
+	)
+	editor.draw_button_pattern(editor.point_mode_button)
+end
+
+
 function editor.draw_spritesheet_buttons()
 	for i, button in ipairs(editor.tab_buttons.buttons) do
 		local border_color = editor.tab_buttons.border_color
@@ -330,6 +412,19 @@ function editor.handle_pressing_universal_buttons(x, y)
 	) then
 		s.set_sprite(editor.current_sprite, editor.current_sprite_data)
 		editor.save_button.has_been_pressed = editor.save_button.has_been_pressed_max
+	end
+
+	-- Check if mouse is over point mode button.
+	if utils.mouse_box_bound_check(
+		x,
+		editor.point_mode_button.x * g.screen.gamepixel.w,
+		(editor.point_mode_button.x + editor.point_mode_button.w) * g.screen.gamepixel.w,
+		y,
+		editor.point_mode_button.y * g.screen.gamepixel.h,
+		(editor.point_mode_button.y + editor.point_mode_button.h) * g.screen.gamepixel.h
+	) then
+		editor.set_current_mode(editor.modes.point)
+		editor.switch_current_toggle_mode()
 	end
 
 	-- Check if mouse is over sprites list.
