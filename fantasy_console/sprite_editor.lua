@@ -8,6 +8,10 @@ local utils = require "utils"
 
 local editor = {}
 
+-- List of the modes available to the user.
+-- Mode is a way to draw, e.g. point is like
+-- drawing pixel-by-pixel, like in Paint, and
+-- rect will create a rectangle with two clicks.
 editor.modes = {}
 editor.modes.point = "point"
 editor.modes.line = "line"
@@ -32,6 +36,7 @@ editor.current_toggle = editor.toggle.hold
 editor.current_sprite_data = nil
 -- ^^^ number: <number>, rgb01: <table of numbers>, hex: <string>
 
+-- Data relevant to drawing list of colors to choose from.
 editor.colors_x_start = 152
 editor.colors_y_start = 30
 editor.current_sprite_x_start = 45
@@ -40,6 +45,9 @@ editor.current_sprite_border_color = Cyan
 editor.all_sprites_x_start = 8
 editor.all_sprites_y_start = 192
 
+-- Save button.
+-- It allows to save current work. After player taps the button,
+-- it changes text and colors for a three seconds.
 editor.save_button = {}
 editor.save_button.w = 25
 editor.save_button.h = 11
@@ -54,9 +62,16 @@ editor.save_button.has_been_pressed_max = math.floor(g.min_dt * 1000)
 editor.save_button.text = "Save"
 editor.save_button.text_active = "Saved!"
 
+-- Kinda constants for sizing modes buttons.
 editor.mode_buttons_w = 7
 editor.mode_buttons_h = 7
 
+---- Below there are data relevant to drawing mode buttons.
+---- Buttons depends on each other – it means that if we change
+---- e.g. the coordinates of the first button, the others will follow.
+---- Pattern represents the figure that will be drawn over the button.
+---- `0`s represent background, `1`s represent coloured pixel.
+----
 editor.point_mode_button = {}
 editor.point_mode_button.name = editor.modes.point
 editor.point_mode_button.w = editor.mode_buttons_w
@@ -98,7 +113,11 @@ editor.circ_mode_button.border_color_active = PinkBold
 editor.circ_mode_button.background_color = BlackBold
 editor.circ_mode_button.background_color_active = WhiteBold
 editor.circ_mode_button.pattern_color = Yellow
+----
+---- End of modes buttons data.
 
+-- Tabs let user switch between pages / lists of sprites.
+-- There are three tabs. The third is a little bit shorter than the first two. 
 editor.tab_buttons = {}
 editor.tab_buttons.border_color = Cyan
 editor.tab_buttons.border_color_active = PinkBold
@@ -127,7 +146,14 @@ editor.all_sprites_tab_3.y = editor.all_sprites_y_start - 67
 editor.all_sprites_tab_3.txt = "Tab 3"
 table.insert(editor.tab_buttons.buttons, editor.all_sprites_tab_3)
 
-
+-- List of colors and the coordinates of the screen.
+-- Together, all colors make a palette that user can choose colors
+-- from by simply clicking on the color they wish to use.
+-- It might seem to be redundant to color data
+-- already available in `palette.lua` and `api.lua`, but this
+-- form works better for sprite editor, because colors in
+-- `api.lua` are just aliases to rgb01 values from palette,
+-- and `palette.lua` contains much more data that is not necessary here.
 editor.colors = {
 	{palette.black, editor.colors_x_start, editor.colors_y_start},
 	{palette.black_bold, editor.colors_x_start + 8, editor.colors_y_start},
