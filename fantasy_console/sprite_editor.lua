@@ -58,18 +58,12 @@ editor.mode_buttons_w = 7
 editor.mode_buttons_h = 7
 
 editor.point_mode_button = {}
+editor.point_mode_button.name = editor.modes.point
 editor.point_mode_button.w = editor.mode_buttons_w
 editor.point_mode_button.h = editor.mode_buttons_h
 editor.point_mode_button.x = editor.colors_x_start + (g.sprites.size_w * 4) - editor.point_mode_button.w - 25
 editor.point_mode_button.y = editor.colors_y_start + (g.sprites.size_h * 4) + editor.point_mode_button.h + 10
 editor.point_mode_button.pattern = {
---	{0, 0, 0, 0, 0, 0, 0},
---	{0, 0, 0, 0, 0, 0, 0},
---	{0, 0, 0, 0, 0, 0, 0},
---	{0, 0, 0, 1, 0, 0, 0},
---	{0, 0, 0, 0, 0, 0, 0},
---	{0, 0, 0, 0, 0, 0, 0},
---	{0, 0, 0, 0, 0, 0, 0},
 	{0, 0, 0, 0, 0, 0, 0},
 	{0, 0, 0, 0, 0, 0, 0},
 	{0, 0, 0, 0, 0, 0, 0},
@@ -83,6 +77,27 @@ editor.point_mode_button.border_color_active = PinkBold
 editor.point_mode_button.background_color = BlackBold
 editor.point_mode_button.background_color_active = WhiteBold
 editor.point_mode_button.pattern_color = Yellow
+
+editor.circ_mode_button = {}
+editor.circ_mode_button.name = editor.modes.circ
+editor.circ_mode_button.w = editor.mode_buttons_w
+editor.circ_mode_button.h = editor.mode_buttons_h
+editor.circ_mode_button.x = editor.point_mode_button.x + editor.point_mode_button.w + 3
+editor.circ_mode_button.y = editor.point_mode_button.y
+editor.circ_mode_button.pattern = {
+	{0, 0, 1, 1, 1, 0, 0},
+	{0, 1, 0, 0, 0, 1, 0},
+	{1, 0, 0, 0, 0, 0, 1},
+	{1, 0, 0, 0, 0, 0, 1},
+	{1, 0, 0, 0, 0, 0, 1},
+	{0, 1, 0, 0, 0, 1, 0},
+	{0, 0, 1, 1, 1, 0, 0},
+}
+editor.circ_mode_button.border_color = Cyan
+editor.circ_mode_button.border_color_active = PinkBold
+editor.circ_mode_button.background_color = BlackBold
+editor.circ_mode_button.background_color_active = WhiteBold
+editor.circ_mode_button.pattern_color = Yellow
 
 editor.tab_buttons = {}
 editor.tab_buttons.border_color = Cyan
@@ -294,10 +309,34 @@ function editor.update_save_button()
 end
 
 function editor.draw_modes_buttons()
-	editor.draw_point_mode_button()
+	editor.draw_mode_button(editor.point_mode_button)
+	--editor.draw_mode_button(editor.circ_mode_button)
 end
 
-function editor.draw_button_pattern(button)
+function editor.draw_mode_button(button)
+	local border_color = button.border_color
+	local background_color = button.background_color
+
+	if editor.current_mode == button.name then
+		border_color = button.border_color_active
+		background_color = button.background_color_active
+	end
+
+	Rect(
+		button.x - 1,
+		button.y - 1,
+		button.w + 2,
+		button.h + 2,
+		border_color
+	)
+	Rectfill(
+		button.x,
+		button.y,
+		button.w,
+		button.h,
+		background_color
+	)
+
 	local x = button.x
 	local y = button.y
 	for _, row in ipairs(button.pattern) do
@@ -315,31 +354,6 @@ function editor.draw_button_pattern(button)
 		end
 	end
 end
-
-function editor.draw_point_mode_button()
-	local border_color = editor.point_mode_button.border_color
-	local background_color = editor.point_mode_button.background_color
-	if editor.current_mode == editor.modes.point then
-		border_color = editor.point_mode_button.border_color_active
-		background_color = editor.point_mode_button.background_color_active
-	end
-	Rect(
-		editor.point_mode_button.x - 1,
-		editor.point_mode_button.y - 1,
-		editor.point_mode_button.w + 2,
-		editor.point_mode_button.h + 2,
-		border_color
-	)
-	Rectfill(
-		editor.point_mode_button.x,
-		editor.point_mode_button.y,
-		editor.point_mode_button.w,
-		editor.point_mode_button.h,
-		background_color
-	)
-	editor.draw_button_pattern(editor.point_mode_button)
-end
-
 
 function editor.draw_spritesheet_buttons()
 	for i, button in ipairs(editor.tab_buttons.buttons) do
