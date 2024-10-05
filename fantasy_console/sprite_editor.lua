@@ -41,7 +41,6 @@ editor.colors_x_start = 152
 editor.colors_y_start = 30
 editor.current_sprite_x_start = 45
 editor.current_sprite_y_start = 30
-editor.current_sprite_border_color = Cyan
 editor.all_sprites_x_start = 8
 editor.all_sprites_y_start = 192
 
@@ -53,10 +52,6 @@ editor.save_button.w = 25
 editor.save_button.h = 11
 editor.save_button.x = editor.colors_x_start + (g.sprites.size_w * 4) - editor.save_button.w - 7
 editor.save_button.y = editor.colors_y_start + (g.sprites.size_h * 4) + editor.save_button.h - 8
-editor.save_button.border_color = Cyan
-editor.save_button.border_color_active = PinkBold
-editor.save_button.background_color = BlackBold
-editor.save_button.background_color_active = WhiteBold
 editor.save_button.has_been_pressed = 0
 editor.save_button.has_been_pressed_max = math.floor(g.min_dt * 1000)
 editor.save_button.text = "Save"
@@ -87,10 +82,6 @@ editor.point_mode_button.pattern = {
 	{0, 0, 0, 0, 0, 0, 0},
 	{0, 0, 0, 0, 0, 0, 0},
 }
-editor.point_mode_button.border_color = Cyan
-editor.point_mode_button.border_color_active = PinkBold
-editor.point_mode_button.background_color = BlackBold
-editor.point_mode_button.background_color_active = WhiteBold
 editor.point_mode_button.pattern_color = Yellow
 
 editor.circ_mode_button = {}
@@ -108,10 +99,6 @@ editor.circ_mode_button.pattern = {
 	{0, 1, 0, 0, 0, 1, 0},
 	{0, 0, 1, 1, 1, 0, 0},
 }
-editor.circ_mode_button.border_color = Cyan
-editor.circ_mode_button.border_color_active = PinkBold
-editor.circ_mode_button.background_color = BlackBold
-editor.circ_mode_button.background_color_active = WhiteBold
 editor.circ_mode_button.pattern_color = Yellow
 ----
 ---- End of modes buttons data.
@@ -119,10 +106,6 @@ editor.circ_mode_button.pattern_color = Yellow
 -- Tabs let user switch between pages / lists of sprites.
 -- There are three tabs. The third is a little bit shorter than the first two. 
 editor.tab_buttons = {}
-editor.tab_buttons.border_color = Cyan
-editor.tab_buttons.border_color_active = PinkBold
-editor.tab_buttons.background_color = BlackBold
-editor.tab_buttons.background_color_active = WhiteBold
 editor.tab_buttons.buttons = {}
 editor.all_sprites_tab_1 = {}
 editor.all_sprites_tab_1.w = 21
@@ -303,12 +286,12 @@ function editor.draw_colors()
 end
 
 function editor.draw_save_button()
-	local border_color = editor.save_button.border_color
-	local background_color = editor.save_button.background_color
+	local border_color = g.colors.default_button_border_color
+	local background_color = g.colors.default_button_background_color
 	local text = editor.save_button.text
 	if editor.save_button.has_been_pressed > 0 then
-		border_color = editor.save_button.border_color_active
-		background_color = editor.save_button.background_color_active
+		border_color = g.colors.default_button_border_color_active
+		background_color = g.colors.default_button_background_color_active
 		text = editor.save_button.text_active
 	end
 	Rect(
@@ -340,12 +323,12 @@ function editor.draw_modes_buttons()
 end
 
 function editor.draw_mode_button(button)
-	local border_color = button.border_color
-	local background_color = button.background_color
+	local border_color = g.colors.default_button_border_color
+	local background_color = g.colors.default_button_background_color
 
 	if editor.current_mode == button.name then
-		border_color = button.border_color_active
-		background_color = button.background_color_active
+		border_color = g.colors.default_button_border_color_active
+		background_color = g.colors.default_button_background_color_active
 	end
 
 	Rect(
@@ -383,11 +366,11 @@ end
 
 function editor.draw_spritesheet_buttons()
 	for i, button in ipairs(editor.tab_buttons.buttons) do
-		local border_color = editor.tab_buttons.border_color
-		local background_color = editor.tab_buttons.background_color
+		local border_color = g.colors.default_button_border_color
+		local background_color = g.colors.default_button_background_color
 		if i == editor.current_tab then
-			border_color = editor.tab_buttons.border_color_active
-			background_color = editor.tab_buttons.background_color_active
+			border_color = g.colors.default_button_border_color_active
+			background_color = g.colors.default_button_background_color_active
 		end
 		Rectfill(
 			button.x,
