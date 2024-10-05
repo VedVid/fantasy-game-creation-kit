@@ -44,13 +44,6 @@ function sprite.set_sprite(num, data)
 		error("Invalid sprite number: " .. num .. " is larger than total number of sprites (" .. g.sprites.amount .. ")")
 	end
 
-	-- THIS BELOW IS TOTALLY STUPID AND NEEDS TO BE IMPROVED
-	-- To replace single sprite, it loads all sprites from json,
-	-- replaces single sprite, deleted sprites.json file,
-	-- then creates new one with newer data.
-	-- Also, I'm just replacing sprite in-place, I'm not sure if it doesn't
-	-- create a memory leak.
-
 	-- Please note that this function creates new file on every call.
 	-- It would be wiser to update in-memory sprites only, and to save the
 	-- modified data to disk only later, e.g. when closing the app, or
