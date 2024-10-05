@@ -33,7 +33,6 @@ machine or simulate hardware.
 Game Creation Kit more accurately.
 
 
-
 SPECIFICATIONS
 ==============
 
@@ -57,9 +56,11 @@ Game is shipped with various start scripts:
 The main functions (Init, Input, Update, Draw) need to
 be specified in the `_cart.lua` file.
 
-In v0.2, the only implemented API functions are those related
-to text, geometry drawing, and input handling.
-Sprites editor is also present.
+In v0.2, the following features and API functions are present:
+- text manipulation
+- geometry drawing
+- sprites drawing
+- sprite editor
 
 To get a sense of how the kit works, it is recommended to check
 the examples included in the main archive. To use them,
