@@ -397,14 +397,7 @@ function editor.handle_pressing_universal_buttons(x, y)
 
 	-- Check if mouse is over tab buttons.
 	for  i, button in ipairs(editor.tab_buttons.buttons) do
-		if utils.mouse_box_bound_check(
-			x,
-			button.x * g.screen.gamepixel.w,
-			(button.x + button.w) * g.screen.gamepixel.w,
-			y,
-			button.y * g.screen.gamepixel.h,
-			(button.y + button.h) * g.screen.gamepixel.h
-		) then
+		if utils.mouse_box_bound_check_for_buttons(x, y, button) then
 			editor.set_current_tab(i)
 			return
 		end
@@ -426,27 +419,13 @@ function editor.handle_pressing_universal_buttons(x, y)
 	end
 
 	-- Check if mouse is over save button.
-	if utils.mouse_box_bound_check(
-		x,
-		editor.save_button.x * g.screen.gamepixel.w,
-		(editor.save_button.x + editor.save_button.w) * g.screen.gamepixel.w,
-		y,
-		editor.save_button.y * g.screen.gamepixel.h,
-		(editor.save_button.y + editor.save_button.h) * g.screen.gamepixel.h
-	) then
+	if utils.mouse_box_bound_check_for_buttons(x, y, editor.save_button) then
 		s.set_sprite(editor.current_sprite, editor.current_sprite_data)
 		editor.save_button.has_been_pressed = editor.save_button.has_been_pressed_max
 	end
 
 	-- Check if mouse is over point mode button.
-	if utils.mouse_box_bound_check(
-		x,
-		editor.point_mode_button.x * g.screen.gamepixel.w,
-		(editor.point_mode_button.x + editor.point_mode_button.w) * g.screen.gamepixel.w,
-		y,
-		editor.point_mode_button.y * g.screen.gamepixel.h,
-		(editor.point_mode_button.y + editor.point_mode_button.h) * g.screen.gamepixel.h
-	) then
+	if utils.mouse_box_bound_check_for_buttons(x, y, editor.point_mode_button) then
 		editor.set_current_mode(editor.modes.point)
 		editor.switch_current_toggle_mode()
 	end
