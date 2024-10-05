@@ -102,6 +102,7 @@ editor.circ_mode_button.pattern = {
 editor.circ_mode_button.pattern_color = Yellow
 ----
 ---- End of modes buttons data.
+----
 
 -- Tabs let user switch between pages / lists of sprites.
 -- There are three tabs. The third is a little bit shorter than the first two. 
