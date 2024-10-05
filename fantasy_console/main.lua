@@ -50,6 +50,14 @@ function love.mousepressed(x, y, button, istouch, presses)
         if sprite_editor.current_toggle == sprite_editor.toggle.press then
             sprite_editor.handle_mousepresses(x, y)
         end
+        -- Method handle_mouseholding is used to handle drawing in point mode
+        -- only. Without the call below, you _need_ to move the mouse to draw.
+        -- Just pressing mouse buttons would do nothing.
+        -- !!! If something weird happens with handling mouse presses,
+        -- !!! it would make a sense to start debugging here.
+        if sprite_editor.current_toggle == sprite_editor.toggle.hold then
+            sprite_editor.handle_mouseholding(x, y)
+        end
     end
 end
 
