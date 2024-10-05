@@ -158,11 +158,48 @@ editor.colors = {
 }
 
 function editor.set_current_tab(num)
+	--[[
+    Method set_current_tab calls set_sprite function that save lastly edited
+	sprite data into editor.current_sprite_data that holds in memory all sprites,
+	then saves everything file.
+	Then, it sets current tab in the sprite editor.
+
+	Arguments
+	---------
+	num : number
+		Number of tab to switch. It should be in range between 1 to 3 (inclusive).
+	
+	Returns
+	-------
+	nothing
+	]]--
+
 	s.set_sprite(editor.current_sprite, editor.current_sprite_data)
 	editor.current_tab = num
 end
 
 function editor.set_current_sprite(num)
+	--[[
+	This method is called when player clicks on any sprite cell in the list
+	of the all sprites at the bottom half of the screen.
+
+	At first, it ensures that current_sprite_data holds sprite data.
+	It might be nil in some circumstances, especially after fresh app launch.
+	Then it saves lastly edited sprites to json file (for details, please see comments
+    to editor.set_current_tab).
+	After that, it sets current sprite number, and loads this sprite data
+	to current_sprite_data.
+
+	Arguments
+	---------
+	num : number
+		Number of chosen sprite.
+	
+	Returns
+	-------
+	nothing
+	]]--
+
 	if editor.current_sprite_data == nil then
 		editor.current_sprite_data = s.return_sprite_colors(
 			s.get_sprite(editor.current_sprite), "palette"
@@ -177,14 +214,62 @@ function editor.set_current_sprite(num)
 end
 
 function editor.set_current_color(num)
+	--[[
+	This function sets number of currently selected color.
+	It is called when user clicks on any color on palette. Then, this color
+	is used for drawing.
+
+	Arguments
+	---------
+	num : number
+		Numeric value that indicates color selected.
+	
+	Returns
+	-------
+	nothing
+	]]--
+
 	editor.current_color = num
 end
 
 function editor.set_current_mode(mode)
+	--[[
+    This function is called when player clicks on the button that changes
+	drawing mode (like point, circle, line, etc.).
+	It sets passed value mode to current_mode variable.
+
+	Arguments
+	---------
+	mode : string
+		`mode` value should be one of the values contained in `editor.modes` table.
+	
+	Returns
+	-------
+	nothing
+	]]--
+
 	editor.current_mode = mode
 end
 
 function editor.switch_current_toggle_mode()
+	--[[
+	This function switches toggle mode, meaning: switches between introducing
+	changes to current sprite when mouse is down (it allows to just hold mouse
+    button down and draw things – in `point` mode only) and by requiring separate
+	mouse presses (e.g. for rectangle – click once to anchor one corner, then
+	click again in another place to draw the rectangle).
+	`hold` mode is available only to `point` drawing.
+	`press` mode is available to all drawing modes, except `point` drawing.
+
+	Arguments
+	---------
+	none
+
+	Returns
+	-------
+	nothing
+	]]--
+
 	if editor.current_mode == editor.modes.point then
 		editor.current_toggle = editor.toggle.hold
 		return
@@ -193,6 +278,21 @@ function editor.switch_current_toggle_mode()
 end
 
 function editor.draw_all_sprites()
+	--[[
+	`draw_all_sprites` draws every sprite from the sprites.json file.
+	While the list of sprites in the sprite editor consists of three tabs,
+	it uses offset to show correct sprites.
+	It also draws a border around currently selected sprite.
+
+	Arguments
+	---------
+	none
+
+	Returns
+	-------
+	nothing
+	]]--
+
 	local cols = 30
 	local rows = 6
 	local tab = editor.current_tab
@@ -231,6 +331,20 @@ function editor.draw_all_sprites()
 end
 
 function editor.draw_current_sprite()
+	--[[
+	This function draws enlarged version of currently selected sprite.
+	It is enlarged to make editing sprite easier.
+	Also, the border around the sprite is being drawn here.
+
+	Arguments
+	---------
+	none
+
+	Returns
+	-------
+	nothing
+	]]--
+
 	local col = 0
 	local row = 0
 
@@ -267,6 +381,24 @@ function editor.draw_current_sprite()
 end
 
 function editor.draw_colors()
+	--[[
+	This function iterates over the available palette colors and draws these
+	colors on the screen to allow user to choose desired color to draw things.
+	It also draws border around the whole palette, and smaller border
+	around currently selected color.
+	This function iterates over the editor.colors rather than over palette.lua
+	values or API colors, because this table also specifies coordinates of every color
+	on the sprite editor screen.
+
+	Arguments
+	---------
+	none
+
+	Returns
+	-------
+	nothing
+	]]--
+
 	Rect(
 		editor.colors_x_start - 1,
 		editor.colors_y_start - 1,
@@ -287,6 +419,18 @@ function editor.draw_colors()
 end
 
 function editor.draw_save_button()
+	--[[
+    Draws save button below the palette.
+
+	Arguments
+	---------
+	none
+
+	Returns
+	-------
+	nothing
+	]]--
+
 	local border_color = g.colors.default_button_border_color
 	local background_color = g.colors.default_button_background_color
 	local text = editor.save_button.text
@@ -313,17 +457,60 @@ function editor.draw_save_button()
 end
 
 function editor.update_save_button()
+	--[[
+    When user uses Save button, then the Save button is for 3 seconds marked as active.
+	It means that the border and background colors change, and `Save` text
+	is replaced by `Saved!` for this time.
+	It works that way to show user that the functionality works.
+
+	Arguments
+	---------
+	none
+
+	Returns
+	-------
+	nothing
+	]]--
+
 	if editor.save_button.has_been_pressed > 0 then
 		editor.save_button.has_been_pressed = editor.save_button.has_been_pressed - 1
 	end
 end
 
 function editor.draw_modes_buttons()
+	--[[
+	This function draws buttons that can be used to switch drawing modes,
+	e.g. between point drawing to drawing circles or rectagles.
+	Currently ony `point_mode_button` is shown to the player.
+	]]--
+
 	editor.draw_mode_button(editor.point_mode_button)
 	--editor.draw_mode_button(editor.circ_mode_button)
 end
 
 function editor.draw_mode_button(button)
+	--[[
+	Generic function to draw every possible button for switching drawing modes
+	that adheres to standards used in this file.
+	Buttons that don't have all these fields will crash this function.
+	
+	Arguments
+	---------
+	button : button
+		Every button passed to this function must have the following fields present:
+			- x
+			- y
+			- w
+			- h
+			- pattern
+			- pattern_color
+		Other buttons will crash this function.
+	
+	Returns
+	-------
+	nothing
+	]]--
+
 	local border_color = g.colors.default_button_border_color
 	local background_color = g.colors.default_button_background_color
 
