@@ -56,7 +56,10 @@ function Write(s, x, y, color)
     local lx = math.floor(x * g.screen.gamepixel.w)
     local ly = math.floor(y * g.screen.gamepixel.h)
     if not color then color = g.colors.default_fg_color.rgb01 end
-    love.graphics.setColor(unpack(color))
+    local ok, _ = pcall(love.graphics.setColor, unpack(color))
+    if not ok then
+        ok, _ = pcall(love.graphics.setColor, unpack(color.rgb01))
+    end
     love.graphics.print(s, lx, ly, 0, 1, 1, 0, 0)
     love.graphics.setColor(unpack(g.colors.default_fg_color.rgb01))
 end
@@ -226,7 +229,10 @@ function Pset(x, y, color)
     local lx = math.floor(x * g.screen.gamepixel.w)
     local ly = math.floor(y * g.screen.gamepixel.h)
     if not color then color = g.colors.default_fg_color.rgb01 end
-    love.graphics.setColor(unpack(color))
+    local ok, _ = pcall(love.graphics.setColor, unpack(color))
+    if not ok then
+        ok, _ = pcall(love.graphics.setColor, unpack(color.rgb01))
+    end
     love.graphics.rectangle(
         "fill",
         lx,
@@ -397,7 +403,10 @@ function Rect(x, y, w, h, color)
 
     if not color then color = g.colors.default_fg_color.rgb01 end
 
-    love.graphics.setColor(unpack(color))
+    local ok, _ = pcall(love.graphics.setColor, unpack(color))
+    if not ok then
+        ok, _ = pcall(love.graphics.setColor, unpack(color.rgb01))
+    end
     love.graphics.rectangle("line", lx, ly, lw, lh)
     love.graphics.setColor(unpack(g.colors.default_fg_color.rgb01))
 end
@@ -445,7 +454,10 @@ function Rectfill(x, y, w, h, color)
 
     if not color then color = g.colors.default_fg_color.rgb01 end
 
-    love.graphics.setColor(unpack(color))
+    local ok, _ = pcall(love.graphics.setColor, unpack(color))
+    if not ok then
+        ok, _ = pcall(love.graphics.setColor, unpack(color.rgb01))
+    end
     love.graphics.rectangle("fill", lx, ly, lw, lh)
     love.graphics.setColor(unpack(g.colors.default_fg_color.rgb01))
 end
