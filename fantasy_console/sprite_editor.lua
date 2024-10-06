@@ -553,6 +553,19 @@ function editor.draw_mode_button(button)
 end
 
 function editor.draw_spritesheet_buttons()
+	--[[
+	Draws buttons at the top of the spritesheet list. Buttons are used to
+	navigate between tabs. Switching tab saves current sprite.
+
+	Arguments
+	---------
+	none
+
+	Returns
+	-------
+	nothing
+	]]--
+
 	for i, button in ipairs(editor.tab_buttons.buttons) do
 		local border_color = g.colors.default_button_border_color
 		local background_color = g.colors.default_button_background_color
@@ -578,6 +591,28 @@ function editor.draw_spritesheet_buttons()
 end
 
 function editor.handle_pressing_universal_buttons(x, y)
+	--[[
+	While handle_mouseholding and handle_mousepresses are functions
+	that are focused on handling drawing things on the current_sprite
+	area, handle_pressing_universal_buttons is used to handle 
+	mousepresses on interface elements, so it:
+	- iterates over color palette
+	- checks spritesheet tabs and spritesheets itself
+	- checks save button
+	- checks buttons that trigger drawing mode change
+
+	Arguments
+	---------
+	x : number
+		mouse position on x ax; this value is passed from love.mousepressed
+	y : number
+		mouse position on y ax; this value is passed from love.mousepressed
+
+	Returns
+	-------
+	nothing
+	]]--
+
 	-- This could be probably improved by basic bound checking
 	-- around the tabs and colors, instead of iterating over all
 	-- buttons from the very start.
@@ -661,6 +696,24 @@ function editor.handle_pressing_universal_buttons(x, y)
 end
 
 function editor.handle_mouseholding(x, y)
+	--[[
+	handle_mouseholding is used only for handling drawing over current sprite
+	while having point drawing mode enabled. All other interactions
+	with UI or other drawing modes are handled by other functions, namely
+	handle_mousepressed and handle_pressing_universal_buttons.
+
+	Arguments
+	---------
+	x : number
+		mouse position on x ax; this value is passed from love.mousepressed
+	y : number
+		mouse position on y ax; this value is passed from love.mousepressed
+
+	Returns
+	-------
+	nothing
+	]]--
+
 	-- This closure is used later to use within pcall to emulate
 	-- behaviour similar to try-except
 	local function replace_sprite_pixel(sprite_1_x, sprite_1_y)
@@ -701,6 +754,29 @@ end
 
 
 function editor.handle_mousepresses(x, y)
+	--[[
+	handle_mousepresses is going to be used for every drawing method.
+	while having point drawing mode enabled.
+	`point drawing mode` is already being handled by handle_mouseholding,
+	but it has to be handled by handle_mousepresses too, as without this,
+	you could not draw things by simply clicking on current_sprite – instead,
+	you would need to click and move mouse to introduce the change.
+	All other interactions with UI or other drawing modes are handled
+	by other functions, namely handle_mousepressed
+	and handle_pressing_universal_buttons.
+
+	Arguments
+	---------
+	x : number
+		mouse position on x ax; this value is passed from love.mousepressed
+	y : number
+		mouse position on y ax; this value is passed from love.mousepressed
+
+	Returns
+	-------
+	nothing
+	]]--
+
 	-- This closure is used later to use within pcall to emulate
 	-- behaviour similar to try-except
 	local function replace_sprite_pixel(sprite_1_x, sprite_1_y)
