@@ -127,4 +127,60 @@ end
 --[[ End of TestSetCurrentMode ]]
 
 
+--[[ Start of TestSwitchCurrentToggleMode ]]
+
+TestSwitchCurrentToggleMode = {}
+
+
+function TestSwitchCurrentToggleMode:test__should_ensure_hold_as_current_toggle__when_drawing_mode_is_set_to_point_mode_and_current_toggle_starts_in_press_mode()
+    editor.current_toggle = editor.toggle.press
+    editor.current_mode = editor.modes.point
+
+    editor.switch_current_toggle_mode()
+
+    luaunit.assertEquals(editor.current_toggle, editor.toggle.hold)
+end
+
+
+function TestSwitchCurrentToggleMode:test__should_ensure_hold_as_current_toggle__when_drawing_mode_is_set_to_point_mode_and_current_toggle_starts_in_hold_mode()
+    editor.current_toggle = editor.toggle.hold
+    editor.current_mode = editor.modes.point
+
+    editor.switch_current_toggle_mode()
+
+    luaunit.assertEquals(editor.current_toggle, editor.toggle.hold)
+end
+
+
+function TestSwitchCurrentToggleMode:test__should_ensure_press_as_current_toggle__when_drawing_mode_is_not_set_to_point_mode_and_current_toggle_starts_in_press_mode()
+    for k, v in pairs(editor.modes) do
+        if v ~= editor.modes.point then
+            editor.current_toggle = editor.toggle.press
+            editor.current_mode = v
+
+            editor.switch_current_toggle_mode()
+
+            luaunit.assertEquals(editor.current_toggle, editor.toggle.press)
+        end
+    end
+end
+
+
+function TestSwitchCurrentToggleMode:test__should_ensure_press_as_current_toggle__when_drawing_mode_is_not_set_to_point_mode_and_current_toggle_starts_in_hold_mode()
+    for k, v in pairs(editor.modes) do
+        if v ~= editor.modes.point then
+            editor.current_toggle = editor.toggle.hold
+            editor.current_mode = v
+
+            editor.switch_current_toggle_mode()
+
+            luaunit.assertEquals(editor.current_toggle, editor.toggle.press)
+        end
+    end
+end
+
+
+--[[ End of TestSwitchCurrentToggleMode ]]
+
+
 os.exit(luaunit.LuaUnit.run())
