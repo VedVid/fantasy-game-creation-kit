@@ -2,6 +2,7 @@ local luaunit = require "luaunit"
 
 local g = require "globals"
 local editor = require "sprite_editor"
+local palette = require "palette"
 local sprite = require "sprite"
 
 
@@ -214,6 +215,121 @@ end
 
 --[[ End of TestUpdateSaveButton ]]
 
+
+--[[ Start of TestHandlePressingUniversalButtons ]]
+
+TestHandlePressingUniversalButtons = {}
+
+
+function TestHandlePressingUniversalButtons:setUp()
+    -- Since we don't start Love2D window, then we can't scale gamepixels.
+    g.screen.gamepixel.w = 1
+    g.screen.gamepixel.h = 1
+    g.sprites.path = g.sprites.path_test
+    g.sprites.sprites = sprite.get_all_sprites()
+end
+
+
+function TestHandlePressingUniversalButtons:test__shold_set_tab_to_the_first_one__when_mouse_over_first_tab_button()
+    editor.current_tab = 2
+    local x = editor.all_sprites_tab_1.x + 4
+    local y = editor.all_sprites_tab_1.y + 4
+
+    editor.handle_pressing_universal_buttons(x, y)
+
+    luaunit.assertEquals(editor.current_tab, 1)
+end
+
+
+function TestHandlePressingUniversalButtons:test__should_set_tab_to_the_first_one__when_mouse_over_top_left_corner_of_the_first_tab_button()
+    editor.current_tab = 2
+    local x = editor.all_sprites_tab_1.x
+    local y = editor.all_sprites_tab_1.y
+
+    editor.handle_pressing_universal_buttons(x, y)
+
+    luaunit.assertEquals(editor.current_tab, 1)
+end
+
+
+function TestHandlePressingUniversalButtons:test__should_set_tab_to_the_first_one__when_mouse_over_bottom_right_corner_of_the_first_tab_button()
+    editor.current_tab = 2
+    local x = editor.all_sprites_tab_1.x + editor.all_sprites_tab_1.w
+    local y = editor.all_sprites_tab_1.y + editor.all_sprites_tab_1.h
+
+    editor.handle_pressing_universal_buttons(x, y)
+
+    luaunit.assertEquals(editor.current_tab, 1)
+end
+
+
+function TestHandlePressingUniversalButtons:test__shold_set_tab_to_the_second_one__when_mouse_over_second_tab_button()
+    editor.current_tab = 1
+    local x = editor.all_sprites_tab_2.x + 4
+    local y = editor.all_sprites_tab_2.y + 4
+
+    editor.handle_pressing_universal_buttons(x, y)
+
+    luaunit.assertEquals(editor.current_tab, 2)
+end
+
+
+function TestHandlePressingUniversalButtons:test__shold_set_tab_to_the_third_one__when_mouse_over_third_tab_button()
+    editor.current_tab = 1
+    local x = editor.all_sprites_tab_3.x + 4
+    local y = editor.all_sprites_tab_3.y + 4
+
+    editor.handle_pressing_universal_buttons(x, y)
+
+    luaunit.assertEquals(editor.current_tab, 3)
+end
+
+
+-- This test actually fails – it switches to second tab instead of to the third tab.
+-- It is something I would like to investigate, but it's tatally unnoticeable
+-- when actually using the software – so, low prio.
+function TestHandlePressingUniversalButtons:test__should_set_tab_to_the_third_one__when_mouse_over_top_left_corner_of_the_third_tab_button()
+    editor.current_tab = 1
+    local x = editor.all_sprites_tab_3.x
+    local y = editor.all_sprites_tab_3.y
+
+    editor.handle_pressing_universal_buttons(x, y)
+
+    luaunit.assertEquals(editor.current_tab, 3)
+end
+
+
+function TestHandlePressingUniversalButtons:test__should_set_tab_to_the_third_one__when_mouse_over_top_left_corner_of_the_third_tab_button_plus_1px_x_offset()
+    editor.current_tab = 1
+    local x = editor.all_sprites_tab_3.x + 1
+    local y = editor.all_sprites_tab_3.y
+
+    editor.handle_pressing_universal_buttons(x, y)
+
+    luaunit.assertEquals(editor.current_tab, 3)
+end
+
+
+function TestHandlePressingUniversalButtons:test__should_set_tab_to_the_third_one__when_mouse_over_bottom_right_corner_of_the_third_tab_button()
+    editor.current_tab = 1
+    local x = editor.all_sprites_tab_3.x + editor.all_sprites_tab_3.w
+    local y = editor.all_sprites_tab_3.y + editor.all_sprites_tab_3.h
+
+    editor.handle_pressing_universal_buttons(x, y)
+
+    luaunit.assertEquals(editor.current_tab, 3)
+end
+
+
+function TestHandlePressingUniversalButtons:test__should_set_current_color_to_blue_bold__when_mouse_is_over_blue_bold_coords()
+    luaunit.assertEquals(editor.colors[10][1], palette.blue_bold)
+    local x = editor.colors[10][2] + 2
+    local y = editor.colors[10][3] + 2
+
+    editor.handle_pressing_universal_buttons(x, y)
+
+    luaunit.assertEquals(editor.current_color, 10)
+end
 
 
 os.exit(luaunit.LuaUnit.run())
