@@ -183,4 +183,37 @@ end
 --[[ End of TestSwitchCurrentToggleMode ]]
 
 
+--[[ Start of TestUpdateSaveButton ]]
+
+TestUpdateSaveButton = {}
+
+
+function TestUpdateSaveButton:test__should_subtract_values_from_save_active_state__when_save_active_is_above_zero()
+    editor.save_button.has_been_pressed = editor.save_button.has_been_pressed_max
+    local first_value = editor.save_button.has_been_pressed
+
+    editor.update_save_button()
+
+    local second_value = editor.save_button.has_been_pressed
+
+    luaunit.assertTrue(first_value > second_value)
+end
+
+
+function TestUpdateSaveButton:test__should_not_subtract_values_from_save_active_state__when_save_active_is_not_above_zero()
+    editor.save_button.has_been_pressed = 0
+    local first_value = editor.save_button.has_been_pressed
+
+    editor.update_save_button()
+
+    local second_value = editor.save_button.has_been_pressed
+
+    luaunit.assertTrue(first_value == second_value)
+end
+
+
+--[[ End of TestUpdateSaveButton ]]
+
+
+
 os.exit(luaunit.LuaUnit.run())
