@@ -332,4 +332,7 @@ function TestHandlePressingUniversalButtons:test__should_set_current_color_to_bl
 end
 
 
+--[[ End of TestHandlePressingUniversalButtons ]]
+
+
 os.exit(luaunit.LuaUnit.run())
