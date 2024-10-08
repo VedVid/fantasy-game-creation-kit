@@ -127,4 +127,16 @@ THE SOFTWARE.
 end
 
 
+function ab.rect(x, y, w, h)
+    local coords = {
+        lx = (x * g.screen.gamepixel.w) + (g.screen.gamepixel.w / 2),
+        ly = (y * g.screen.gamepixel.h) + (g.screen.gamepixel.h / 2),
+        lw = (w - 1) * g.screen.gamepixel.w,
+        lh = (h - 1) * g.screen.gamepixel.h
+    }
+
+    return coords
+end
+
+
 return ab
