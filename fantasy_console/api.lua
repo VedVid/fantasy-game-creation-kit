@@ -456,20 +456,8 @@ function Circfill(x, y, r, color)
     assert(type(r) == "number", "Third argument (r) to Circfill must be a number.")
     assert(r > 0, "Third argument (r) to Circfill must be larger than 0.")
 
-    x = math.floor(x)
-    y = math.floor(y)
-    r = math.floor(r)
-
-    if not color then color = g.colors.default_fg_color.rgb01 end
-
-    for ty=-r,r do
-        for tx=-r,r do
-            if(tx*tx+ty*ty <= r*r) then
-                Pset(x + tx, y + ty, color)
-            end
-        end
-    end
-    Circ(x, y, r, color)
+    local coords = ab.circfill(x, y, r)
+    ad.draw_with_pset(coords, color)
 end
 
 

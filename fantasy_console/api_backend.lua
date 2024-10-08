@@ -207,4 +207,28 @@ function ab.circ(x, y, r)
 end
 
 
+function ab.circfill(x, y, r)
+    -- Start by adding coords of circle border...
+    local coords = ab.circ(x, y, r)
+
+    x = math.floor(x)
+    y = math.floor(y)
+    r = math.floor(r)
+
+    -- ...then add coords of fill.
+    for ty=-r,r do
+        for tx=-r,r do
+            if(tx*tx+ty*ty <= r*r) then
+                table.insert(coords, {
+                    x = (x + tx) * g.screen.gamepixel.w,
+                    y = (y + ty) * g.screen.gamepixel.h
+                })
+            end
+        end
+    end
+
+    return coords
+end
+
+
 return ab

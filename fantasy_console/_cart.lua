@@ -21,5 +21,6 @@ function Draw()
     Line(10, 12, 20, 12, Green)
     Rect(10, 14, 11, 5, Yellow)
     Rectfill(10, 20, 11, 5, YellowBold)
-    Circ(15, 31, 5)
+    Circ(15, 31, 5, White)
+    Circfill(15, 43, 5, WhiteBold)
 end
