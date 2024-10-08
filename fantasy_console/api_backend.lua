@@ -151,4 +151,60 @@ function ab.rectfill(x, y, w, h)
 end
 
 
+function ab.circ(x, y, r)
+    local coords = {}
+
+    x = math.floor(x)
+    y = math.floor(y)
+    r = math.floor(r)
+
+    local dx = r
+    local dy = 0
+    local err = 1 - r
+    while dx >= dy do
+        table.insert(coords, {
+            x = (x + dx) * g.screen.gamepixel.w,
+            y = (y + dy) * g.screen.gamepixel.h
+        })
+        table.insert(coords, {
+            x = (x - dx) * g.screen.gamepixel.w,
+            y = (y + dy) * g.screen.gamepixel.h
+        })
+        table.insert(coords, {
+            x = (x + dx) * g.screen.gamepixel.w,
+            y = (y - dy) * g.screen.gamepixel.h
+        })
+        table.insert(coords, {
+            x = (x - dx) * g.screen.gamepixel.w,
+            y = (y - dy) * g.screen.gamepixel.h
+        })
+        table.insert(coords, {
+            x = (x + dy) * g.screen.gamepixel.w,
+            y = (y + dx) * g.screen.gamepixel.h
+        })
+        table.insert(coords, {
+            x = (x - dy) * g.screen.gamepixel.w,
+            y = (y + dx) * g.screen.gamepixel.h
+        })
+        table.insert(coords, {
+            x = (x + dy) * g.screen.gamepixel.w,
+            y = (y - dx) * g.screen.gamepixel.h
+        })
+        table.insert(coords, {
+            x = (x - dy) * g.screen.gamepixel.w,
+            y = (y - dx) * g.screen.gamepixel.h
+        })
+        dy = dy + 1
+        if err < 0 then
+            err = err + 2 * dy + 1
+        else
+            dx = dx - 1
+            err = err + 2 * (dy - dx) + 1
+        end
+    end
+
+    return coords
+end
+
+
 return ab

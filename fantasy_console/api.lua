@@ -423,32 +423,8 @@ function Circ(x, y, r, color)
     assert(type(r) == "number", "Third argument (r) to Circ must be a number.")
     assert(r > 0, "Third argument (r) to Circ must be larger than 0.")
 
-    x = math.floor(x)
-    y = math.floor(y)
-    r = math.floor(r)
-
-    if not color then color = g.colors.default_fg_color.rgb01 end
-
-    local dx = r
-    local dy = 0
-    local err = 1 - r
-    while dx >= dy do
-        Pset(x + dx, y + dy, color)
-        Pset(x - dx, y + dy, color)
-        Pset(x + dx, y - dy, color)
-        Pset(x - dx, y - dy, color)
-        Pset(x + dy, y + dx, color)
-        Pset(x - dy, y + dx, color)
-        Pset(x + dy, y - dx, color)
-        Pset(x - dy, y - dx, color)
-        dy = dy + 1
-        if err < 0 then
-            err = err + 2 * dy + 1
-        else
-            dx = dx - 1
-            err = err + 2 * (dy - dx) + 1
-        end
-    end
+    local coords = ab.circ(x, y, r)
+    ad.draw_with_pset(coords, color)
 end
 
 
