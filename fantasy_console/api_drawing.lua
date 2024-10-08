@@ -32,7 +32,7 @@ function ad.draw_with_pset(coords, color)
 end
 
 
-function ad.draw_rect(coords, color)
+function ad.draw_rect(coords, color, filled)
     if not color then color = g.colors.default_fg_color.rgb01 end
 
     local ok, _ = pcall(love.graphics.setColor, unpack(color))
@@ -40,8 +40,13 @@ function ad.draw_rect(coords, color)
         ok, _ = pcall(love.graphics.setColor, unpack(color.rgb01))
     end
 
+    local style = "line"
+    if filled then
+        style = "fill"
+    end
+
     love.graphics.rectangle(
-        "line",
+        style,
         coords.lx,
         coords.ly,
         coords.lw, 
@@ -49,6 +54,11 @@ function ad.draw_rect(coords, color)
     )
     
     love.graphics.setColor(unpack(g.colors.default_fg_color.rgb01))
+end
+
+
+function ad.draw_rectfill(coords, color)
+    ad.draw_rect(coords, color, true)
 end
 
 

@@ -20,4 +20,5 @@ function Draw()
     Pset(20, 10, BlueBold)
     Line(10, 12, 20, 12, Green)
     Rect(10, 14, 11, 5, Yellow)
+    Rectfill(10, 20, 11, 5, YellowBold)
 end

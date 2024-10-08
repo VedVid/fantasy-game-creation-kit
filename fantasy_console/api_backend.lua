@@ -139,4 +139,9 @@ function ab.rect(x, y, w, h)
 end
 
 
+function ab.rectfill(x, y, w, h)
+    return ab.rect(x, y, w, h)
+end
+
+
 return ab
