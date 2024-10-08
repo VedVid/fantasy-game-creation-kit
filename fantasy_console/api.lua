@@ -7,8 +7,6 @@ requiring user to write repeatedly module name over and over.
 ]]--
 
 
-local ab = require "api_backend"
-local ad = require "api_drawing"
 local gamepixel = require "gamepixel"
 local g = require "globals"
 local palette = require "palette"
@@ -228,9 +226,21 @@ function Pset(x, y, color)
     assert(type(y) == "number", "Second argument (y) to Pset must be a number.")
     assert(y >= 0, "Second argument (y) to Pset must not be negative.")
 
-    local coords = ab.pset(x, y)
-
-    ad.pset(coords, color)
+    local lx = math.floor(x * g.screen.gamepixel.w)
+    local ly = math.floor(y * g.screen.gamepixel.h)
+    if not color then color = g.colors.default_fg_color.rgb01 end
+    local ok, _ = pcall(love.graphics.setColor, unpack(color))
+    if not ok then
+        ok, _ = pcall(love.graphics.setColor, unpack(color.rgb01))
+    end
+    love.graphics.rectangle(
+        "fill",
+        lx,
+        ly,
+        g.screen.gamepixel.w,
+        g.screen.gamepixel.h
+    )
+    love.graphics.setColor(unpack(g.colors.default_fg_color.rgb01))
 end
 
 
