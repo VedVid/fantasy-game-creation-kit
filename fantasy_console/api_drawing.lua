@@ -10,7 +10,7 @@ local ad = {}
 ----------------------
 
 
-function ad.draw(coords, color)
+function ad.draw_with_pset(coords, color)
     if not color then color = g.colors.default_fg_color.rgb01 end
 
     local ok, _ = pcall(love.graphics.setColor, unpack(color))
