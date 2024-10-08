@@ -24,4 +24,5 @@ function Draw()
     Circ(15, 31, 5, White)
     Circfill(15, 43, 5, WhiteBold)
     Oval(15, 53, 5, 3, Red)
+    Ovalfill(15, 61, 5, 3, RedBold)
 end

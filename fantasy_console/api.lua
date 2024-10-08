@@ -7,8 +7,8 @@ requiring user to write repeatedly module name over and over.
 ]]--
 
 
-local ab = require "api_backend"
-local ad = require "api_drawing"
+local agcalc = require "api_geometry_calculations"
+local agdraw = require "api_geometry_drawing"
 local gamepixel = require "gamepixel"
 local g = require "globals"
 local palette = require "palette"
@@ -228,9 +228,9 @@ function Pset(x, y, color)
     assert(type(y) == "number", "Second argument (y) to Pset must be a number.")
     assert(y >= 0, "Second argument (y) to Pset must not be negative.")
 
-    local coords = ab.pset(x, y)
+    local coords = agcalc.pset(x, y)
 
-    ad.draw_with_pset(coords, color)
+    agdraw.draw_with_pset(coords, color)
 end
 
 
@@ -290,8 +290,9 @@ THE SOFTWARE.
     assert(type(ty) == "number", "Fourth argument (ty) to Line must be a number.")
     assert(ty >= 0, "Fourth argument (ty) to Line must not be negative.")
 
-    local coords = ab.line(sx, sy, tx, ty)
-    ad.draw_with_pset(coords, color)
+    local coords = agcalc.line(sx, sy, tx, ty)
+
+    agdraw.draw_with_pset(coords, color)
 end
 
 
@@ -339,8 +340,9 @@ function Rect(x, y, w, h, color)
     assert(type(h) == "number", "Fourth argument (h) to Rect must be a number.")
     assert(h > 1, "Fourth argument (h) to Rect must be larger than 1.")
 
-    local coords = ab.rect(x, y, w, h)
-    ad.draw_rect(coords, color)
+    local coords = agcalc.rect(x, y, w, h)
+
+    agdraw.draw_rect(coords, color)
 end
 
 
@@ -423,8 +425,9 @@ function Circ(x, y, r, color)
     assert(type(r) == "number", "Third argument (r) to Circ must be a number.")
     assert(r > 0, "Third argument (r) to Circ must be larger than 0.")
 
-    local coords = ab.circ(x, y, r)
-    ad.draw_with_pset(coords, color)
+    local coords = agcalc.circ(x, y, r)
+
+    agdraw.draw_with_pset(coords, color)
 end
 
 
@@ -456,8 +459,9 @@ function Circfill(x, y, r, color)
     assert(type(r) == "number", "Third argument (r) to Circfill must be a number.")
     assert(r > 0, "Third argument (r) to Circfill must be larger than 0.")
 
-    local coords = ab.circfill(x, y, r)
-    ad.draw_with_pset(coords, color)
+    local coords = agcalc.circfill(x, y, r)
+
+    agdraw.draw_with_pset(coords, color)
 end
 
 
@@ -489,8 +493,9 @@ function Oval(x, y, rx, ry, color)
     assert(type(ry) == "number", "Fourth argument (ry) to Oval must be a number.")
     assert(ry > 0, "Fourth argument (ry) to Oval must be larger than 0.")
 
-    local coords = ab.oval(x, y, rx, ry)
-    ad.draw_with_pset(coords, color)
+    local coords = agcalc.oval(x, y, rx, ry)
+
+    agdraw.draw_with_pset(coords, color)
 end
 
 
@@ -522,8 +527,9 @@ function Ovalfill(x, y, rx, ry, color)
     assert(type(ry) == "number", "Fourth argument (ry) to Ovalfill must be a number.")
     assert(ry > 0, "Fourth argument (ry) to Ovalfill must be larger than 0.")
 
-    local coords = ab.ovalfill(x, y, rx, ry)
-    ad.draw_with_pset(coords, color)
+    local coords = agcalc.ovalfill(x, y, rx, ry)
+
+    agdraw.draw_with_pset(coords, color)
 end
 
 

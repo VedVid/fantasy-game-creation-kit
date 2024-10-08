@@ -1,8 +1,8 @@
 local g = require "globals"
 
 
--- shortcut for `api_backend`
-local ab = {}
+-- shortcut for `api_geometry_calculations`
+local agc = {}
 
 
 ----------------------
@@ -10,7 +10,7 @@ local ab = {}
 ----------------------
 
 
-function ab.pset(x, y)
+function agc.pset(x, y)
     local coords = {
         {
             x = math.floor(x * g.screen.gamepixel.w),
@@ -22,7 +22,7 @@ function ab.pset(x, y)
 end
 
 
-function ab.line(sx, sy, tx, ty)
+function agc.line(sx, sy, tx, ty)
     -- This is a translation of bresenham algorithm by Petr Viktorin,
     -- written in Python, released under the MIT license.
     -- It's available at https://github.com/encukou/bresenham as of
@@ -127,7 +127,7 @@ THE SOFTWARE.
 end
 
 
-function ab.rect(x, y, w, h)
+function agc.rect(x, y, w, h)
     local coords = {
         lx = (x * g.screen.gamepixel.w) + (g.screen.gamepixel.w / 2),
         ly = (y * g.screen.gamepixel.h) + (g.screen.gamepixel.h / 2),
@@ -139,7 +139,7 @@ function ab.rect(x, y, w, h)
 end
 
 
-function ab.rectfill(x, y, w, h)
+function agc.rectfill(x, y, w, h)
     local coords = {
         lx = math.floor(x * g.screen.gamepixel.w),
         ly = math.floor(y * g.screen.gamepixel.h),
@@ -151,7 +151,7 @@ function ab.rectfill(x, y, w, h)
 end
 
 
-function ab.circ(x, y, r)
+function agc.circ(x, y, r)
     local coords = {}
 
     x = math.floor(x)
@@ -207,9 +207,9 @@ function ab.circ(x, y, r)
 end
 
 
-function ab.circfill(x, y, r)
+function agc.circfill(x, y, r)
     -- Start by adding coords of circle border...
-    local coords = ab.circ(x, y, r)
+    local coords = agc.circ(x, y, r)
 
     x = math.floor(x)
     y = math.floor(y)
@@ -231,7 +231,7 @@ function ab.circfill(x, y, r)
 end
 
 
-function ab.oval(x, y, rx, ry)
+function agc.oval(x, y, rx, ry)
     local coords = {}
 
     x = math.floor(x)
@@ -311,7 +311,7 @@ function ab.oval(x, y, rx, ry)
 end
 
 
-function ab.ovalfill(x, y, rx, ry)
+function agc.ovalfill(x, y, rx, ry)
     local coords = {}
 
     x = math.floor(x)
@@ -327,8 +327,8 @@ function ab.ovalfill(x, y, rx, ry)
     dy = 2 * rx * rx * yy
 
     while (dx < dy) do
-        local line_1 = ab.line(x - xx, y + yy, x + xx, y + yy)
-        local line_2 = ab.line(x - xx, y - yy, x + xx, y - yy)
+        local line_1 = agc.line(x - xx, y + yy, x + xx, y + yy)
+        local line_2 = agc.line(x - xx, y - yy, x + xx, y - yy)
         for i=1, #line_1 do
             coords[#coords+1] = line_1[i]
         end
@@ -350,8 +350,8 @@ function ab.ovalfill(x, y, rx, ry)
 
     d2 = ((ry * ry) * ((xx + 0.5) * (xx + 0.5))) + ((rx * rx) * ((yy - 1) * (yy - 1))) - (rx * rx * ry * ry)
     while (yy >= 0) do
-        local line_1 = ab.line(x - xx, y + yy, x + xx, y + yy)
-        local line_2 = ab.line(x - xx, y - yy, x + xx, y - yy)
+        local line_1 = agc.line(x - xx, y + yy, x + xx, y + yy)
+        local line_2 = agc.line(x - xx, y - yy, x + xx, y - yy)
         for i=1, #line_1 do
             coords[#coords+1] = line_1[i]
         end
@@ -375,4 +375,4 @@ function ab.ovalfill(x, y, rx, ry)
 end
 
 
-return ab
+return agc

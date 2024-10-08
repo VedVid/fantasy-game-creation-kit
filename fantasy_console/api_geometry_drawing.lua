@@ -1,8 +1,8 @@
 local g = require "globals"
 
 
--- shortcut for `api_drawing`
-local ad = {}
+-- shortcut for `api_geometry_drawing`
+local agd = {}
 
 
 ----------------------
@@ -10,7 +10,7 @@ local ad = {}
 ----------------------
 
 
-function ad.draw_with_pset(coords, color)
+function agd.draw_with_pset(coords, color)
     if not color then color = g.colors.default_fg_color.rgb01 end
 
     local ok, _ = pcall(love.graphics.setColor, unpack(color))
@@ -32,7 +32,7 @@ function ad.draw_with_pset(coords, color)
 end
 
 
-function ad.draw_rect(coords, color, filled)
+function agd.draw_rect(coords, color, filled)
     if not color then color = g.colors.default_fg_color.rgb01 end
 
     local ok, _ = pcall(love.graphics.setColor, unpack(color))
@@ -57,9 +57,9 @@ function ad.draw_rect(coords, color, filled)
 end
 
 
-function ad.draw_rectfill(coords, color)
-    ad.draw_rect(coords, color, true)
+function agd.draw_rectfill(coords, color)
+    agd.draw_rect(coords, color, true)
 end
 
 
-return ad
+return agd
