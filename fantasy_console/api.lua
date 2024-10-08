@@ -230,7 +230,7 @@ function Pset(x, y, color)
 
     local coords = ab.pset(x, y)
 
-    ad.pset(coords, color)
+    ad.draw(coords, color)
 end
 
 
@@ -291,7 +291,7 @@ THE SOFTWARE.
     assert(ty >= 0, "Fourth argument (ty) to Line must not be negative.")
 
     local coords = ab.line(sx, sy, tx, ty)
-    ad.line(coords, color)
+    ad.draw(coords, color)
 end
 
 
