@@ -128,6 +128,11 @@ end
 
 
 function agc.rect(x, y, w, h)
+    x = math.floor(x)
+    y = math.floor(y)
+    w = math.floor(w)
+    h = math.floor(h)
+
     local coords = {
         lx = (x * g.screen.gamepixel.w) + (g.screen.gamepixel.w / 2),
         ly = (y * g.screen.gamepixel.h) + (g.screen.gamepixel.h / 2),
@@ -140,6 +145,11 @@ end
 
 
 function agc.rectfill(x, y, w, h)
+    x = math.floor(x)
+    y = math.floor(y)
+    w = math.floor(w)
+    h = math.floor(h)
+
     local coords = {
         lx = math.floor(x * g.screen.gamepixel.w),
         ly = math.floor(y * g.screen.gamepixel.h),
