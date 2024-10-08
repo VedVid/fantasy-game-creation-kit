@@ -9,6 +9,11 @@ local sprite = require "sprite"
 TestGetSprite = {}
 
 
+function TestGetSprite:setUp()
+    g.sprites.path = g.sprites.path_test
+end
+
+
 function TestGetSprite:test__should_error__when_sprite_number_is_negative()
     local negative_sprite_number = -1
 
@@ -21,7 +26,6 @@ end
 
 
 function TestGetSprite:test__should_error__when_sprite_number_equals_to_zero()
-    g.sprites.path = g.sprites.path_test
     local zero_sprite_number = 0
 
     luaunit.assertErrorMsgContains(
@@ -33,7 +37,6 @@ end
 
 
 function TestGetSprite:test__should_error__when_sprite_number_is_larger_than_total_amount_of_sprites_supported()
-    g.sprites.path = g.sprites.path_test
     local large_sprite_number = g.sprites.amount + 1
 
     luaunit.assertErrorMsgContains(
@@ -45,7 +48,7 @@ end
 
 
 function TestGetSprite:test__should_return_sprite__when_sprite_number_equals_to_1()
-    g.sprites.path = g.sprites.path_test
+    g.sprites.sprites = sprite.get_all_sprites()
     local valid_sprite_number = 1
 
     local sprite_found = sprite.get_sprite(valid_sprite_number)
@@ -55,7 +58,7 @@ end
 
 
 function TestGetSprite:test__should_return_sprite__when_sprite_number_equals_to_last_sprite()
-    g.sprites.path = g.sprites.path_test
+    g.sprites.sprites = sprite.get_all_sprites()
     local large_sprite_number = g.sprites.amount
 
     local sprite_found = sprite.get_sprite(large_sprite_number)
