@@ -21,7 +21,7 @@ end
 
 
 function TestGetSprite:test__should_error__when_sprite_number_equals_to_zero()
-    g.sprites_path = g.sprites_path_test
+    g.sprites.path = g.sprites.path_test
     local zero_sprite_number = 0
 
     luaunit.assertErrorMsgContains(
@@ -33,8 +33,8 @@ end
 
 
 function TestGetSprite:test__should_error__when_sprite_number_is_larger_than_total_amount_of_sprites_supported()
-    g.sprites_path = g.sprites_path_test
-    local large_sprite_number = g.sprites_amount + 1
+    g.sprites.path = g.sprites.path_test
+    local large_sprite_number = g.sprites.amount + 1
 
     luaunit.assertErrorMsgContains(
         "is larger than",
@@ -45,7 +45,7 @@ end
 
 
 function TestGetSprite:test__should_return_sprite__when_sprite_number_equals_to_1()
-    g.sprites_path = g.sprites_path_test
+    g.sprites.path = g.sprites.path_test
     local valid_sprite_number = 1
 
     local sprite_found = sprite.get_sprite(valid_sprite_number)
@@ -55,8 +55,8 @@ end
 
 
 function TestGetSprite:test__should_return_sprite__when_sprite_number_equals_to_last_sprite()
-    g.sprites_path = g.sprites_path_test
-    local large_sprite_number = g.sprites_amount
+    g.sprites.path = g.sprites.path_test
+    local large_sprite_number = g.sprites.amount
 
     local sprite_found = sprite.get_sprite(large_sprite_number)
 
@@ -72,7 +72,7 @@ end
 TestGetAllSprites = {}
 
 function TestGetAllSprites:test__should_error__when_there_is_no_sprites_file()
-    g.sprites_path = "some/incorrect/path/to/sprites.json"
+    g.sprites.path = "some/incorrect/path/to/sprites.json"
 
     luaunit.assertErrorMsgContains(
         "No such file or directory",
@@ -82,7 +82,7 @@ end
 
 
 function TestGetAllSprites:test__should_return_sprite_table__when_file_is_present()
-    g.sprites_path = g.sprites_path_test
+    g.sprites.path = g.sprites.path_test
 
     local sprites_table = sprite.get_all_sprites()
 
@@ -123,9 +123,9 @@ end
 TestInitializeBlankSprites = {}
 
 function TestInitializeBlankSprites:test__should_initialize_blank_sprites_correctly__when_there_is_no_sprites_file_present()
-    g.sprites_path = g.sprites_path_test
-    os.remove(g.sprites_path_test)
-    local f = io.open(g.sprites_path, "r")
+    g.sprites.path = g.sprites.path_test
+    os.remove(g.sprites.path_test)
+    local f = io.open(g.sprites.path, "r")
     if f ~= nil then
         io.close(f)
         error('Test file sprites_test.json is not removed! Tests aborted.')
@@ -133,7 +133,7 @@ function TestInitializeBlankSprites:test__should_initialize_blank_sprites_correc
 
     sprite.initialize_blank_sprites()
 
-    local f = io.open(g.sprites_path, "r")
+    local f = io.open(g.sprites.path, "r")
     if f == nil then
         error('Test file sprites_test.json has not been created! Tests aborted.')
     end
