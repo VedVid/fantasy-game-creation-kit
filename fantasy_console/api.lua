@@ -522,52 +522,8 @@ function Ovalfill(x, y, rx, ry, color)
     assert(type(ry) == "number", "Fourth argument (ry) to Ovalfill must be a number.")
     assert(ry > 0, "Fourth argument (ry) to Ovalfill must be larger than 0.")
 
-    x = math.floor(x)
-    y = math.floor(y)
-    rx = math.floor(rx)
-    ry = math.floor(ry)
-
-    if not color then color = g.colors.default_fg_color.rgb01 end
-
-    local dx, dy, d1, d2
-    local xx = 0;
-    local yy = ry;
-    d1 = (ry * ry) - (rx * rx * ry) + (0.25 * rx * rx)
-    dx = 2 * ry * ry * xx
-    dy = 2 * rx * rx * yy
-
-    while (dx < dy) do
-        Line(x - xx, y + yy, x + xx, y + yy, color)
-        Line(x - xx, y - yy, x + xx, y - yy, color)
-        if d1 < 0 then
-            xx = xx + 1
-            dx = dx + (2 * ry * ry)
-            d1 = d1 + dx + (ry * ry)
-        else
-            xx = xx + 1
-            yy = yy - 1
-            dx = dx + (2 * ry * ry)
-            dy = dy - (2 * rx * rx)
-            d1 = d1 + dx - dy + (ry * ry)
-        end
-    end
-
-    d2 = ((ry * ry) * ((xx + 0.5) * (xx + 0.5))) + ((rx * rx) * ((yy - 1) * (yy - 1))) - (rx * rx * ry * ry)
-    while (yy >= 0) do
-        Line(x - xx, y + yy, x + xx, y + yy, color)
-        Line(x - xx, y - yy, x + xx, y - yy, color)
-        if d2 > 0 then
-            yy = yy - 1
-            dy = dy - (2 * rx * rx)
-            d2 = d2 + (rx * rx) - dy
-        else
-            yy = yy - 1
-            xx = xx + 1
-            dx = dx + (2 * ry * ry)
-            dy = dy - (2 * rx * rx)
-            d2 = d2 + dx - dy + (rx * rx)
-        end
-    end
+    local coords = ab.ovalfill(x, y, rx, ry)
+    ad.draw_with_pset(coords, color)
 end
 
 

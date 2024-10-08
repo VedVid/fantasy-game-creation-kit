@@ -311,4 +311,68 @@ function ab.oval(x, y, rx, ry)
 end
 
 
+function ab.ovalfill(x, y, rx, ry)
+    local coords = {}
+
+    x = math.floor(x)
+    y = math.floor(y)
+    rx = math.floor(rx)
+    ry = math.floor(ry)
+
+    local dx, dy, d1, d2
+    local xx = 0;
+    local yy = ry;
+    d1 = (ry * ry) - (rx * rx * ry) + (0.25 * rx * rx)
+    dx = 2 * ry * ry * xx
+    dy = 2 * rx * rx * yy
+
+    while (dx < dy) do
+        local line_1 = ab.line(x - xx, y + yy, x + xx, y + yy)
+        local line_2 = ab.line(x - xx, y - yy, x + xx, y - yy)
+        for i=1, #line_1 do
+            coords[#coords+1] = line_1[i]
+        end
+        for i=1, #line_2 do
+            coords[#coords+1] = line_2[i]
+        end
+        if d1 < 0 then
+            xx = xx + 1
+            dx = dx + (2 * ry * ry)
+            d1 = d1 + dx + (ry * ry)
+        else
+            xx = xx + 1
+            yy = yy - 1
+            dx = dx + (2 * ry * ry)
+            dy = dy - (2 * rx * rx)
+            d1 = d1 + dx - dy + (ry * ry)
+        end
+    end
+
+    d2 = ((ry * ry) * ((xx + 0.5) * (xx + 0.5))) + ((rx * rx) * ((yy - 1) * (yy - 1))) - (rx * rx * ry * ry)
+    while (yy >= 0) do
+        local line_1 = ab.line(x - xx, y + yy, x + xx, y + yy)
+        local line_2 = ab.line(x - xx, y - yy, x + xx, y - yy)
+        for i=1, #line_1 do
+            coords[#coords+1] = line_1[i]
+        end
+        for i=1, #line_2 do
+            coords[#coords+1] = line_2[i]
+        end
+        if d2 > 0 then
+            yy = yy - 1
+            dy = dy - (2 * rx * rx)
+            d2 = d2 + (rx * rx) - dy
+        else
+            yy = yy - 1
+            xx = xx + 1
+            dx = dx + (2 * ry * ry)
+            dy = dy - (2 * rx * rx)
+            d2 = d2 + dx - dy + (rx * rx)
+        end
+    end
+
+    return coords
+end
+
+
 return ab
