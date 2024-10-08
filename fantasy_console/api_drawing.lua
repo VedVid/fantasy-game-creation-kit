@@ -25,11 +25,11 @@ function ad.pset(coords, color)
             v.y,
             g.screen.gamepixel.w,
             g.screen.gamepixel.h
-        )        
+        )
     end
 
     love.graphics.setColor(unpack(g.colors.default_fg_color.rgb01))
-end
+end 
 
 
 function ad.line(coords, color)
@@ -40,14 +40,16 @@ function ad.line(coords, color)
         ok, _ = pcall(love.graphics.setColor, unpack(color.rgb01))
     end
 
+    print()
     for _, v in ipairs(coords) do
+        print(v.x, v.y)
         love.graphics.rectangle(
             "fill",
             v.x,
             v.y,
             g.screen.gamepixel.w,
             g.screen.gamepixel.h
-        )        
+        )
     end
 
     love.graphics.setColor(unpack(g.colors.default_fg_color.rgb01))

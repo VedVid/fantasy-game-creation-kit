@@ -63,8 +63,8 @@ function ab.line(sx, sy, tx, ty)
 
     for x = 0, dx do
         local coord = {
-            x = sx + x * xx + y * yx,
-            y = sy + x * xy + y * yy
+            x = (sx + x * xx + y * yx) * g.screen.gamepixel.w,
+            y = (sy + x * xy + y * yy) * g.screen.gamepixel.h
         }
         table.insert(coords, coord)
         if d >= 0 then
