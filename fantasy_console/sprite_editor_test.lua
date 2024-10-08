@@ -295,6 +295,9 @@ function TestHandlePressingUniversalButtons:test__should_set_tab_to_the_third_on
 
     editor.handle_pressing_universal_buttons(x, y)
 
+    print("This test actually fails - it switches to second tab instead of to the third tab.")
+    print("It is something I would like to investigate, but it's tatally unnoticeable")
+    print("when actually using the software – so, low prio.")
     luaunit.assertEquals(editor.current_tab, 3)
 end
 
