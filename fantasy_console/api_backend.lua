@@ -140,7 +140,14 @@ end
 
 
 function ab.rectfill(x, y, w, h)
-    return ab.rect(x, y, w, h)
+    local coords = {
+        lx = math.floor(x * g.screen.gamepixel.w),
+        ly = math.floor(y * g.screen.gamepixel.h),
+        lw = math.floor(w * g.screen.gamepixel.w),
+        lh = math.floor(h * g.screen.gamepixel.h)
+    }
+
+    return coords
 end
 
 
