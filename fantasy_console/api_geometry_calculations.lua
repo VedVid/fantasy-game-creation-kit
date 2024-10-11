@@ -11,6 +11,24 @@ local agc = {}
 
 
 function agc.pset(x, y)
+    --[[
+    This function just translates passed x, y parameters into table of two values.
+    It is present mostly to keep things consistent with other functions calculating
+    lists of coordinates.
+
+    Arguments
+    ---------
+    x : number
+        Position of pixel on horizontal axis.
+    y : number
+        Position of pixel on vertical axis.
+
+    Returns
+    -------
+    list of numbers
+        List of coords, in the following form: {x = value_x, y = value_y}
+    ]]--
+
     local coords = {
         {
             x = math.floor(x * g.screen.gamepixel.w),
@@ -65,13 +83,10 @@ THE SOFTWARE.
     -------
     list of lists
         List of coords of all gamepixels that create the line.
-        It has the following form:
-            {
-                {x: 1, y: 1},
-                {x: 2, y: 1},
-                ...
-            }
+        It has the following structure:
+        { {x1, y1}, {x2, y2}, ... {xn, yn} }
     ]]--
+
     local coords = {}
 
     sx = math.floor(sx)
@@ -128,6 +143,50 @@ end
 
 
 function agc.rect(x, y, w, h)
+    --[[
+    Function rect creates a list of coords that will be used later
+    to draw a rectangle.
+    `rect` is a special kind of function, because it does not create
+    a full list of coordinates as other – except `rectfill` – functions.
+    It just returns coordinates of top-left corner, and width, and height
+    of rectangle. 
+    It is handled that way because rectangles (both empty and filled) are
+    actually drawn using Love2D `rectangle` function – unlike all other
+    primitives.
+    Also, another special case, this time exclusively for `rect`.
+    lx, ly are increased by half of the current gamepixel due the
+    three reasons:
+    - by default, Love2D starts drawing in the middle of the pixel,
+        which mights result in blurry lines unless we pass 0.5 to
+        x and y all the time (not feasible with current app architecture)
+        or unless we use "rough" line style (which we use);
+    - rough line style rounds the half-pixel which mights cause
+        off-by-one issues;
+    - setting wide line width cause the line to grow in both directions.
+    lw, lh are decreased by single gamepixel because Love2D does
+    not take into account the starting point when calculating size
+    of rectangle.
+    Such issue does not happening with `rectfill` function.
+
+    Arguments
+    ---------
+    x : number
+        Position of top-left rectangle corner on the x axis.
+    y : number
+        Position of top-left rectangle corner on the y axis.
+    w : number
+        Width of rectangle.
+    h : number
+        Height of rectangle.
+
+    Returns
+    -------
+    list of lists
+        List of coords of all gamepixels that create the line.
+        It has the following structure:
+        { {x1, y1}, {x2, y2}, ... {xn, yn} }
+    ]]--
+    
     x = math.floor(x)
     y = math.floor(y)
     w = math.floor(w)
@@ -145,6 +204,40 @@ end
 
 
 function agc.rectfill(x, y, w, h)
+    --[[
+    Function rect creates a list of coords that will be used later
+    to draw a rectangle.
+    `rectfill` is a special kind of function, because it does not create
+    a full list of coordinates as other – except `rect` – functions.
+    It just returns coordinates of top-left corner, and width, and height
+    of rectangle. 
+    It is handled that way because rectangles (both empty and filled) are
+    actually drawn using Love2D `rectangle` function – unlike all other
+    primitives.
+    `rectangle("line")` and `recangle("filled")` works a bit differently
+    in Love2D.
+    rectfill does not require taking into account line width set in
+    Love2D, hence the rectfill implementation is simpler than the Rect one.
+
+    Arguments
+    ---------
+    x : number
+        Position of top-left rectangle corner on the x axis.
+    y : number
+        Position of top-left rectangle corner on the y axis.
+    w : number
+        Width of rectangle.
+    h : number
+        Height of rectangle.
+
+    Returns
+    -------
+    list of lists
+        List of coords of all gamepixels that create the line.
+        It has the following structure:
+        { {x1, y1}, {x2, y2}, ... {xn, yn} }
+    ]]--
+
     x = math.floor(x)
     y = math.floor(y)
     w = math.floor(w)

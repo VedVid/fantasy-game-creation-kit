@@ -235,33 +235,16 @@ end
 
 
 function Line(sx, sy, tx, ty, color)
-    -- This is a translation of bresenham algorithm by Petr Viktorin,
+    --[[
+    -- This function draws a line from sx, sy to tx, ty. Under the hood,
+    -- it uses translation of bresenham algorithm by Petr Viktorin
     -- written in Python, released under the MIT license.
     -- It's available at https://github.com/encukou/bresenham as of
     -- 20240521
-    --[[
-Copyright © 2016 Petr Viktorin
+    -- For details, please read the comment to
+    -- api_geometry_calculations.line, and to the
+    -- `bresenham_by_Petr_Viktoring.txt` file inside `licenses` directory.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
-    ]]--
-
-    --[[
     Arguments
     ---------
     sx : number
@@ -299,18 +282,6 @@ end
 function Rect(x, y, w, h, color)
     --[[
     Function Rect creates empty (ie not filled) rectangle on screen.
-    lx, ly are increased by half of the current gamepixel due the
-    three reasons:
-    - by default, Love2D starts drawing in the middle of the pixel,
-        which mights result in blurry lines unless we pass 0.5 to
-        x and y all the time (not feasible with current app architecture)
-        or unless we use "rough" line style (which we use);
-    - rough line style rounds the half-pixel which mights cause
-        off-by-one issues;
-    - setting wide line width cause the line to grow in both directions.
-    lw, lh are decreased by single gamepixel because Love2D does
-    not take into account the starting point when calculating size
-    of rectangle.
 
     Arguments
     ---------
@@ -349,10 +320,6 @@ end
 function Rectfill(x, y, w, h, color)
     --[[
     Function Rectfill drawn filled rectangle on the screen.
-    `rectangle("line")` and `recangle("filled")` works a bit differently
-    in Love2D.
-    Rectfill does not require taking into account line width set in
-    Love2D, hence the Rectfill implementation is simpler than the Rect one.
 
     Arguments
     ---------
@@ -381,19 +348,9 @@ function Rectfill(x, y, w, h, color)
     assert(type(h) == "number", "Fourth argument (h) to Rectfill must be a number.")
     assert(h > 1, "Fourth argument (h) to Rectfill must be larger than 1.")
 
-    local lx = math.floor(x * g.screen.gamepixel.w)
-    local ly = math.floor(y * g.screen.gamepixel.h)
-    local lw = math.floor(w * g.screen.gamepixel.w)
-    local lh = math.floor(h * g.screen.gamepixel.h)
+    local coords = agcalc.rectfill(x, y, w, h)
 
-    if not color then color = g.colors.default_fg_color.rgb01 end
-
-    local ok, _ = pcall(love.graphics.setColor, unpack(color))
-    if not ok then
-        ok, _ = pcall(love.graphics.setColor, unpack(color.rgb01))
-    end
-    love.graphics.rectangle("fill", lx, ly, lw, lh)
-    love.graphics.setColor(unpack(g.colors.default_fg_color.rgb01))
+    agdraw.draw_rect(coords, color)
 end
 
 
