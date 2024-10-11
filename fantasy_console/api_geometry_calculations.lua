@@ -181,10 +181,9 @@ function agc.rect(x, y, w, h)
 
     Returns
     -------
-    list of lists
-        List of coords of all gamepixels that create the line.
-        It has the following structure:
-        { {x1, y1}, {x2, y2}, ... {xn, yn} }
+    list of numbers
+        List containing four numbers, that specify
+        top-left anchor point and width and height of rectangle
     ]]--
     
     x = math.floor(x)
@@ -232,10 +231,9 @@ function agc.rectfill(x, y, w, h)
 
     Returns
     -------
-    list of lists
-        List of coords of all gamepixels that create the line.
-        It has the following structure:
-        { {x1, y1}, {x2, y2}, ... {xn, yn} }
+    list of numbers
+        List containing four numbers, that specify
+        top-left anchor point and width and height of rectangle
     ]]--
 
     x = math.floor(x)
