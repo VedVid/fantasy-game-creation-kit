@@ -390,7 +390,9 @@ end
 
 function Circfill(x, y, r, color)
     --[[
-    Function Circfill draws filled circle on the screen. 
+    Function Circfill draws filled circle on the screen.
+    Under the hood, it uses midpoint circle alogrithm for border,
+    then brute-forces the colouring inside the borders.
     
     Arguments
     ---------
@@ -424,6 +426,7 @@ end
 function Oval(x, y, rx, ry, color)
     --[[
     Function Oval draws empty (ie not filled) ellipse on the screen.
+    It uses midpoint ellipse algorithm.
 
     Arguments
     ---------
