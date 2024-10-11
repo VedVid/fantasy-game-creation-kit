@@ -266,8 +266,6 @@ function agc.circ(x, y, r)
         Position of circle center on the y axis.
     r : number
         Radius.
-    color : palette.<color>
-        Color of circle. Defaults to the default foreground colour.
     
     Returns
     -------
@@ -333,6 +331,28 @@ end
 
 
 function agc.circfill(x, y, r)
+    --[[
+    This function calculates list of coordinates of all points that create
+    a filled circle.
+    It re-uses circ function, and brute-forces the filling. 
+
+    Arguments
+    ---------
+    x : number
+        Position of circle center on the x axis.
+    y : number
+        Position of circle center on the y axis.
+    r : number
+        Radius.
+    
+    Returns
+    -------
+    list of lists
+        List of coords of all gamepixels that create the line.
+        It has the following structure:
+        { {x1, y1}, {x2, y2}, ... {xn, yn} }
+    ]]--
+
     -- Start by adding coords of circle border...
     local coords = agc.circ(x, y, r)
 
