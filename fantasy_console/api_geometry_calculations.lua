@@ -377,6 +377,27 @@ end
 
 
 function agc.oval(x, y, rx, ry)
+    --[[
+    Function Oval calculates coordinates of every point that make
+    an empty (ie not filled) ellipse.
+    It uses midpoint ellipse algorithm.
+
+    Arguments
+    ---------
+    x : number
+        Position of ellipse center on the x axis.
+    y : number
+        Position of ellipse center on the y axis.
+    rx : number
+        Length of radius on the x axis.
+    ry : number
+        Length of radius on the y axis.
+
+    Returns
+    -------
+    nothing
+    ]]--
+
     local coords = {}
 
     x = math.floor(x)
@@ -457,6 +478,26 @@ end
 
 
 function agc.ovalfill(x, y, rx, ry)
+    --[[
+    Function Oval calculates coordinates of every point that make
+    an filled ellipse.
+    It uses midpoint ellipse algorithm – it draws lines between the border points.
+
+    Arguments
+    ---------
+    x : number
+        Position of ellipse center on the x axis.
+    y : number
+        Position of ellipse center on the y axis.
+    rx : number
+        Length of radius on the x axis.
+    ry : number
+        Length of radius on the y axis.
+
+    Returns
+    -------
+    nothing
+    ]]--
     local coords = {}
 
     x = math.floor(x)

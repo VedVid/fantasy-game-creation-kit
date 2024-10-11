@@ -440,6 +440,10 @@ function Oval(x, y, rx, ry, color)
         Length of radius on the y axis.
     color : palette.<color>
         Color of ellipse. Defaults to the default foreground colour.
+
+    Returns
+    -------
+    nothing
     ]]--
 
     assert(type(x) == "number", "First argument (x) to Oval must be a number.")
@@ -474,6 +478,10 @@ function Ovalfill(x, y, rx, ry, color)
         Length of radius on the y axis.
     color : palette.<color>
         Color of ellipse. Defaults to the default foreground colour.
+
+    Returns
+    -------
+    nothing
     ]]--
 
     assert(type(x) == "number", "First argument (x) to Ovalfill must be a number.")
