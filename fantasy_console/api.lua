@@ -357,7 +357,7 @@ end
 function Circ(x, y, r, color)
     --[[
     Function Circ creates empty (ie not filled) circle on the screen.
-    It uses midpoint circle alogrithm. 
+    Under the hood, it uses midpoint circle alogrithm. 
 
     Arguments
     ---------

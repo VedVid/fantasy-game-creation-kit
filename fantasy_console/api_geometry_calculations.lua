@@ -255,6 +255,30 @@ end
 
 
 function agc.circ(x, y, r)
+    --[[
+    This function calculates list of coordinates of all points that create
+    an empty circle.
+    It uses midpoint circle alogrithm. 
+
+    Arguments
+    ---------
+    x : number
+        Position of circle center on the x axis.
+    y : number
+        Position of circle center on the y axis.
+    r : number
+        Radius.
+    color : palette.<color>
+        Color of circle. Defaults to the default foreground colour.
+    
+    Returns
+    -------
+    list of lists
+        List of coords of all gamepixels that create the line.
+        It has the following structure:
+        { {x1, y1}, {x2, y2}, ... {xn, yn} }
+    ]]--
+
     local coords = {}
 
     x = math.floor(x)
