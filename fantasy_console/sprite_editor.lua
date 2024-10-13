@@ -34,7 +34,8 @@ editor.current_color = 1
 editor.current_mode = editor.modes.point
 editor.current_toggle = editor.toggle.hold
 editor.primitive_active = false
-editor.primitive_start = nil
+editor.primitive_start_gamepixels = nil
+editor.primitive_start_love2d = nil
 
 
 -- When user changes sprite by drawing, then the changes should be
@@ -760,10 +761,18 @@ function editor.handle_mouseholding(x, y, button)
 
 	if button == nil then
 		if editor.current_mode == editor.modes.circ then
-			local x, y = editor.primitive_start[1], editor.primitive_start[2]
-			local r  -- Calculate distance between current mouse position and primitive_start
-			local coords = agc.circ(editor.primitive_start[1], editor.primitive_start[2])
-			editor.temp_sprite_data = editor.current_sprite_data
+			if editor.primitive_start_gamepixels and editor.primitive_start_love2d then
+				local gx = editor.primitive_start_gamepixels[1]
+				local gy = editor.primitive_start_gamepixels[2]
+				local r = math.floor(utils.distance_between_points(
+					x,
+					y,
+					editor.primitive_start_love2d[1],
+					editor.primitive_start_love2d[2]
+				)/g.screen.gamepixel.w) -- We assume that gamepixel.w == gamepixel.h
+				local coords = agc.circ(gx, gy, r)
+				editor.temp_sprite_data = editor.current_sprite_data
+			end
 		end
 	end
 
@@ -872,12 +881,14 @@ function editor.handle_mousepresses(x, y, button)
 			if not editor.primitive_active then
 				editor.temp_sprite_data = editor.current_sprite_data
 				editor.primitive_active = true
-				editor.primitive_start = {sprite_x, sprite_y}
+				editor.primitive_start_gamepixels = {sprite_x, sprite_y}
+				editor.primitive_start_love2d = {x, y}
 			else
 				editor.current_sprite_data = editor.temp_sprite_data
 				editor.temp_sprite_data = nil
 				editor.primitive_active = false
-				editor.primitive_start = nil
+				editor.primitive_start_gamepixels = nil
+				editor.primitive_start_love2d = nil
 			end
 		end
 	end
