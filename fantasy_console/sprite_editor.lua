@@ -760,32 +760,35 @@ function editor.handle_mouseholding(x, y, button)
 		g.sprites.sprites[editor.current_sprite]["colors"][sprite_1_y][sprite_1_x] = editor.colors[editor.current_color][1]
 	end
 
-	if love.mouse.isDown(button) then
-		-- Check if mouse is over current sprite.
-		if utils.mouse_box_bound_check(
-			x,
-			editor.current_sprite_x_start * g.screen.gamepixel.w,
-			(editor.current_sprite_x_start + (8 * g.sprites.size_w)) * g.screen.gamepixel.w,
-			y,
-			editor.current_sprite_y_start * g.screen.gamepixel.h,
-			(editor.current_sprite_y_start + (8 * g.sprites.size_h)) * g.screen.gamepixel.h
-		) then
-			-- Again, lots of magic below, and I don't really like it.
-			-- 1. We get x and y; these are raw pixel mouse coords caught by Love2D
-			-- 2. We divide the coords by g.screen.gamepixel.w / .h to obtain
-			--    the correct resolution in gamepixels.
-			-- 3. We substract distance of the currently drawn sprite from the left and top
-			--    edges of screen. These values are in gamepixels already.
-			-- 4. We divide result by g.sprites.size_w / _h, because cells have size
-			--    of full sprite.
-			-- 5. We use math.ceil function to round the results up, because
-			--    the first sprite has coords from 0.1 to 1.0.
-			local sprite_x = math.ceil(((x / g.screen.gamepixel.w) - editor.current_sprite_x_start) / g.sprites.size_w)
-			local sprite_y = math.ceil(((y / g.screen.gamepixel.h) - editor.current_sprite_y_start) / g.sprites.size_h)
-			if editor.current_mode == editor.modes.point then
-				local ok, res = pcall(replace_sprite_pixel, sprite_x, sprite_y)
-				if not ok then
-					print("Warning: " .. res)
+
+	if button == 1 then
+		if love.mouse.isDown(button) then
+			-- Check if mouse is over current sprite.
+			if utils.mouse_box_bound_check(
+				x,
+				editor.current_sprite_x_start * g.screen.gamepixel.w,
+				(editor.current_sprite_x_start + (8 * g.sprites.size_w)) * g.screen.gamepixel.w,
+				y,
+				editor.current_sprite_y_start * g.screen.gamepixel.h,
+				(editor.current_sprite_y_start + (8 * g.sprites.size_h)) * g.screen.gamepixel.h
+			) then
+				-- Again, lots of magic below, and I don't really like it.
+				-- 1. We get x and y; these are raw pixel mouse coords caught by Love2D
+				-- 2. We divide the coords by g.screen.gamepixel.w / .h to obtain
+				--    the correct resolution in gamepixels.
+				-- 3. We substract distance of the currently drawn sprite from the left and top
+				--    edges of screen. These values are in gamepixels already.
+				-- 4. We divide result by g.sprites.size_w / _h, because cells have size
+				--    of full sprite.
+				-- 5. We use math.ceil function to round the results up, because
+				--    the first sprite has coords from 0.1 to 1.0.
+				local sprite_x = math.ceil(((x / g.screen.gamepixel.w) - editor.current_sprite_x_start) / g.sprites.size_w)
+				local sprite_y = math.ceil(((y / g.screen.gamepixel.h) - editor.current_sprite_y_start) / g.sprites.size_h)
+				if editor.current_mode == editor.modes.point then
+					local ok, res = pcall(replace_sprite_pixel, sprite_x, sprite_y)
+					if not ok then
+						print("Warning: " .. res)
+					end
 				end
 			end
 		end
@@ -860,7 +863,7 @@ function editor.handle_mousepresses(x, y, button)
 				print("Warning: " .. res)
 			end
 		elseif editor.current_mode == editor.modes.circ then
-			if ~editor.primitive_active then
+			if not editor.primitive_active then
 				editor.temp_sprite_data = editor.current_sprite_data
 				editor.primitive_active = true
 			else
