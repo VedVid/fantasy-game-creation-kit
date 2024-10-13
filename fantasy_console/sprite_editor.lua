@@ -37,6 +37,7 @@ editor.current_toggle = editor.toggle.hold
 -- When user changes sprite by drawing, then the changes should be
 -- automatically added to current_sprite_data
 editor.current_sprite_data = nil
+editor.temp_sprite_data = nil
 -- ^^^ number: <number>, rgb01: <table of numbers>, hex: <string>
 
 
