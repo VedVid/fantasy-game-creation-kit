@@ -505,7 +505,7 @@ function editor.draw_modes_buttons()
 	]]--
 
 	editor.draw_mode_button(editor.point_mode_button)
-	--editor.draw_mode_button(editor.circ_mode_button)
+	editor.draw_mode_button(editor.circ_mode_button)
 end
 
 
@@ -645,8 +645,8 @@ function editor.handle_pressing_universal_buttons(x, y, button)
 	-- buttons from the very start.
 
 	-- Check if mouse is over tab buttons.
-	for  i, button in ipairs(editor.tab_buttons.buttons) do
-		if utils.mouse_box_bound_check_for_buttons(x, y, button) then
+	for  i, tab_button in ipairs(editor.tab_buttons.buttons) do
+		if utils.mouse_box_bound_check_for_buttons(x, y, tab_button) then
 			editor.set_current_tab(i)
 			return
 		end
