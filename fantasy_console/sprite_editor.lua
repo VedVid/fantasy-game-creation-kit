@@ -679,6 +679,12 @@ function editor.handle_pressing_universal_buttons(x, y, button)
 		editor.switch_current_toggle_mode()
 	end
 
+	-- Check if mouse is over circ mode button.
+	if utils.mouse_box_bound_check_for_buttons(x, y, editor.circ_mode_button) then
+		editor.set_current_mode(editor.modes.circ)
+		editor.switch_current_toggle_mode()
+	end
+
 	-- Check if mouse is over sprites list.
 	if utils.mouse_box_bound_check(
 		x,
