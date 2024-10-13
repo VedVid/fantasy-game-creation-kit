@@ -32,6 +32,7 @@ editor.current_sprite = 1
 editor.current_color = 1
 editor.current_mode = editor.modes.point
 editor.current_toggle = editor.toggle.hold
+editor.primitive_active = false
 
 
 -- When user changes sprite by drawing, then the changes should be
@@ -816,7 +817,13 @@ function editor.handle_mousepresses(x, y, button)
 	nothing
 	]]--
 
-	if button ~= 1 then
+	if button ~= 1 and button ~= 2 then
+		return
+	end
+
+	if button == 2 then
+		editor.temp_sprite_data = nil
+		editor.primitive_active = false
 		return
 	end
 
@@ -853,7 +860,12 @@ function editor.handle_mousepresses(x, y, button)
 				print("Warning: " .. res)
 			end
 		elseif editor.current_mode == editor.modes.circ then
-			do end
+			if ~editor.primitive_active then
+				editor.temp_sprite_data = editor.current_sprite_data
+				editor.primitive_active = true
+			else
+				do end
+			end
 		end
 	end
 end
