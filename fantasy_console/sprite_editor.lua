@@ -750,8 +750,10 @@ function editor.handle_mouseholding(x, y, button)
 	nothing
 	]]--
 
-	if button ~= 1 then
-		return
+	if button == nil then
+		if editor.current_mode == editor.modes.circ then
+			do end
+		end
 	end
 
 	-- This closure is used later to use within pcall to emulate
