@@ -7,6 +7,8 @@ requiring user to write repeatedly module name over and over.
 ]]--
 
 
+local agcalc = require "api_geometry_calculations"
+local agdraw = require "api_geometry_drawing"
 local gamepixel = require "gamepixel"
 local g = require "globals"
 local palette = require "palette"
@@ -226,52 +228,23 @@ function Pset(x, y, color)
     assert(type(y) == "number", "Second argument (y) to Pset must be a number.")
     assert(y >= 0, "Second argument (y) to Pset must not be negative.")
 
-    local lx = math.floor(x * g.screen.gamepixel.w)
-    local ly = math.floor(y * g.screen.gamepixel.h)
-    if not color then color = g.colors.default_fg_color.rgb01 end
-    local ok, _ = pcall(love.graphics.setColor, unpack(color))
-    if not ok then
-        ok, _ = pcall(love.graphics.setColor, unpack(color.rgb01))
-    end
-    love.graphics.rectangle(
-        "fill",
-        lx,
-        ly,
-        g.screen.gamepixel.w,
-        g.screen.gamepixel.h
-    )
-    love.graphics.setColor(unpack(g.colors.default_fg_color.rgb01))
+    local coords = agcalc.pset(x, y)
+
+    agdraw.draw_with_pset(coords, color)
 end
 
 
 function Line(sx, sy, tx, ty, color)
-    -- This is a translation of bresenham algorithm by Petr Viktorin,
+    --[[
+    -- This function draws a line from sx, sy to tx, ty. Under the hood,
+    -- it uses translation of bresenham algorithm by Petr Viktorin
     -- written in Python, released under the MIT license.
     -- It's available at https://github.com/encukou/bresenham as of
     -- 20240521
-    --[[
-Copyright © 2016 Petr Viktorin
+    -- For details, please read the comment to
+    -- api_geometry_calculations.line, and to the
+    -- `bresenham_by_Petr_Viktoring.txt` file inside `licenses` directory.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
-    ]]--
-
-    --[[
     Arguments
     ---------
     sx : number
@@ -300,73 +273,15 @@ THE SOFTWARE.
     assert(type(ty) == "number", "Fourth argument (ty) to Line must be a number.")
     assert(ty >= 0, "Fourth argument (ty) to Line must not be negative.")
 
-    if not color then color = g.colors.default_fg_color.rgb01 end
+    local coords = agcalc.line(sx, sy, tx, ty)
 
-    sx = math.floor(sx)
-    sy = math.floor(sy)
-    tx = math.floor(tx)
-    ty = math.floor(ty)
-
-    local dx = tx - sx
-    local dy = ty - sy
-
-    local xsign = 1
-    if dx <= 0 then
-        xsign = -1
-    end
-
-    local ysign = 1
-    if dy <= 0 then
-        ysign = -1
-    end
-
-    dx = math.abs(dx)
-    dy = math.abs(dy)
-
-    local xx = xsign
-    local xy = 0
-    local yx = 0
-    local yy = ysign
-    if dx <= dy then
-        dx, dy = dy, dx
-        xx = 0
-        xy = ysign
-        yx = xsign
-        yy = 0
-    end
-
-    local d = 2 * dy - dx
-    local y = 0
-
-    for x = 0, dx do
-        local coord = {}
-        coord.x = sx + x * xx + y * yx
-        coord.y = sy + x * xy + y * yy
-        Pset(coord.x, coord.y, color)
-        if d >= 0 then
-            y = y + 1
-            d = d - 2 * dx
-        end
-        d = d + 2 * dy
-    end
+    agdraw.draw_with_pset(coords, color)
 end
 
 
 function Rect(x, y, w, h, color)
     --[[
     Function Rect creates empty (ie not filled) rectangle on screen.
-    lx, ly are increased by half of the current gamepixel due the
-    three reasons:
-    - by default, Love2D starts drawing in the middle of the pixel,
-        which mights result in blurry lines unless we pass 0.5 to
-        x and y all the time (not feasible with current app architecture)
-        or unless we use "rough" line style (which we use);
-    - rough line style rounds the half-pixel which mights cause
-        off-by-one issues;
-    - setting wide line width cause the line to grow in both directions.
-    lw, lh are decreased by single gamepixel because Love2D does
-    not take into account the starting point when calculating size
-    of rectangle.
 
     Arguments
     ---------
@@ -396,29 +311,15 @@ function Rect(x, y, w, h, color)
     assert(type(h) == "number", "Fourth argument (h) to Rect must be a number.")
     assert(h > 1, "Fourth argument (h) to Rect must be larger than 1.")
 
-    local lx = (x * g.screen.gamepixel.w) + (g.screen.gamepixel.w / 2)
-    local ly = (y * g.screen.gamepixel.h) + (g.screen.gamepixel.h / 2)
-    local lw = (w - 1) * g.screen.gamepixel.w
-    local lh = (h - 1) * g.screen.gamepixel.h
+    local coords = agcalc.rect(x, y, w, h)
 
-    if not color then color = g.colors.default_fg_color.rgb01 end
-
-    local ok, _ = pcall(love.graphics.setColor, unpack(color))
-    if not ok then
-        ok, _ = pcall(love.graphics.setColor, unpack(color.rgb01))
-    end
-    love.graphics.rectangle("line", lx, ly, lw, lh)
-    love.graphics.setColor(unpack(g.colors.default_fg_color.rgb01))
+    agdraw.draw_rect(coords, color)
 end
 
 
 function Rectfill(x, y, w, h, color)
     --[[
     Function Rectfill drawn filled rectangle on the screen.
-    `rectangle("line")` and `recangle("filled")` works a bit differently
-    in Love2D.
-    Rectfill does not require taking into account line width set in
-    Love2D, hence the Rectfill implementation is simpler than the Rect one.
 
     Arguments
     ---------
@@ -447,26 +348,16 @@ function Rectfill(x, y, w, h, color)
     assert(type(h) == "number", "Fourth argument (h) to Rectfill must be a number.")
     assert(h > 1, "Fourth argument (h) to Rectfill must be larger than 1.")
 
-    local lx = math.floor(x * g.screen.gamepixel.w)
-    local ly = math.floor(y * g.screen.gamepixel.h)
-    local lw = math.floor(w * g.screen.gamepixel.w)
-    local lh = math.floor(h * g.screen.gamepixel.h)
+    local coords = agcalc.rectfill(x, y, w, h)
 
-    if not color then color = g.colors.default_fg_color.rgb01 end
-
-    local ok, _ = pcall(love.graphics.setColor, unpack(color))
-    if not ok then
-        ok, _ = pcall(love.graphics.setColor, unpack(color.rgb01))
-    end
-    love.graphics.rectangle("fill", lx, ly, lw, lh)
-    love.graphics.setColor(unpack(g.colors.default_fg_color.rgb01))
+    agdraw.draw_rectfill(coords, color)
 end
 
 
 function Circ(x, y, r, color)
     --[[
     Function Circ creates empty (ie not filled) circle on the screen.
-    It uses midpoint circle alogrithm. 
+    Under the hood, it uses midpoint circle alogrithm. 
 
     Arguments
     ---------
@@ -491,39 +382,17 @@ function Circ(x, y, r, color)
     assert(type(r) == "number", "Third argument (r) to Circ must be a number.")
     assert(r > 0, "Third argument (r) to Circ must be larger than 0.")
 
-    x = math.floor(x)
-    y = math.floor(y)
-    r = math.floor(r)
+    local coords = agcalc.circ(x, y, r)
 
-    if not color then color = g.colors.default_fg_color.rgb01 end
-
-    local dx = r
-    local dy = 0
-    local err = 1 - r
-    while dx >= dy do
-        Pset(x + dx, y + dy, color)
-        Pset(x - dx, y + dy, color)
-        Pset(x + dx, y - dy, color)
-        Pset(x - dx, y - dy, color)
-        Pset(x + dy, y + dx, color)
-        Pset(x - dy, y + dx, color)
-        Pset(x + dy, y - dx, color)
-        Pset(x - dy, y - dx, color)
-        dy = dy + 1
-        if err < 0 then
-            err = err + 2 * dy + 1
-        else
-            dx = dx - 1
-            err = err + 2 * (dy - dx) + 1
-        end
-    end
+    agdraw.draw_with_pset(coords, color)
 end
 
 
 function Circfill(x, y, r, color)
     --[[
-    Function Circfill draws filled circle on the screen. 
-    It reuses Circ function for the borders, and brute-forces the coloring.
+    Function Circfill draws filled circle on the screen.
+    Under the hood, it uses midpoint circle alogrithm for border,
+    then brute-forces the colouring inside the borders.
     
     Arguments
     ---------
@@ -548,20 +417,9 @@ function Circfill(x, y, r, color)
     assert(type(r) == "number", "Third argument (r) to Circfill must be a number.")
     assert(r > 0, "Third argument (r) to Circfill must be larger than 0.")
 
-    x = math.floor(x)
-    y = math.floor(y)
-    r = math.floor(r)
+    local coords = agcalc.circfill(x, y, r)
 
-    if not color then color = g.colors.default_fg_color.rgb01 end
-
-    for ty=-r,r do
-        for tx=-r,r do
-            if(tx*tx+ty*ty <= r*r) then
-                Pset(x + tx, y + ty, color)
-            end
-        end
-    end
-    Circ(x, y, r, color)
+    agdraw.draw_with_pset(coords, color)
 end
 
 
@@ -582,6 +440,10 @@ function Oval(x, y, rx, ry, color)
         Length of radius on the y axis.
     color : palette.<color>
         Color of ellipse. Defaults to the default foreground colour.
+
+    Returns
+    -------
+    nothing
     ]]--
 
     assert(type(x) == "number", "First argument (x) to Oval must be a number.")
@@ -593,56 +455,9 @@ function Oval(x, y, rx, ry, color)
     assert(type(ry) == "number", "Fourth argument (ry) to Oval must be a number.")
     assert(ry > 0, "Fourth argument (ry) to Oval must be larger than 0.")
 
-    x = math.floor(x)
-    y = math.floor(y)
-    rx = math.floor(rx)
-    ry = math.floor(ry)
+    local coords = agcalc.oval(x, y, rx, ry)
 
-    if not color then color = g.colors.default_fg_color.rgb01 end
-
-    local dx, dy, d1, d2
-    local xx = 0;
-    local yy = ry;
-    d1 = (ry * ry) - (rx * rx * ry) + (0.25 * rx * rx)
-    dx = 2 * ry * ry * xx
-    dy = 2 * rx * rx * yy
-
-    while (dx < dy) do	
-        Pset(xx + x, yy + y, color)
-        Pset(-xx + x, yy + y, color)
-        Pset(xx + x, -yy + y, color)
-        Pset(-xx + x, -yy + y, color)
-        if d1 < 0 then
-            xx = xx + 1
-            dx = dx + (2 * ry * ry)
-            d1 = d1 + dx + (ry * ry)
-        else
-            xx = xx + 1
-            yy = yy - 1
-            dx = dx + (2 * ry * ry)
-            dy = dy - (2 * rx * rx)
-            d1 = d1 + dx - dy + (ry * ry)
-        end
-    end
-
-    d2 = ((ry * ry) * ((xx + 0.5) * (xx + 0.5))) + ((rx * rx) * ((yy - 1) * (yy - 1))) - (rx * rx * ry * ry)
-    while (yy >= 0) do	
-        Pset(xx + x, yy + y, color)
-        Pset(-xx + x, yy + y, color)
-        Pset(xx + x, -yy + y, color)
-        Pset(-xx + x, -yy + y, color)	
-        if d2 > 0 then
-            yy = yy - 1
-            dy = dy - (2 * rx * rx)
-            d2 = d2 + (rx * rx) - dy
-        else
-            yy = yy - 1
-            xx = xx + 1
-            dx = dx + (2 * ry * ry)
-            dy = dy - (2 * rx * rx)
-            d2 = d2 + dx - dy + (rx * rx)
-        end
-    end
+    agdraw.draw_with_pset(coords, color)
 end
 
 
@@ -663,6 +478,10 @@ function Ovalfill(x, y, rx, ry, color)
         Length of radius on the y axis.
     color : palette.<color>
         Color of ellipse. Defaults to the default foreground colour.
+
+    Returns
+    -------
+    nothing
     ]]--
 
     assert(type(x) == "number", "First argument (x) to Ovalfill must be a number.")
@@ -674,52 +493,9 @@ function Ovalfill(x, y, rx, ry, color)
     assert(type(ry) == "number", "Fourth argument (ry) to Ovalfill must be a number.")
     assert(ry > 0, "Fourth argument (ry) to Ovalfill must be larger than 0.")
 
-    x = math.floor(x)
-    y = math.floor(y)
-    rx = math.floor(rx)
-    ry = math.floor(ry)
+    local coords = agcalc.ovalfill(x, y, rx, ry)
 
-    if not color then color = g.colors.default_fg_color.rgb01 end
-
-    local dx, dy, d1, d2
-    local xx = 0;
-    local yy = ry;
-    d1 = (ry * ry) - (rx * rx * ry) + (0.25 * rx * rx)
-    dx = 2 * ry * ry * xx
-    dy = 2 * rx * rx * yy
-
-    while (dx < dy) do
-        Line(x - xx, y + yy, x + xx, y + yy, color)
-        Line(x - xx, y - yy, x + xx, y - yy, color)
-        if d1 < 0 then
-            xx = xx + 1
-            dx = dx + (2 * ry * ry)
-            d1 = d1 + dx + (ry * ry)
-        else
-            xx = xx + 1
-            yy = yy - 1
-            dx = dx + (2 * ry * ry)
-            dy = dy - (2 * rx * rx)
-            d1 = d1 + dx - dy + (ry * ry)
-        end
-    end
-
-    d2 = ((ry * ry) * ((xx + 0.5) * (xx + 0.5))) + ((rx * rx) * ((yy - 1) * (yy - 1))) - (rx * rx * ry * ry)
-    while (yy >= 0) do
-        Line(x - xx, y + yy, x + xx, y + yy, color)
-        Line(x - xx, y - yy, x + xx, y - yy, color)
-        if d2 > 0 then
-            yy = yy - 1
-            dy = dy - (2 * rx * rx)
-            d2 = d2 + (rx * rx) - dy
-        else
-            yy = yy - 1
-            xx = xx + 1
-            dx = dx + (2 * ry * ry)
-            dy = dy - (2 * rx * rx)
-            d2 = d2 + dx - dy + (rx * rx)
-        end
-    end
+    agdraw.draw_with_pset(coords, color)
 end
 
 
