@@ -454,7 +454,7 @@ end
 
 function TestGeometryCalculations.test_circfill__should_return_correct_coords__when_calculating_large_circle()
     -- Of course I did not calculate all these coords myself.
-    -- I generated a circle, checked, if it is drawn correctly,
+    -- I generated an oval, checked, if it is drawn correctly,
     -- the I copied the coords there.
     -- It means that this test is not the best one, because it doesn't
     -- really check if function works correctly, but at least
@@ -1368,6 +1368,266 @@ function TestGeometryCalculations.test_oval__should_return_correct_coords__when_
     }
 
     local given_result = agc.oval(5, 5, 3, 5)
+
+    luaunit.assertEquals(given_result, expected_result)
+end
+
+
+-- Start of test__ovalfill
+
+function TestGeometryCalculations.test_ovalfill__should_return_correct_coords__when_calculating_coords_for_oval_with_the_same_rx_and_ry()
+    -- Of course I did not calculate all these coords myself.
+    -- I generated an oval, checked, if it is drawn correctly,
+    -- the I copied the coords there.
+    -- It means that this test is not the best one, because it doesn't
+    -- really check if function works correctly, but at least
+    -- it will catch the moment when the behaviour changes unexpectly.
+    local expected_result = {
+        {x = 25, y = 40},
+        {x = 25, y = 10},
+        {x = 20, y = 40},
+        {x = 25, y = 40},
+        {x = 30, y = 40},
+        {x = 20, y = 10},
+        {x = 25, y = 10},
+        {x = 30, y = 10},
+        {x = 15, y = 35},
+        {x = 20, y = 35},
+        {x = 25, y = 35},
+        {x = 30, y = 35},
+        {x = 35, y = 35},
+        {x = 15, y = 15},
+        {x = 20, y = 15},
+        {x = 25, y = 15},
+        {x = 30, y = 15},
+        {x = 35, y = 15},
+        {x = 10, y = 30},
+        {x = 15, y = 30},
+        {x = 20, y = 30},
+        {x = 25, y = 30},
+        {x = 30, y = 30},
+        {x = 35, y = 30},
+        {x = 40, y = 30},
+        {x = 10, y = 20},
+        {x = 15, y = 20},
+        {x = 20, y = 20},
+        {x = 25, y = 20},
+        {x = 30, y = 20},
+        {x = 35, y = 20},
+        {x = 40, y = 20},
+        {x = 10, y = 25},
+        {x = 15, y = 25},
+        {x = 20, y = 25},
+        {x = 25, y = 25},
+        {x = 30, y = 25},
+        {x = 35, y = 25},
+        {x = 40, y = 25},
+        {x = 10, y = 25},
+        {x = 15, y = 25},
+        {x = 20, y = 25},
+        {x = 25, y = 25},
+        {x = 30, y = 25},
+        {x = 35, y = 25},
+        {x = 40, y = 25}
+    }
+
+    local given_result = agc.ovalfill(5, 5, 3, 3)
+
+    luaunit.assertEquals(given_result, expected_result)
+end
+
+
+function TestGeometryCalculations.test_ovalfill__should_return_correct_coords__when_calculating_coords_for_oval_with_rx_larger_than_ry()
+    -- Of course I did not calculate all these coords myself.
+    -- I generated an oval, checked, if it is drawn correctly,
+    -- the I copied the coords there.
+    -- It means that this test is not the best one, because it doesn't
+    -- really check if function works correctly, but at least
+    -- it will catch the moment when the behaviour changes unexpectly.
+    local expected_result = {
+        {x = 25, y = 40},
+        {x = 25, y = 10},
+        {x = 20, y = 40},
+        {x = 25, y = 40},
+        {x = 30, y = 40},
+        {x = 20, y = 10},
+        {x = 25, y = 10},
+        {x = 30, y = 10},
+        {x = 15, y = 40},
+        {x = 20, y = 40},
+        {x = 25, y = 40},
+        {x = 30, y = 40},
+        {x = 35, y = 40},
+        {x = 15, y = 10},
+        {x = 20, y = 10},
+        {x = 25, y = 10},
+        {x = 30, y = 10},
+        {x = 35, y = 10},
+        {x = 10, y = 35},
+        {x = 15, y = 35},
+        {x = 20, y = 35},
+        {x = 25, y = 35},
+        {x = 30, y = 35},
+        {x = 35, y = 35},
+        {x = 40, y = 35},
+        {x = 10, y = 15},
+        {x = 15, y = 15},
+        {x = 20, y = 15},
+        {x = 25, y = 15},
+        {x = 30, y = 15},
+        {x = 35, y = 15},
+        {x = 40, y = 15},
+        {x = 5, y = 35},
+        {x = 10, y = 35},
+        {x = 15, y = 35},
+        {x = 20, y = 35},
+        {x = 25, y = 35},
+        {x = 30, y = 35},
+        {x = 35, y = 35},
+        {x = 40, y = 35},
+        {x = 45, y = 35},
+        {x = 5, y = 15},
+        {x = 10, y = 15},
+        {x = 15, y = 15},
+        {x = 20, y = 15},
+        {x = 25, y = 15},
+        {x = 30, y = 15},
+        {x = 35, y = 15},
+        {x = 40, y = 15},
+        {x = 45, y = 15},
+        {x = 0, y = 30},
+        {x = 5, y = 30},
+        {x = 10, y = 30},
+        {x = 15, y = 30},
+        {x = 20, y = 30},
+        {x = 25, y = 30},
+        {x = 30, y = 30},
+        {x = 35, y = 30},
+        {x = 40, y = 30},
+        {x = 45, y = 30},
+        {x = 50, y = 30},
+        {x = 0, y = 20},
+        {x = 5, y = 20},
+        {x = 10, y = 20},
+        {x = 15, y = 20},
+        {x = 20, y = 20},
+        {x = 25, y = 20},
+        {x = 30, y = 20},
+        {x = 35, y = 20},
+        {x = 40, y = 20},
+        {x = 45, y = 20},
+        {x = 50, y = 20},
+        {x = 0, y = 25},
+        {x = 5, y = 25},
+        {x = 10, y = 25},
+        {x = 15, y = 25},
+        {x = 20, y = 25},
+        {x = 25, y = 25},
+        {x = 30, y = 25},
+        {x = 35, y = 25},
+        {x = 40, y = 25},
+        {x = 45, y = 25},
+        {x = 50, y = 25},
+        {x = 0, y = 25},
+        {x = 5, y = 25},
+        {x = 10, y = 25},
+        {x = 15, y = 25},
+        {x = 20, y = 25},
+        {x = 25, y = 25},
+        {x = 30, y = 25},
+        {x = 35, y = 25},
+        {x = 40, y = 25},
+        {x = 45, y = 25},
+        {x = 50, y = 25}
+    }
+
+    local given_result = agc.ovalfill(5, 5, 5, 3)
+
+    luaunit.assertEquals(given_result, expected_result)
+end
+
+
+function TestGeometryCalculations.test_ovalfill__should_return_correct_coords__when_calculating_coords_for_oval_with_rx_smaller_than_ry()
+    -- Of course I did not calculate all these coords myself.
+    -- I generated an oval, checked, if it is drawn correctly,
+    -- the I copied the coords there.
+    -- It means that this test is not the best one, because it doesn't
+    -- really check if function works correctly, but at least
+    -- it will catch the moment when the behaviour changes unexpectly.
+    local expected_result = {
+        {x = 25, y = 50},
+        {x = 25, y = 0},
+        {x = 20, y = 50},
+        {x = 25, y = 50},
+        {x = 30, y = 50},
+        {x = 20, y = 0},
+        {x = 25, y = 0},
+        {x = 30, y = 0},
+        {x = 15, y = 45},
+        {x = 20, y = 45},
+        {x = 25, y = 45},
+        {x = 30, y = 45},
+        {x = 35, y = 45},
+        {x = 15, y = 5},
+        {x = 20, y = 5},
+        {x = 25, y = 5},
+        {x = 30, y = 5},
+        {x = 35, y = 5},
+        {x = 15, y = 40},
+        {x = 20, y = 40},
+        {x = 25, y = 40},
+        {x = 30, y = 40},
+        {x = 35, y = 40},
+        {x = 15, y = 10},
+        {x = 20, y = 10},
+        {x = 25, y = 10},
+        {x = 30, y = 10},
+        {x = 35, y = 10},
+        {x = 10, y = 35},
+        {x = 15, y = 35},
+        {x = 20, y = 35},
+        {x = 25, y = 35},
+        {x = 30, y = 35},
+        {x = 35, y = 35},
+        {x = 40, y = 35},
+        {x = 10, y = 15},
+        {x = 15, y = 15},
+        {x = 20, y = 15},
+        {x = 25, y = 15},
+        {x = 30, y = 15},
+        {x = 35, y = 15},
+        {x = 40, y = 15},
+        {x = 10, y = 30},
+        {x = 15, y = 30},
+        {x = 20, y = 30},
+        {x = 25, y = 30},
+        {x = 30, y = 30},
+        {x = 35, y = 30},
+        {x = 40, y = 30},
+        {x = 10, y = 20},
+        {x = 15, y = 20},
+        {x = 20, y = 20},
+        {x = 25, y = 20},
+        {x = 30, y = 20},
+        {x = 35, y = 20},
+        {x = 40, y = 20},
+        {x = 10, y = 25},
+        {x = 15, y = 25},
+        {x = 20, y = 25},
+        {x = 25, y = 25},
+        {x = 30, y = 25},
+        {x = 35, y = 25},
+        {x = 40, y = 25},
+        {x = 10, y = 25},
+        {x = 15, y = 25},
+        {x = 20, y = 25},
+        {x = 25, y = 25},
+        {x = 30, y = 25},
+        {x = 35, y = 25},
+        {x = 40, y = 25}
+    }
+
+    local given_result = agc.ovalfill(5, 5, 3, 5)
 
     luaunit.assertEquals(given_result, expected_result)
 end
