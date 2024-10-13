@@ -852,6 +852,8 @@ function editor.handle_mousepresses(x, y, button)
 			if not ok then
 				print("Warning: " .. res)
 			end
+		elseif editor.current_mode == editor.modes.circ then
+			do end
 		end
 	end
 end
