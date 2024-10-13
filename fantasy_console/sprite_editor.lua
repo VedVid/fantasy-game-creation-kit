@@ -613,7 +613,7 @@ function editor.draw_spritesheet_buttons()
 end
 
 
-function editor.handle_pressing_universal_buttons(x, y)
+function editor.handle_pressing_universal_buttons(x, y, button)
 	--[[
 	While handle_mouseholding and handle_mousepresses are functions
 	that are focused on handling drawing things on the current_sprite
@@ -635,6 +635,10 @@ function editor.handle_pressing_universal_buttons(x, y)
 	-------
 	nothing
 	]]--
+
+	if button ~= 1 then
+		return
+	end
 
 	-- This could be probably improved by basic bound checking
 	-- around the tabs and colors, instead of iterating over all
@@ -719,7 +723,7 @@ function editor.handle_pressing_universal_buttons(x, y)
 end
 
 
-function editor.handle_mouseholding(x, y)
+function editor.handle_mouseholding(x, y, button)
 	--[[
 	handle_mouseholding is used only for handling drawing over current sprite
 	while having point drawing mode enabled. All other interactions
@@ -738,13 +742,17 @@ function editor.handle_mouseholding(x, y)
 	nothing
 	]]--
 
+	if button ~= 1 then
+		return
+	end
+
 	-- This closure is used later to use within pcall to emulate
 	-- behaviour similar to try-except
 	local function replace_sprite_pixel(sprite_1_x, sprite_1_y)
 		g.sprites.sprites[editor.current_sprite]["colors"][sprite_1_y][sprite_1_x] = editor.colors[editor.current_color][1]
 	end
 
-	if love.mouse.isDown(1, 2) then
+	if love.mouse.isDown(button) then
 		-- Check if mouse is over current sprite.
 		if utils.mouse_box_bound_check(
 			x,
@@ -777,7 +785,7 @@ function editor.handle_mouseholding(x, y)
 end
 
 
-function editor.handle_mousepresses(x, y)
+function editor.handle_mousepresses(x, y, button)
 	--[[
 	handle_mousepresses is going to be used for every drawing method.
 	while having point drawing mode enabled.
@@ -800,6 +808,10 @@ function editor.handle_mousepresses(x, y)
 	-------
 	nothing
 	]]--
+
+	if button ~= 1 then
+		return
+	end
 
 	-- This closure is used later to use within pcall to emulate
 	-- behaviour similar to try-except
