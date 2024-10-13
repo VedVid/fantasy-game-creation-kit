@@ -369,10 +369,15 @@ function editor.draw_current_sprite()
 	local col = 0
 	local row = 0
 
-	if editor.current_sprite_data == nil then
+	if editor.current_sprite_data == nil and editor.temp_sprite_data == nil then
 		editor.current_sprite_data = s.return_sprite_colors(
 			s.get_sprite(editor.current_sprite), "palette"
 		)
+	end
+
+	local cur_spr = editor.temp_sprite_data
+	if not cur_spr then
+		cur_spr = editor.current_sprite_data
 	end
 
 	Rect(
@@ -383,7 +388,7 @@ function editor.draw_current_sprite()
 		Cyan
 	  )
 
-	for _, line in ipairs(editor.current_sprite_data) do
+	for _, line in ipairs(cur_spr) do
 	local cur_y = editor.current_sprite_y_start + (row * g.sprites.size_h)
 		for _, v in ipairs(line) do
 			local cur_x = editor.current_sprite_x_start + (col * g.sprites.size_w)
