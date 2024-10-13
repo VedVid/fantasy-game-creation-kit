@@ -2,6 +2,8 @@ This project is a work-in-progress game creation kit. Heavily inspired by fantas
 
 Under the hood, it's wrapper around Love2D.
 
+Please note that the actual development happens in `development` branch and several feature branches. I merge into `master` only when preparing a new release.
+
 Goals:
 - provide all the basic tools to create simple games
 - create API that will feel familiar to people who know PICO-8
@@ -21,6 +23,7 @@ How to start:
 - start the app, either by:
 	- drag-and-drop `fantasy_console` directory on you Love2D installation, or
 	- by executing `start.bat` file (this assumes that `fantasy_console` and `love` directory are in the same root directory).
+
 
 
 
