@@ -1265,6 +1265,114 @@ function TestGeometryCalculations.test_circfill__should_return_correct_coords__w
 end
 
 
+-- Start of test_oval
+
+function TestGeometryCalculations.test_oval__should_return_correct_coords__when_calculating_coords_for_oval_with_the_same_rx_and_ry()
+    local expected_result = {
+        {x = 25, y = 40},
+        {x = 25, y = 40},
+        {x = 25, y = 10},
+        {x = 25, y = 10},
+        {x = 30, y = 40},
+        {x = 20, y = 40},
+        {x = 30, y = 10},
+        {x = 20, y = 10},
+        {x = 35, y = 35},
+        {x = 15, y = 35},
+        {x = 35, y = 15},
+        {x = 15, y = 15},
+        {x = 40, y = 30},
+        {x = 10, y = 30},
+        {x = 40, y = 20},
+        {x = 10, y = 20},
+        {x = 40, y = 25},
+        {x = 10, y = 25},
+        {x = 40, y = 25},
+        {x = 10, y = 25}
+    }
+
+    local given_result = agc.oval(5, 5, 3, 3)
+
+    luaunit.assertEquals(given_result, expected_result)
+end
+
+
+function TestGeometryCalculations.test_oval__should_return_correct_coords__when_calculating_coords_for_oval_with_rx_larger_than_ry()
+    local expected_result = {
+        {x = 25, y = 40},
+        {x = 25, y = 40},
+        {x = 25, y = 10},
+        {x = 25, y = 10},
+        {x = 30, y = 40},
+        {x = 20, y = 40},
+        {x = 30, y = 10},
+        {x = 20, y = 10},
+        {x = 35, y = 40},
+        {x = 15, y = 40},
+        {x = 35, y = 10},
+        {x = 15, y = 10},
+        {x = 40, y = 35},
+        {x = 10, y = 35},
+        {x = 40, y = 15},
+        {x = 10, y = 15},
+        {x = 45, y = 35},
+        {x = 5, y = 35},
+        {x = 45, y = 15},
+        {x = 5, y = 15},
+        {x = 50, y = 30},
+        {x = 0, y = 30},
+        {x = 50, y = 20},
+        {x = 0, y = 20},
+        {x = 50, y = 25},
+        {x = 0, y = 25},
+        {x = 50, y = 25},
+        {x = 0, y = 25}
+    }
+
+    local given_result = agc.oval(5, 5, 5, 3)
+
+    luaunit.assertEquals(given_result, expected_result)
+end
+
+
+function TestGeometryCalculations.test_oval__should_return_correct_coords__when_calculating_coords_for_oval_with_rx_smaller_than_ry()
+    local expected_result = {
+        {x = 25, y = 50},
+        {x = 25, y = 50},
+        {x = 25, y = 0},
+        {x = 25, y = 0},
+        {x = 30, y = 50},
+        {x = 20, y = 50},
+        {x = 30, y = 0},
+        {x = 20, y = 0},
+        {x = 35, y = 45},
+        {x = 15, y = 45},
+        {x = 35, y = 5},
+        {x = 15, y = 5},
+        {x = 35, y = 40},
+        {x = 15, y = 40},
+        {x = 35, y = 10},
+        {x = 15, y = 10},
+        {x = 40, y = 35},
+        {x = 10, y = 35},
+        {x = 40, y = 15},
+        {x = 10, y = 15},
+        {x = 40, y = 30},
+        {x = 10, y = 30},
+        {x = 40, y = 20},
+        {x = 10, y = 20},
+        {x = 40, y = 25},
+        {x = 10, y = 25},
+        {x = 40, y = 25},
+        {x = 10, y = 25}
+    }
+
+    local given_result = agc.oval(5, 5, 3, 5)
+
+    luaunit.assertEquals(given_result, expected_result)
+end
+
+
 --[[ End of TestGeometryCalculations ]]
 
 
