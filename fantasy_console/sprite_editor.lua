@@ -1,5 +1,6 @@
 require "api"
 
+local agc = require "api_geometry_calculations"
 local g = require "globals"
 local s = require "sprite"
 local palette = require "palette"
@@ -33,6 +34,7 @@ editor.current_color = 1
 editor.current_mode = editor.modes.point
 editor.current_toggle = editor.toggle.hold
 editor.primitive_active = false
+editor.primitive_start = nil
 
 
 -- When user changes sprite by drawing, then the changes should be
@@ -750,18 +752,20 @@ function editor.handle_mouseholding(x, y, button)
 	nothing
 	]]--
 
-	if button == nil then
-		if editor.current_mode == editor.modes.circ then
-			do end
-		end
-	end
-
 	-- This closure is used later to use within pcall to emulate
 	-- behaviour similar to try-except
 	local function replace_sprite_pixel(sprite_1_x, sprite_1_y)
 		g.sprites.sprites[editor.current_sprite]["colors"][sprite_1_y][sprite_1_x] = editor.colors[editor.current_color][1]
 	end
 
+	if button == nil then
+		if editor.current_mode == editor.modes.circ then
+			local x, y = editor.primitive_start[1], editor.primitive_start[2]
+			local r  -- Calculate distance between current mouse position and primitive_start
+			local coords = agc.circ(editor.primitive_start[1], editor.primitive_start[2])
+			editor.temp_sprite_data = editor.current_sprite_data
+		end
+	end
 
 	if button == 1 then
 		if love.mouse.isDown(button) then
@@ -868,10 +872,12 @@ function editor.handle_mousepresses(x, y, button)
 			if not editor.primitive_active then
 				editor.temp_sprite_data = editor.current_sprite_data
 				editor.primitive_active = true
+				editor.primitive_start = {sprite_x, sprite_y}
 			else
 				editor.current_sprite_data = editor.temp_sprite_data
 				editor.temp_sprite_data = nil
 				editor.primitive_active = false
+				editor.primitive_start = nil
 			end
 		end
 	end
