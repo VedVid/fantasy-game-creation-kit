@@ -8,6 +8,7 @@ local utils = require "utils"
 
 local editor = {}
 
+
 -- List of the modes available to the user.
 -- Mode is a way to draw, e.g. point is like
 -- drawing pixel-by-pixel, like in Paint, and
@@ -25,16 +26,19 @@ editor.toggle = {}
 editor.toggle.press = "press"
 editor.toggle.hold = "hold"
 
+
 editor.current_tab = 1
 editor.current_sprite = 1
 editor.current_color = 1
 editor.current_mode = editor.modes.point
 editor.current_toggle = editor.toggle.hold
 
+
 -- When user changes sprite by drawing, then the changes should be
 -- automatically added to current_sprite_data
 editor.current_sprite_data = nil
 -- ^^^ number: <number>, rgb01: <table of numbers>, hex: <string>
+
 
 -- Data relevant to drawing list of colors to choose from.
 editor.colors_x_start = 152
@@ -43,6 +47,7 @@ editor.current_sprite_x_start = 45
 editor.current_sprite_y_start = 30
 editor.all_sprites_x_start = 8
 editor.all_sprites_y_start = 192
+
 
 -- Save button.
 -- It allows to save current work. After player taps the button,
@@ -57,9 +62,11 @@ editor.save_button.has_been_pressed_max = math.floor(g.min_dt * 1000)
 editor.save_button.text = "Save"
 editor.save_button.text_active = "Saved!"
 
+
 -- Kinda constants for sizing modes buttons.
 editor.mode_buttons_w = 7
 editor.mode_buttons_h = 7
+
 
 ---- Below there are data relevant to drawing mode buttons.
 ---- Buttons depends on each other – it means that if we change
@@ -104,6 +111,7 @@ editor.circ_mode_button.pattern_color = Yellow
 ---- End of modes buttons data.
 ----
 
+
 -- Tabs let user switch between pages / lists of sprites.
 -- There are three tabs. The third is a little bit shorter than the first two. 
 editor.tab_buttons = {}
@@ -129,6 +137,7 @@ editor.all_sprites_tab_3.x = editor.all_sprites_tab_2.x + editor.all_sprites_tab
 editor.all_sprites_tab_3.y = editor.all_sprites_y_start - 67
 editor.all_sprites_tab_3.txt = "Tab 3"
 table.insert(editor.tab_buttons.buttons, editor.all_sprites_tab_3)
+
 
 -- List of colors and the coordinates of the screen.
 -- Together, all colors make a palette that user can choose colors
@@ -157,6 +166,7 @@ editor.colors = {
 	{palette.white_bold, editor.colors_x_start + 24, editor.colors_y_start + 24}
 }
 
+
 function editor.set_current_tab(num)
 	--[[
     Method set_current_tab calls set_sprite function that save lastly edited
@@ -177,6 +187,7 @@ function editor.set_current_tab(num)
 	s.set_sprite(editor.current_sprite, editor.current_sprite_data)
 	editor.current_tab = num
 end
+
 
 function editor.set_current_sprite(num)
 	--[[
@@ -213,6 +224,7 @@ function editor.set_current_sprite(num)
 	-- ^^^ number: <number>, rgb01: <table of numbers>, hex: <string>
 end
 
+
 function editor.set_current_color(num)
 	--[[
 	This function sets number of currently selected color.
@@ -232,6 +244,7 @@ function editor.set_current_color(num)
 	editor.current_color = num
 end
 
+
 function editor.set_current_mode(mode)
 	--[[
     This function is called when player clicks on the button that changes
@@ -250,6 +263,7 @@ function editor.set_current_mode(mode)
 
 	editor.current_mode = mode
 end
+
 
 function editor.switch_current_toggle_mode()
 	--[[
@@ -276,6 +290,7 @@ function editor.switch_current_toggle_mode()
 	end
 	editor.current_toggle = editor.toggle.press
 end
+
 
 function editor.draw_all_sprites()
 	--[[
@@ -330,6 +345,7 @@ function editor.draw_all_sprites()
 	end
 end
 
+
 function editor.draw_current_sprite()
 	--[[
 	This function draws enlarged version of currently selected sprite.
@@ -380,6 +396,7 @@ function editor.draw_current_sprite()
 	end
 end
 
+
 function editor.draw_colors()
 	--[[
 	This function iterates over the available palette colors and draws these
@@ -417,6 +434,7 @@ function editor.draw_colors()
 		PinkBold
 	)
 end
+
 
 function editor.draw_save_button()
 	--[[
@@ -456,6 +474,7 @@ function editor.draw_save_button()
 	Write(text, editor.save_button.x + 2, editor.save_button.y + 2)
 end
 
+
 function editor.update_save_button()
 	--[[
     When user uses Save button, then the Save button is for 3 seconds marked as active.
@@ -477,6 +496,7 @@ function editor.update_save_button()
 	end
 end
 
+
 function editor.draw_modes_buttons()
 	--[[
 	This function draws buttons that can be used to switch drawing modes,
@@ -487,6 +507,7 @@ function editor.draw_modes_buttons()
 	editor.draw_mode_button(editor.point_mode_button)
 	--editor.draw_mode_button(editor.circ_mode_button)
 end
+
 
 function editor.draw_mode_button(button)
 	--[[
@@ -552,6 +573,7 @@ function editor.draw_mode_button(button)
 	end
 end
 
+
 function editor.draw_spritesheet_buttons()
 	--[[
 	Draws buttons at the top of the spritesheet list. Buttons are used to
@@ -589,6 +611,7 @@ function editor.draw_spritesheet_buttons()
 		Write(button.txt, button.x + 2, button.y + 3)
 	end
 end
+
 
 function editor.handle_pressing_universal_buttons(x, y)
 	--[[
@@ -694,6 +717,7 @@ function editor.handle_pressing_universal_buttons(x, y)
 		end
 	end
 end
+
 
 function editor.handle_mouseholding(x, y)
 	--[[
@@ -812,5 +836,6 @@ function editor.handle_mousepresses(x, y)
 		end
 	end
 end
+
 
 return editor
