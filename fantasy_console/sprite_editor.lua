@@ -869,7 +869,9 @@ function editor.handle_mousepresses(x, y, button)
 				editor.temp_sprite_data = editor.current_sprite_data
 				editor.primitive_active = true
 			else
-				do end
+				editor.current_sprite_data = editor.temp_sprite_data
+				editor.temp_sprite_data = nil
+				editor.primitive_active = false
 			end
 		end
 	end
