@@ -884,18 +884,20 @@ function editor.handle_mousepresses(x, y, button)
 						-- TEMPORARY TODO PLEASE REMOVE LATER
 						if editor.current_mode == editor.modes.circ then
 							editor.temp_sprite_data = editor.current_sprite_data
-							local circle = agc.circ(sprite_x, sprite_y, 3)
-							for k, v in ipairs(circle) do
-								local new_x = v.x / g.screen.gamepixel.w
-								local new_y = v.y / g.screen.gamepixel.h
-								if new_x <= 8 and new_x > 0 and new_y <= 8 and new_y > 0 then
-									editor.temp_sprite_data[new_y][new_x] = editor.colors[editor.current_color][1]
-								end
-							end
 						end
 					end
 				else
+					local circle = agc.circ(sprite_x, sprite_y, 3)
+					for k, v in ipairs(circle) do
+						local new_x = v.x / g.screen.gamepixel.w
+						local new_y = v.y / g.screen.gamepixel.h
+						if new_x <= 8 and new_x > 0 and new_y <= 8 and new_y > 0 then
+							editor.temp_sprite_data[new_y][new_x] = editor.colors[editor.current_color][1]
+						end
+					end
 					editor.drawing_primitives = false
+					editor.current_sprite_data = editor.temp_sprite_data
+					editor.temp_sprite_data = nil
 				end
 			end
 		end
