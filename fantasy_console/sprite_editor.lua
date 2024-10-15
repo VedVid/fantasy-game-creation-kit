@@ -34,6 +34,9 @@ editor.current_mode = editor.modes.point
 editor.current_toggle = editor.toggle.hold
 
 
+editor.drawing_primitives = false
+
+
 -- When user changes sprite by drawing, then the changes should be
 -- automatically added to current_sprite_data
 editor.current_sprite_data = nil
@@ -364,6 +367,11 @@ function editor.draw_current_sprite()
 
 	local col = 0
 	local row = 0
+
+	-- This function will draw temp sprite only if temp sprite data
+	-- is not empty. _The content of temp_sprite dictates how
+	-- this function behaves._ Still, current_sprite_data
+	-- can't be empty.
 
 	if editor.current_sprite_data == nil then
 		editor.current_sprite_data = s.return_sprite_colors(
@@ -857,6 +865,20 @@ function editor.handle_mousepresses(x, y, button)
 			local ok, res = pcall(replace_sprite_pixel, sprite_x, sprite_y)
 			if not ok then
 				print("Warning: " .. res)
+			end
+		else
+			-- This will mark when we start drawing a primitive.
+			-- So, if we click for the first time, we _start_ drawing primitive.
+			-- At this point, we should probably generate anchor point, and
+			-- copy data from current sprite to temp sprite.
+			-- Until we click next time, app should update every frame and
+			-- draw the primitive from anchor point to the mouse position.
+			-- When user clicks second time, we "commit" the changes from
+			-- temp sprite to current (base) sprite.
+			if not editor.drawing_primitives then
+				editor.drawing_primitives = true
+			else
+				editor.drawing_primitives = false
 			end
 		end
 	end
