@@ -1,5 +1,7 @@
 require "api"
 
+
+local agc = require "api_geometry_calculations"
 local g = require "globals"
 local s = require "sprite"
 local palette = require "palette"
@@ -830,7 +832,7 @@ function editor.handle_mousepresses(x, y, button)
 	nothing
 	]]--
 
-	if button ~= 1 then
+	if button ~= 1 and button ~= 2 then
 		return
 	end
 
@@ -840,47 +842,68 @@ function editor.handle_mousepresses(x, y, button)
 		g.sprites.sprites[editor.current_sprite]["colors"][sprite_1_y][sprite_1_x] = editor.colors[editor.current_color][1]
 		end
 
-	-- Check if mouse is over current sprite.
-	if utils.mouse_box_bound_check(
-		x,
-		editor.current_sprite_x_start * g.screen.gamepixel.w,
-		(editor.current_sprite_x_start + (8 * g.sprites.size_w)) * g.screen.gamepixel.w,
-		y,
-		editor.current_sprite_y_start * g.screen.gamepixel.h,
-		(editor.current_sprite_y_start + (8 * g.sprites.size_h)) * g.screen.gamepixel.h
-	) then
-		-- Again, lots of magic below, and I don't really like it.
-		-- 1. We get x and y; these are raw pixel mouse coords caught by Love2D
-		-- 2. We divide the coords by g.screen.gamepixel.w / .h to obtain
-		--    the correct resolution in gamepixels.
-		-- 3. We substract distance of the currently drawn sprite from the left and top
-		--    edges of screen. These values are in gamepixels already.
-		-- 4. We divide result by g.sprites.size_w / _h, because cells have size
-		--    of full sprite.
-		-- 5. We use math.ceil function to round the results up, because
-		--    the first sprite has coords from 0.1 to 1.0.
-		local sprite_x = math.ceil(((x / g.screen.gamepixel.w) - editor.current_sprite_x_start) / g.sprites.size_w)
-		local sprite_y = math.ceil(((y / g.screen.gamepixel.h) - editor.current_sprite_y_start) / g.sprites.size_h)
-		if editor.current_mode == editor.modes.point then
-			local ok, res = pcall(replace_sprite_pixel, sprite_x, sprite_y)
-			if not ok then
-				print("Warning: " .. res)
-			end
-		else
-			-- This will mark when we start drawing a primitive.
-			-- So, if we click for the first time, we _start_ drawing primitive.
-			-- At this point, we should probably generate anchor point, and
-			-- copy data from current sprite to temp sprite.
-			-- Until we click next time, app should update every frame and
-			-- draw the primitive from anchor point to the mouse position.
-			-- When user clicks second time, we "commit" the changes from
-			-- temp sprite to current (base) sprite.
-			if not editor.drawing_primitives then
-				editor.drawing_primitives = true
+	if button == 1 then
+		-- Check if mouse is over current sprite.
+		if utils.mouse_box_bound_check(
+			x,
+			editor.current_sprite_x_start * g.screen.gamepixel.w,
+			(editor.current_sprite_x_start + (8 * g.sprites.size_w)) * g.screen.gamepixel.w,
+			y,
+			editor.current_sprite_y_start * g.screen.gamepixel.h,
+			(editor.current_sprite_y_start + (8 * g.sprites.size_h)) * g.screen.gamepixel.h
+		) then
+			-- Again, lots of magic below, and I don't really like it.
+			-- 1. We get x and y; these are raw pixel mouse coords caught by Love2D
+			-- 2. We divide the coords by g.screen.gamepixel.w / .h to obtain
+			--    the correct resolution in gamepixels.
+			-- 3. We substract distance of the currently drawn sprite from the left and top
+			--    edges of screen. These values are in gamepixels already.
+			-- 4. We divide result by g.sprites.size_w / _h, because cells have size
+			--    of full sprite.
+			-- 5. We use math.ceil function to round the results up, because
+			--    the first sprite has coords from 0.1 to 1.0.
+			local sprite_x = math.ceil(((x / g.screen.gamepixel.w) - editor.current_sprite_x_start) / g.sprites.size_w)
+			local sprite_y = math.ceil(((y / g.screen.gamepixel.h) - editor.current_sprite_y_start) / g.sprites.size_h)
+			if editor.current_mode == editor.modes.point then
+				local ok, res = pcall(replace_sprite_pixel, sprite_x, sprite_y)
+				if not ok then
+					print("Warning: " .. res)
+				end
 			else
-				editor.drawing_primitives = false
+				-- This will mark when we start drawing a primitive.
+				-- So, if we click for the first time, we _start_ drawing primitive.
+				-- At this point, we should probably generate anchor point, and
+				-- copy data from current sprite to temp sprite.
+				-- Until we click next time, app should update every frame and
+				-- draw the primitive from anchor point to the mouse position.
+				-- When user clicks second time, we "commit" the changes from
+				-- temp sprite to current (base) sprite.
+				if not editor.drawing_primitives then
+					editor.drawing_primitives = true
+					do
+						-- TEMPORARY TODO PLEASE REMOVE LATER
+						if editor.current_mode == editor.modes.circ then
+							editor.temp_sprite_data = editor.current_sprite_data
+						end
+					end
+				else
+					local circle = agc.circ(sprite_x, sprite_y, 3)
+					for k, v in ipairs(circle) do
+						local new_x = v.x / g.screen.gamepixel.w
+						local new_y = v.y / g.screen.gamepixel.h
+						if new_x <= 8 and new_x > 0 and new_y <= 8 and new_y > 0 then
+							editor.temp_sprite_data[new_y][new_x] = editor.colors[editor.current_color][1]
+						end
+					end
+					editor.drawing_primitives = false
+					editor.current_sprite_data = editor.temp_sprite_data
+					editor.temp_sprite_data = nil
+				end
 			end
 		end
+	else
+		editor.drawing_primitives = false
+		editor.temp_sprite_data = nil
 	end
 end
 
