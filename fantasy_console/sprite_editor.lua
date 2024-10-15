@@ -885,13 +885,6 @@ function editor.handle_mousepresses(x, y, button)
 						if editor.current_mode == editor.modes.circ then
 							editor.temp_sprite_data = editor.current_sprite_data
 							local circle = agc.circ(sprite_x, sprite_y, 3)
-							local pprint = require "pprint"
-							--pprint(editor.temp_sprite_data)
-							print()
-							print(sprite_x, sprite_y)
-							print()
-							--pprint(circle)
-							print("END OF TIMES!!!!!!!!!!!!!!!!!!!!!!!")
 							for k, v in ipairs(circle) do
 								local new_x = v.x / g.screen.gamepixel.w
 								local new_y = v.y / g.screen.gamepixel.h
