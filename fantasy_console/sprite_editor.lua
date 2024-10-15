@@ -1,5 +1,7 @@
 require "api"
 
+
+local agc = require "api_geometry_calculations"
 local g = require "globals"
 local s = require "sprite"
 local palette = require "palette"
@@ -880,7 +882,25 @@ function editor.handle_mousepresses(x, y, button)
 				do
 					-- TEMPORARY TODO PLEASE REMOVE LATER
 					if editor.current_mode == editor.modes.circ then
-						do end -- find how to create sprite data
+						editor.temp_sprite_data = editor.current_sprite_data
+						local circle = agc.circ(sprite_x, sprite_y, 3)
+						local pprint = require "pprint"
+						pprint(editor.temp_sprite_data)
+						print()
+						print(sprite_x, sprite_y)
+						print()
+						pprint(circle)
+						print("END OF TIMES!!!!!!!!!!!!!!!!!!!!!!!")
+						for k, v in ipairs(circle) do
+							local ok, res = pcall(
+								replace_sprite_pixel,
+								v.x / g.screen.gamepixel.h,
+								v.y / g.screen.gamepixel.w
+							)
+							if not ok then
+								print("Warning: " .. res)
+							end
+						end
 					end
 				end
 			else
