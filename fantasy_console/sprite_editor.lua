@@ -893,17 +893,13 @@ function editor.handle_mousepresses(x, y, button)
 							pprint(circle)
 							print("END OF TIMES!!!!!!!!!!!!!!!!!!!!!!!")
 							for k, v in ipairs(circle) do
-								local new_x = v.x / g.screen.gamepixel.w
-								local new_y = v.y / g.screen.gamepixel.h
-								if new_x <= 8 and new_y <= 8 then
-									local ok, res = pcall(
-										replace_sprite_pixel,
-										new_x,
-										new_y
-									)
-									if not ok then
-										print("Warning: " .. res)
-									end
+								local ok, res = pcall(
+									replace_sprite_pixel,
+									v.x / g.screen.gamepixel.h,
+									v.y / g.screen.gamepixel.w
+								)
+								if not ok then
+									print("Warning: " .. res)
 								end
 							end
 						end
