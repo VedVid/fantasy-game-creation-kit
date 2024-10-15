@@ -877,12 +877,6 @@ function editor.handle_mousepresses(x, y, button)
 			-- temp sprite to current (base) sprite.
 			if not editor.drawing_primitives then
 				editor.drawing_primitives = true
-				do
-					-- TEMPORARY TODO PLEASE REMOVE LATER
-					if editor.current_mode == editor.modes.circ then
-						do end -- find how to create sprite data
-					end
-				end
 			else
 				editor.drawing_primitives = false
 			end
