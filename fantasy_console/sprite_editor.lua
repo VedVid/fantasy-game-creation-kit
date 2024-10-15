@@ -37,6 +37,7 @@ editor.current_toggle = editor.toggle.hold
 -- When user changes sprite by drawing, then the changes should be
 -- automatically added to current_sprite_data
 editor.current_sprite_data = nil
+editor.temp_sprite_data = nil
 -- ^^^ number: <number>, rgb01: <table of numbers>, hex: <string>
 
 
@@ -370,6 +371,12 @@ function editor.draw_current_sprite()
 		)
 	end
 
+	local sprite_to_draw_data = editor.current_sprite_data
+
+	if editor.temp_sprite_data then
+		sprite_to_draw_data = editor.temp_sprite_data
+	end
+
 	Rect(
 		editor.current_sprite_x_start - 1,
 		editor.current_sprite_y_start - 1,
@@ -378,7 +385,7 @@ function editor.draw_current_sprite()
 		Cyan
 	  )
 
-	for _, line in ipairs(editor.current_sprite_data) do
+	for _, line in ipairs(sprite_to_draw_data) do
 	local cur_y = editor.current_sprite_y_start + (row * g.sprites.size_h)
 		for _, v in ipairs(line) do
 			local cur_x = editor.current_sprite_x_start + (col * g.sprites.size_w)
