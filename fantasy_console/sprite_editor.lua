@@ -665,6 +665,8 @@ function editor.handle_pressing_universal_buttons(x, y, button)
 	for  i, tab_button in ipairs(editor.tab_buttons.buttons) do
 		if utils.mouse_box_bound_check_for_buttons(x, y, tab_button) then
 			editor.set_current_tab(i)
+			editor.drawing_primitives = false
+			editor.temp_sprite_data = nil
 			return
 		end
 	end
@@ -688,18 +690,24 @@ function editor.handle_pressing_universal_buttons(x, y, button)
 	if utils.mouse_box_bound_check_for_buttons(x, y, editor.save_button) then
 		s.set_sprite(editor.current_sprite, editor.current_sprite_data)
 		editor.save_button.has_been_pressed = editor.save_button.has_been_pressed_max
+		editor.drawing_primitives = false
+		editor.temp_sprite_data = nil
 	end
 
 	-- Check if mouse is over point mode button.
 	if utils.mouse_box_bound_check_for_buttons(x, y, editor.point_mode_button) then
 		editor.set_current_mode(editor.modes.point)
 		editor.switch_current_toggle_mode()
+		editor.drawing_primitives = false
+		editor.temp_sprite_data = nil
 	end
 
 	-- Check if mouse is over circ mode button.
 	if utils.mouse_box_bound_check_for_buttons(x, y, editor.circ_mode_button) then
 		editor.set_current_mode(editor.modes.circ)
 		editor.switch_current_toggle_mode()
+		editor.drawing_primitives = false
+		editor.temp_sprite_data = nil
 	end
 
 	-- Check if mouse is over sprites list.
@@ -727,6 +735,8 @@ function editor.handle_pressing_universal_buttons(x, y, button)
 		--    amount of _rows_ from the top of the screen.
 		-- 6. Finally, we truncate the results. So first tile instead of, said,
 		--    1.95x1.35 returns 1x1
+		editor.drawing_primitives = false
+		editor.temp_sprite_data = nil
 		local col = math.floor(x / g.screen.gamepixel.w / g.sprites.size_w)
 		local row = math.floor((y / g.screen.gamepixel.h / g.sprites.size_h) - 16)
 		if editor.current_tab == 3 then
