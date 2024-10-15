@@ -886,24 +886,17 @@ function editor.handle_mousepresses(x, y, button)
 							editor.temp_sprite_data = editor.current_sprite_data
 							local circle = agc.circ(sprite_x, sprite_y, 3)
 							local pprint = require "pprint"
-							pprint(editor.temp_sprite_data)
+							--pprint(editor.temp_sprite_data)
 							print()
 							print(sprite_x, sprite_y)
 							print()
-							pprint(circle)
+							--pprint(circle)
 							print("END OF TIMES!!!!!!!!!!!!!!!!!!!!!!!")
 							for k, v in ipairs(circle) do
 								local new_x = v.x / g.screen.gamepixel.w
 								local new_y = v.y / g.screen.gamepixel.h
-								if new_x <= 8 and new_y <= 8 then
-									local ok, res = pcall(
-										replace_sprite_pixel,
-										new_x,
-										new_y
-									)
-									if not ok then
-										print("Warning: " .. res)
-									end
+								if new_x <= 8 and new_x > 0 and new_y <= 8 and new_y > 0 then
+									editor.temp_sprite_data[new_y][new_x] = editor.colors[editor.current_color][1]
 								end
 							end
 						end
