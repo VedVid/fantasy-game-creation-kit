@@ -44,6 +44,7 @@ editor.anchor_primitive = nil
 -- automatically added to current_sprite_data
 editor.current_sprite_data = nil
 editor.temp_sprite_data = nil
+editor.preview_sprite_data = nil
 -- ^^^ number: <number>, rgb01: <table of numbers>, hex: <string>
 
 
