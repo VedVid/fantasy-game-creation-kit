@@ -809,7 +809,10 @@ function editor.handle_mouseholding(x, y, button)
 			mouse_x,
 			mouse_y
 		)
-		editor.primitive_args = {mouse_x, mouse_y, r}
+		editor.primitive_args = {
+			editor.anchor_primitive.x,
+			editor.anchor_primitive.y,
+		r}
 	end
 
 	-- This closure is used later to use within pcall to emulate
