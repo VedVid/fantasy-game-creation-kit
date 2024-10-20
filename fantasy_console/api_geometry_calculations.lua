@@ -144,46 +144,6 @@ end
 
 function agc.rect(x, y, w, h)
     --[[
-    Function rect creates a list of coords that will be used later
-    to draw a rectangle.
-    `rect` is a special kind of function, because it does not create
-    a full list of coordinates as other – except `rectfill` – functions.
-    It just returns coordinates of top-left corner, and width, and height
-    of rectangle. 
-    It is handled that way because rectangles (both empty and filled) are
-    actually drawn using Love2D `rectangle` function – unlike all other
-    primitives.
-    Also, another special case, this time exclusively for `rect`.
-    lx, ly are increased by half of the current gamepixel due the
-    three reasons:
-    - by default, Love2D starts drawing in the middle of the pixel,
-        which mights result in blurry lines unless we pass 0.5 to
-        x and y all the time (not feasible with current app architecture)
-        or unless we use "rough" line style (which we use);
-    - rough line style rounds the half-pixel which mights cause
-        off-by-one issues;
-    - setting wide line width cause the line to grow in both directions.
-    lw, lh are decreased by single gamepixel because Love2D does
-    not take into account the starting point when calculating size
-    of rectangle.
-    Such issue does not happening with `rectfill` function.
-
-    Arguments
-    ---------
-    x : number
-        Position of top-left rectangle corner on the x axis.
-    y : number
-        Position of top-left rectangle corner on the y axis.
-    w : number
-        Width of rectangle.
-    h : number
-        Height of rectangle.
-
-    Returns
-    -------
-    list of numbers
-        List containing four numbers, that specify
-        top-left anchor point and width and height of rectangle
     ]]--
     
     x = math.floor(x)
@@ -233,36 +193,6 @@ end
 
 function agc.rectfill(x, y, w, h)
     --[[
-    Function rect creates a list of coords that will be used later
-    to draw a rectangle.
-    `rectfill` is a special kind of function, because it does not create
-    a full list of coordinates as other – except `rect` – functions.
-    It just returns coordinates of top-left corner, and width, and height
-    of rectangle. 
-    It is handled that way because rectangles (both empty and filled) are
-    actually drawn using Love2D `rectangle` function – unlike all other
-    primitives.
-    `rectangle("line")` and `recangle("filled")` works a bit differently
-    in Love2D.
-    rectfill does not require taking into account line width set in
-    Love2D, hence the rectfill implementation is simpler than the Rect one.
-
-    Arguments
-    ---------
-    x : number
-        Position of top-left rectangle corner on the x axis.
-    y : number
-        Position of top-left rectangle corner on the y axis.
-    w : number
-        Width of rectangle.
-    h : number
-        Height of rectangle.
-
-    Returns
-    -------
-    list of numbers
-        List containing four numbers, that specify
-        top-left anchor point and width and height of rectangle
     ]]--
 
     x = math.floor(x)
