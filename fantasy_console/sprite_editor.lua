@@ -787,9 +787,29 @@ function editor.handle_mouseholding(x, y, button)
 
 	if not button and editor.drawing_primitives then
 		editor.temp_sprite_data = editor.current_sprite_data
+		local sprite_x = math.ceil(((x / g.screen.gamepixel.w) - editor.current_sprite_x_start) / g.sprites.size_w)
+		local sprite_y = math.ceil(((y / g.screen.gamepixel.h) - editor.current_sprite_y_start) / g.sprites.size_h)
+		local r = utils.distance_between(
+			editor.anchor_primitive.x,
+			editor.anchor_primitive.y,
+			sprite_x,
+			sprite_y
+		)
+		local circle = agc.circ(
+			editor.anchor_primitive.x,
+			editor.anchor_primitive.y,
+			r
+		)
+		for k, v in ipairs(circle) do
+			local new_x = v.x / g.screen.gamepixel.w
+			local new_y = v.y / g.screen.gamepixel.h
+			if new_x <= 8 and new_x > 0 and new_y <= 8 and new_y > 0 then
+				editor.temp_sprite_data[new_y][new_x] = editor.colors[editor.current_color][1]
+			end
+		end
 	end
 
-	if love.mouse.isDown(button) and button == 1 then
+	if button == 1 and love.mouse.isDown(button) then
 		-- Check if mouse is over current sprite.
 		if utils.mouse_box_bound_check(
 			x,
@@ -905,24 +925,6 @@ function editor.handle_mousepresses(x, y, button)
 						end
 					end
 				else
-					local r = utils.distance_between(
-						editor.anchor_primitive.x,
-						editor.anchor_primitive.y,
-						sprite_x,
-						sprite_y
-					)
-					local circle = agc.circ(
-						editor.anchor_primitive.x,
-						editor.anchor_primitive.y,
-						r
-					)
-					for k, v in ipairs(circle) do
-						local new_x = v.x / g.screen.gamepixel.w
-						local new_y = v.y / g.screen.gamepixel.h
-						if new_x <= 8 and new_x > 0 and new_y <= 8 and new_y > 0 then
-							editor.temp_sprite_data[new_y][new_x] = editor.colors[editor.current_color][1]
-						end
-					end
 					editor.current_sprite_data = editor.temp_sprite_data
 					editor.exit_drawing_primitives()
 				end
