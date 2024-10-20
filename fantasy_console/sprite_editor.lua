@@ -110,7 +110,7 @@ editor.point_mode_button.pattern = {
 editor.point_mode_button.pattern_color = Yellow
 
 editor.line_mode_button = {}
-editor.line_mode_button.name = editor.modes.point
+editor.line_mode_button.name = editor.modes.line
 editor.line_mode_button.w = editor.mode_buttons_w
 editor.line_mode_button.h = editor.mode_buttons_h
 editor.line_mode_button.x = editor.point_mode_button.x
@@ -832,16 +832,9 @@ function editor.handle_pressing_universal_buttons(x, y, button)
 		editor.exit_drawing_primitives()
 	end
 
-	-- Check if mouse is over circ mode button.
-	if utils.mouse_box_bound_check_for_buttons(x, y, editor.circ_mode_button) then
-		editor.set_current_mode(editor.modes.circ)
-		editor.switch_current_toggle_mode()
-		editor.exit_drawing_primitives()
-	end
-
-	-- Check if mouse is over circfill mode button.
-	if utils.mouse_box_bound_check_for_buttons(x, y, editor.circfill_mode_button) then
-		editor.set_current_mode(editor.modes.circfill)
+	-- Check if mouse is over line mode button.
+	if utils.mouse_box_bound_check_for_buttons(x, y, editor.line_mode_button) then
+		editor.set_current_mode(editor.modes.line)
 		editor.switch_current_toggle_mode()
 		editor.exit_drawing_primitives()
 	end
@@ -856,6 +849,20 @@ function editor.handle_pressing_universal_buttons(x, y, button)
 	-- Check if mouse is over rectfill mode button.
 	if utils.mouse_box_bound_check_for_buttons(x, y, editor.rectfill_mode_button) then
 		editor.set_current_mode(editor.modes.rectfill)
+		editor.switch_current_toggle_mode()
+		editor.exit_drawing_primitives()
+	end
+
+	-- Check if mouse is over circ mode button.
+	if utils.mouse_box_bound_check_for_buttons(x, y, editor.circ_mode_button) then
+		editor.set_current_mode(editor.modes.circ)
+		editor.switch_current_toggle_mode()
+		editor.exit_drawing_primitives()
+	end
+
+	-- Check if mouse is over circfill mode button.
+	if utils.mouse_box_bound_check_for_buttons(x, y, editor.circfill_mode_button) then
+		editor.set_current_mode(editor.modes.circfill)
 		editor.switch_current_toggle_mode()
 		editor.exit_drawing_primitives()
 	end
@@ -955,7 +962,8 @@ function editor.handle_mouseholding(x, y, button)
 			editor.anchor_primitive.y,
 		}
 		if editor.current_mode == editor.modes.line then
-			do end  -- TODO!!!
+			table.insert(editor.primitive_args, mouse_x)
+			table.insert(editor.primitive_args, mouse_y)
 		elseif editor.current_mode == editor.modes.rect or editor.current_mode == editor.modes.rectfill then
 			local w = utils.distance_between(
 				editor.anchor_primitive.x,
