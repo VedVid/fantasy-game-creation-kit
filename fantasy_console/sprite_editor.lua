@@ -109,12 +109,29 @@ editor.point_mode_button.pattern = {
 }
 editor.point_mode_button.pattern_color = Yellow
 
+editor.line_mode_button = {}
+editor.line_mode_button.name = editor.modes.point
+editor.line_mode_button.w = editor.mode_buttons_w
+editor.line_mode_button.h = editor.mode_buttons_h
+editor.line_mode_button.x = editor.point_mode_button.x
+editor.line_mode_button.y = editor.point_mode_button.y + editor.point_mode_button.h + 3
+editor.line_mode_button.pattern = {
+	{0, 0, 0, 0, 0, 0, 0},
+	{0, 0, 0, 0, 0, 0, 0},
+	{0, 0, 0, 0, 0, 0, 0},
+	{0, 1, 1, 1, 1, 1, 0},
+	{0, 0, 0, 0, 0, 0, 0},
+	{0, 0, 0, 0, 0, 0, 0},
+	{0, 0, 0, 0, 0, 0, 0},
+}
+editor.line_mode_button.pattern_color = Yellow
+
 editor.rect_mode_button = {}
 editor.rect_mode_button.name = editor.modes.rect
 editor.rect_mode_button.w = editor.mode_buttons_w
 editor.rect_mode_button.h = editor.mode_buttons_h
-editor.rect_mode_button.x = editor.circ_mode_button.x + editor.circ_mode_button.w + 3
-editor.rect_mode_button.y = editor.circ_mode_button.y
+editor.rect_mode_button.x = editor.point_mode_button.x + editor.point_mode_button.w + 3
+editor.rect_mode_button.y = editor.point_mode_button.y
 editor.rect_mode_button.pattern = {
 	{0, 0, 0, 0, 0, 0, 0},
 	{0, 1, 1, 1, 1, 1, 0},
@@ -130,8 +147,8 @@ editor.rectfill_mode_button = {}
 editor.rectfill_mode_button.name = editor.modes.rectfill
 editor.rectfill_mode_button.w = editor.mode_buttons_w
 editor.rectfill_mode_button.h = editor.mode_buttons_h
-editor.rectfill_mode_button.x = editor.circ_mode_button.x + editor.circ_mode_button.w + 3
-editor.rectfill_mode_button.y = editor.circ_mode_button.y + editor.rect_mode_button.h + 3
+editor.rectfill_mode_button.x = editor.point_mode_button.x + editor.point_mode_button.w + 3
+editor.rectfill_mode_button.y = editor.line_mode_button.y
 editor.rectfill_mode_button.pattern = {
 	{0, 0, 0, 0, 0, 0, 0},
 	{0, 1, 1, 1, 1, 1, 0},
@@ -147,8 +164,8 @@ editor.circ_mode_button = {}
 editor.circ_mode_button.name = editor.modes.circ
 editor.circ_mode_button.w = editor.mode_buttons_w
 editor.circ_mode_button.h = editor.mode_buttons_h
-editor.circ_mode_button.x = editor.point_mode_button.x + editor.point_mode_button.w + 3
-editor.circ_mode_button.y = editor.point_mode_button.y
+editor.circ_mode_button.x = editor.rect_mode_button.x + editor.rect_mode_button.w + 3
+editor.circ_mode_button.y = editor.rect_mode_button.y
 editor.circ_mode_button.pattern = {
 	{0, 0, 1, 1, 1, 0, 0},
 	{0, 1, 0, 0, 0, 1, 0},
@@ -164,8 +181,8 @@ editor.circfill_mode_button = {}
 editor.circfill_mode_button.name = editor.modes.circfill
 editor.circfill_mode_button.w = editor.mode_buttons_w
 editor.circfill_mode_button.h = editor.mode_buttons_h
-editor.circfill_mode_button.x = editor.point_mode_button.x + editor.point_mode_button.w + 3
-editor.circfill_mode_button.y = editor.point_mode_button.y + editor.circ_mode_button.h + 3
+editor.circfill_mode_button.x = editor.circ_mode_button.x
+editor.circfill_mode_button.y = editor.rectfill_mode_button.y
 editor.circfill_mode_button.pattern = {
 	{0, 0, 1, 1, 1, 0, 0},
 	{0, 1, 1, 1, 1, 1, 0},
@@ -181,8 +198,8 @@ editor.oval_mode_button = {}
 editor.oval_mode_button.name = editor.modes.oval
 editor.oval_mode_button.w = editor.mode_buttons_w
 editor.oval_mode_button.h = editor.mode_buttons_h
-editor.oval_mode_button.x = editor.rect_mode_button.x + editor.rect_mode_button.w + 3
-editor.oval_mode_button.y = editor.rect_mode_button.y
+editor.oval_mode_button.x = editor.circ_mode_button.x + editor.circ_mode_button.w + 3
+editor.oval_mode_button.y = editor.circ_mode_button.y
 editor.oval_mode_button.pattern = {
 	{0, 0, 0, 0, 0, 0, 0},
 	{0, 1, 1, 1, 1, 1, 0},
@@ -198,8 +215,8 @@ editor.ovalfill_mode_button = {}
 editor.ovalfill_mode_button.name = editor.modes.ovalfill
 editor.ovalfill_mode_button.w = editor.mode_buttons_w
 editor.ovalfill_mode_button.h = editor.mode_buttons_h
-editor.ovalfill_mode_button.x = editor.rect_mode_button.x + editor.rect_mode_button.w + 3
-editor.ovalfill_mode_button.y = editor.rect_mode_button.y + editor.oval_mode_button.h + 3
+editor.ovalfill_mode_button.x = editor.oval_mode_button.x
+editor.ovalfill_mode_button.y = editor.circfill_mode_button.y
 editor.ovalfill_mode_button.pattern = {
 	{0, 0, 0, 0, 0, 0, 0},
 	{0, 1, 1, 1, 1, 1, 0},
@@ -632,6 +649,7 @@ function editor.draw_modes_buttons()
 	]]--
 
 	editor.draw_mode_button(editor.point_mode_button)
+	editor.draw_mode_button(editor.line_mode_button)
 	editor.draw_mode_button(editor.circ_mode_button)
 	editor.draw_mode_button(editor.circfill_mode_button)
 	editor.draw_mode_button(editor.rect_mode_button)
