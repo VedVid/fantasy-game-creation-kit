@@ -447,7 +447,7 @@ function editor.draw_current_sprite()
 			(editor.current_sprite_y_start - g.sprites.size_h) * g.screen.gamepixel.h
 		)
 		love.graphics.scale(g.sprites.size_w, g.sprites.size_h)
-		agd.draw_with_pset(primitive, palette.green_bold)
+		agd.draw_with_pset(primitive, editor.colors[editor.current_color][1])
 		love.graphics.pop()
 	end
 end
