@@ -2,7 +2,6 @@ require "api"
 
 
 local agc = require "api_geometry_calculations"
-local agd = require "api_geometry_drawing"
 local g = require "globals"
 local s = require "sprite"
 local palette = require "palette"
@@ -370,24 +369,15 @@ function editor.draw_preview(coords, color)
     end
 
     for _, v in ipairs(coords) do
+		local x = v.x + editor.current_sprite_x_start
+		local y = v.y + editor.current_sprite_y_start
 		Rectfill(
-			v.x,
-			v.y,
+			x,
+			y,
 			g.sprites.size_w,
 			g.sprites.size_h,
 			color
 		)
---        love.graphics.rectangle(
---            "fill",
---            v.x,
---            v.y,
---            --v.x * (g.sprites.size_w),-- / g.screen.gamepixel.w),
---            --v.y * (g.sprites.size_h),-- / g.screen.gamepixel.h),
---            --v.x * (g.sprites.size_w / g.screen.gamepixel.w),
---            --v.y * (g.sprites.size_h / g.screen.gamepixel.h),
---            g.sprites.size_w,
---            g.sprites.size_h
---        )
     end
 
     love.graphics.setColor(unpack(g.colors.default_fg_color.rgb01))
