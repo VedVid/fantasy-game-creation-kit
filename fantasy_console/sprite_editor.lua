@@ -30,6 +30,16 @@ editor.toggle.press = "press"
 editor.toggle.hold = "hold"
 
 
+editor.agc_modes_map = {}
+editor.agc_modes_map[editor.modes.line] = agc.line
+editor.agc.modes_map[editor.modes.rect] = agc.rect
+editor.agc.modes.map[editor.modes.rectfill] = agc.rectfill
+editor.agc_modes_map[editor.modes.circ] = agc.circ
+editor.agc_modes_map[editor.modes.circfill] = agc.circfill
+editor.agc_modes_map[editor.modes.oval] = agc.oval
+editor.agc_modes_map[editor.modes.ovalfill] = agc.ovalfill
+
+
 editor.current_tab = 1
 editor.current_sprite = 1
 editor.current_color = 1
@@ -413,14 +423,14 @@ function editor.draw_current_sprite()
 	end
 
 	if editor.drawing_primitives and editor.primitive_args then
-		local circle = agc.circ(unpack(editor.primitive_args))
+		local primitive = editor.agc_modes_map[editor.current_mode](unpack(editor.primitive_args))
 		love.graphics.push()
 		love.graphics.translate(
 			(editor.current_sprite_x_start - g.sprites.size_w) * g.screen.gamepixel.w,
 			(editor.current_sprite_y_start - g.sprites.size_h) * g.screen.gamepixel.h
 		)
 		love.graphics.scale(g.sprites.size_w, g.sprites.size_h)
-		agd.draw_with_pset(circle, palette.green_bold)
+		agd.draw_with_pset(primitive, palette.green_bold)
 		love.graphics.pop()
 	end
 end
