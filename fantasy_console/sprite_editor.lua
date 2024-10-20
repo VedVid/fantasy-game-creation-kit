@@ -390,10 +390,10 @@ function editor.draw_current_sprite()
 		)
 	end
 
-	local sprite_to_draw_data = editor.current_sprite_data
+	local sprite_to_draw_data = {unpack(editor.current_sprite_data)}
 
 	if editor.temp_sprite_data then
-		sprite_to_draw_data = editor.temp_sprite_data
+		sprite_to_draw_data = {unpack(editor.temp_sprite_data)}
 	end
 
 	Rect(
@@ -901,7 +901,7 @@ function editor.handle_mousepresses(x, y, button)
 					do
 						-- TEMPORARY TODO PLEASE REMOVE LATER
 						if editor.current_mode == editor.modes.circ then
-							editor.temp_sprite_data = editor.current_sprite_data
+							editor.temp_sprite_data = {unpack(editor.current_sprite_data)}
 						end
 					end
 				else
@@ -923,7 +923,7 @@ function editor.handle_mousepresses(x, y, button)
 							editor.temp_sprite_data[new_y][new_x] = editor.colors[editor.current_color][1]
 						end
 					end
-					editor.current_sprite_data = editor.temp_sprite_data
+					editor.current_sprite_data = {unpack(editor.temp_sprite_data)}
 					editor.exit_drawing_primitives()
 				end
 			end
