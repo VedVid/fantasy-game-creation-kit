@@ -38,13 +38,13 @@ editor.current_toggle = editor.toggle.hold
 
 editor.drawing_primitives = false
 editor.anchor_primitive = nil
+editor.primitive_args = nil
 
 
 -- When user changes sprite by drawing, then the changes should be
 -- automatically added to current_sprite_data
 editor.current_sprite_data = nil
 -- ^^^ number: <number>, rgb01: <table of numbers>, hex: <string>
-editor.primitive_args = nil
 
 
 -- Data relevant to drawing list of colors to choose from.
@@ -761,8 +761,17 @@ function editor.handle_mouseholding(x, y, button)
 	nothing
 	]]--
 
-	if button ~= 1 then
-		return
+	if not button and editor.drawing_primitives then
+		editor.primitive_args = nil
+		local mouse_x = math.ceil(((x / g.screen.gamepixel.w) - editor.current_sprite_x_start) / g.sprites.size_w)
+		local mouse_y = math.ceil(((y / g.screen.gamepixel.h) - editor.current_sprite_y_start) / g.sprites.size_h)
+		local r = utils.distance_between(
+			editor.anchor_primitive.x,
+			editor.anchor_primitive.y,
+			mouse_x,
+			mouse_y
+		)
+		editor.primitive_args = {mouse_x, mouse_y, r}
 	end
 
 	-- This closure is used later to use within pcall to emulate
@@ -771,7 +780,7 @@ function editor.handle_mouseholding(x, y, button)
 		g.sprites.sprites[editor.current_sprite]["colors"][sprite_1_y][sprite_1_x] = editor.colors[editor.current_color][1]
 	end
 
-	if love.mouse.isDown(button) then
+	if button and love.mouse.isDown(button) then
 		-- Check if mouse is over current sprite.
 		if utils.mouse_box_bound_check(
 			x,
