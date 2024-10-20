@@ -408,6 +408,10 @@ function editor.draw_current_sprite()
 		col = 0
 		row = row + 1
 	end
+
+	if editor.drawing_primitives and editor.primitive_args then 
+		do end
+	end
 end
 
 
