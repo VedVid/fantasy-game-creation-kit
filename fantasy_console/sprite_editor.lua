@@ -961,7 +961,7 @@ function editor.handle_mouseholding(x, y, button)
 		if editor.current_mode == editor.modes.line then
 			table.insert(editor.primitive_args, mouse_x)
 			table.insert(editor.primitive_args, mouse_y)
-		elseif editor.current_mode == editor.modes.rect then
+		elseif editor.current_mode == editor.modes.rect or editor.current_mode == editor.modes.rectfill then
 			local w = utils.distance_between(
 				editor.anchor_primitive.x,
 				editor.anchor_primitive.y,
