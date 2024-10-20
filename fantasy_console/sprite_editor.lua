@@ -2,6 +2,7 @@ require "api"
 
 
 local agc = require "api_geometry_calculations"
+local agd = require "api_geometry_drawing"
 local g = require "globals"
 local s = require "sprite"
 local palette = require "palette"
@@ -38,13 +39,12 @@ editor.current_toggle = editor.toggle.hold
 
 editor.drawing_primitives = false
 editor.anchor_primitive = nil
+editor.primitive_args = nil
 
 
 -- When user changes sprite by drawing, then the changes should be
 -- automatically added to current_sprite_data
 editor.current_sprite_data = nil
-editor.temp_sprite_data = nil
-editor.preview_sprite_data = nil
 -- ^^^ number: <number>, rgb01: <table of numbers>, hex: <string>
 
 
@@ -275,7 +275,7 @@ end
 
 function editor.exit_drawing_primitives()
 	editor.drawing_primitives = false
-	editor.temp_sprite_data = nil
+	editor.primitive_args = nil
 	editor.anchor_primitive = nil
 end
 
@@ -361,6 +361,30 @@ function editor.draw_all_sprites()
 end
 
 
+function editor.draw_preview(coords, color)
+    if not color then color = g.colors.default_fg_color.rgb01 end
+
+    local ok, _ = pcall(love.graphics.setColor, unpack(color))
+    if not ok then
+        ok, _ = pcall(love.graphics.setColor, unpack(color.rgb01))
+    end
+
+    for _, v in ipairs(coords) do
+		local x
+		local y
+		Rectfill(
+			x,
+			y,
+			g.sprites.size_w,
+			g.sprites.size_h,
+			color
+		)
+    end
+
+    love.graphics.setColor(unpack(g.colors.default_fg_color.rgb01))
+end
+
+
 function editor.draw_current_sprite()
 	--[[
 	This function draws enlarged version of currently selected sprite.
@@ -379,23 +403,6 @@ function editor.draw_current_sprite()
 	local col = 0
 	local row = 0
 
-	-- This function will draw temp sprite only if temp sprite data
-	-- is not empty. _The content of temp_sprite dictates how
-	-- this function behaves._ Still, current_sprite_data
-	-- can't be empty.
-
-	if editor.current_sprite_data == nil then
-		editor.current_sprite_data = s.return_sprite_colors(
-			s.get_sprite(editor.current_sprite), "palette"
-		)
-	end
-
-	local sprite_to_draw_data = editor.current_sprite_data
-
-	if editor.temp_sprite_data then
-		sprite_to_draw_data = editor.temp_sprite_data
-	end
-
 	Rect(
 		editor.current_sprite_x_start - 1,
 		editor.current_sprite_y_start - 1,
@@ -404,7 +411,13 @@ function editor.draw_current_sprite()
 		Cyan
 	  )
 
-	for _, line in ipairs(sprite_to_draw_data) do
+	if editor.current_sprite_data == nil then
+		editor.current_sprite_data = s.return_sprite_colors(
+			s.get_sprite(editor.current_sprite), "palette"
+		)
+	end
+
+	for _, line in ipairs(editor.current_sprite_data) do
 	local cur_y = editor.current_sprite_y_start + (row * g.sprites.size_h)
 		for _, v in ipairs(line) do
 			local cur_x = editor.current_sprite_x_start + (col * g.sprites.size_w)
@@ -419,6 +432,25 @@ function editor.draw_current_sprite()
 		end
 		col = 0
 		row = row + 1
+	end
+
+	print(editor.drawing_primitives)
+	print(editor.primitive_args)
+	if editor.drawing_primitives and editor.primitive_args then
+		local circle = agc.circ(unpack(editor.primitive_args))
+		-- primitive args OK
+		--print(editor.primitive_args[1], editor.primitive_args[2], editor.primitive_args[3])
+		--editor.draw_preview(circle, palette.green_bold)
+		love.graphics.push()
+		love.graphics.translate(
+			(editor.current_sprite_x_start - g.sprites.size_w) * g.screen.gamepixel.w,
+			(editor.current_sprite_y_start - g.sprites.size_h) * g.screen.gamepixel.h
+		)
+		love.graphics.scale(g.sprites.size_w, g.sprites.size_h)
+		agd.draw_with_pset(circle, palette.green_bold)
+		love.graphics.pop()
+		-- anchors are OK
+		--print(editor.anchor_primitive.x, editor.anchor_primitive.y)
 	end
 end
 
@@ -779,8 +811,21 @@ function editor.handle_mouseholding(x, y, button)
 	nothing
 	]]--
 
-	if button ~= 1 then
-		return
+	if not button and editor.drawing_primitives then
+		editor.primitive_args = nil
+		local mouse_x = math.ceil(((x / g.screen.gamepixel.w) - editor.current_sprite_x_start) / g.sprites.size_w)
+		local mouse_y = math.ceil(((y / g.screen.gamepixel.h) - editor.current_sprite_y_start) / g.sprites.size_h)
+		local r = utils.distance_between(
+			editor.anchor_primitive.x,
+			editor.anchor_primitive.y,
+			mouse_x,
+			mouse_y
+		)
+		editor.primitive_args = {
+			editor.anchor_primitive.x,
+			editor.anchor_primitive.y,
+			r
+		}
 	end
 
 	-- This closure is used later to use within pcall to emulate
@@ -789,7 +834,7 @@ function editor.handle_mouseholding(x, y, button)
 		g.sprites.sprites[editor.current_sprite]["colors"][sprite_1_y][sprite_1_x] = editor.colors[editor.current_color][1]
 	end
 
-	if love.mouse.isDown(button) then
+	if button and love.mouse.isDown(button) then
 		-- Check if mouse is over current sprite.
 		if utils.mouse_box_bound_check(
 			x,
@@ -898,32 +943,26 @@ function editor.handle_mousepresses(x, y, button)
 						x = sprite_x,
 						y = sprite_y
 					}
-					do
-						-- TEMPORARY TODO PLEASE REMOVE LATER
-						if editor.current_mode == editor.modes.circ then
-							editor.temp_sprite_data = editor.current_sprite_data
-						end
-					end
 				else
-					local r = utils.distance_between(
-						editor.anchor_primitive.x,
-						editor.anchor_primitive.y,
-						sprite_x,
-						sprite_y
-					)
-					local circle = agc.circ(
-						editor.anchor_primitive.x,
-						editor.anchor_primitive.y,
-						r
-					)
-					for k, v in ipairs(circle) do
-						local new_x = v.x / g.screen.gamepixel.w
-						local new_y = v.y / g.screen.gamepixel.h
-						if new_x <= 8 and new_x > 0 and new_y <= 8 and new_y > 0 then
-							editor.temp_sprite_data[new_y][new_x] = editor.colors[editor.current_color][1]
-						end
-					end
-					editor.current_sprite_data = editor.temp_sprite_data
+--					local r = utils.distance_between(
+--						editor.anchor_primitive.x,
+--						editor.anchor_primitive.y,
+--						sprite_x,
+--						sprite_y
+--					)
+--					local circle = agc.circ(
+--						editor.anchor_primitive.x,
+--						editor.anchor_primitive.y,
+--						r
+--					)
+--					for k, v in ipairs(circle) do
+--						local new_x = v.x / g.screen.gamepixel.w
+--						local new_y = v.y / g.screen.gamepixel.h
+--						if new_x <= 8 and new_x > 0 and new_y <= 8 and new_y > 0 then
+--							editor.temp_sprite_data[new_y][new_x] = editor.colors[editor.current_color][1]
+--						end
+--					end
+--					editor.current_sprite_data = editor.temp_sprite_data
 					editor.exit_drawing_primitives()
 				end
 			end
