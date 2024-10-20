@@ -438,11 +438,19 @@ function editor.draw_current_sprite()
 	print(editor.primitive_args)
 	if editor.drawing_primitives and editor.primitive_args then
 		local circle = agc.circ(unpack(editor.primitive_args))
+		-- primitive args OK
+		--print(editor.primitive_args[1], editor.primitive_args[2], editor.primitive_args[3])
 		--editor.draw_preview(circle, palette.green_bold)
 		love.graphics.push()
+		love.graphics.translate(
+			(editor.current_sprite_x_start - g.sprites.size_w) * g.screen.gamepixel.w,
+			(editor.current_sprite_y_start - g.sprites.size_h) * g.screen.gamepixel.h
+		)
 		love.graphics.scale(g.sprites.size_w, g.sprites.size_h)
 		agd.draw_with_pset(circle, palette.green_bold)
 		love.graphics.pop()
+		-- anchors are OK
+		--print(editor.anchor_primitive.x, editor.anchor_primitive.y)
 	end
 end
 
@@ -816,7 +824,8 @@ function editor.handle_mouseholding(x, y, button)
 		editor.primitive_args = {
 			editor.anchor_primitive.x,
 			editor.anchor_primitive.y,
-		r}
+			r
+		}
 	end
 
 	-- This closure is used later to use within pcall to emulate
