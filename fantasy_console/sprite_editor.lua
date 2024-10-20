@@ -159,6 +159,23 @@ editor.rect_mode_button.pattern = {
 	{0, 0, 0, 0, 0, 0, 0},
 }
 editor.rect_mode_button.pattern_color = Yellow
+
+editor.rectfill_mode_button = {}
+editor.rectfill_mode_button.name = editor.modes.rectfill
+editor.rectfill_mode_button.w = editor.mode_buttons_w
+editor.rectfill_mode_button.h = editor.mode_buttons_h
+editor.rectfill_mode_button.x = editor.circ_mode_button.x + editor.circ_mode_button.w + 3
+editor.rectfill_mode_button.y = editor.circ_mode_button.y + editor.rect_mode_button.h + 3
+editor.rectfill_mode_button.pattern = {
+	{0, 0, 0, 0, 0, 0, 0},
+	{0, 1, 1, 1, 1, 1, 0},
+	{0, 1, 1, 1, 1, 1, 0},
+	{0, 1, 1, 1, 1, 1, 0},
+	{0, 1, 1, 1, 1, 1, 0},
+	{0, 1, 1, 1, 1, 1, 0},
+	{0, 0, 0, 0, 0, 0, 0},
+}
+editor.rectfill_mode_button.pattern_color = Yellow
 ----
 ---- End of modes buttons data.
 ----
@@ -584,6 +601,7 @@ function editor.draw_modes_buttons()
 	editor.draw_mode_button(editor.circ_mode_button)
 	editor.draw_mode_button(editor.circfill_mode_button)
 	editor.draw_mode_button(editor.rect_mode_button)
+	editor.draw_mode_button(editor.rectfill_mode_button)
 end
 
 
@@ -777,6 +795,13 @@ function editor.handle_pressing_universal_buttons(x, y, button)
 	-- Check if mouse is over rect mode button.
 	if utils.mouse_box_bound_check_for_buttons(x, y, editor.rect_mode_button) then
 		editor.set_current_mode(editor.modes.rect)
+		editor.switch_current_toggle_mode()
+		editor.exit_drawing_primitives()
+	end
+
+	-- Check if mouse is over rectfill mode button.
+	if utils.mouse_box_bound_check_for_buttons(x, y, editor.rectfill_mode_button) then
+		editor.set_current_mode(editor.modes.rectfill)
 		editor.switch_current_toggle_mode()
 		editor.exit_drawing_primitives()
 	end
