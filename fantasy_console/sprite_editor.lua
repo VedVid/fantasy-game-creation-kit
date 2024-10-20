@@ -804,17 +804,25 @@ function editor.handle_mouseholding(x, y, button)
 		editor.primitive_args = nil
 		local mouse_x = math.ceil(((x / g.screen.gamepixel.w) - editor.current_sprite_x_start) / g.sprites.size_w)
 		local mouse_y = math.ceil(((y / g.screen.gamepixel.h) - editor.current_sprite_y_start) / g.sprites.size_h)
-		local r = utils.distance_between(
-			editor.anchor_primitive.x,
-			editor.anchor_primitive.y,
-			mouse_x,
-			mouse_y
-		)
 		editor.primitive_args = {
 			editor.anchor_primitive.x,
 			editor.anchor_primitive.y,
-			r
 		}
+		if editor.current_mode == editor.modes.line then
+			do end  -- TODO!!!
+		elseif editor.current_mode == editor.modes.rect or editor.current_mode == editor.modes.rectfill then
+			do end  -- TODO!!!
+		elseif editor.current_mode == editor.modes.circ or editor.current_mode == editor.modes.circfill then
+			local r = utils.distance_between(
+				editor.anchor_primitive.x,
+				editor.anchor_primitive.y,
+				mouse_x,
+				mouse_y
+			)
+			table.insert(editor.primitive_args, r)
+		elseif editor.current_mode == editor.modes.oval or editor.current_mode == editor.modes.ovalfill then
+			do end  -- TODO!!!
+		end
 	end
 
 	-- This closure is used later to use within pcall to emulate
