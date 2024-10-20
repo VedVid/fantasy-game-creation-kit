@@ -361,34 +361,12 @@ function editor.draw_all_sprites()
 end
 
 
-function editor.draw_preview(coords, color)
-    if not color then color = g.colors.default_fg_color.rgb01 end
-
-    local ok, _ = pcall(love.graphics.setColor, unpack(color))
-    if not ok then
-        ok, _ = pcall(love.graphics.setColor, unpack(color.rgb01))
-    end
-
-    for _, v in ipairs(coords) do
-		local x
-		local y
-		Rectfill(
-			x,
-			y,
-			g.sprites.size_w,
-			g.sprites.size_h,
-			color
-		)
-    end
-
-    love.graphics.setColor(unpack(g.colors.default_fg_color.rgb01))
-end
-
-
 function editor.draw_current_sprite()
 	--[[
 	This function draws enlarged version of currently selected sprite.
 	It is enlarged to make editing sprite easier.
+	If user in in drawing_primitives mode, then at the top of the current sprite,
+	the preview of changes that are to be introduced is shown.
 	Also, the border around the sprite is being drawn here.
 
 	Arguments
@@ -434,13 +412,8 @@ function editor.draw_current_sprite()
 		row = row + 1
 	end
 
-	print(editor.drawing_primitives)
-	print(editor.primitive_args)
 	if editor.drawing_primitives and editor.primitive_args then
 		local circle = agc.circ(unpack(editor.primitive_args))
-		-- primitive args OK
-		--print(editor.primitive_args[1], editor.primitive_args[2], editor.primitive_args[3])
-		--editor.draw_preview(circle, palette.green_bold)
 		love.graphics.push()
 		love.graphics.translate(
 			(editor.current_sprite_x_start - g.sprites.size_w) * g.screen.gamepixel.w,
@@ -449,8 +422,6 @@ function editor.draw_current_sprite()
 		love.graphics.scale(g.sprites.size_w, g.sprites.size_h)
 		agd.draw_with_pset(circle, palette.green_bold)
 		love.graphics.pop()
-		-- anchors are OK
-		--print(editor.anchor_primitive.x, editor.anchor_primitive.y)
 	end
 end
 
@@ -794,10 +765,18 @@ end
 
 function editor.handle_mouseholding(x, y, button)
 	--[[
-	handle_mouseholding is used only for handling drawing over current sprite
-	while having point drawing mode enabled. All other interactions
-	with UI or other drawing modes are handled by other functions, namely
-	handle_mousepressed and handle_pressing_universal_buttons.
+	handle_mouseholding is used only for handling drawing over current sprite.
+	All other interactions with UI or other drawing modes are handled
+	by other functions, namely handle_mousepressed
+	and handle_pressing_universal_buttons.
+
+	If user is in point drawing mode, then this function allows to draw
+	continuously over the existing sprite. In that case, all changes
+	are immediately commited into the current sprite data.
+
+	If user is in primitive drawing mode, then if no button is pressed,
+	it calculates data used to show preview of primitive to be drawn.
+	In that case, no changes are immediately commited.
 
 	Arguments
 	---------
@@ -871,10 +850,20 @@ function editor.handle_mousepresses(x, y, button)
 	--[[
 	handle_mousepresses is going to be used for every drawing method.
 	while having point drawing mode enabled.
+
+	If point drawing method is disabled, then this function is used to
+	start and end process of drawing primitives by left mouse button, and
+	canceling drawing primitive by right mouse button. 
+	When starting drawing primitives, the initial point clicked
+	by user becomes anchor for drawing, e.g. it becomes
+	top-left corner of rectangle, or centre of circle.
+
+
 	`point drawing mode` is already being handled by handle_mouseholding,
 	but it has to be handled by handle_mousepresses too, as without this,
 	you could not draw things by simply clicking on current_sprite – instead,
 	you would need to click and move mouse to introduce the change.
+
 	All other interactions with UI or other drawing modes are handled
 	by other functions, namely handle_mousepressed
 	and handle_pressing_universal_buttons.
@@ -944,25 +933,6 @@ function editor.handle_mousepresses(x, y, button)
 						y = sprite_y
 					}
 				else
---					local r = utils.distance_between(
---						editor.anchor_primitive.x,
---						editor.anchor_primitive.y,
---						sprite_x,
---						sprite_y
---					)
---					local circle = agc.circ(
---						editor.anchor_primitive.x,
---						editor.anchor_primitive.y,
---						r
---					)
---					for k, v in ipairs(circle) do
---						local new_x = v.x / g.screen.gamepixel.w
---						local new_y = v.y / g.screen.gamepixel.h
---						if new_x <= 8 and new_x > 0 and new_y <= 8 and new_y > 0 then
---							editor.temp_sprite_data[new_y][new_x] = editor.colors[editor.current_color][1]
---						end
---					end
---					editor.current_sprite_data = editor.temp_sprite_data
 					editor.exit_drawing_primitives()
 				end
 			end
