@@ -526,18 +526,14 @@ function editor.draw_current_sprite()
 
 	if editor.drawing_primitives and editor.primitive_args then
 		local primitive = editor.agcalc_modes_map[editor.current_mode](unpack(editor.primitive_args))
-		if editor.current_mode ~= editor.modes.rectfill then
-			love.graphics.push()
-			love.graphics.translate(
-				(editor.current_sprite_x_start - g.sprites.size_w) * g.screen.gamepixel.w,
-				(editor.current_sprite_y_start - g.sprites.size_h) * g.screen.gamepixel.h
-			)
-			love.graphics.scale(g.sprites.size_w, g.sprites.size_h)
-			agdraw.draw_with_pset(primitive, editor.colors[editor.current_color][1])
-			love.graphics.pop()
-		elseif editor.current_mode == editor.modes.rectfill then
-			do end
-		end
+		love.graphics.push()
+		love.graphics.translate(
+			(editor.current_sprite_x_start - g.sprites.size_w) * g.screen.gamepixel.w,
+			(editor.current_sprite_y_start - g.sprites.size_h) * g.screen.gamepixel.h
+		)
+		love.graphics.scale(g.sprites.size_w, g.sprites.size_h)
+		agdraw.draw_with_pset(primitive, editor.colors[editor.current_color][1])
+		love.graphics.pop()
 	end
 end
 
