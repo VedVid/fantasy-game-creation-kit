@@ -191,12 +191,26 @@ function agc.rect(x, y, w, h)
     w = math.floor(w)
     h = math.floor(h)
 
-    local coords = {
-        lx = (x * g.screen.gamepixel.w) + (g.screen.gamepixel.w / 2),
-        ly = (y * g.screen.gamepixel.h) + (g.screen.gamepixel.h / 2),
-        lw = (w - 1) * g.screen.gamepixel.w,
-        lh = (h - 1) * g.screen.gamepixel.h
-    }
+    local x2 = x + w
+    local y2 = y + h
+
+    local coords = {}
+
+    local top = agc.line(x, y, x2, y)
+    local bottom = agc.line(x, y2, x2, y2)
+    local left = agc.line(x, y, x, y2)
+    local right = agc.line(x2, y, x2, y2)
+    local all_lines = {}
+    table.insert(all_lines, top)
+    table.insert(all_lines, bottom)
+    table.insert(all_lines, left)
+    table.insert(all_lines, right)
+
+    for _, line in pairs(all_lines) do
+        for _, coord in pairs(line) do
+            table.insert(coords, coord)
+        end
+    end
 
     return coords
 end
