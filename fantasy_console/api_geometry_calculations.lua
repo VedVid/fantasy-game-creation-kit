@@ -196,10 +196,25 @@ function agc.rect(x, y, w, h)
 
     local coords = {}
 
-    local top = agc.line(x, y, x2, y)
-    local bottom = agc.line(x, y2, x2, y2)
-    local left = agc.line(x, y, x, y2)
-    local right = agc.line(x2, y, x2, y2)
+    local xx = {}
+    local yy = {}
+
+    if x < x2 then
+        xx = {x, x2 - 1}
+    else
+        xx = {x2, x - 1}
+    end
+
+    if y < y2 then
+        yy = {y, y2 - 1}
+    else
+        yy = {y2, y - 1}
+    end
+
+    local top = agc.line(xx[1], yy[1], xx[2], yy[1])
+    local bottom = agc.line(xx[1], yy[2], xx[2], yy[2])
+    local left = agc.line(xx[1], yy[1], xx[1], yy[2])
+    local right = agc.line(xx[2], yy[1], xx[2], yy[2])
     local all_lines = {}
     table.insert(all_lines, top)
     table.insert(all_lines, bottom)
@@ -255,12 +270,38 @@ function agc.rectfill(x, y, w, h)
     w = math.floor(w)
     h = math.floor(h)
 
-    local coords = {
-        lx = math.floor(x * g.screen.gamepixel.w),
-        ly = math.floor(y * g.screen.gamepixel.h),
-        lw = math.floor(w * g.screen.gamepixel.w),
-        lh = math.floor(h * g.screen.gamepixel.h)
-    }
+    local x2 = x + w
+    local y2 = y + h
+
+    local xx = {}
+    local yy = {}
+
+    if x < x2 then
+        xx = {x, x2 - 1}
+    else
+        xx = {x2, x - 1}
+    end
+
+    if y < y2 then
+        yy = {y, y2 - 1}
+    else
+        yy = {y2, y - 1}
+    end
+
+    local lines = {}
+
+    for i=yy[1], yy[2] do
+        local line = agc.line(xx[1], i, xx[2], i)
+        table.insert(lines, line)
+    end
+
+    local coords = {}
+
+    for _, line in pairs(lines) do
+        for _, coord in pairs(line) do
+            table.insert(coords, coord)
+        end
+    end
 
     return coords
 end

@@ -350,7 +350,7 @@ function Rectfill(x, y, w, h, color)
 
     local coords = agcalc.rectfill(x, y, w, h)
 
-    agdraw.draw_rectfill(coords, color)
+    agdraw.draw_with_pset(coords, color)
 end
 
 
