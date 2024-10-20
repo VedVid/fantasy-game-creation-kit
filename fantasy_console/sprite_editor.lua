@@ -2,6 +2,7 @@ require "api"
 
 
 local agc = require "api_geometry_calculations"
+local agd = require "api_geometry_drawing"
 local g = require "globals"
 local s = require "sprite"
 local palette = require "palette"
@@ -369,8 +370,8 @@ function editor.draw_preview(coords, color)
     end
 
     for _, v in ipairs(coords) do
-		local x = v.x + editor.current_sprite_x_start
-		local y = v.y + editor.current_sprite_y_start
+		local x
+		local y
 		Rectfill(
 			x,
 			y,
@@ -437,8 +438,11 @@ function editor.draw_current_sprite()
 	print(editor.primitive_args)
 	if editor.drawing_primitives and editor.primitive_args then
 		local circle = agc.circ(unpack(editor.primitive_args))
-		editor.draw_preview(circle, palette.green_bold)
-		--agd.draw_with_pset(circle, palette.green_bold)
+		--editor.draw_preview(circle, palette.green_bold)
+		love.graphics.push()
+		love.graphics.scale(g.sprites.size_w, g.sprites.size_h)
+		agd.draw_with_pset(circle, palette.green_bold)
+		love.graphics.pop()
 	end
 end
 
