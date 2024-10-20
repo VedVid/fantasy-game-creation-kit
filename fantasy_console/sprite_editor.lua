@@ -43,9 +43,8 @@ editor.anchor_primitive = nil
 -- When user changes sprite by drawing, then the changes should be
 -- automatically added to current_sprite_data
 editor.current_sprite_data = nil
-editor.temp_sprite_data = nil
-editor.preview_sprite_data = nil
 -- ^^^ number: <number>, rgb01: <table of numbers>, hex: <string>
+editor.primitive_args = nil
 
 
 -- Data relevant to drawing list of colors to choose from.
@@ -275,7 +274,7 @@ end
 
 function editor.exit_drawing_primitives()
 	editor.drawing_primitives = false
-	editor.temp_sprite_data = nil
+	editor.primitive_args = nil
 	editor.anchor_primitive = nil
 end
 
@@ -379,23 +378,6 @@ function editor.draw_current_sprite()
 	local col = 0
 	local row = 0
 
-	-- This function will draw temp sprite only if temp sprite data
-	-- is not empty. _The content of temp_sprite dictates how
-	-- this function behaves._ Still, current_sprite_data
-	-- can't be empty.
-
-	if editor.current_sprite_data == nil then
-		editor.current_sprite_data = s.return_sprite_colors(
-			s.get_sprite(editor.current_sprite), "palette"
-		)
-	end
-
-	local sprite_to_draw_data = editor.current_sprite_data
-
-	if editor.temp_sprite_data then
-		sprite_to_draw_data = editor.temp_sprite_data
-	end
-
 	Rect(
 		editor.current_sprite_x_start - 1,
 		editor.current_sprite_y_start - 1,
@@ -404,7 +386,7 @@ function editor.draw_current_sprite()
 		Cyan
 	  )
 
-	for _, line in ipairs(sprite_to_draw_data) do
+	for _, line in ipairs(editor.current_sprite_data) do
 	local cur_y = editor.current_sprite_y_start + (row * g.sprites.size_h)
 		for _, v in ipairs(line) do
 			local cur_x = editor.current_sprite_x_start + (col * g.sprites.size_w)
@@ -898,32 +880,26 @@ function editor.handle_mousepresses(x, y, button)
 						x = sprite_x,
 						y = sprite_y
 					}
-					do
-						-- TEMPORARY TODO PLEASE REMOVE LATER
-						if editor.current_mode == editor.modes.circ then
-							editor.temp_sprite_data = editor.current_sprite_data
-						end
-					end
 				else
-					local r = utils.distance_between(
-						editor.anchor_primitive.x,
-						editor.anchor_primitive.y,
-						sprite_x,
-						sprite_y
-					)
-					local circle = agc.circ(
-						editor.anchor_primitive.x,
-						editor.anchor_primitive.y,
-						r
-					)
-					for k, v in ipairs(circle) do
-						local new_x = v.x / g.screen.gamepixel.w
-						local new_y = v.y / g.screen.gamepixel.h
-						if new_x <= 8 and new_x > 0 and new_y <= 8 and new_y > 0 then
-							editor.temp_sprite_data[new_y][new_x] = editor.colors[editor.current_color][1]
-						end
-					end
-					editor.current_sprite_data = editor.temp_sprite_data
+--					local r = utils.distance_between(
+--						editor.anchor_primitive.x,
+--						editor.anchor_primitive.y,
+--						sprite_x,
+--						sprite_y
+--					)
+--					local circle = agc.circ(
+--						editor.anchor_primitive.x,
+--						editor.anchor_primitive.y,
+--						r
+--					)
+--					for k, v in ipairs(circle) do
+--						local new_x = v.x / g.screen.gamepixel.w
+--						local new_y = v.y / g.screen.gamepixel.h
+--						if new_x <= 8 and new_x > 0 and new_y <= 8 and new_y > 0 then
+--							editor.temp_sprite_data[new_y][new_x] = editor.colors[editor.current_color][1]
+--						end
+--					end
+--					editor.current_sprite_data = editor.temp_sprite_data
 					editor.exit_drawing_primitives()
 				end
 			end
