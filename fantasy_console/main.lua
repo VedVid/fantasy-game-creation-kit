@@ -75,7 +75,6 @@ function love.update()
         Update()
     elseif mode == "sprites" then
         sprite_editor.update_save_button()
-        print(sprite_editor.drawing_primitives)
     end
 end
 

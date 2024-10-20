@@ -904,7 +904,17 @@ function editor.handle_mousepresses(x, y, button)
 						end
 					end
 				else
-					local circle = agc.circ(sprite_x, sprite_y, 3)
+					local r = utils.distance_between(
+						editor.anchor_primitive.x,
+						editor.anchor_primitive.y,
+						sprite_x,
+						sprite_y
+					)
+					local circle = agc.circ(
+						editor.anchor_primitive.x,
+						editor.anchor_primitive.y,
+						r
+					)
 					for k, v in ipairs(circle) do
 						local new_x = v.x / g.screen.gamepixel.w
 						local new_y = v.y / g.screen.gamepixel.h
