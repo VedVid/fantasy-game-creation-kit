@@ -961,35 +961,9 @@ function editor.handle_mouseholding(x, y, button)
 		if editor.current_mode == editor.modes.line then
 			table.insert(editor.primitive_args, mouse_x)
 			table.insert(editor.primitive_args, mouse_y)
-		elseif editor.current_mode == editor.modes.rect or editor.current_mode == editor.modes.rectfill then
-			editor.primitive_args = nil
-			local x2 = editor.anchor_primitive.x + mouse_x
-			local y2 = editor.anchor_primitive.y + mouse_y
-			local xx = {}
-			local yy = {}
-			if x2 > editor.anchor_primitive.x then
-				xx = {editor.anchor_primitive.x, x2}
-			else
-				xx = {x2, editor.anchor_primitive.x}
-			end
-			if y2 > editor.anchor_primitive.y then
-				yy = {editor.anchor_primitive.y, y2}
-			else
-				yy = {y2, editor.anchor_primitive.y}
-			end
-			local w = utils.distance_between(
-				xx[1],
-				yy[1],
-				xx[2],
-				yy[1]
-			)
-			local h = utils.distance_between(
-				xx[1],
-				yy[1],
-				xx[1],
-				yy[2]
-			)
-			editor.primitive_args = {xx[1], yy[1], w, h}
+		elseif editor.current_mode == editor.modes.rect then
+			table.insert(editor.primitive_args, mouse_x)
+			table.insert(editor.primitive_args, mouse_y)
 		elseif editor.current_mode == editor.modes.circ or editor.current_mode == editor.modes.circfill then
 			local r = utils.distance_between(
 				editor.anchor_primitive.x,
