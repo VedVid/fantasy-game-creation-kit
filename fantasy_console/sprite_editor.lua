@@ -2,6 +2,7 @@ require "api"
 
 
 local agc = require "api_geometry_calculations"
+local agd = require "api_geometry_drawing"
 local g = require "globals"
 local s = require "sprite"
 local palette = require "palette"
@@ -409,8 +410,11 @@ function editor.draw_current_sprite()
 		row = row + 1
 	end
 
+	print(editor.drawing_primitives)
+	print(editor.primitive_args)
 	if editor.drawing_primitives and editor.primitive_args then
 		local circle = agc.circ(unpack(editor.primitive_args))
+		agd.draw_with_pset(circle, palette.green_bold)
 	end
 end
 
