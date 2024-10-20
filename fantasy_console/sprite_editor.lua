@@ -176,6 +176,40 @@ editor.rectfill_mode_button.pattern = {
 	{0, 0, 0, 0, 0, 0, 0},
 }
 editor.rectfill_mode_button.pattern_color = Yellow
+
+editor.oval_mode_button = {}
+editor.oval_mode_button.name = editor.modes.oval
+editor.oval_mode_button.w = editor.mode_buttons_w
+editor.oval_mode_button.h = editor.mode_buttons_h
+editor.oval_mode_button.x = editor.rect_mode_button.x + editor.rect_mode_button.w + 3
+editor.oval_mode_button.y = editor.rect_mode_button.y
+editor.oval_mode_button.pattern = {
+	{0, 0, 0, 0, 0, 0, 0},
+	{0, 1, 1, 1, 1, 1, 0},
+	{1, 1, 0, 0, 0, 1, 1},
+	{1, 0, 0, 0, 0, 0, 1},
+	{1, 1, 0, 0, 0, 1, 1},
+	{0, 1, 1, 1, 1, 1, 0},
+	{0, 0, 0, 0, 0, 0, 0},
+}
+editor.oval_mode_button.pattern_color = Yellow
+
+editor.ovalfill_mode_button = {}
+editor.ovalfill_mode_button.name = editor.modes.ovalfill
+editor.ovalfill_mode_button.w = editor.mode_buttons_w
+editor.ovalfill_mode_button.h = editor.mode_buttons_h
+editor.ovalfill_mode_button.x = editor.rect_mode_button.x + editor.rect_mode_button.w + 3
+editor.ovalfill_mode_button.y = editor.rect_mode_button.y + editor.oval_mode_button.h + 3
+editor.ovalfill_mode_button.pattern = {
+	{0, 0, 0, 0, 0, 0, 0},
+	{0, 1, 1, 1, 1, 1, 0},
+	{1, 1, 1, 1, 1, 1, 1},
+	{1, 1, 1, 1, 1, 1, 1},
+	{1, 1, 1, 1, 1, 1, 1},
+	{0, 1, 1, 1, 1, 1, 0},
+	{0, 0, 0, 0, 0, 0, 0},
+}
+editor.ovalfill_mode_button.pattern_color = Yellow
 ----
 ---- End of modes buttons data.
 ----
@@ -602,6 +636,8 @@ function editor.draw_modes_buttons()
 	editor.draw_mode_button(editor.circfill_mode_button)
 	editor.draw_mode_button(editor.rect_mode_button)
 	editor.draw_mode_button(editor.rectfill_mode_button)
+	editor.draw_mode_button(editor.oval_mode_button)
+	editor.draw_mode_button(editor.ovalfill_mode_button)
 end
 
 
@@ -806,6 +842,20 @@ function editor.handle_pressing_universal_buttons(x, y, button)
 		editor.exit_drawing_primitives()
 	end
 
+	-- Check if mouse is over oval mode button.
+	if utils.mouse_box_bound_check_for_buttons(x, y, editor.oval_mode_button) then
+		editor.set_current_mode(editor.modes.oval)
+		editor.switch_current_toggle_mode()
+		editor.exit_drawing_primitives()
+	end
+
+	-- Check if mouse is over ovalfill mode button.
+	if utils.mouse_box_bound_check_for_buttons(x, y, editor.ovalfill_mode_button) then
+		editor.set_current_mode(editor.modes.ovalfill)
+		editor.switch_current_toggle_mode()
+		editor.exit_drawing_primitives()
+	end
+	
 	-- Check if mouse is over sprites list.
 	if utils.mouse_box_bound_check(
 		x,
@@ -912,7 +962,20 @@ function editor.handle_mouseholding(x, y, button)
 			)
 			table.insert(editor.primitive_args, r)
 		elseif editor.current_mode == editor.modes.oval or editor.current_mode == editor.modes.ovalfill then
-			do end  -- TODO!!!
+			local rx = utils.distance_between(
+				editor.anchor_primitive.x,
+				editor.anchor_primitive.y,
+				mouse_x,
+				editor.anchor_primitive.y
+			)
+			local ry = utils.distance_between(
+				editor.anchor_primitive.x,
+				editor.anchor_primitive.y,
+				editor.anchor_primitive.x,
+				mouse_y
+			)
+			table.insert(editor.primitive_args, rx)
+			table.insert(editor.primitive_args, ry)
 		end
 	end
 
