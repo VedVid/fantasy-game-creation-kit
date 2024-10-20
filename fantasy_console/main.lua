@@ -65,6 +65,8 @@ function love.mousemoved(x, y, dx, dy)
     if mode == "sprites" then
         if sprite_editor.current_toggle == sprite_editor.toggle.hold then
             sprite_editor.handle_mouseholding(x, y, 1)
+        else
+            sprite_editor.handle_mouseholding(x, y)
         end
     end
 end
@@ -75,6 +77,7 @@ function love.update()
         Update()
     elseif mode == "sprites" then
         sprite_editor.update_save_button()
+        print(sprite_editor.primitive_args)
     end
 end
 
