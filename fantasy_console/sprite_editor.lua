@@ -125,6 +125,23 @@ editor.circ_mode_button.pattern = {
 	{0, 0, 1, 1, 1, 0, 0},
 }
 editor.circ_mode_button.pattern_color = Yellow
+
+editor.rect_mode_button = {}
+editor.rect_mode_button.name = editor.modes.rect
+editor.rect_mode_button.w = editor.mode_buttons_w
+editor.rect_mode_button.h = editor.mode_buttons_h
+editor.rect_mode_button.x = editor.circ_mode_button.x + editor.circ_mode_button.w + 3
+editor.rect_mode_button.y = editor.circ_mode_button.y
+editor.rect_mode_button.pattern = {
+	{0, 0, 0, 0, 0, 0, 0},
+	{0, 1, 1, 1, 1, 1, 0},
+	{0, 1, 0, 0, 0, 1, 0},
+	{0, 1, 0, 0, 0, 1, 0},
+	{0, 1, 0, 0, 0, 1, 0},
+	{0, 1, 1, 1, 1, 1, 0},
+	{0, 0, 0, 0, 0, 0, 0},
+}
+editor.rect_mode_button.pattern_color = Yellow
 ----
 ---- End of modes buttons data.
 ----
@@ -545,6 +562,7 @@ function editor.draw_modes_buttons()
 
 	editor.draw_mode_button(editor.point_mode_button)
 	editor.draw_mode_button(editor.circ_mode_button)
+	editor.draw_mode_button(editor.rect_mode_button)
 end
 
 
@@ -728,6 +746,13 @@ function editor.handle_pressing_universal_buttons(x, y, button)
 		editor.exit_drawing_primitives()
 	end
 
+	-- Check if mouse is over rect mode button.
+	if utils.mouse_box_bound_check_for_buttons(x, y, editor.rect_mode_button) then
+		editor.set_current_mode(editor.modes.rect)
+		editor.switch_current_toggle_mode()
+		editor.exit_drawing_primitives()
+	end
+
 	-- Check if mouse is over sprites list.
 	if utils.mouse_box_bound_check(
 		x,
@@ -811,7 +836,20 @@ function editor.handle_mouseholding(x, y, button)
 		if editor.current_mode == editor.modes.line then
 			do end  -- TODO!!!
 		elseif editor.current_mode == editor.modes.rect or editor.current_mode == editor.modes.rectfill then
-			do end  -- TODO!!!
+			local w = utils.distance_between(
+				editor.anchor_primitive.x,
+				1,
+				mouse_x,
+				1
+			)
+			local h = utils.distance_between(
+				1,
+				editor.anchor_primitive.y,
+				1,
+				mouse_y
+			)
+			table.insert(editor.primitive_args, w)
+			table.insert(editor.primitive_args, h)
 		elseif editor.current_mode == editor.modes.circ or editor.current_mode == editor.modes.circfill then
 			local r = utils.distance_between(
 				editor.anchor_primitive.x,
