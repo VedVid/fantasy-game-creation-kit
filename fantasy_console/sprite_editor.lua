@@ -386,6 +386,12 @@ function editor.draw_current_sprite()
 		Cyan
 	  )
 
+	if editor.current_sprite_data == nil then
+		editor.current_sprite_data = s.return_sprite_colors(
+			s.get_sprite(editor.current_sprite), "palette"
+		)
+	end
+
 	for _, line in ipairs(editor.current_sprite_data) do
 	local cur_y = editor.current_sprite_y_start + (row * g.sprites.size_h)
 		for _, v in ipairs(line) do
