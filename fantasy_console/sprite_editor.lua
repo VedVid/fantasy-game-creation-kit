@@ -390,10 +390,10 @@ function editor.draw_current_sprite()
 		)
 	end
 
-	local sprite_to_draw_data = editor.current_sprite_data
+	local sprite_to_draw_data = {unpack(editor.current_sprite_data)}
 
 	if editor.temp_sprite_data then
-		sprite_to_draw_data = editor.temp_sprite_data
+		sprite_to_draw_data = {unpack(editor.temp_sprite_data)}
 	end
 
 	Rect(
@@ -874,7 +874,7 @@ function editor.handle_mousepresses(x, y, button)
 	-- behaviour similar to try-except
 	local function replace_sprite_pixel(sprite_1_x, sprite_1_y)
 		g.sprites.sprites[editor.current_sprite]["colors"][sprite_1_y][sprite_1_x] = editor.colors[editor.current_color][1]
-		end
+	end
 
 	if button == 1 then
 		-- Check if mouse is over current sprite.
