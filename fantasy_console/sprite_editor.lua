@@ -536,6 +536,15 @@ function editor.draw_current_sprite()
 			love.graphics.scale(g.sprites.size_w, g.sprites.size_h)
 			agdraw.draw_with_pset(primitive, editor.colors[editor.current_color][1])
 			love.graphics.pop()
+		elseif editor.current_mode == editor.modes.rect then
+			love.graphics.push()
+			love.graphics.translate(
+				(editor.current_sprite_x_start - g.sprites.size_w) * g.screen.gamepixel.w,
+				(editor.current_sprite_y_start - g.sprites.size_h) * g.screen.gamepixel.h
+			)
+			love.graphics.scale(g.sprites.size_w, g.sprites.size_h)
+			agdraw.draw_rect(primitive, editor.colors[editor.current_color][1])
+			love.graphics.pop()
 		end
 	end
 end
@@ -965,20 +974,34 @@ function editor.handle_mouseholding(x, y, button)
 			table.insert(editor.primitive_args, mouse_x)
 			table.insert(editor.primitive_args, mouse_y)
 		elseif editor.current_mode == editor.modes.rect or editor.current_mode == editor.modes.rectfill then
+			editor.primitive_args = nil
+			local x2 = editor.anchor_primitive.x + mouse_x
+			local y2 = editor.anchor_primitive.y + mouse_y
+			local xx = {}
+			local yy = {}
+			if x2 > editor.anchor_primitive.x then
+				xx = {editor.anchor_primitive.x, x2}
+			else
+				xx = {x2, editor.anchor_primitive.x}
+			end
+			if y2 > editor.anchor_primitive.y then
+				yy = {editor.anchor_primitive.y, y2}
+			else
+				yy = {y2, editor.anchor_primitive.y}
+			end
 			local w = utils.distance_between(
-				editor.anchor_primitive.x,
-				1,
-				mouse_x,
-				1
+				xx[1],
+				yy[1],
+				xx[2],
+				yy[1]
 			)
 			local h = utils.distance_between(
-				1,
-				editor.anchor_primitive.y,
-				1,
-				mouse_y
+				xx[1],
+				yy[1],
+				xx[1],
+				yy[2]
 			)
-			table.insert(editor.primitive_args, w)
-			table.insert(editor.primitive_args, h)
+			editor.primitive_args = {xx[1], yy[1], w, h}
 		elseif editor.current_mode == editor.modes.circ or editor.current_mode == editor.modes.circfill then
 			local r = utils.distance_between(
 				editor.anchor_primitive.x,
