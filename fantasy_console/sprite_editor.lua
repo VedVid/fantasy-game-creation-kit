@@ -32,8 +32,8 @@ editor.toggle.hold = "hold"
 
 editor.agc_modes_map = {}
 editor.agc_modes_map[editor.modes.line] = agc.line
-editor.agc.modes_map[editor.modes.rect] = agc.rect
-editor.agc.modes.map[editor.modes.rectfill] = agc.rectfill
+editor.agc_modes_map[editor.modes.rect] = agc.rect
+editor.agc_modes_map[editor.modes.rectfill] = agc.rectfill
 editor.agc_modes_map[editor.modes.circ] = agc.circ
 editor.agc_modes_map[editor.modes.circfill] = agc.circfill
 editor.agc_modes_map[editor.modes.oval] = agc.oval
