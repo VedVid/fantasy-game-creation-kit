@@ -779,17 +779,17 @@ function editor.handle_mouseholding(x, y, button)
 	nothing
 	]]--
 
-	if button ~= 1 then
-		return
-	end
-
 	-- This closure is used later to use within pcall to emulate
 	-- behaviour similar to try-except
 	local function replace_sprite_pixel(sprite_1_x, sprite_1_y)
 		g.sprites.sprites[editor.current_sprite]["colors"][sprite_1_y][sprite_1_x] = editor.colors[editor.current_color][1]
 	end
 
-	if love.mouse.isDown(button) then
+	if not button and editor.drawing_primitives then
+		editor.temp_sprite_data = editor.current_sprite_data
+	end
+
+	if love.mouse.isDown(button) and button == 1 then
 		-- Check if mouse is over current sprite.
 		if utils.mouse_box_bound_check(
 			x,
