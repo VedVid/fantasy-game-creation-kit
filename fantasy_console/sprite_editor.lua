@@ -126,6 +126,23 @@ editor.circ_mode_button.pattern = {
 }
 editor.circ_mode_button.pattern_color = Yellow
 
+editor.circfill_mode_button = {}
+editor.circfill_mode_button.name = editor.modes.circfill
+editor.circfill_mode_button.w = editor.mode_buttons_w
+editor.circfill_mode_button.h = editor.mode_buttons_h
+editor.circfill_mode_button.x = editor.point_mode_button.x + editor.point_mode_button.w + 3
+editor.circfill_mode_button.y = editor.point_mode_button.y + editor.circ_mode_button.h + 3
+editor.circfill_mode_button.pattern = {
+	{0, 0, 1, 1, 1, 0, 0},
+	{0, 1, 1, 1, 1, 1, 0},
+	{1, 1, 1, 1, 1, 1, 1},
+	{1, 1, 1, 1, 1, 1, 1},
+	{1, 1, 1, 1, 1, 1, 1},
+	{0, 1, 1, 1, 1, 1, 0},
+	{0, 0, 1, 1, 1, 0, 0},
+}
+editor.circfill_mode_button.pattern_color = Yellow
+
 editor.rect_mode_button = {}
 editor.rect_mode_button.name = editor.modes.rect
 editor.rect_mode_button.w = editor.mode_buttons_w
@@ -565,6 +582,7 @@ function editor.draw_modes_buttons()
 
 	editor.draw_mode_button(editor.point_mode_button)
 	editor.draw_mode_button(editor.circ_mode_button)
+	editor.draw_mode_button(editor.circfill_mode_button)
 	editor.draw_mode_button(editor.rect_mode_button)
 end
 
@@ -745,6 +763,13 @@ function editor.handle_pressing_universal_buttons(x, y, button)
 	-- Check if mouse is over circ mode button.
 	if utils.mouse_box_bound_check_for_buttons(x, y, editor.circ_mode_button) then
 		editor.set_current_mode(editor.modes.circ)
+		editor.switch_current_toggle_mode()
+		editor.exit_drawing_primitives()
+	end
+
+	-- Check if mouse is over circfill mode button.
+	if utils.mouse_box_bound_check_for_buttons(x, y, editor.circfill_mode_button) then
+		editor.set_current_mode(editor.modes.circfill)
 		editor.switch_current_toggle_mode()
 		editor.exit_drawing_primitives()
 	end
