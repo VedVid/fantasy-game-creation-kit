@@ -1,8 +1,8 @@
 require "api"
 
 
-local agc = require "api_geometry_calculations"
-local agd = require "api_geometry_drawing"
+local agcalc = require "api_geometry_calculations"
+local agdraw = require "api_geometry_drawing"
 local g = require "globals"
 local s = require "sprite"
 local palette = require "palette"
@@ -30,14 +30,14 @@ editor.toggle.press = "press"
 editor.toggle.hold = "hold"
 
 
-editor.agc_modes_map = {}
-editor.agc_modes_map[editor.modes.line] = agc.line
-editor.agc_modes_map[editor.modes.rect] = agc.rect
-editor.agc_modes_map[editor.modes.rectfill] = agc.rectfill
-editor.agc_modes_map[editor.modes.circ] = agc.circ
-editor.agc_modes_map[editor.modes.circfill] = agc.circfill
-editor.agc_modes_map[editor.modes.oval] = agc.oval
-editor.agc_modes_map[editor.modes.ovalfill] = agc.ovalfill
+editor.agcalc_modes_map = {}
+editor.agcalc_modes_map[editor.modes.line] = agcalc.line
+editor.agcalc_modes_map[editor.modes.rect] = agcalc.rect
+editor.agcalc_modes_map[editor.modes.rectfill] = agcalc.rectfill
+editor.agcalc_modes_map[editor.modes.circ] = agcalc.circ
+editor.agcalc_modes_map[editor.modes.circfill] = agcalc.circfill
+editor.agcalc_modes_map[editor.modes.oval] = agcalc.oval
+editor.agcalc_modes_map[editor.modes.ovalfill] = agcalc.ovalfill
 
 
 editor.current_tab = 1
@@ -440,7 +440,7 @@ function editor.draw_current_sprite()
 	end
 
 	if editor.drawing_primitives and editor.primitive_args then
-		local primitive = editor.agc_modes_map[editor.current_mode](unpack(editor.primitive_args))
+		local primitive = editor.agcalc_modes_map[editor.current_mode](unpack(editor.primitive_args))
 		-- Rectangles needs some special care
 		if editor.current_mode ~= editor.modes.rect and editor.current_mode ~= editor.modes.rectfill then
 			love.graphics.push()
@@ -449,7 +449,7 @@ function editor.draw_current_sprite()
 				(editor.current_sprite_y_start - g.sprites.size_h) * g.screen.gamepixel.h
 			)
 			love.graphics.scale(g.sprites.size_w, g.sprites.size_h)
-			agd.draw_with_pset(primitive, editor.colors[editor.current_color][1])
+			agdraw.draw_with_pset(primitive, editor.colors[editor.current_color][1])
 			love.graphics.pop()
 		end
 	end
