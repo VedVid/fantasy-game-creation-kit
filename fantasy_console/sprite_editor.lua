@@ -409,8 +409,8 @@ function editor.draw_current_sprite()
 		row = row + 1
 	end
 
-	if editor.drawing_primitives and editor.primitive_args then 
-		do end
+	if editor.drawing_primitives and editor.primitive_args then
+		local circle = agc.circ(unpack(editor.primitive_args))
 	end
 end
 
