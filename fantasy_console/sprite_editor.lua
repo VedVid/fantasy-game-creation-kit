@@ -393,8 +393,10 @@ function editor.draw_current_sprite()
 
 	local sprite_to_draw_data = {unpack(editor.current_sprite_data)}
 
-	if editor.temp_sprite_data then
+	if editor.drawing_primitives and editor.primitive_args then
 		sprite_to_draw_data = {unpack(editor.temp_sprite_data)}
+		local circle = agc.circ(unpack(editor.primitive_args))
+		
 	end
 
 	Rect(
