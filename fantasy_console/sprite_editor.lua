@@ -786,7 +786,7 @@ function editor.handle_mouseholding(x, y, button)
 	end
 
 	if not button and editor.drawing_primitives then
-		editor.temp_sprite_data = editor.current_sprite_data
+		editor.temp_sprite_data = {unpack(editor.current_sprite_data)}
 		local sprite_x = math.ceil(((x / g.screen.gamepixel.w) - editor.current_sprite_x_start) / g.sprites.size_w)
 		local sprite_y = math.ceil(((y / g.screen.gamepixel.h) - editor.current_sprite_y_start) / g.sprites.size_h)
 		local r = utils.distance_between(
@@ -918,14 +918,14 @@ function editor.handle_mousepresses(x, y, button)
 						x = sprite_x,
 						y = sprite_y
 					}
-					do
-						-- TEMPORARY TODO PLEASE REMOVE LATER
-						if editor.current_mode == editor.modes.circ then
-							editor.temp_sprite_data = editor.current_sprite_data
-						end
-					end
+					--do
+					--	-- TEMPORARY TODO PLEASE REMOVE LATER
+					--	if editor.current_mode == editor.modes.circ then
+					--		editor.temp_sprite_data = {unpack(editor.current_sprite_data)}
+					--	end
+					--end
 				else
-					editor.current_sprite_data = editor.temp_sprite_data
+					editor.current_sprite_data = {unpack(editor.temp_sprite_data)}
 					editor.exit_drawing_primitives()
 				end
 			end
