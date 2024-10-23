@@ -50,6 +50,7 @@ editor.current_toggle = editor.toggle.hold
 editor.drawing_primitives = false
 editor.anchor_primitive = nil
 editor.primitive_args = nil
+editor.primitive_coords = nil
 
 
 -- When user changes sprite by drawing, then the changes should be
@@ -529,8 +530,10 @@ function editor.draw_current_sprite()
 	if editor.drawing_primitives and editor.primitive_args then
 		local primitive = editor.agcalc_modes_map[editor.current_mode](unpack(editor.primitive_args))
 		local primitive_adjusted = {}
-		editor.temp_sprite_data = {unpack(editor.current_sprite_data)}
-		print(editor.temp_sprite_data == editor.current_sprite_data)
+		editor.temp_sprite_data = nil
+		editor.temp_sprite_data = utils.experimental_deepcopy(editor.current_sprite_data)
+		--editor.temp_sprite_data = {unpack(editor.current_sprite_data)}
+		print(editor.temp_sprite_data[1] == editor.current_sprite_data[1])
 		--print(editor.temp_sprite_data[1][1].number)
 		--print()
 		for i, v in ipairs(primitive) do
@@ -1150,6 +1153,8 @@ function editor.handle_mousepresses(x, y, button)
 						y = sprite_y
 					}
 				else
+					editor.current_sprite_data = nil
+					editor.current_sprite_data = utils.experimental_deepcopy(editor.temp_sprite_data)
 					editor.exit_drawing_primitives()
 				end
 			end
