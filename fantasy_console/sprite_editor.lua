@@ -526,13 +526,21 @@ function editor.draw_current_sprite()
 
 	if editor.drawing_primitives and editor.primitive_args then
 		local primitive = editor.agcalc_modes_map[editor.current_mode](unpack(editor.primitive_args))
+		local primitive_adjusted = {}
+		print(primitive[1].x, primitive[1].y)
+		for _, v in ipairs(primitive) do
+			print(v.x, v.y)
+			if v.x >= 5 and v.x <= 40 and v.y >= 5 and v.y <= 40 then
+				table.insert(primitive_adjusted, v)
+			end
+		end
 		love.graphics.push()
 		love.graphics.translate(
 			(editor.current_sprite_x_start - g.sprites.size_w) * g.screen.gamepixel.w,
 			(editor.current_sprite_y_start - g.sprites.size_h) * g.screen.gamepixel.h
 		)
 		love.graphics.scale(g.sprites.size_w, g.sprites.size_h)
-		agdraw.draw_with_pset(primitive, editor.colors[editor.current_color][1])
+		agdraw.draw_with_pset(primitive_adjusted, editor.colors[editor.current_color][1])
 		love.graphics.pop()
 	end
 end
