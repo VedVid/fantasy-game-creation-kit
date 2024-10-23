@@ -56,6 +56,8 @@ editor.primitive_args = nil
 -- automatically added to current_sprite_data
 editor.current_sprite_data = nil
 -- ^^^ number: <number>, rgb01: <table of numbers>, hex: <string>
+editor.temp_sprite_data = nil
+-- ^^^ number: <number>, rgb01: <table of numbers>, hex: <string>
 
 
 -- Data relevant to drawing list of colors to choose from.
@@ -527,11 +529,14 @@ function editor.draw_current_sprite()
 	if editor.drawing_primitives and editor.primitive_args then
 		local primitive = editor.agcalc_modes_map[editor.current_mode](unpack(editor.primitive_args))
 		local primitive_adjusted = {}
-		print(primitive[1].x, primitive[1].y)
-		for _, v in ipairs(primitive) do
-			print(v.x, v.y)
+		editor.temp_sprite_data = {unpack(editor.current_sprite_data)}
+		print(editor.temp_sprite_data == editor.current_sprite_data)
+		--print(editor.temp_sprite_data[1][1].number)
+		--print()
+		for i, v in ipairs(primitive) do
 			if v.x >= 5 and v.x <= 40 and v.y >= 5 and v.y <= 40 then
 				table.insert(primitive_adjusted, v)
+				editor.temp_sprite_data[v.y / g.screen.gamepixel.h][v.x / g.screen.gamepixel.w] = editor.colors[editor.current_color][1]
 			end
 		end
 		love.graphics.push()
