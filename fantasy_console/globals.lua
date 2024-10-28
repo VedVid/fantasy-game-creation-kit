@@ -3,6 +3,7 @@ local palette = require "palette"
 
 local globals = {}
 
+
 -- FPS-related variables
 globals.min_dt = 1/30
 globals.next_time = 0
@@ -42,5 +43,6 @@ globals.sprites.size_h = 8
 globals.sprites.amount = 512
 globals.sprites.path_test = "data/sprites_test.json"
 globals.sprites.path = "fantasy_console/data/sprites.json"
+
 
 return globals

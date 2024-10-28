@@ -116,6 +116,7 @@ palette.colors = {
     palette.white_bold
 }
 
+
 function palette.find_color_by_hex(hexc)
     --[[
     Method find_color_by_hex searches through palette.colors trying

@@ -7,6 +7,7 @@ local sprite_editor = require "sprite_editor"
 
 local mode = nil
 
+
 function love.load(args)
     mode = args[1] or "playing"
     canvas.get_player_screen_dimension()
@@ -32,6 +33,7 @@ function love.load(args)
     end
 end
 
+
 function love.keypressed(key, scancode, isrepeat)
     if key == "pageup" then
         canvas.scale_up()
@@ -42,6 +44,7 @@ function love.keypressed(key, scancode, isrepeat)
         Input()
     end  -- More modes might come here
 end
+
 
 function love.mousepressed(x, y, button, istouch, presses)
     if mode == "sprites" then
@@ -60,6 +63,7 @@ function love.mousepressed(x, y, button, istouch, presses)
     end
 end
 
+
 function love.mousemoved(x, y, dx, dy)
     if mode == "sprites" then
         if sprite_editor.current_toggle == sprite_editor.toggle.hold then
@@ -70,6 +74,7 @@ function love.mousemoved(x, y, dx, dy)
     end
 end
 
+
 function love.update()
     g.next_time = g.next_time + g.min_dt
     if mode == "playing" then
@@ -78,6 +83,7 @@ function love.update()
         sprite_editor.update_save_button()
     end
 end
+
 
 function love.draw()
     canvas.set_background_color()

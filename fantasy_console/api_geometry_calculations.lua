@@ -165,7 +165,7 @@ function agc.rect(x, y, w, h)
         Width of the rectangle. Can be negative.
     h : number
         Height of the rectangle. Can be negative.
-    
+
     Returns
     -------
     list of lists
@@ -173,7 +173,7 @@ function agc.rect(x, y, w, h)
         It has the following structure:
         { {x1, y1}, {x2, y2}, ... {xn, yn} }
     ]]--
-    
+
     x = math.floor(x)
     y = math.floor(y)
     w = math.floor(w)
@@ -243,7 +243,7 @@ function agc.rectfill(x, y, w, h)
         Width of the rectangle. Can be negative.
     h : number
         Height of the rectangle. Can be negative.
-    
+
     Returns
     -------
     list of lists
@@ -298,7 +298,7 @@ function agc.circ(x, y, r)
     --[[
     This function calculates list of coordinates of all points that create
     an empty circle.
-    It uses midpoint circle alogrithm. 
+    It uses midpoint circle alogrithm.
 
     Arguments
     ---------
@@ -308,7 +308,7 @@ function agc.circ(x, y, r)
         Position of circle center on the y axis.
     r : number
         Radius.
-    
+
     Returns
     -------
     list of lists
@@ -376,7 +376,7 @@ function agc.circfill(x, y, r)
     --[[
     This function calculates list of coordinates of all points that create
     a filled circle.
-    It re-uses circ function, and brute-forces the filling. 
+    It re-uses circ function, and brute-forces the filling.
 
     Arguments
     ---------
@@ -386,7 +386,7 @@ function agc.circfill(x, y, r)
         Position of circle center on the y axis.
     r : number
         Radius.
-    
+
     Returns
     -------
     list of lists

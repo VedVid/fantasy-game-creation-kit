@@ -252,7 +252,7 @@ editor.ovalfill_mode_button.pattern_color = Yellow
 
 
 -- Tabs let user switch between pages / lists of sprites.
--- There are three tabs. The third is a little bit shorter than the first two. 
+-- There are three tabs. The third is a little bit shorter than the first two.
 editor.tab_buttons = {}
 editor.tab_buttons.buttons = {}
 editor.all_sprites_tab_1 = {}
@@ -344,7 +344,7 @@ function editor.set_current_sprite(num)
 	---------
 	num : number
 		Number of chosen sprite.
-	
+
 	Returns
 	-------
 	nothing
@@ -374,7 +374,7 @@ function editor.set_current_color(num)
 	---------
 	num : number
 		Numeric value that indicates color selected.
-	
+
 	Returns
 	-------
 	nothing
@@ -394,7 +394,7 @@ function editor.set_current_mode(mode)
 	---------
 	mode : string
 		`mode` value should be one of the values contained in `editor.modes` table.
-	
+
 	Returns
 	-------
 	nothing
@@ -705,7 +705,7 @@ function editor.draw_mode_button(button)
 	Generic function to draw every possible button for switching drawing modes
 	that adheres to standards used in this file.
 	Buttons that don't have all these fields will crash this function.
-	
+
 	Arguments
 	---------
 	button : button
@@ -717,7 +717,7 @@ function editor.draw_mode_button(button)
 			- pattern
 			- pattern_color
 		Other buttons will crash this function.
-	
+
 	Returns
 	-------
 	nothing
@@ -808,7 +808,7 @@ function editor.handle_pressing_universal_buttons(x, y, button)
 	--[[
 	While handle_mouseholding and handle_mousepresses are functions
 	that are focused on handling drawing things on the current_sprite
-	area, handle_pressing_universal_buttons is used to handle 
+	area, handle_pressing_universal_buttons is used to handle
 	mousepresses on interface elements, so it:
 	- iterates over color palette
 	- checks spritesheet tabs and spritesheets itself
@@ -922,7 +922,7 @@ function editor.handle_pressing_universal_buttons(x, y, button)
 		editor.switch_current_toggle_mode()
 		editor.exit_drawing_primitives()
 	end
-	
+
 	-- Check if mouse is over sprites list.
 	if utils.mouse_box_bound_check(
 		x,
@@ -935,7 +935,7 @@ function editor.handle_pressing_universal_buttons(x, y, button)
 		-- There is definitely _too_ much magic in these two lines below,
 		-- but I found it difficult to find a generic solution. The solution
 		-- below is ugly and can cause issues during changing anything related
-		-- to spritesheet location or form, but it works on every scale I tested it. 
+		-- to spritesheet location or form, but it works on every scale I tested it.
 		-- I'll try to explain how it works.
 		-- 1. We get x and y; these are raw pixel mouse coords caught by Love2D
 		-- 2. We dividing the coords by g.screen.gamepixel.w / .h to obtain
@@ -1101,7 +1101,7 @@ function editor.handle_mousepresses(x, y, button)
 
 	If point drawing method is disabled, then this function is used to
 	start and end process of drawing primitives by left mouse button, and
-	canceling drawing primitive by right mouse button. 
+	canceling drawing primitive by right mouse button.
 	When starting drawing primitives, the initial point clicked
 	by user becomes anchor for drawing, e.g. it becomes
 	top-left corner of rectangle, or centre of circle.

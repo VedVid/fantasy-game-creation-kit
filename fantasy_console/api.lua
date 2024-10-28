@@ -24,7 +24,7 @@ function Write(s, x, y, color)
     --[[
     Function Write uses the Love2D's print function under the
     hood, but it does not expose all of its arguments to the
-    user. 
+    user.
     Rotation, scaling, and offset are set to the Love2D's
     defaults.
 
@@ -41,7 +41,7 @@ function Write(s, x, y, color)
         Position of text beginning at the y axis.
     color : palette.<color>
         Color of text. Defaults to the default foreground colour.
-    
+
     Returns
     -------
     nothing
@@ -80,7 +80,7 @@ function Join(ss, delimiter)
     delimiter : string = ""
         Optional argument. It specifies what symbol or text will
         be added between strings joined. Defaults to empty string.
-    
+
     Returns
     -------
     string
@@ -114,7 +114,7 @@ function Split(s, delimiter)
         Text to be split. Must be a valid ASCII string.
     delimiter : string = " "
         Delimiter used to split the string. Defaults to space.
-    
+
     Returns
     -------
     {strings}
@@ -157,7 +157,7 @@ function Sub(s, i, j)
         Start of the substring (i included).
     j : number
         End of the substring (j included). Must be positive.
-    
+
     Returns
     -------
     string
@@ -216,7 +216,7 @@ function Pset(x, y, color)
     color : palette.<color>
         Color of pixel to-bo-created. Defaults to the default
         foreground colour.
-    
+
     Returns
     -------
     nothing
@@ -295,7 +295,7 @@ function Rect(x, y, w, h, color)
     color : palette.<color>
         Color of pixel to-bo-created. Defaults to the default
         foreground colour.
-    
+
     Returns
     -------
     nothing
@@ -332,7 +332,7 @@ function Rectfill(x, y, w, h, color)
         Height of rectangle.
     color : palette.<color>
         Color of pixel to-bo-created. Defaults to the default foreground colour.
-    
+
     Returns
     -------
     nothing
@@ -356,7 +356,7 @@ end
 function Circ(x, y, r, color)
     --[[
     Function Circ creates empty (ie not filled) circle on the screen.
-    Under the hood, it uses midpoint circle alogrithm. 
+    Under the hood, it uses midpoint circle alogrithm.
 
     Arguments
     ---------
@@ -368,7 +368,7 @@ function Circ(x, y, r, color)
         Radius.
     color : palette.<color>
         Color of circle. Defaults to the default foreground colour.
-    
+
     Returns
     -------
     nothing
@@ -392,7 +392,7 @@ function Circfill(x, y, r, color)
     Function Circfill draws filled circle on the screen.
     Under the hood, it uses midpoint circle alogrithm for border,
     then brute-forces the colouring inside the borders.
-    
+
     Arguments
     ---------
     x : number
@@ -403,7 +403,7 @@ function Circfill(x, y, r, color)
         Radius.
     color : palette.<color>
         Color of circle. Defaults to the default foreground colour.
-    
+
     Returns
     -------
     nothing
@@ -515,7 +515,7 @@ function Spr(num, x, y)
         Number of sprite in the spreadsheet. You should be able to
         determine sprite number looking at the GUI of the sprites
         editor.
-    
+
     x : number
         Position of top-left sprite corner on the x axis.
     y : number
@@ -623,6 +623,7 @@ function Brpt(enabled)
 
     love.keyboard.setKeyRepeat(enabled)
 end
+
 
 --------------------
 ---------- COLORS --

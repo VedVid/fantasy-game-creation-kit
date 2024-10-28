@@ -82,7 +82,7 @@ function canvas.set_global_screen_variables(scale, gamepixel_w, gamepixel_h, fon
     Arguments
     ---------
     scale : table
-        Scale is table with width and height of gamepixel. 
+        Scale is table with width and height of gamepixel.
         It can be nil, if all other arguments are provided.
         Scale has higher priority than other arguments.
     gamepixel_w : number
@@ -98,7 +98,7 @@ function canvas.set_global_screen_variables(scale, gamepixel_w, gamepixel_h, fon
     font_size : number
         Height of font in pixels.
         Can be nil if `scale` argument is provided.
-    
+
     Returns
     -------
     nothing
@@ -152,7 +152,7 @@ function canvas.scale_down()
     This method might be used to scale the gamepixels and, therefore,
     app window, down. It also scales the font size. Font and each
     gamepixel can not be smaller than 1 real pixel.
-    
+
 
     Arguments
     ---------

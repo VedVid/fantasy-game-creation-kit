@@ -49,5 +49,4 @@ end
 --[[ End of Test__set_global_screen_variables ]]
 
 
-
 os.exit(luaunit.LuaUnit.run())

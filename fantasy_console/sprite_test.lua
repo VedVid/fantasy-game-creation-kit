@@ -44,7 +44,7 @@ function TestGetSprite:test__should_error__when_sprite_number_is_larger_than_tot
         sprite.get_sprite,
         large_sprite_number
     )
-end 
+end
 
 
 function TestGetSprite:test__should_return_sprite__when_sprite_number_equals_to_1()
