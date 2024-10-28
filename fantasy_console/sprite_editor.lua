@@ -532,10 +532,6 @@ function editor.draw_current_sprite()
 		local primitive_adjusted = {}
 		editor.temp_sprite_data = nil
 		editor.temp_sprite_data = utils.experimental_deepcopy(editor.current_sprite_data)
-		--editor.temp_sprite_data = {unpack(editor.current_sprite_data)}
-		print(editor.temp_sprite_data[1] == editor.current_sprite_data[1])
-		--print(editor.temp_sprite_data[1][1].number)
-		--print()
 		for i, v in ipairs(primitive) do
 			if v.x >= 5 and v.x <= 40 and v.y >= 5 and v.y <= 40 then
 				table.insert(primitive_adjusted, v)
@@ -1000,7 +996,6 @@ function editor.handle_mouseholding(x, y, button)
 			else
 				table.insert(editor.primitive_args, -h)
 			end
-			print(editor.primitive_args[1], editor.primitive_args[2], editor.primitive_args[3], editor.primitive_args[4])
 		elseif editor.current_mode == editor.modes.circ or editor.current_mode == editor.modes.circfill then
 			local r = utils.distance_between(
 				editor.anchor_primitive.x,
