@@ -565,7 +565,7 @@ function editor.draw_current_sprite()
 		editor.temp_sprite_data = nil
 		editor.temp_sprite_data = utils.experimental_deepcopy(editor.current_sprite_data)
 		for i, v in ipairs(primitive) do
-			if v.x >= 5 and v.x <= 40 and v.y >= 5 and v.y <= 40 then
+			if v.x >= g.screen.gamepixel.w and v.x <= g.screen.gamepixel.w * 8 and v.y >= g.screen.gamepixel.h and v.y <= g.screen.gamepixel.h * 8 then
 				table.insert(primitive_adjusted, v)
 				editor.temp_sprite_data[v.y / g.screen.gamepixel.h][v.x / g.screen.gamepixel.w] = editor.colors[editor.current_color][1]
 			end
