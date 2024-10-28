@@ -209,13 +209,13 @@ function agc.rectfill(x, y, w, h)
     if x < x2 then
         xx = {x, x2 - 1}
     else
-        xx = {x2, x - 1}
+        xx = {x2, x}
     end
 
     if y < y2 then
         yy = {y, y2 - 1}
     else
-        yy = {y2, y - 1}
+        yy = {y2, y}
     end
 
     local lines = {}
