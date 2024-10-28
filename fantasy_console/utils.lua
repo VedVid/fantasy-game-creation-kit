@@ -27,4 +27,33 @@ function utils.mouse_box_bound_check_for_buttons(x, y, button)
     )
 end
 
+function utils.distance_between(x1, y1, x2, y2)
+    local dx = x1 - x2
+    local dy = y1 - y2
+    return math.sqrt(dx * dx + dy * dy)
+end
+
+
+function utils.experimental_deepcopy(orig, copies)
+    copies = copies or {}
+    local orig_type = type(orig)
+    local copy
+    if orig_type == 'table' then
+        if copies[orig] then
+            copy = copies[orig]
+        else
+            copy = {}
+            copies[orig] = copy
+            for orig_key, orig_value in next, orig, nil do
+                copy[utils.experimental_deepcopy(orig_key, copies)] = utils.experimental_deepcopy(orig_value, copies)
+            end
+            setmetatable(copy, utils.experimental_deepcopy(getmetatable(orig), copies))
+        end
+    else -- number, string, boolean, etc
+        copy = orig
+    end
+    return copy
+end
+
+
 return utils
