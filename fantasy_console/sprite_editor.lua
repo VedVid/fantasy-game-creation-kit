@@ -1182,6 +1182,7 @@ function editor.handle_mousepresses(x, y, button)
 				else
 					editor.current_sprite_data = nil
 					editor.current_sprite_data = utils.experimental_deepcopy(editor.temp_sprite_data)
+					s.set_sprite(editor.current_sprite, editor.current_sprite_data)
 					editor.exit_drawing_primitives()
 				end
 			end
