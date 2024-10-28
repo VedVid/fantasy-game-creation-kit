@@ -144,46 +144,6 @@ end
 
 function agc.rect(x, y, w, h)
     --[[
-    Function rect creates a list of coords that will be used later
-    to draw a rectangle.
-    `rect` is a special kind of function, because it does not create
-    a full list of coordinates as other – except `rectfill` – functions.
-    It just returns coordinates of top-left corner, and width, and height
-    of rectangle. 
-    It is handled that way because rectangles (both empty and filled) are
-    actually drawn using Love2D `rectangle` function – unlike all other
-    primitives.
-    Also, another special case, this time exclusively for `rect`.
-    lx, ly are increased by half of the current gamepixel due the
-    three reasons:
-    - by default, Love2D starts drawing in the middle of the pixel,
-        which mights result in blurry lines unless we pass 0.5 to
-        x and y all the time (not feasible with current app architecture)
-        or unless we use "rough" line style (which we use);
-    - rough line style rounds the half-pixel which mights cause
-        off-by-one issues;
-    - setting wide line width cause the line to grow in both directions.
-    lw, lh are decreased by single gamepixel because Love2D does
-    not take into account the starting point when calculating size
-    of rectangle.
-    Such issue does not happening with `rectfill` function.
-
-    Arguments
-    ---------
-    x : number
-        Position of top-left rectangle corner on the x axis.
-    y : number
-        Position of top-left rectangle corner on the y axis.
-    w : number
-        Width of rectangle.
-    h : number
-        Height of rectangle.
-
-    Returns
-    -------
-    list of numbers
-        List containing four numbers, that specify
-        top-left anchor point and width and height of rectangle
     ]]--
     
     x = math.floor(x)
@@ -191,12 +151,41 @@ function agc.rect(x, y, w, h)
     w = math.floor(w)
     h = math.floor(h)
 
-    local coords = {
-        lx = (x * g.screen.gamepixel.w) + (g.screen.gamepixel.w / 2),
-        ly = (y * g.screen.gamepixel.h) + (g.screen.gamepixel.h / 2),
-        lw = (w - 1) * g.screen.gamepixel.w,
-        lh = (h - 1) * g.screen.gamepixel.h
-    }
+    local x2 = x + w
+    local y2 = y + h
+
+    local coords = {}
+
+    local xx = {}
+    local yy = {}
+
+    if x < x2 then
+        xx = {x, x2 - 1}
+    else
+        xx = {x2, x}
+    end
+
+    if y < y2 then
+        yy = {y, y2 - 1}
+    else
+        yy = {y2, y}
+    end
+
+    local top = agc.line(xx[1], yy[1], xx[2], yy[1])
+    local bottom = agc.line(xx[1], yy[2], xx[2], yy[2])
+    local left = agc.line(xx[1], yy[1], xx[1], yy[2])
+    local right = agc.line(xx[2], yy[1], xx[2], yy[2])
+    local all_lines = {}
+    table.insert(all_lines, top)
+    table.insert(all_lines, bottom)
+    table.insert(all_lines, left)
+    table.insert(all_lines, right)
+
+    for _, line in pairs(all_lines) do
+        for _, coord in pairs(line) do
+            table.insert(coords, coord)
+        end
+    end
 
     return coords
 end
@@ -204,36 +193,6 @@ end
 
 function agc.rectfill(x, y, w, h)
     --[[
-    Function rect creates a list of coords that will be used later
-    to draw a rectangle.
-    `rectfill` is a special kind of function, because it does not create
-    a full list of coordinates as other – except `rect` – functions.
-    It just returns coordinates of top-left corner, and width, and height
-    of rectangle. 
-    It is handled that way because rectangles (both empty and filled) are
-    actually drawn using Love2D `rectangle` function – unlike all other
-    primitives.
-    `rectangle("line")` and `recangle("filled")` works a bit differently
-    in Love2D.
-    rectfill does not require taking into account line width set in
-    Love2D, hence the rectfill implementation is simpler than the Rect one.
-
-    Arguments
-    ---------
-    x : number
-        Position of top-left rectangle corner on the x axis.
-    y : number
-        Position of top-left rectangle corner on the y axis.
-    w : number
-        Width of rectangle.
-    h : number
-        Height of rectangle.
-
-    Returns
-    -------
-    list of numbers
-        List containing four numbers, that specify
-        top-left anchor point and width and height of rectangle
     ]]--
 
     x = math.floor(x)
@@ -241,12 +200,38 @@ function agc.rectfill(x, y, w, h)
     w = math.floor(w)
     h = math.floor(h)
 
-    local coords = {
-        lx = math.floor(x * g.screen.gamepixel.w),
-        ly = math.floor(y * g.screen.gamepixel.h),
-        lw = math.floor(w * g.screen.gamepixel.w),
-        lh = math.floor(h * g.screen.gamepixel.h)
-    }
+    local x2 = x + w
+    local y2 = y + h
+
+    local xx = {}
+    local yy = {}
+
+    if x < x2 then
+        xx = {x, x2 - 1}
+    else
+        xx = {x2, x}
+    end
+
+    if y < y2 then
+        yy = {y, y2 - 1}
+    else
+        yy = {y2, y}
+    end
+
+    local lines = {}
+
+    for i=yy[1], yy[2] do
+        local line = agc.line(xx[1], i, xx[2], i)
+        table.insert(lines, line)
+    end
+
+    local coords = {}
+
+    for _, line in pairs(lines) do
+        for _, coord in pairs(line) do
+            table.insert(coords, coord)
+        end
+    end
 
     return coords
 end

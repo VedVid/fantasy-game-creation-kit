@@ -1,5 +1,8 @@
 require "api"
 
+
+local agcalc = require "api_geometry_calculations"
+local agdraw = require "api_geometry_drawing"
 local g = require "globals"
 local s = require "sprite"
 local palette = require "palette"
@@ -27,6 +30,16 @@ editor.toggle.press = "press"
 editor.toggle.hold = "hold"
 
 
+editor.agcalc_modes_map = {}
+editor.agcalc_modes_map[editor.modes.line] = agcalc.line
+editor.agcalc_modes_map[editor.modes.rect] = agcalc.rect
+editor.agcalc_modes_map[editor.modes.rectfill] = agcalc.rectfill
+editor.agcalc_modes_map[editor.modes.circ] = agcalc.circ
+editor.agcalc_modes_map[editor.modes.circfill] = agcalc.circfill
+editor.agcalc_modes_map[editor.modes.oval] = agcalc.oval
+editor.agcalc_modes_map[editor.modes.ovalfill] = agcalc.ovalfill
+
+
 editor.current_tab = 1
 editor.current_sprite = 1
 editor.current_color = 1
@@ -34,9 +47,17 @@ editor.current_mode = editor.modes.point
 editor.current_toggle = editor.toggle.hold
 
 
+editor.drawing_primitives = false
+editor.anchor_primitive = nil
+editor.primitive_args = nil
+editor.primitive_coords = nil
+
+
 -- When user changes sprite by drawing, then the changes should be
 -- automatically added to current_sprite_data
 editor.current_sprite_data = nil
+-- ^^^ number: <number>, rgb01: <table of numbers>, hex: <string>
+editor.temp_sprite_data = nil
 -- ^^^ number: <number>, rgb01: <table of numbers>, hex: <string>
 
 
@@ -91,12 +112,63 @@ editor.point_mode_button.pattern = {
 }
 editor.point_mode_button.pattern_color = Yellow
 
+editor.line_mode_button = {}
+editor.line_mode_button.name = editor.modes.line
+editor.line_mode_button.w = editor.mode_buttons_w
+editor.line_mode_button.h = editor.mode_buttons_h
+editor.line_mode_button.x = editor.point_mode_button.x
+editor.line_mode_button.y = editor.point_mode_button.y + editor.point_mode_button.h + 3
+editor.line_mode_button.pattern = {
+	{0, 0, 0, 0, 0, 0, 0},
+	{0, 0, 0, 0, 0, 0, 0},
+	{0, 0, 0, 0, 0, 0, 0},
+	{0, 1, 1, 1, 1, 1, 0},
+	{0, 0, 0, 0, 0, 0, 0},
+	{0, 0, 0, 0, 0, 0, 0},
+	{0, 0, 0, 0, 0, 0, 0},
+}
+editor.line_mode_button.pattern_color = Yellow
+
+editor.rect_mode_button = {}
+editor.rect_mode_button.name = editor.modes.rect
+editor.rect_mode_button.w = editor.mode_buttons_w
+editor.rect_mode_button.h = editor.mode_buttons_h
+editor.rect_mode_button.x = editor.point_mode_button.x + editor.point_mode_button.w + 3
+editor.rect_mode_button.y = editor.point_mode_button.y
+editor.rect_mode_button.pattern = {
+	{0, 0, 0, 0, 0, 0, 0},
+	{0, 1, 1, 1, 1, 1, 0},
+	{0, 1, 0, 0, 0, 1, 0},
+	{0, 1, 0, 0, 0, 1, 0},
+	{0, 1, 0, 0, 0, 1, 0},
+	{0, 1, 1, 1, 1, 1, 0},
+	{0, 0, 0, 0, 0, 0, 0},
+}
+editor.rect_mode_button.pattern_color = Yellow
+
+editor.rectfill_mode_button = {}
+editor.rectfill_mode_button.name = editor.modes.rectfill
+editor.rectfill_mode_button.w = editor.mode_buttons_w
+editor.rectfill_mode_button.h = editor.mode_buttons_h
+editor.rectfill_mode_button.x = editor.point_mode_button.x + editor.point_mode_button.w + 3
+editor.rectfill_mode_button.y = editor.line_mode_button.y
+editor.rectfill_mode_button.pattern = {
+	{0, 0, 0, 0, 0, 0, 0},
+	{0, 1, 1, 1, 1, 1, 0},
+	{0, 1, 1, 1, 1, 1, 0},
+	{0, 1, 1, 1, 1, 1, 0},
+	{0, 1, 1, 1, 1, 1, 0},
+	{0, 1, 1, 1, 1, 1, 0},
+	{0, 0, 0, 0, 0, 0, 0},
+}
+editor.rectfill_mode_button.pattern_color = Yellow
+
 editor.circ_mode_button = {}
 editor.circ_mode_button.name = editor.modes.circ
 editor.circ_mode_button.w = editor.mode_buttons_w
 editor.circ_mode_button.h = editor.mode_buttons_h
-editor.circ_mode_button.x = editor.point_mode_button.x + editor.point_mode_button.w + 3
-editor.circ_mode_button.y = editor.point_mode_button.y
+editor.circ_mode_button.x = editor.rect_mode_button.x + editor.rect_mode_button.w + 3
+editor.circ_mode_button.y = editor.rect_mode_button.y
 editor.circ_mode_button.pattern = {
 	{0, 0, 1, 1, 1, 0, 0},
 	{0, 1, 0, 0, 0, 1, 0},
@@ -107,6 +179,57 @@ editor.circ_mode_button.pattern = {
 	{0, 0, 1, 1, 1, 0, 0},
 }
 editor.circ_mode_button.pattern_color = Yellow
+
+editor.circfill_mode_button = {}
+editor.circfill_mode_button.name = editor.modes.circfill
+editor.circfill_mode_button.w = editor.mode_buttons_w
+editor.circfill_mode_button.h = editor.mode_buttons_h
+editor.circfill_mode_button.x = editor.circ_mode_button.x
+editor.circfill_mode_button.y = editor.rectfill_mode_button.y
+editor.circfill_mode_button.pattern = {
+	{0, 0, 1, 1, 1, 0, 0},
+	{0, 1, 1, 1, 1, 1, 0},
+	{1, 1, 1, 1, 1, 1, 1},
+	{1, 1, 1, 1, 1, 1, 1},
+	{1, 1, 1, 1, 1, 1, 1},
+	{0, 1, 1, 1, 1, 1, 0},
+	{0, 0, 1, 1, 1, 0, 0},
+}
+editor.circfill_mode_button.pattern_color = Yellow
+
+editor.oval_mode_button = {}
+editor.oval_mode_button.name = editor.modes.oval
+editor.oval_mode_button.w = editor.mode_buttons_w
+editor.oval_mode_button.h = editor.mode_buttons_h
+editor.oval_mode_button.x = editor.circ_mode_button.x + editor.circ_mode_button.w + 3
+editor.oval_mode_button.y = editor.circ_mode_button.y
+editor.oval_mode_button.pattern = {
+	{0, 0, 0, 0, 0, 0, 0},
+	{0, 1, 1, 1, 1, 1, 0},
+	{1, 1, 0, 0, 0, 1, 1},
+	{1, 0, 0, 0, 0, 0, 1},
+	{1, 1, 0, 0, 0, 1, 1},
+	{0, 1, 1, 1, 1, 1, 0},
+	{0, 0, 0, 0, 0, 0, 0},
+}
+editor.oval_mode_button.pattern_color = Yellow
+
+editor.ovalfill_mode_button = {}
+editor.ovalfill_mode_button.name = editor.modes.ovalfill
+editor.ovalfill_mode_button.w = editor.mode_buttons_w
+editor.ovalfill_mode_button.h = editor.mode_buttons_h
+editor.ovalfill_mode_button.x = editor.oval_mode_button.x
+editor.ovalfill_mode_button.y = editor.circfill_mode_button.y
+editor.ovalfill_mode_button.pattern = {
+	{0, 0, 0, 0, 0, 0, 0},
+	{0, 1, 1, 1, 1, 1, 0},
+	{1, 1, 1, 1, 1, 1, 1},
+	{1, 1, 1, 1, 1, 1, 1},
+	{1, 1, 1, 1, 1, 1, 1},
+	{0, 1, 1, 1, 1, 1, 0},
+	{0, 0, 0, 0, 0, 0, 0},
+}
+editor.ovalfill_mode_button.pattern_color = Yellow
 ----
 ---- End of modes buttons data.
 ----
@@ -265,6 +388,13 @@ function editor.set_current_mode(mode)
 end
 
 
+function editor.exit_drawing_primitives()
+	editor.drawing_primitives = false
+	editor.primitive_args = nil
+	editor.anchor_primitive = nil
+end
+
+
 function editor.switch_current_toggle_mode()
 	--[[
 	This function switches toggle mode, meaning: switches between introducing
@@ -350,6 +480,8 @@ function editor.draw_current_sprite()
 	--[[
 	This function draws enlarged version of currently selected sprite.
 	It is enlarged to make editing sprite easier.
+	If user in in drawing_primitives mode, then at the top of the current sprite,
+	the preview of changes that are to be introduced is shown.
 	Also, the border around the sprite is being drawn here.
 
 	Arguments
@@ -364,12 +496,6 @@ function editor.draw_current_sprite()
 	local col = 0
 	local row = 0
 
-	if editor.current_sprite_data == nil then
-		editor.current_sprite_data = s.return_sprite_colors(
-			s.get_sprite(editor.current_sprite), "palette"
-		)
-	end
-
 	Rect(
 		editor.current_sprite_x_start - 1,
 		editor.current_sprite_y_start - 1,
@@ -377,6 +503,12 @@ function editor.draw_current_sprite()
 		(g.sprites.size_h ^ 2) + 2,
 		Cyan
 	  )
+
+	if editor.current_sprite_data == nil then
+		editor.current_sprite_data = s.return_sprite_colors(
+			s.get_sprite(editor.current_sprite), "palette"
+		)
+	end
 
 	for _, line in ipairs(editor.current_sprite_data) do
 	local cur_y = editor.current_sprite_y_start + (row * g.sprites.size_h)
@@ -393,6 +525,27 @@ function editor.draw_current_sprite()
 		end
 		col = 0
 		row = row + 1
+	end
+
+	if editor.drawing_primitives and editor.primitive_args then
+		local primitive = editor.agcalc_modes_map[editor.current_mode](unpack(editor.primitive_args))
+		local primitive_adjusted = {}
+		editor.temp_sprite_data = nil
+		editor.temp_sprite_data = utils.experimental_deepcopy(editor.current_sprite_data)
+		for i, v in ipairs(primitive) do
+			if v.x >= 5 and v.x <= 40 and v.y >= 5 and v.y <= 40 then
+				table.insert(primitive_adjusted, v)
+				editor.temp_sprite_data[v.y / g.screen.gamepixel.h][v.x / g.screen.gamepixel.w] = editor.colors[editor.current_color][1]
+			end
+		end
+		love.graphics.push()
+		love.graphics.translate(
+			(editor.current_sprite_x_start - g.sprites.size_w) * g.screen.gamepixel.w,
+			(editor.current_sprite_y_start - g.sprites.size_h) * g.screen.gamepixel.h
+		)
+		love.graphics.scale(g.sprites.size_w, g.sprites.size_h)
+		agdraw.draw_with_pset(primitive_adjusted, editor.colors[editor.current_color][1])
+		love.graphics.pop()
 	end
 end
 
@@ -505,7 +658,13 @@ function editor.draw_modes_buttons()
 	]]--
 
 	editor.draw_mode_button(editor.point_mode_button)
+	editor.draw_mode_button(editor.line_mode_button)
 	editor.draw_mode_button(editor.circ_mode_button)
+	editor.draw_mode_button(editor.circfill_mode_button)
+	editor.draw_mode_button(editor.rect_mode_button)
+	editor.draw_mode_button(editor.rectfill_mode_button)
+	editor.draw_mode_button(editor.oval_mode_button)
+	editor.draw_mode_button(editor.ovalfill_mode_button)
 end
 
 
@@ -648,6 +807,7 @@ function editor.handle_pressing_universal_buttons(x, y, button)
 	for  i, tab_button in ipairs(editor.tab_buttons.buttons) do
 		if utils.mouse_box_bound_check_for_buttons(x, y, tab_button) then
 			editor.set_current_tab(i)
+			editor.exit_drawing_primitives()
 			return
 		end
 	end
@@ -671,20 +831,65 @@ function editor.handle_pressing_universal_buttons(x, y, button)
 	if utils.mouse_box_bound_check_for_buttons(x, y, editor.save_button) then
 		s.set_sprite(editor.current_sprite, editor.current_sprite_data)
 		editor.save_button.has_been_pressed = editor.save_button.has_been_pressed_max
+		editor.exit_drawing_primitives()
 	end
 
 	-- Check if mouse is over point mode button.
 	if utils.mouse_box_bound_check_for_buttons(x, y, editor.point_mode_button) then
 		editor.set_current_mode(editor.modes.point)
 		editor.switch_current_toggle_mode()
+		editor.exit_drawing_primitives()
+	end
+
+	-- Check if mouse is over line mode button.
+	if utils.mouse_box_bound_check_for_buttons(x, y, editor.line_mode_button) then
+		editor.set_current_mode(editor.modes.line)
+		editor.switch_current_toggle_mode()
+		editor.exit_drawing_primitives()
+	end
+
+	-- Check if mouse is over rect mode button.
+	if utils.mouse_box_bound_check_for_buttons(x, y, editor.rect_mode_button) then
+		editor.set_current_mode(editor.modes.rect)
+		editor.switch_current_toggle_mode()
+		editor.exit_drawing_primitives()
+	end
+
+	-- Check if mouse is over rectfill mode button.
+	if utils.mouse_box_bound_check_for_buttons(x, y, editor.rectfill_mode_button) then
+		editor.set_current_mode(editor.modes.rectfill)
+		editor.switch_current_toggle_mode()
+		editor.exit_drawing_primitives()
 	end
 
 	-- Check if mouse is over circ mode button.
 	if utils.mouse_box_bound_check_for_buttons(x, y, editor.circ_mode_button) then
 		editor.set_current_mode(editor.modes.circ)
 		editor.switch_current_toggle_mode()
+		editor.exit_drawing_primitives()
 	end
 
+	-- Check if mouse is over circfill mode button.
+	if utils.mouse_box_bound_check_for_buttons(x, y, editor.circfill_mode_button) then
+		editor.set_current_mode(editor.modes.circfill)
+		editor.switch_current_toggle_mode()
+		editor.exit_drawing_primitives()
+	end
+
+	-- Check if mouse is over oval mode button.
+	if utils.mouse_box_bound_check_for_buttons(x, y, editor.oval_mode_button) then
+		editor.set_current_mode(editor.modes.oval)
+		editor.switch_current_toggle_mode()
+		editor.exit_drawing_primitives()
+	end
+
+	-- Check if mouse is over ovalfill mode button.
+	if utils.mouse_box_bound_check_for_buttons(x, y, editor.ovalfill_mode_button) then
+		editor.set_current_mode(editor.modes.ovalfill)
+		editor.switch_current_toggle_mode()
+		editor.exit_drawing_primitives()
+	end
+	
 	-- Check if mouse is over sprites list.
 	if utils.mouse_box_bound_check(
 		x,
@@ -710,6 +915,7 @@ function editor.handle_pressing_universal_buttons(x, y, button)
 		--    amount of _rows_ from the top of the screen.
 		-- 6. Finally, we truncate the results. So first tile instead of, said,
 		--    1.95x1.35 returns 1x1
+		editor.exit_drawing_primitives()
 		local col = math.floor(x / g.screen.gamepixel.w / g.sprites.size_w)
 		local row = math.floor((y / g.screen.gamepixel.h / g.sprites.size_h) - 16)
 		if editor.current_tab == 3 then
@@ -731,10 +937,18 @@ end
 
 function editor.handle_mouseholding(x, y, button)
 	--[[
-	handle_mouseholding is used only for handling drawing over current sprite
-	while having point drawing mode enabled. All other interactions
-	with UI or other drawing modes are handled by other functions, namely
-	handle_mousepressed and handle_pressing_universal_buttons.
+	handle_mouseholding is used only for handling drawing over current sprite.
+	All other interactions with UI or other drawing modes are handled
+	by other functions, namely handle_mousepressed
+	and handle_pressing_universal_buttons.
+
+	If user is in point drawing mode, then this function allows to draw
+	continuously over the existing sprite. In that case, all changes
+	are immediately commited into the current sprite data.
+
+	If user is in primitive drawing mode, then if no button is pressed,
+	it calculates data used to show preview of primitive to be drawn.
+	In that case, no changes are immediately commited.
 
 	Arguments
 	---------
@@ -748,8 +962,64 @@ function editor.handle_mouseholding(x, y, button)
 	nothing
 	]]--
 
-	if button ~= 1 then
-		return
+	if not button and editor.drawing_primitives then
+		editor.primitive_args = nil
+		local mouse_x = math.ceil(((x / g.screen.gamepixel.w) - editor.current_sprite_x_start) / g.sprites.size_w)
+		local mouse_y = math.ceil(((y / g.screen.gamepixel.h) - editor.current_sprite_y_start) / g.sprites.size_h)
+		editor.primitive_args = {
+			editor.anchor_primitive.x,
+			editor.anchor_primitive.y,
+		}
+		if editor.current_mode == editor.modes.line then
+			table.insert(editor.primitive_args, mouse_x)
+			table.insert(editor.primitive_args, mouse_y)
+		elseif editor.current_mode == editor.modes.rect or editor.current_mode == editor.modes.rectfill then
+			local w = utils.distance_between(
+				editor.anchor_primitive.x,
+				editor.anchor_primitive.y,
+				mouse_x,
+				editor.anchor_primitive.y
+			)
+			local h = utils.distance_between(
+				editor.anchor_primitive.x,
+				editor.anchor_primitive.y,
+				editor.anchor_primitive.x,
+				mouse_y
+			)
+			if mouse_x >= editor.anchor_primitive.x then
+				table.insert(editor.primitive_args, w+1)
+			else
+				table.insert(editor.primitive_args, -w)
+			end
+			if mouse_y >= editor.anchor_primitive.y then
+				table.insert(editor.primitive_args, h+1)
+			else
+				table.insert(editor.primitive_args, -h)
+			end
+		elseif editor.current_mode == editor.modes.circ or editor.current_mode == editor.modes.circfill then
+			local r = utils.distance_between(
+				editor.anchor_primitive.x,
+				editor.anchor_primitive.y,
+				mouse_x,
+				mouse_y
+			)
+			table.insert(editor.primitive_args, r)
+		elseif editor.current_mode == editor.modes.oval or editor.current_mode == editor.modes.ovalfill then
+			local rx = utils.distance_between(
+				editor.anchor_primitive.x,
+				editor.anchor_primitive.y,
+				mouse_x,
+				editor.anchor_primitive.y
+			)
+			local ry = utils.distance_between(
+				editor.anchor_primitive.x,
+				editor.anchor_primitive.y,
+				editor.anchor_primitive.x,
+				mouse_y
+			)
+			table.insert(editor.primitive_args, rx)
+			table.insert(editor.primitive_args, ry)
+		end
 	end
 
 	-- This closure is used later to use within pcall to emulate
@@ -758,7 +1028,7 @@ function editor.handle_mouseholding(x, y, button)
 		g.sprites.sprites[editor.current_sprite]["colors"][sprite_1_y][sprite_1_x] = editor.colors[editor.current_color][1]
 	end
 
-	if love.mouse.isDown(button) then
+	if button and love.mouse.isDown(button) then
 		-- Check if mouse is over current sprite.
 		if utils.mouse_box_bound_check(
 			x,
@@ -795,10 +1065,20 @@ function editor.handle_mousepresses(x, y, button)
 	--[[
 	handle_mousepresses is going to be used for every drawing method.
 	while having point drawing mode enabled.
+
+	If point drawing method is disabled, then this function is used to
+	start and end process of drawing primitives by left mouse button, and
+	canceling drawing primitive by right mouse button. 
+	When starting drawing primitives, the initial point clicked
+	by user becomes anchor for drawing, e.g. it becomes
+	top-left corner of rectangle, or centre of circle.
+
+
 	`point drawing mode` is already being handled by handle_mouseholding,
 	but it has to be handled by handle_mousepresses too, as without this,
 	you could not draw things by simply clicking on current_sprite – instead,
 	you would need to click and move mouse to introduce the change.
+
 	All other interactions with UI or other drawing modes are handled
 	by other functions, namely handle_mousepressed
 	and handle_pressing_universal_buttons.
@@ -815,7 +1095,7 @@ function editor.handle_mousepresses(x, y, button)
 	nothing
 	]]--
 
-	if button ~= 1 then
+	if button ~= 1 and button ~= 2 then
 		return
 	end
 
@@ -825,33 +1105,57 @@ function editor.handle_mousepresses(x, y, button)
 		g.sprites.sprites[editor.current_sprite]["colors"][sprite_1_y][sprite_1_x] = editor.colors[editor.current_color][1]
 		end
 
-	-- Check if mouse is over current sprite.
-	if utils.mouse_box_bound_check(
-		x,
-		editor.current_sprite_x_start * g.screen.gamepixel.w,
-		(editor.current_sprite_x_start + (8 * g.sprites.size_w)) * g.screen.gamepixel.w,
-		y,
-		editor.current_sprite_y_start * g.screen.gamepixel.h,
-		(editor.current_sprite_y_start + (8 * g.sprites.size_h)) * g.screen.gamepixel.h
-	) then
-		-- Again, lots of magic below, and I don't really like it.
-		-- 1. We get x and y; these are raw pixel mouse coords caught by Love2D
-		-- 2. We divide the coords by g.screen.gamepixel.w / .h to obtain
-		--    the correct resolution in gamepixels.
-		-- 3. We substract distance of the currently drawn sprite from the left and top
-		--    edges of screen. These values are in gamepixels already.
-		-- 4. We divide result by g.sprites.size_w / _h, because cells have size
-		--    of full sprite.
-		-- 5. We use math.ceil function to round the results up, because
-		--    the first sprite has coords from 0.1 to 1.0.
-		local sprite_x = math.ceil(((x / g.screen.gamepixel.w) - editor.current_sprite_x_start) / g.sprites.size_w)
-		local sprite_y = math.ceil(((y / g.screen.gamepixel.h) - editor.current_sprite_y_start) / g.sprites.size_h)
-		if editor.current_mode == editor.modes.point then
-			local ok, res = pcall(replace_sprite_pixel, sprite_x, sprite_y)
-			if not ok then
-				print("Warning: " .. res)
+	if button == 1 then
+		-- Check if mouse is over current sprite.
+		if utils.mouse_box_bound_check(
+			x,
+			editor.current_sprite_x_start * g.screen.gamepixel.w,
+			(editor.current_sprite_x_start + (8 * g.sprites.size_w)) * g.screen.gamepixel.w,
+			y,
+			editor.current_sprite_y_start * g.screen.gamepixel.h,
+			(editor.current_sprite_y_start + (8 * g.sprites.size_h)) * g.screen.gamepixel.h
+		) then
+			-- Again, lots of magic below, and I don't really like it.
+			-- 1. We get x and y; these are raw pixel mouse coords caught by Love2D
+			-- 2. We divide the coords by g.screen.gamepixel.w / .h to obtain
+			--    the correct resolution in gamepixels.
+			-- 3. We substract distance of the currently drawn sprite from the left and top
+			--    edges of screen. These values are in gamepixels already.
+			-- 4. We divide result by g.sprites.size_w / _h, because cells have size
+			--    of full sprite.
+			-- 5. We use math.ceil function to round the results up, because
+			--    the first sprite has coords from 0.1 to 1.0.
+			local sprite_x = math.ceil(((x / g.screen.gamepixel.w) - editor.current_sprite_x_start) / g.sprites.size_w)
+			local sprite_y = math.ceil(((y / g.screen.gamepixel.h) - editor.current_sprite_y_start) / g.sprites.size_h)
+			if editor.current_mode == editor.modes.point then
+				local ok, res = pcall(replace_sprite_pixel, sprite_x, sprite_y)
+				if not ok then
+					print("Warning: " .. res)
+				end
+			else
+				-- This will mark when we start drawing a primitive.
+				-- So, if we click for the first time, we _start_ drawing primitive.
+				-- At this point, we should probably generate anchor point, and
+				-- copy data from current sprite to temp sprite.
+				-- Until we click next time, app should update every frame and
+				-- draw the primitive from anchor point to the mouse position.
+				-- When user clicks second time, we "commit" the changes from
+				-- temp sprite to current (base) sprite.
+				if not editor.drawing_primitives then
+					editor.drawing_primitives = true
+					editor.anchor_primitive = {
+						x = sprite_x,
+						y = sprite_y
+					}
+				else
+					editor.current_sprite_data = nil
+					editor.current_sprite_data = utils.experimental_deepcopy(editor.temp_sprite_data)
+					editor.exit_drawing_primitives()
+				end
 			end
 		end
+	else
+		editor.exit_drawing_primitives()
 	end
 end
 
