@@ -1,4 +1,3 @@
-local g = require "globals"
 local palette = require "palette"
 
 

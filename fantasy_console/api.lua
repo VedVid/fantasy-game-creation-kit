@@ -9,7 +9,6 @@ requiring user to write repeatedly module name over and over.
 
 local agcalc = require "api_geometry_calculations"
 local agdraw = require "api_geometry_drawing"
-local gamepixel = require "gamepixel"
 local g = require "globals"
 local palette = require "palette"
 local sprite = require "sprite"

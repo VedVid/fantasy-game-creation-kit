@@ -1,6 +1,5 @@
 require "_cart"
 local canvas = require "canvas"
---local data_sprites = require "data/sprites"
 local g = require "globals"
 local sprite = require "sprite"
 local sprite_editor = require "sprite_editor"
