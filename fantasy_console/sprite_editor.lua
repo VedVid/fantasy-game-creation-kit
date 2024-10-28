@@ -30,6 +30,8 @@ editor.toggle.press = "press"
 editor.toggle.hold = "hold"
 
 
+-- This maps sprite editor modes to functions that calculate
+-- coordinates of every point that creates a primitive.
 editor.agcalc_modes_map = {}
 editor.agcalc_modes_map[editor.modes.line] = agcalc.line
 editor.agcalc_modes_map[editor.modes.rect] = agcalc.rect
@@ -40,17 +42,31 @@ editor.agcalc_modes_map[editor.modes.oval] = agcalc.oval
 editor.agcalc_modes_map[editor.modes.ovalfill] = agcalc.ovalfill
 
 
+-- Helper variables used to track the current state of primitves drawing.
+editor.drawing_primitives = false
+-- ^^^ true if player is currently drawing a primitive
+editor.anchor_primitive = nil
+-- ^^ Anchor point – center of circle, top-left corner of rectangle, etc.
+editor.primitive_args = nil
+-- ^^ This is a list that keeps all arguments used in the calculating functions.
+--    So, `x, y, w, h` for rectangle, `x, y, r` for circle, and so on.
+--    They might keep the desired color of primitive drawn, too.
+--    It is used because it is necessary to store these args somewhere
+--    before the primitive is actually drawn, due to the dynamic nature of
+--    drawing primitives (the preview is being re-drawn on every mouse move),
+--    and sending these arguments around the whole sprite_editor file would
+--    be cumberstone and would be less readable.
+editor.primitive_coords = nil
+-- ^^ List of all points that create a primitive.
+--    Rationale is the same as for `primitive_args`.
+
+
+-- Data related to tabs that are used to switch between pages of sprites list.
 editor.current_tab = 1
 editor.current_sprite = 1
 editor.current_color = 1
 editor.current_mode = editor.modes.point
 editor.current_toggle = editor.toggle.hold
-
-
-editor.drawing_primitives = false
-editor.anchor_primitive = nil
-editor.primitive_args = nil
-editor.primitive_coords = nil
 
 
 -- When user changes sprite by drawing, then the changes should be
@@ -301,7 +317,7 @@ function editor.set_current_tab(num)
 	---------
 	num : number
 		Number of tab to switch. It should be in range between 1 to 3 (inclusive).
-	
+
 	Returns
 	-------
 	nothing
@@ -389,6 +405,20 @@ end
 
 
 function editor.exit_drawing_primitives()
+	--[[
+	This function is called every time when user ends drawing a primitive.
+	It does not matter if user cancelled drawing or confirmed changes. It only
+	does a clean up.
+
+	Arguments
+	---------
+	none
+
+	Returns
+	-------
+	nothing
+	]]--
+
 	editor.drawing_primitives = false
 	editor.primitive_args = nil
 	editor.anchor_primitive = nil
@@ -483,6 +513,8 @@ function editor.draw_current_sprite()
 	If user in in drawing_primitives mode, then at the top of the current sprite,
 	the preview of changes that are to be introduced is shown.
 	Also, the border around the sprite is being drawn here.
+	At the end of this function, drawing and re-drawing of preview of primitives
+	is handled.
 
 	Arguments
 	---------
@@ -782,6 +814,7 @@ function editor.handle_pressing_universal_buttons(x, y, button)
 	- checks spritesheet tabs and spritesheets itself
 	- checks save button
 	- checks buttons that trigger drawing mode change
+	It also exits primitive drawing on cancel and on commit.
 
 	Arguments
 	---------
@@ -1072,7 +1105,6 @@ function editor.handle_mousepresses(x, y, button)
 	When starting drawing primitives, the initial point clicked
 	by user becomes anchor for drawing, e.g. it becomes
 	top-left corner of rectangle, or centre of circle.
-
 
 	`point drawing mode` is already being handled by handle_mouseholding,
 	but it has to be handled by handle_mousepresses too, as without this,

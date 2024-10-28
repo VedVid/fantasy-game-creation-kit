@@ -144,6 +144,34 @@ end
 
 function agc.rect(x, y, w, h)
     --[[
+    This function calculates list of coordinates of all points that create
+    an empty rectangle. It uses `agc.line` function to find coordinates of
+    two vertical and two horizontal lines.
+
+    Note: rect (and rectfill) functions used to be kind of special case – they were
+    not drawn with pset / line or any other function implemented in this engine,
+    but instead, they were relying on Love2D's rect drawing. It required some
+    special treatment as the behaviour was changing depending on the style used
+    (`line` and `fill`). After all, it turned out it is easier to treat rectangles
+    as every other geometry primitive present in my API.
+
+    Arguments
+    ---------
+    x : number
+        Position of anchored corner on the x axis.
+    y : number
+        Position of anchored corner on the y axis.
+    w : number
+        Width of the rectangle. Can be negative.
+    h : number
+        Height of the rectangle. Can be negative.
+    
+    Returns
+    -------
+    list of lists
+        List of coords of all gamepixels that create the line.
+        It has the following structure:
+        { {x1, y1}, {x2, y2}, ... {xn, yn} }
     ]]--
     
     x = math.floor(x)
@@ -193,6 +221,35 @@ end
 
 function agc.rectfill(x, y, w, h)
     --[[
+    This function calculates list of coordinates of all points that create
+    an filled rectangle. It uses `agc.line` function to find coordinates of every
+    point that creates filled rectangle. It does that by kind of slicing rectangle
+    into horizontal lines.
+
+    Note: rectfill (and rectf) functions used to be kind of special case – they were
+    not drawn with pset / line or any other function implemented in this engine,
+    but instead, they were relying on Love2D's rect drawing. It required some
+    special treatment as the behaviour was changing depending on the style used
+    (`line` and `fill`). After all, it turned out it is easier to treat rectangles
+    as every other geometry primitive present in my API.
+
+    Arguments
+    ---------
+    x : number
+        Position of anchored corner on the x axis.
+    y : number
+        Position of anchored corner on the y axis.
+    w : number
+        Width of the rectangle. Can be negative.
+    h : number
+        Height of the rectangle. Can be negative.
+    
+    Returns
+    -------
+    list of lists
+        List of coords of all gamepixels that create the line.
+        It has the following structure:
+        { {x1, y1}, {x2, y2}, ... {xn, yn} }
     ]]--
 
     x = math.floor(x)
