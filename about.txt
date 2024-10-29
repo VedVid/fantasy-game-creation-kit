@@ -91,3 +91,7 @@ Run tests?
   `start_tests > results.txt`.
   You need to have Lua 5.1 in your path to run the tests
   successfully.
+
+Turn the console window on / off?
+  Set `t.console` in `conf.lua` file to `true` or `false`.
+ 
