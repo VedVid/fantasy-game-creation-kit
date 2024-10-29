@@ -1,5 +1,6 @@
 require "api"
 
+
 local score = 0
 local x_dir = 0
 local y_dir = 0
@@ -14,12 +15,14 @@ local map_y_max = 192
 local started = false
 local game_over = false
 
+
 function Init()
     x_dir = 1
     Update_fruit()
     snake_x[1] = 8 * 8
     snake_y[1] = 8 * 8
 end
+
 
 function Input()
     if started == false then
@@ -42,12 +45,14 @@ function Input()
     end
 end
 
+
 function Update()
     if game_over == true or started == false then
         return
     end
     Update_snake()
 end
+
 
 function Draw()
     Cls()
