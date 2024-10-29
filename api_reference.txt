@@ -318,6 +318,34 @@ Ovalfill(x, y, rx, ry, [color])
     nothing
 
 
+----------------------
+---------- SPRITES --
+----------------------
+
+
+Spr(x, y, num)
+==============
+
+    The Spr function allows to draw a sprite on on the specific coordinates.
+    Please note that this function, unlike its equivalent from PICO-8,
+    does not allow to specify a range of sprites to draw.
+
+    Arguments
+    ---------
+    x : number
+        Position of top-left sprite corner on the x axis.
+    y : number
+        Position of top-left sprite corner on the y axis.
+    num : number
+        Number of sprite in the spreadsheet. You should be able to
+        determine sprite number looking at the GUI of the sprites
+        editor.
+
+    Returns
+    -------
+    nothing
+
+
 -------------------
 ---------- INPUT --
 -------------------
