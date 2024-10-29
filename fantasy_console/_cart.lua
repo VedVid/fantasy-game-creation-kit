@@ -17,5 +17,5 @@ end
 
 
 function Draw()
-    Write(10, 10, "Hello world!", PinkBold)
+    do end
 end
