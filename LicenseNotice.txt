@@ -33,8 +33,8 @@ This software uses the following programs, libraries and resources:
 7. ProFi
    Profiling library by Luke Perkin.
    https://gist.github.com/perky/2838755/  [available as of 20240825]
-   MIT license
-   No external license file provided.
+   MIT license – head comment from the ProFi.lua file is available
+   in the `licenses` directory.
 
 8. pprint.lua
    Pretty printer for Lua, by Chen Tao.
