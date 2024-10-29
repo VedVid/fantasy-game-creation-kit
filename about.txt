@@ -4,7 +4,7 @@
 
 
 Fantasy Game Creation Kit.
-v0.1
+v0.2
 (c) 2024 Tomasz Nowakowski
 Released under Free BSD license.
 
