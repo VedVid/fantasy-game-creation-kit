@@ -804,16 +804,15 @@ function editor.draw_spritesheet_buttons()
 end
 
 
-function editor.handle_pressing_universal_buttons(x, y, button)
+function editor.handle_mousepresses(x, y, button)
 	--[[
-	While handle_mouseholding and handle_mousepresses are functions
-	that are focused on handling drawing things on the current_sprite
-	area, handle_pressing_universal_buttons is used to handle
-	mousepresses on interface elements, so it:
+	Handle mousepresses is function that:
 	- iterates over color palette
 	- checks spritesheet tabs and spritesheets itself
 	- checks save button
 	- checks buttons that trigger drawing mode change
+	- checks starting primitive drawing
+	- checks commiting primitive drawing
 	It also exits primitive drawing on cancel and on commit.
 
 	Arguments
@@ -822,6 +821,8 @@ function editor.handle_pressing_universal_buttons(x, y, button)
 		mouse position on x ax; this value is passed from love.mousepressed
 	y : number
 		mouse position on y ax; this value is passed from love.mousepressed
+	button : number
+		mouse button; 1 is left mouse button, 2 is right mouse button
 
 	Returns
 	-------
@@ -1013,8 +1014,8 @@ function editor.handle_mouseholding(x, y, button)
 	--[[
 	handle_mouseholding is used only for handling drawing over current sprite.
 	All other interactions with UI or other drawing modes are handled
-	by other functions, namely handle_mousepressed
-	and handle_pressing_universal_buttons.
+	by other functions, namely handle_mousepresses
+	and handle_mousepresses_point_drawing_mode_special_case.
 
 	If user is in point drawing mode, then this function allows to draw
 	continuously over the existing sprite. In that case, all changes
@@ -1030,6 +1031,8 @@ function editor.handle_mouseholding(x, y, button)
 		mouse position on x ax; this value is passed from love.mousepressed
 	y : number
 		mouse position on y ax; this value is passed from love.mousepressed
+	button : number
+		mouse button; 1 is left mouse button, 2 is right mouse button
 
 	Returns
 	-------
@@ -1135,26 +1138,18 @@ function editor.handle_mouseholding(x, y, button)
 end
 
 
-function editor.handle_mousepresses(x, y, button)
+function editor.handle_mousepresses_point_drawing_mode_special_case(x, y, button)
 	--[[
-	handle_mousepresses is going to be used for every drawing method.
-	while having point drawing mode enabled.
+	This function helps with handling `point drawing mode` that is kind of
+	special case.
 
-	If point drawing method is disabled, then this function is used to
-	start and end process of drawing primitives by left mouse button, and
-	canceling drawing primitive by right mouse button.
-	When starting drawing primitives, the initial point clicked
-	by user becomes anchor for drawing, e.g. it becomes
-	top-left corner of rectangle, or centre of circle.
-
-	`point drawing mode` is already being handled by handle_mouseholding,
-	but it has to be handled by handle_mousepresses too, as without this,
-	you could not draw things by simply clicking on current_sprite – instead,
-	you would need to click and move mouse to introduce the change.
+	The primary work for `point drawing mode` is already being handled by
+	handle_mouseholding, but it has to be handled by this function too,
+	as without this, you could not draw things by simply clicking on current_sprite;
+	instead, you would need to click and move mouse to introduce the change.
 
 	All other interactions with UI or other drawing modes are handled
-	by other functions, namely handle_mousepressed
-	and handle_pressing_universal_buttons.
+	by handle_mousepresses.
 
 	Arguments
 	---------
@@ -1162,6 +1157,8 @@ function editor.handle_mousepresses(x, y, button)
 		mouse position on x ax; this value is passed from love.mousepressed
 	y : number
 		mouse position on y ax; this value is passed from love.mousepressed
+	button : number
+		mouse button; 1 is left mouse button, 2 is right mouse button
 
 	Returns
 	-------
