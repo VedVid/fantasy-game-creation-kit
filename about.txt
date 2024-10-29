@@ -66,3 +66,28 @@ To get a sense of how the kit works, it is recommended to check
 the examples included in the main archive. To use them,
 you need to replace the original `_cart.lua` with one copied
 from the examples directory.
+
+
+HOW DO I...
+===========
+
+Start playing game?
+  Ensure that the correct _cart file is present in the fantasy_console
+  directory and start the game by using `start` bat file.
+
+Edit game's code?
+  Use your favorite text editor to edit _cart file. You can also
+  add your own files and libraries.
+  Code editor is not part of the Fantasy Game Creation Kit,
+  and I did not make my mind if I am going to implement it yet.
+
+Edit sprites?
+  Start sprite editor by using `sprites` bat file.
+
+Run tests?
+  Start test runner by running the `start_tests_` bat file.
+  It will print the output to the console. If you wish to save output
+  to the text file, simply stream the output to desired file by
+  `start_tests > results.txt`.
+  You need to have Lua 5.1 in your path to run the tests
+  successfully.
