@@ -488,7 +488,7 @@ function editor.draw_all_sprites()
 		if sprite_number > g.sprites.amount then
 			break
 		end
-		Spr(start + i, x, y)
+		Spr(x, y, start + i)
 		if sprite_number == editor.current_sprite then
 			sprite_border.x = x - 1
 			sprite_border.y = y - 1
