@@ -656,7 +656,7 @@ function editor.draw_save_button()
 		editor.save_button.h,
 		background_color
 	)
-	Write(text, editor.save_button.x + 2, editor.save_button.y + 2)
+	Write(editor.save_button.x + 2, editor.save_button.y + 2, text)
 end
 
 
@@ -799,7 +799,7 @@ function editor.draw_spritesheet_buttons()
 			button.x + button.w - 1,
 			button.y,
 			border_color)
-		Write(button.txt, button.x + 2, button.y + 3)
+		Write(button.x + 2, button.y + 3, button.txt)
 	end
 end
 

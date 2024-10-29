@@ -56,16 +56,16 @@ function Draw()
     Draw_fruit()
     Draw_snake()
     if started == false then
-        Write("Press [space] to start", 80, 1)
+        Write(80, 1, "Press [space] to start")
     end
     if game_over == true then
-        Write("GAME OVER", 100, 1)
+        Write(100, 1, "GAME OVER")
     end
 end
 
 
 function Draw_score()
-    Write("Score: " .. score, 1, 1, White)
+    Write(1, 1, "Score: " .. score, White)
 end
 
 

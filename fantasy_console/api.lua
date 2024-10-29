@@ -20,7 +20,7 @@ local utils = require "utils"
 ------------------
 
 
-function Write(s, x, y, color)
+function Write(x, y, s, color)
     --[[
     Function Write uses the Love2D's print function under the
     hood, but it does not expose all of its arguments to the
@@ -33,12 +33,12 @@ function Write(s, x, y, color)
 
     Arguments
     ---------
-    s : string
-        Text to be printed. Must be a valid ASCII string.
     x : number
         Position of text beginning at the x axis.
     y : number
         Position of text beginning at the y axis.
+    s : string
+        Text to be printed. Must be a valid ASCII string.
     color : palette.<color>
         Color of text. Defaults to the default foreground colour.
 
