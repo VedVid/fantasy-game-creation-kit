@@ -865,6 +865,7 @@ function editor.handle_pressing_universal_buttons(x, y, button)
 		s.set_sprite(editor.current_sprite, editor.current_sprite_data)
 		editor.save_button.has_been_pressed = editor.save_button.has_been_pressed_max
 		editor.exit_drawing_primitives()
+		return
 	end
 
 	-- Check if mouse is over point mode button.
@@ -872,6 +873,7 @@ function editor.handle_pressing_universal_buttons(x, y, button)
 		editor.set_current_mode(editor.modes.point)
 		editor.switch_current_toggle_mode()
 		editor.exit_drawing_primitives()
+		return
 	end
 
 	-- Check if mouse is over line mode button.
@@ -879,6 +881,7 @@ function editor.handle_pressing_universal_buttons(x, y, button)
 		editor.set_current_mode(editor.modes.line)
 		editor.switch_current_toggle_mode()
 		editor.exit_drawing_primitives()
+		return
 	end
 
 	-- Check if mouse is over rect mode button.
@@ -886,6 +889,7 @@ function editor.handle_pressing_universal_buttons(x, y, button)
 		editor.set_current_mode(editor.modes.rect)
 		editor.switch_current_toggle_mode()
 		editor.exit_drawing_primitives()
+		return
 	end
 
 	-- Check if mouse is over rectfill mode button.
@@ -893,6 +897,7 @@ function editor.handle_pressing_universal_buttons(x, y, button)
 		editor.set_current_mode(editor.modes.rectfill)
 		editor.switch_current_toggle_mode()
 		editor.exit_drawing_primitives()
+		return
 	end
 
 	-- Check if mouse is over circ mode button.
@@ -900,6 +905,7 @@ function editor.handle_pressing_universal_buttons(x, y, button)
 		editor.set_current_mode(editor.modes.circ)
 		editor.switch_current_toggle_mode()
 		editor.exit_drawing_primitives()
+		return
 	end
 
 	-- Check if mouse is over circfill mode button.
@@ -907,6 +913,7 @@ function editor.handle_pressing_universal_buttons(x, y, button)
 		editor.set_current_mode(editor.modes.circfill)
 		editor.switch_current_toggle_mode()
 		editor.exit_drawing_primitives()
+		return
 	end
 
 	-- Check if mouse is over oval mode button.
@@ -914,6 +921,7 @@ function editor.handle_pressing_universal_buttons(x, y, button)
 		editor.set_current_mode(editor.modes.oval)
 		editor.switch_current_toggle_mode()
 		editor.exit_drawing_primitives()
+		return
 	end
 
 	-- Check if mouse is over ovalfill mode button.
@@ -921,6 +929,7 @@ function editor.handle_pressing_universal_buttons(x, y, button)
 		editor.set_current_mode(editor.modes.ovalfill)
 		editor.switch_current_toggle_mode()
 		editor.exit_drawing_primitives()
+		return
 	end
 
 	-- Check if mouse is over sprites list.
