@@ -57,5 +57,5 @@ To get an idea of ​​the API completeness and compare the capabilities of thi
 
 ### Screenshots
 
-![alt text](.\images\drawing_api.png)
+![alt text](images/drawing_api.png)
 
