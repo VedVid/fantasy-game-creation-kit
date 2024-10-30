@@ -111,7 +111,7 @@ function canvas.set_global_screen_variables(scale, gamepixel_w, gamepixel_h, fon
     elseif gamepixel_h ~= nil and gamepixel_w ~= nil and font_size ~= nil then
         g.screen.gamepixel.w = gamepixel_w
         g.screen.gamepixel.h = gamepixel_h
-        g.screen.font_size = font_size * gamepixel_h
+        g.screen.font_size = font_size
     else
         error("Error in canvas.set_global_screen_variables:\nscale or (gamepixel_h and gamepixel_h) must be valid value.")
     end
@@ -139,7 +139,7 @@ function canvas.scale_up()
         nil,
         g.screen.gamepixel.w + 1,
         g.screen.gamepixel.h + 1,
-        (g.screen.font_size / g.screen.gamepixel.h) + 1
+        g.screen.font_size + g.sprites.size_h
     )
     canvas.set_font()
     canvas.set_line_width()
@@ -165,7 +165,7 @@ function canvas.scale_down()
 
     local new_gamepixel_w = g.screen.gamepixel.w - 1
     local new_gamepixel_h = g.screen.gamepixel.h - 1
-    local new_font_size = (g.screen.font_size / g.screen.gamepixel.h) - 1
+    local new_font_size = g.screen.font_size - g.sprites.size_h
     if new_gamepixel_w <= 0 or new_gamepixel_h <= 0 or new_font_size <= 0 then
         return
     end
