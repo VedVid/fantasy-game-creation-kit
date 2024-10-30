@@ -48,10 +48,10 @@ To get an idea of ​​the API completeness and compare the capabilities of thi
 
 - [x] text manipulation
 - [x] geometry
-* [x] sprites
+- [x] sprites
 - [ ] animations
 - [ ] sounds
-* [x] sprite editor
+- [x] sprite editor
 - [ ] sound editor
 - [ ] support for various languages
 
