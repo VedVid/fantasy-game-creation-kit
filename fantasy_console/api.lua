@@ -222,10 +222,10 @@ function Pset(x, y, color)
     nothing
     ]]--
 
-    assert(type(x) == "number", "First argument (x) to Pset must be a number.")
-    assert(x >= 0, "First argument (x) to Pset must not be negative.")
-    assert(type(y) == "number", "Second argument (y) to Pset must be a number.")
-    assert(y >= 0, "Second argument (y) to Pset must not be negative.")
+    assert(type(x) == "number", "First argument (x) to Pset must be a number. Got " .. x .. " (type " .. type(x) .. ").")
+    assert(x >= 0, "First argument (x) to Pset must not be negative. Got " .. x .. ".")
+    assert(type(y) == "number", "Second argument (y) to Pset must be a number. Got " .. y .. " (type " .. type(y) .. ").")
+    assert(y >= 0, "Second argument (y) to Pset must not be negative. Got " .. y .. ".")
 
     local coords = agcalc.pset(x, y)
 
@@ -263,14 +263,14 @@ function Line(sx, sy, tx, ty, color)
     nothing
     ]]--
 
-    assert(type(sx) == "number", "First argument (sx) to Line must be a number.")
-    assert(sx >= 0, "First argument (sx) to Line must not be negative.")
-    assert(type(sy) == "number", "Second argument (sy) to Line must be a number.")
-    assert(sy >= 0, "Second argument (sy) to Line must not be negative.")
-    assert(type(tx) == "number", "Third argument (tx) to Line must be a number.")
-    assert(tx >= 0, "Third argument (tx) to Line must not be negative.")
-    assert(type(ty) == "number", "Fourth argument (ty) to Line must be a number.")
-    assert(ty >= 0, "Fourth argument (ty) to Line must not be negative.")
+    assert(type(sx) == "number", "First argument (sx) to Line must be a number. Got " .. sx .. " (type " .. type(sx) .. ").")
+    assert(sx >= 0, "First argument (sx) to Line must not be negative. Got " .. sx .. ".")
+    assert(type(sy) == "number", "Second argument (sy) to Line must be a number. Got " .. sy .. " (type " .. type(sy) .. ").")
+    assert(sy >= 0, "Second argument (sy) to Line must not be negative. Got " .. sy .. ".")
+    assert(type(tx) == "number", "Third argument (tx) to Line must be a number. Got " .. tx .. " (type " .. type(tx) .. ").")
+    assert(tx >= 0, "Third argument (tx) to Line must not be negative. Got " .. tx .. ".")
+    assert(type(ty) == "number", "Fourth argument (ty) to Line must be a number. Got " .. ty .. " (type " .. type(ty) .. ").")
+    assert(ty >= 0, "Fourth argument (ty) to Line must not be negative. Got " .. ty .. ".")
 
     local coords = agcalc.line(sx, sy, tx, ty)
 
@@ -301,14 +301,14 @@ function Rect(x, y, w, h, color)
     nothing
     ]]--
 
-    assert(type(x) == "number", "First argument (x) to Rect must be a number.")
-    assert(x >= 0, "First argument (x) to Rect must not be negative.")
-    assert(type(y) == "number", "Second argument (y) to Rect must be a number.")
-    assert(y >= 0, "Second argument (y) to Rect must not be negative.")
-    assert(type(w) == "number", "Third argument (w) to Rect must be a number.")
-    assert(w > 1, "Third argument (w) to Rect must be larger than 1.")
-    assert(type(h) == "number", "Fourth argument (h) to Rect must be a number.")
-    assert(h > 1, "Fourth argument (h) to Rect must be larger than 1.")
+    assert(type(x) == "number", "First argument (x) to Rect must be a number. Got " .. x .. " (type " .. type(x) .. ").")
+    assert(x >= 0, "First argument (x) to Rect must not be negative. Got " .. x .. ".")
+    assert(type(y) == "number", "Second argument (y) to Rect must be a number. Got " .. y .. " (type " .. type(y) .. ").")
+    assert(y >= 0, "Second argument (y) to Rect must not be negative. Got " .. y .. ".")
+    assert(type(w) == "number", "Third argument (w) to Rect must be a number. Got " .. w .. " (type " .. type(w) .. ").")
+    assert(w > 1, "Third argument (w) to Rect must be larger than 1. Got " .. w .. ".")
+    assert(type(h) == "number", "Fourth argument (h) to Rect must be a number. Got " .. h .. " (type " .. type(h) .. ").")
+    assert(h > 1, "Fourth argument (h) to Rect must be larger than 1. Got " .. h .. ".")
 
     local coords = agcalc.rect(x, y, w, h)
 
@@ -338,14 +338,14 @@ function Rectfill(x, y, w, h, color)
     nothing
     ]]--
 
-    assert(type(x) == "number", "First argument (x) to Rectfill must be a number.")
-    assert(x >= 0, "First argument (x) to Rectfill must not be negative.")
-    assert(type(y) == "number", "Second argument (y) to Rectfill must be a number.")
-    assert(y >= 0, "Second argument (y) to Rectfill must not be negative.")
-    assert(type(w) == "number", "Third argument (w) to Rectfill must be a number.")
-    assert(w > 1, "Third argument (w) to Rectfill must be larger than 1.")
-    assert(type(h) == "number", "Fourth argument (h) to Rectfill must be a number.")
-    assert(h > 1, "Fourth argument (h) to Rectfill must be larger than 1.")
+    assert(type(x) == "number", "First argument (x) to Rectfill must be a number. Got " .. x .. " (type " .. type(x) .. ").")
+    assert(x >= 0, "First argument (x) to Rectfill must not be negative. Got " .. x .. ".")
+    assert(type(y) == "number", "Second argument (y) to Rectfill must be a number. Got " .. y .. " (type " .. type(y) .. ").")
+    assert(y >= 0, "Second argument (y) to Rectfill must not be negative. Got " .. y .. ".")
+    assert(type(w) == "number", "Third argument (w) to Rectfill must be a number. Got " .. w .. " (type " .. type(w) .. ").")
+    assert(w > 1, "Third argument (w) to Rectfill must be larger than 1. Got " .. w .. ".")
+    assert(type(h) == "number", "Fourth argument (h) to Rectfill must be a number. Got " .. h .. " (type " .. type(h) .. ").")
+    assert(h > 1, "Fourth argument (h) to Rectfill must be larger than 1. Got " .. h .. ".")
 
     local coords = agcalc.rectfill(x, y, w, h)
 
@@ -374,12 +374,12 @@ function Circ(x, y, r, color)
     nothing
     ]]--
 
-    assert(type(x) == "number", "First argument (x) to Circ must be a number.")
-    assert(x >= 0, "First argument (x) to Circ must not be negative.")
-    assert(type(y) == "number", "Second argument (y) to Circ must be a number.")
-    assert(y >= 0, "Second argument (y) to Circ must not be negative.")
-    assert(type(r) == "number", "Third argument (r) to Circ must be a number.")
-    assert(r > 0, "Third argument (r) to Circ must be larger than 0.")
+    assert(type(x) == "number", "First argument (x) to Circ must be a number. Got " .. x .. " (type " .. type(x) .. ").")
+    assert(x >= 0, "First argument (x) to Circ must not be negative. Got " .. x .. ".")
+    assert(type(y) == "number", "Second argument (y) to Circ must be a number. Got " .. y .. " (type " .. type(y) .. ").")
+    assert(y >= 0, "Second argument (y) to Circ must not be negative. Got " .. y .. ".")
+    assert(type(r) == "number", "Third argument (r) to Circ must be a number. Got " .. r .. " (type " .. type(r) .. ").")
+    assert(r > 0, "Third argument (r) to Circ must be larger than 0. Got " .. r .. ".")
 
     local coords = agcalc.circ(x, y, r)
 
@@ -409,12 +409,12 @@ function Circfill(x, y, r, color)
     nothing
     ]]--
 
-    assert(type(x) == "number", "First argument (x) to Circfill must be a number.")
-    assert(x >= 0, "First argument (x) to Circfill must not be negative.")
-    assert(type(y) == "number", "Second argument (y) to Circfill must be a number.")
-    assert(y >= 0, "Second argument (y) to Circfill must not be negative.")
-    assert(type(r) == "number", "Third argument (r) to Circfill must be a number.")
-    assert(r > 0, "Third argument (r) to Circfill must be larger than 0.")
+    assert(type(x) == "number", "First argument (x) to Circfill must be a number. Got " .. x .. " (type " .. type(x) .. ").")
+    assert(x >= 0, "First argument (x) to Circfill must not be negative. Got " .. x .. ".")
+    assert(type(y) == "number", "Second argument (y) to Circfill must be a number. Got " .. y .. " (type " .. type(y) .. ").")
+    assert(y >= 0, "Second argument (y) to Circfill must not be negative. Got " .. y .. ".")
+    assert(type(r) == "number", "Third argument (r) to Circfill must be a number. Got " .. r .. " (type " .. type(r) .. ").")
+    assert(r > 0, "Third argument (r) to Circfill must be larger than 0. Got " .. r .. ".")
 
     local coords = agcalc.circfill(x, y, r)
 
@@ -445,14 +445,14 @@ function Oval(x, y, rx, ry, color)
     nothing
     ]]--
 
-    assert(type(x) == "number", "First argument (x) to Oval must be a number.")
-    assert(x >= 0, "First argument (x) to Oval must not be negative.")
-    assert(type(y) == "number", "Second argument (y) to Oval must be a number.")
-    assert(y >= 0, "Second argument (y) to Oval must not be negative.")
-    assert(type(rx) == "number", "Third argument (rx) to Oval must be a number.")
-    assert(rx > 0, "Third argument (rx) to Oval must be larger than 0.")
-    assert(type(ry) == "number", "Fourth argument (ry) to Oval must be a number.")
-    assert(ry > 0, "Fourth argument (ry) to Oval must be larger than 0.")
+    assert(type(x) == "number", "First argument (x) to Oval must be a number. Got " .. x .. " (type " .. type(x) .. ").")
+    assert(x >= 0, "First argument (x) to Oval must not be negative. Got " .. x .. ".")
+    assert(type(y) == "number", "Second argument (y) to Oval must be a number. Got " .. y .. " (type " .. type(y) .. ").")
+    assert(y >= 0, "Second argument (y) to Oval must not be negative. Got " .. y .. ".")
+    assert(type(rx) == "number", "Third argument (r) to Oval must be a number. Got " .. rx .. " (type " .. type(rx) .. ").")
+    assert(rx > 0, "Third argument (r) to Oval must be larger than 0. Got " .. rx .. ".")
+    assert(type(ry) == "number", "Fourth argument (ry) to Oval must be a number. Got " .. ry .. " (type " .. type(ry) .. ").")
+    assert(ry > 0, "Fourth argument (ry) to Oval must be larger than 0. Got " .. ry .. ".")
 
     local coords = agcalc.oval(x, y, rx, ry)
 
@@ -483,14 +483,14 @@ function Ovalfill(x, y, rx, ry, color)
     nothing
     ]]--
 
-    assert(type(x) == "number", "First argument (x) to Ovalfill must be a number.")
-    assert(x >= 0, "First argument (x) to Ovalfill must not be negative.")
-    assert(type(y) == "number", "Second argument (y) to Ovalfill must be a number.")
-    assert(y >= 0, "Second argument (y) to Ovalfill must not be negative.")
-    assert(type(rx) == "number", "Third argument (rx) to Ovalfill must be a number.")
-    assert(rx > 0, "Third argument (rx) to Ovalfill must be larger than 0.")
-    assert(type(ry) == "number", "Fourth argument (ry) to Ovalfill must be a number.")
-    assert(ry > 0, "Fourth argument (ry) to Ovalfill must be larger than 0.")
+    assert(type(x) == "number", "First argument (x) to Ovalfill must be a number. Got " .. x .. " (type " .. type(x) .. ").")
+    assert(x >= 0, "First argument (x) to Ovalfill must not be negative. Got " .. x .. ".")
+    assert(type(y) == "number", "Second argument (y) to Ovalfill must be a number. Got " .. y .. " (type " .. type(y) .. ").")
+    assert(y >= 0, "Second argument (y) to Ovalfill must not be negative. Got " .. y .. ".")
+    assert(type(rx) == "number", "Third argument (r) to Ovalfill must be a number. Got " .. rx .. " (type " .. type(rx) .. ").")
+    assert(rx > 0, "Third argument (r) to Ovalfill must be larger than 0. Got " .. rx .. ".")
+    assert(type(ry) == "number", "Fourth argument (ry) to Ovalfill must be a number. Got " .. ry .. " (type " .. type(ry) .. ").")
+    assert(ry > 0, "Fourth argument (ry) to Ovalfill must be larger than 0. Got " .. ry .. ".")
 
     local coords = agcalc.ovalfill(x, y, rx, ry)
 
@@ -525,13 +525,13 @@ function Spr(x, y, num)
     nothing
     ]]--
 
-    assert(type(num) == "number", "First argument (num) to Spr must be a number.")
-    assert(num > 0, "First argument (num) to Spr must be a number larger than 0.")
-    assert(num <= g.sprites.amount, "First argument (num) to Spr must be a number not larger than " .. g.sprites.amount .. ".")
-    assert(type(x) == "number", "Second argument (x) to Spr must be a number.")
-    assert(x >= 0, "Second argument (x) to Spr must not be negative.")
-    assert(type(y) == "number", "Third argument (y) to Spr must be a number.")
-    assert(y >= 0, "Third argument (y) to Spr must not be negative.")
+    assert(type(x) == "number", "First argument (x) to Spr must be a number. Got " .. x .. " (type " .. type(x) .. ").")
+    assert(x >= 0, "First argument (x) to Spr must not be negative. Got " .. x .. ".")
+    assert(type(y) == "number", "Second argument (y) to Spr must be a number. Got " .. y .. " (type " .. type(y) .. ").")
+    assert(y >= 0, "Second argument (y) to Spr must not be negative. Got " .. y .. ".")
+    assert(type(num) == "number", "Third argument (num) to Spr must be a number. Got " .. num .. " (type " .. type(num) .. ").")
+    assert(num > 0, "Third argument (num) to Spr must be a number larger than 0. Got " .. num .. ".")
+    assert(num <= g.sprites.amount, "Third argument (num) to Spr must be a number not larger than " .. g.sprites.amount .. ". Got " .. num .. ".")
 
     local current_sprite = sprite.get_sprite(num)
     local colors = current_sprite["colors"]
