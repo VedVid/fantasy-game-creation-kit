@@ -47,12 +47,15 @@ function Write(x, y, s, color)
     nothing
     ]]--
 
-    assert(type(x) == "number", "First argument (x) to Write must be a number. Got " .. x .. " (type " .. type(x) .. ").")
-    assert(x >= 0, "First argument (x) to Write must not be negative. Got " .. x .. ".")
-    assert(type(y) == "number", "Second argument (y) to Write must be a number. Got " .. y .. " (type " .. type(y) .. ").")
-    assert(y >= 0, "Second argument (y) to Write must not be negative. Got " .. y .. ".")
-    assert(type(s) == "string", "Third argument (s) to Write must be a valid ASCII string. Got " .. s .. " (type " .. type(s) .. ").")
-    assert(utils.check_if_string_is_valid_ascii(s), "Third argument (s) to Write must be a valid ASCII string. Got " .. s .. ".")
+    assert(x ~= nil, "First argument (x) to Write must not be nil. Got nil.")
+    assert(type(x) == "number", "First argument (x) to Write must be a number. Got " .. tostring(x) .. " (type " .. tostring(type(x)) .. ").")
+    assert(x >= 0, "First argument (x) to Write must not be negative. Got " .. tostring(x) .. ".")
+    assert(y ~= nil, "Second argument (y) to Write must not be nil. Got nil.")
+    assert(type(y) == "number", "Second argument (y) to Write must be a number. Got " .. tostring(y) .. " (type " .. tostring(type(y)) .. ").")
+    assert(y >= 0, "Second argument (y) to Write must not be negative. Got " .. tostring(y) .. ".")
+    assert(s ~= nil, "Third argument (s) to Write must not be nil. Got nil.")
+    assert(type(s) == "string", "Third argument (s) to Write must be a valid ASCII string. Got " .. tostring(s) .. " (type " .. tostring(type(s)) .. ").")
+    assert(utils.check_if_string_is_valid_ascii(s), "Third argument (s) to Write must be a valid ASCII string. Got " .. tostring(s) .. ".")
 
     local lx = math.floor(x * g.screen.gamepixel.w)
     local ly = math.floor(y * g.screen.gamepixel.h)
@@ -86,10 +89,11 @@ function Join(ss, delimiter)
     string
     ]]--
 
-    assert(type(ss) == "table", "First argument (ss) to Join must be a table. Got " .. ss .. " (type " .. type(ss) .. ").")
+    assert(ss ~= nil, "First argument (ss) to Join must not be nil. Got nil.")
+    assert(type(ss) == "table", "First argument (ss) to Join must be a table. Got " .. tostring(ss) .. " (type " .. tostring(type(ss)) .. ").")
     for _, element in ipairs(ss) do
-        assert(type(element) == "string", "Every element of table passed to Join must be a valid ASCII string. Got " .. element .. " (type " .. type(element) .. ").")
-        assert(utils.check_if_string_is_valid_ascii(element), "Every element of table passed to Join must be a valid ASCII string. Got " .. element .. ".")
+        assert(type(element) == "string", "Every element of table passed to Join must be a valid ASCII string. Got " .. tostring(element) .. " (type " .. tostring(type(element)) .. ").")
+        assert(utils.check_if_string_is_valid_ascii(element), "Every element of table passed to Join must be a valid ASCII string. Got " .. tostring(element) .. ".")
     end
 
     if not delimiter then
@@ -120,10 +124,11 @@ function Split(s, delimiter)
     {strings}
     ]]--
 
-    assert(type(s) == "string", "First argument (s) passed to Split must be a string. Got " .. s .. " (type " .. type(s) .. ").")
-    assert(utils.check_if_string_is_valid_ascii(s), "First argument (s) passed to Split must be a valid ASCII string. Got " .. s .. ".")
+    assert(s ~= nil, "First argument (s) to Split must not be nil. Got nil.")
+    assert(type(s) == "string", "First argument (s) passed to Split must be a string. Got " .. tostring(s) .. " (type " .. tostring(type(s)) .. ").")
+    assert(utils.check_if_string_is_valid_ascii(s), "First argument (s) passed to Split must be a valid ASCII string. Got " .. tostring(s) .. ".")
     if delimiter then
-        assert(type(delimiter) == "string", "If second argument (delimiter) is passed to Split, it must be a string. Got " .. delimiter .. ".")
+        assert(type(delimiter) == "string", "If second argument (delimiter) is passed to Split, it must be a string. Got " .. tostring(delimiter) .. ".")
     end
 
     if delimiter == "" then
@@ -163,8 +168,9 @@ function Sub(s, i, j)
     string
     ]]--
 
-    assert(type(s) == "string", "First argument (s) passed to Sub must be a valid ASCII string. Got " .. s .. " (type " .. type(s) .. ").")
-    assert(utils.check_if_string_is_valid_ascii(s), "First argument (s) passed to Sub must be a valid ASCII string. Got " .. s .. ".")
+    assert(s ~= nil, "First argument (s) to Sub must not be nil. Got nil.")
+    assert(type(s) == "string", "First argument (s) passed to Sub must be a valid ASCII string. Got " .. tostring(s) .. " (type " .. tostring(type(s)) .. ").")
+    assert(utils.check_if_string_is_valid_ascii(s), "First argument (s) passed to Sub must be a valid ASCII string. Got " .. tostring(s) .. ".")
 
     if j < 1 then
         j = i
@@ -222,10 +228,11 @@ function Pset(x, y, color)
     nothing
     ]]--
 
-    assert(type(x) == "number", "First argument (x) to Pset must be a number. Got " .. x .. " (type " .. type(x) .. ").")
-    assert(x >= 0, "First argument (x) to Pset must not be negative. Got " .. x .. ".")
-    assert(type(y) == "number", "Second argument (y) to Pset must be a number. Got " .. y .. " (type " .. type(y) .. ").")
-    assert(y >= 0, "Second argument (y) to Pset must not be negative. Got " .. y .. ".")
+    assert(x ~= nil, "First argument (x) to Pset must not be nil. Got nil.")
+    assert(type(x) == "number", "First argument (x) to Pset must be a number. Got " .. tostring(x) .. " (type " .. tostring(type(x)) .. ").")
+    assert(x >= 0, "First argument (x) to Pset must not be negative. Got " .. tostring(x) .. ".")
+    assert(type(y) == "number", "Second argument (y) to Pset must be a number. Got " .. tostring(y) .. " (type " .. tostring(type(y)) .. ").")
+    assert(y >= 0, "Second argument (y) to Pset must not be negative. Got " .. tostring(y) .. ".")
 
     local coords = agcalc.pset(x, y)
 
@@ -263,14 +270,18 @@ function Line(sx, sy, tx, ty, color)
     nothing
     ]]--
 
-    assert(type(sx) == "number", "First argument (sx) to Line must be a number. Got " .. sx .. " (type " .. type(sx) .. ").")
-    assert(sx >= 0, "First argument (sx) to Line must not be negative. Got " .. sx .. ".")
-    assert(type(sy) == "number", "Second argument (sy) to Line must be a number. Got " .. sy .. " (type " .. type(sy) .. ").")
-    assert(sy >= 0, "Second argument (sy) to Line must not be negative. Got " .. sy .. ".")
-    assert(type(tx) == "number", "Third argument (tx) to Line must be a number. Got " .. tx .. " (type " .. type(tx) .. ").")
-    assert(tx >= 0, "Third argument (tx) to Line must not be negative. Got " .. tx .. ".")
-    assert(type(ty) == "number", "Fourth argument (ty) to Line must be a number. Got " .. ty .. " (type " .. type(ty) .. ").")
-    assert(ty >= 0, "Fourth argument (ty) to Line must not be negative. Got " .. ty .. ".")
+    assert(sx ~= nil, "First argument (sx) to Line must not be nil. Got nil.")
+    assert(type(sx) == "number", "First argument (sx) to Line must be a number. Got " .. tostring(sx) .. " (type " .. tostring(type(sx)) .. ").")
+    assert(sx >= 0, "First argument (sx) to Line must not be negative. Got " .. tostring(sx) .. ".")
+    assert(sy ~= nil, "Second argument (sy) to Line must not be nil. Got nil.")
+    assert(type(sy) == "number", "Second argument (sy) to Line must be a number. Got " .. tostring(sy) .. " (type " .. tostring(type(sy)) .. ").")
+    assert(sy >= 0, "Second argument (sy) to Line must not be negative. Got " .. tostring(sy) .. ".")
+    assert(tx ~= nil, "Third argument (tx) to Line must not be nil. Got nil.")
+    assert(type(tx) == "number", "Third argument (tx) to Line must be a number. Got " .. tostring(tx) .. " (type " .. tostring(type(tx)) .. ").")
+    assert(tx >= 0, "Third argument (tx) to Line must not be negative. Got " .. tostring(tx) .. ".")
+    assert(ty ~= nil, "Fourth argument (ty) to Line must not be nil. Got nil.")
+    assert(type(ty) == "number", "Fourth argument (ty) to Line must be a number. Got " .. tostring(ty) .. " (type " .. tostring(type(ty)) .. ").")
+    assert(ty >= 0, "Fourth argument (ty) to Line must not be negative. Got " .. tostring(ty) .. ".")
 
     local coords = agcalc.line(sx, sy, tx, ty)
 
@@ -301,14 +312,18 @@ function Rect(x, y, w, h, color)
     nothing
     ]]--
 
-    assert(type(x) == "number", "First argument (x) to Rect must be a number. Got " .. x .. " (type " .. type(x) .. ").")
-    assert(x >= 0, "First argument (x) to Rect must not be negative. Got " .. x .. ".")
-    assert(type(y) == "number", "Second argument (y) to Rect must be a number. Got " .. y .. " (type " .. type(y) .. ").")
-    assert(y >= 0, "Second argument (y) to Rect must not be negative. Got " .. y .. ".")
-    assert(type(w) == "number", "Third argument (w) to Rect must be a number. Got " .. w .. " (type " .. type(w) .. ").")
-    assert(w > 1, "Third argument (w) to Rect must be larger than 1. Got " .. w .. ".")
-    assert(type(h) == "number", "Fourth argument (h) to Rect must be a number. Got " .. h .. " (type " .. type(h) .. ").")
-    assert(h > 1, "Fourth argument (h) to Rect must be larger than 1. Got " .. h .. ".")
+    assert(x ~= nil, "First argument (x) to Rect must not be nil. Got nil.")
+    assert(type(x) == "number", "First argument (x) to Rect must be a number. Got " .. tostring(x) .. " (type " .. tostring(type(x)) .. ").")
+    assert(x >= 0, "First argument (x) to Rect must not be negative. Got " .. tostring(x) .. ".")
+    assert(y ~= nil, "Second argument (y) to Rect must not be nil. Got nil.")
+    assert(type(y) == "number", "Second argument (y) to Rect must be a number. Got " .. tostring(y) .. " (type " .. tostring(type(y)) .. ").")
+    assert(y >= 0, "Second argument (y) to Rect must not be negative. Got " .. tostring(y) .. ".")
+    assert(w ~= nil, "Third argument (w) to Rect must not be nil. Got nil.")
+    assert(type(w) == "number", "Third argument (w) to Rect must be a number. Got " .. tostring(w) .. " (type " .. tostring(type(w)) .. ").")
+    assert(w > 1, "Third argument (w) to Rect must be larger than 1. Got " .. tostring(w) .. ".")
+    assert(h ~= nil, "Fourth argument (h) to Rect must not be nil. Got nil.")
+    assert(type(h) == "number", "Fourth argument (h) to Rect must be a number. Got " .. tostring(h) .. " (type " .. tostring(type(h)) .. ").")
+    assert(h > 1, "Fourth argument (h) to Rect must be larger than 1. Got " .. tostring(h) .. ".")
 
     local coords = agcalc.rect(x, y, w, h)
 
@@ -338,14 +353,18 @@ function Rectfill(x, y, w, h, color)
     nothing
     ]]--
 
-    assert(type(x) == "number", "First argument (x) to Rectfill must be a number. Got " .. x .. " (type " .. type(x) .. ").")
-    assert(x >= 0, "First argument (x) to Rectfill must not be negative. Got " .. x .. ".")
-    assert(type(y) == "number", "Second argument (y) to Rectfill must be a number. Got " .. y .. " (type " .. type(y) .. ").")
-    assert(y >= 0, "Second argument (y) to Rectfill must not be negative. Got " .. y .. ".")
-    assert(type(w) == "number", "Third argument (w) to Rectfill must be a number. Got " .. w .. " (type " .. type(w) .. ").")
-    assert(w > 1, "Third argument (w) to Rectfill must be larger than 1. Got " .. w .. ".")
-    assert(type(h) == "number", "Fourth argument (h) to Rectfill must be a number. Got " .. h .. " (type " .. type(h) .. ").")
-    assert(h > 1, "Fourth argument (h) to Rectfill must be larger than 1. Got " .. h .. ".")
+    assert(x ~= nil, "First argument (x) to Rectfill must not be nil. Got nil.")
+    assert(type(x) == "number", "First argument (x) to Rectfill must be a number. Got " .. tostring(x) .. " (type " .. tostring(type(x)) .. ").")
+    assert(x >= 0, "First argument (x) to Rectfill must not be negative. Got " .. tostring(x) .. ".")
+    assert(y ~= nil, "Second argument (y) to Rectfill must not be nil. Got nil.")
+    assert(type(y) == "number", "Second argument (y) to Rectfill must be a number. Got " .. tostring(y) .. " (type " .. tostring(type(y)) .. ").")
+    assert(y >= 0, "Second argument (y) to Rectfill must not be negative. Got " .. tostring(y) .. ".")
+    assert(w ~= nil, "Third argument (w) to Rectfill must not be nil. Got nil.")
+    assert(type(w) == "number", "Third argument (w) to Rectfill must be a number. Got " .. tostring(w) .. " (type " .. tostring(type(w)) .. ").")
+    assert(w > 1, "Third argument (w) to Rectfill must be larger than 1. Got " .. tostring(w) .. ".")
+    assert(h ~= nil, "Fourth argument (h) to Rectfill must not be nil. Got nil.")
+    assert(type(h) == "number", "Fourth argument (h) to Rectfill must be a number. Got " .. tostring(h) .. " (type " .. tostring(type(h)) .. ").")
+    assert(h > 1, "Fourth argument (h) to Rectfill must be larger than 1. Got " .. tostring(h) .. ".")
 
     local coords = agcalc.rectfill(x, y, w, h)
 
@@ -374,12 +393,15 @@ function Circ(x, y, r, color)
     nothing
     ]]--
 
-    assert(type(x) == "number", "First argument (x) to Circ must be a number. Got " .. x .. " (type " .. type(x) .. ").")
-    assert(x >= 0, "First argument (x) to Circ must not be negative. Got " .. x .. ".")
-    assert(type(y) == "number", "Second argument (y) to Circ must be a number. Got " .. y .. " (type " .. type(y) .. ").")
-    assert(y >= 0, "Second argument (y) to Circ must not be negative. Got " .. y .. ".")
-    assert(type(r) == "number", "Third argument (r) to Circ must be a number. Got " .. r .. " (type " .. type(r) .. ").")
-    assert(r > 0, "Third argument (r) to Circ must be larger than 0. Got " .. r .. ".")
+    assert(x ~= nil, "First argument (x) to Circ must not be nil. Got nil.")
+    assert(type(x) == "number", "First argument (x) to Circ must be a number. Got " .. tostring(x) .. " (type " .. tostring(type(x)) .. ").")
+    assert(x >= 0, "First argument (x) to Circ must not be negative. Got " .. tostring(x) .. ".")
+    assert(y ~= nil, "Second argument (y) to Circ must not be nil. Got nil.")
+    assert(type(y) == "number", "Second argument (y) to Circ must be a number. Got " .. tostring(y) .. " (type " .. tostring(type(y)) .. ").")
+    assert(y >= 0, "Second argument (y) to Circ must not be negative. Got " .. tostring(y) .. ".")
+    assert(r ~= nil, "Third argument (r) to Circ must not be nil. Got nil.")
+    assert(type(r) == "number", "Third argument (r) to Circ must be a number. Got " .. tostring(r) .. " (type " .. tostring(type(r)) .. ").")
+    assert(r > 0, "Third argument (r) to Circ must be larger than 0. Got " .. tostring(r) .. ".")
 
     local coords = agcalc.circ(x, y, r)
 
@@ -409,12 +431,15 @@ function Circfill(x, y, r, color)
     nothing
     ]]--
 
-    assert(type(x) == "number", "First argument (x) to Circfill must be a number. Got " .. x .. " (type " .. type(x) .. ").")
-    assert(x >= 0, "First argument (x) to Circfill must not be negative. Got " .. x .. ".")
-    assert(type(y) == "number", "Second argument (y) to Circfill must be a number. Got " .. y .. " (type " .. type(y) .. ").")
-    assert(y >= 0, "Second argument (y) to Circfill must not be negative. Got " .. y .. ".")
-    assert(type(r) == "number", "Third argument (r) to Circfill must be a number. Got " .. r .. " (type " .. type(r) .. ").")
-    assert(r > 0, "Third argument (r) to Circfill must be larger than 0. Got " .. r .. ".")
+    assert(x ~= nil, "First argument (x) to Circfill must not be nil. Got nil.")
+    assert(type(x) == "number", "First argument (x) to Circfill must be a number. Got " .. tostring(x) .. " (type " .. tostring(type(x)) .. ").")
+    assert(x >= 0, "First argument (x) to Circfill must not be negative. Got " .. tostring(x) .. ".")
+    assert(y ~= nil, "Second argument (y) to Circfill must not be nil. Got nil.")
+    assert(type(y) == "number", "Second argument (y) to Circfill must be a number. Got " .. tostring(y) .. " (type " .. tostring(type(y)) .. ").")
+    assert(y >= 0, "Second argument (y) to Circfill must not be negative. Got " .. tostring(y) .. ".")
+    assert(r ~= nil, "Third argument (r) to Circfill must not be nil. Got nil.")
+    assert(type(r) == "number", "Third argument (r) to Circfill must be a number. Got " .. tostring(r) .. " (type " .. tostring(type(r)) .. ").")
+    assert(r > 0, "Third argument (r) to Circfill must be larger than 0. Got " .. tostring(r) .. ".")
 
     local coords = agcalc.circfill(x, y, r)
 
@@ -445,14 +470,18 @@ function Oval(x, y, rx, ry, color)
     nothing
     ]]--
 
-    assert(type(x) == "number", "First argument (x) to Oval must be a number. Got " .. x .. " (type " .. type(x) .. ").")
-    assert(x >= 0, "First argument (x) to Oval must not be negative. Got " .. x .. ".")
-    assert(type(y) == "number", "Second argument (y) to Oval must be a number. Got " .. y .. " (type " .. type(y) .. ").")
-    assert(y >= 0, "Second argument (y) to Oval must not be negative. Got " .. y .. ".")
-    assert(type(rx) == "number", "Third argument (r) to Oval must be a number. Got " .. rx .. " (type " .. type(rx) .. ").")
-    assert(rx > 0, "Third argument (r) to Oval must be larger than 0. Got " .. rx .. ".")
-    assert(type(ry) == "number", "Fourth argument (ry) to Oval must be a number. Got " .. ry .. " (type " .. type(ry) .. ").")
-    assert(ry > 0, "Fourth argument (ry) to Oval must be larger than 0. Got " .. ry .. ".")
+    assert(x ~= nil, "First argument (x) to Oval must not be nil. Got nil.")
+    assert(type(x) == "number", "First argument (x) to Oval must be a number. Got " .. tostring(x) .. " (type " .. tostring(type(x)) .. ").")
+    assert(x >= 0, "First argument (x) to Oval must not be negative. Got " .. tostring(x) .. ".")
+    assert(y ~= nil, "Second argument (y) to Oval must not be nil. Got nil.")
+    assert(type(y) == "number", "Second argument (y) to Oval must be a number. Got " .. tostring(y) .. " (type " .. tostring(type(y)) .. ").")
+    assert(y >= 0, "Second argument (y) to Oval must not be negative. Got " .. tostring(y) .. ".")
+    assert(rx ~= nil, "Third argument (rx) to Oval must not be nil. Got nil.")
+    assert(type(rx) == "number", "Third argument (r) to Oval must be a number. Got " .. tostring(rx) .. " (type " .. tostring(type(rx)) .. ").")
+    assert(rx > 0, "Third argument (r) to Oval must be larger than 0. Got " .. tostring(rx) .. ".")
+    assert(ry ~= nil, "Fourth argument (ry) to Oval must not be nil. Got nil.")
+    assert(type(ry) == "number", "Fourth argument (ry) to Oval must be a number. Got " .. tostring(ry) .. " (type " .. tostring(type(ry)) .. ").")
+    assert(ry > 0, "Fourth argument (ry) to Oval must be larger than 0. Got " .. tostring(ry) .. ".")
 
     local coords = agcalc.oval(x, y, rx, ry)
 
@@ -483,14 +512,18 @@ function Ovalfill(x, y, rx, ry, color)
     nothing
     ]]--
 
-    assert(type(x) == "number", "First argument (x) to Ovalfill must be a number. Got " .. x .. " (type " .. type(x) .. ").")
-    assert(x >= 0, "First argument (x) to Ovalfill must not be negative. Got " .. x .. ".")
-    assert(type(y) == "number", "Second argument (y) to Ovalfill must be a number. Got " .. y .. " (type " .. type(y) .. ").")
-    assert(y >= 0, "Second argument (y) to Ovalfill must not be negative. Got " .. y .. ".")
-    assert(type(rx) == "number", "Third argument (r) to Ovalfill must be a number. Got " .. rx .. " (type " .. type(rx) .. ").")
-    assert(rx > 0, "Third argument (r) to Ovalfill must be larger than 0. Got " .. rx .. ".")
-    assert(type(ry) == "number", "Fourth argument (ry) to Ovalfill must be a number. Got " .. ry .. " (type " .. type(ry) .. ").")
-    assert(ry > 0, "Fourth argument (ry) to Ovalfill must be larger than 0. Got " .. ry .. ".")
+    assert(x ~= nil, "First argument (x) to Ovalfill must not be nil. Got nil.")
+    assert(type(x) == "number", "First argument (x) to Ovalfill must be a number. Got " .. tostring(x) .. " (type " .. tostring(type(x)) .. ").")
+    assert(x >= 0, "First argument (x) to Ovalfill must not be negative. Got " .. tostring(x) .. ".")
+    assert(y ~= nil, "Second argument (y) to Ovalfill must not be nil. Got nil.")
+    assert(type(y) == "number", "Second argument (y) to Ovalfill must be a number. Got " .. tostring(y) .. " (type " .. tostring(type(y)) .. ").")
+    assert(y >= 0, "Second argument (y) to Ovalfill must not be negative. Got " .. tostring(y) .. ".")
+    assert(rx ~= nil, "Third argument (rx) to Ovalfill must not be nil. Got nil.")
+    assert(type(rx) == "number", "Third argument (r) to Ovalfill must be a number. Got " .. tostring(rx) .. " (type " .. tostring(type(rx)) .. ").")
+    assert(rx > 0, "Third argument (r) to Ovalfill must be larger than 0. Got " .. tostring(rx) .. ".")
+    assert(ry ~= nil, "Fourth argument (ry) to Ovalfill must not be nil. Got nil.")
+    assert(type(ry) == "number", "Fourth argument (ry) to Ovalfill must be a number. Got " .. tostring(ry) .. " (type " .. tostring(type(ry)) .. ").")
+    assert(ry > 0, "Fourth argument (ry) to Ovalfill must be larger than 0. Got " .. tostring(ry) .. ".")
 
     local coords = agcalc.ovalfill(x, y, rx, ry)
 
@@ -525,13 +558,13 @@ function Spr(x, y, num)
     nothing
     ]]--
 
-    assert(type(x) == "number", "First argument (x) to Spr must be a number. Got " .. x .. " (type " .. type(x) .. ").")
-    assert(x >= 0, "First argument (x) to Spr must not be negative. Got " .. x .. ".")
-    assert(type(y) == "number", "Second argument (y) to Spr must be a number. Got " .. y .. " (type " .. type(y) .. ").")
-    assert(y >= 0, "Second argument (y) to Spr must not be negative. Got " .. y .. ".")
-    assert(type(num) == "number", "Third argument (num) to Spr must be a number. Got " .. num .. " (type " .. type(num) .. ").")
-    assert(num > 0, "Third argument (num) to Spr must be a number larger than 0. Got " .. num .. ".")
-    assert(num <= g.sprites.amount, "Third argument (num) to Spr must be a number not larger than " .. g.sprites.amount .. ". Got " .. num .. ".")
+    assert(type(x) == "number", "First argument (x) to Spr must be a number. Got " .. tostring(x) .. " (type " .. tostring(type(x)) .. ").")
+    assert(x >= 0, "First argument (x) to Spr must not be negative. Got " .. tostring(x) .. ".")
+    assert(type(y) == "number", "Second argument (y) to Spr must be a number. Got " .. tostring(y) .. " (type " .. tostring(type(y)) .. ").")
+    assert(y >= 0, "Second argument (y) to Spr must not be negative. Got " .. tostring(y) .. ".")
+    assert(type(num) == "number", "Third argument (num) to Spr must be a number. Got " .. tostring(num) .. " (type " .. tostring(type(num)) .. ").")
+    assert(num > 0, "Third argument (num) to Spr must be a number larger than 0. Got " .. tostring(num) .. ".")
+    assert(num <= g.sprites.amount, "Third argument (num) to Spr must be a number not larger than " .. tostring(g.sprites.amount) .. ". Got " .. tostring(num) .. ".")
 
     local current_sprite = sprite.get_sprite(num)
     local colors = current_sprite["colors"]
