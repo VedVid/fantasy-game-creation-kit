@@ -47,12 +47,12 @@ function Write(x, y, s, color)
     nothing
     ]]--
 
-    assert(type(s) == "string", "First argument (s) to Write must be a valid ASCII string.")
-    assert(type(x) == "number", "Second argument (x) to Write must be a number.")
-    assert(x >= 0, "Second argument (x) to Write must not be negative.")
-    assert(type(y) == "number", "Third argument (y) to Write must be a number.")
-    assert(y >= 0, "Third argument (y) to Write must not be negative.")
-    assert(utils.check_if_string_is_valid_ascii(s), "First argument (s) to Write must be a valid ASCII string.")
+    assert(type(x) == "number", "First argument (x) to Write must be a number.")
+    assert(x >= 0, "First argument (x) to Write must not be negative.")
+    assert(type(y) == "number", "Second argument (y) to Write must be a number.")
+    assert(y >= 0, "Second argument (y) to Write must not be negative.")
+    assert(type(s) == "string", "Third argument (s) to Write must be a valid ASCII string.")
+    assert(utils.check_if_string_is_valid_ascii(s), "Third argument (s) to Write must be a valid ASCII string.")
 
     local lx = math.floor(x * g.screen.gamepixel.w)
     local ly = math.floor(y * g.screen.gamepixel.h)

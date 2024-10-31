@@ -77,11 +77,17 @@ editor.temp_sprite_data = nil
 -- ^^^ number: <number>, rgb01: <table of numbers>, hex: <string>
 
 
--- Data relevant to drawing list of colors to choose from.
+-- Data relevant to drawing:
+-- - list of colors to choose from
+-- - current sprite view
+-- - current sprite number
+-- - list of all sprites
 editor.colors_x_start = 152
 editor.colors_y_start = 30
 editor.current_sprite_x_start = 45
 editor.current_sprite_y_start = 30
+editor.current_sprite_info_x_start = editor.current_sprite_x_start
+editor.current_sprite_info_y_start = editor.current_sprite_y_start + (8 * g.sprites.size_h) + 2
 editor.all_sprites_x_start = 8
 editor.all_sprites_y_start = 192
 
@@ -579,6 +585,30 @@ function editor.draw_current_sprite()
 		agdraw.draw_with_pset(primitive_adjusted, editor.colors[editor.current_color][1])
 		love.graphics.pop()
 	end
+end
+
+
+function editor.write_current_sprite_number()
+	--[[
+	This function writes number of currently selected sprite under the
+	current sprite view. It helps users to get sprite number to use it with
+	Spr function.
+
+	Arguments
+	---------
+	none
+
+	Returns
+	-------
+	nothing
+	]]--
+
+	Write(
+		editor.current_sprite_info_x_start,
+		editor.current_sprite_info_y_start,
+		"Current sprite: " .. editor.current_sprite,
+		WhiteBold
+	)
 end
 
 

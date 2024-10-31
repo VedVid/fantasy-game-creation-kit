@@ -97,6 +97,7 @@ function love.draw()
         sprite_editor.draw_modes_buttons()
         sprite_editor.draw_save_button()
         sprite_editor.draw_current_sprite()
+        sprite_editor.write_current_sprite_number()
     end
     local current_time = love.timer.getTime()
     if g.next_time <= current_time then
