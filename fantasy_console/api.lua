@@ -47,12 +47,12 @@ function Write(x, y, s, color)
     nothing
     ]]--
 
-    assert(type(x) == "number", "First argument (x) to Write must be a number.")
-    assert(x >= 0, "First argument (x) to Write must not be negative.")
-    assert(type(y) == "number", "Second argument (y) to Write must be a number.")
-    assert(y >= 0, "Second argument (y) to Write must not be negative.")
-    assert(type(s) == "string", "Third argument (s) to Write must be a valid ASCII string.")
-    assert(utils.check_if_string_is_valid_ascii(s), "Third argument (s) to Write must be a valid ASCII string.")
+    assert(type(x) == "number", "First argument (x) to Write must be a number. Got " .. x .. " (type " .. type(x) .. ").")
+    assert(x >= 0, "First argument (x) to Write must not be negative. Got " .. x .. ".")
+    assert(type(y) == "number", "Second argument (y) to Write must be a number. Got " .. y .. " (type " .. type(y) .. ").")
+    assert(y >= 0, "Second argument (y) to Write must not be negative. Got " .. y .. ".")
+    assert(type(s) == "string", "Third argument (s) to Write must be a valid ASCII string. Got " .. s .. " (type " .. type(s) .. ").")
+    assert(utils.check_if_string_is_valid_ascii(s), "Third argument (s) to Write must be a valid ASCII string. Got " .. s .. ".")
 
     local lx = math.floor(x * g.screen.gamepixel.w)
     local ly = math.floor(y * g.screen.gamepixel.h)
@@ -86,10 +86,10 @@ function Join(ss, delimiter)
     string
     ]]--
 
-    assert(type(ss) == "table", "First argument (ss) to Join must be a table.")
+    assert(type(ss) == "table", "First argument (ss) to Join must be a table. Got " .. ss .. " (type " .. type(ss) .. ").")
     for _, element in ipairs(ss) do
-        assert(type(element) == "string", "Every element of table passed to Join must be a valid ASCII string.")
-        assert(utils.check_if_string_is_valid_ascii(element), "Every element of table passed to Join must be a valid ASCII string.")
+        assert(type(element) == "string", "Every element of table passed to Join must be a valid ASCII string. Got " .. element .. " (type " .. type(element) .. ").")
+        assert(utils.check_if_string_is_valid_ascii(element), "Every element of table passed to Join must be a valid ASCII string. Got " .. element .. ".")
     end
 
     if not delimiter then
@@ -120,10 +120,10 @@ function Split(s, delimiter)
     {strings}
     ]]--
 
-    assert(type(s) == "string", "First argument (s) passed to Split must be a string.")
-    assert(utils.check_if_string_is_valid_ascii(s), "First argument (s) passed to Split must be a valid ASCII string.")
+    assert(type(s) == "string", "First argument (s) passed to Split must be a string. Got " .. s .. " (type " .. type(s) .. ").")
+    assert(utils.check_if_string_is_valid_ascii(s), "First argument (s) passed to Split must be a valid ASCII string. Got " .. s .. ".")
     if delimiter then
-        assert(type(delimiter) == "string", "If second argument (delimiter) is passed to Split, it must be a string.")
+        assert(type(delimiter) == "string", "If second argument (delimiter) is passed to Split, it must be a string. Got " .. delimiter .. ".")
     end
 
     if delimiter == "" then
@@ -163,8 +163,8 @@ function Sub(s, i, j)
     string
     ]]--
 
-    assert(type(s) == "string", "First argument (s) passed to Sub must be a valid ASCII string.")
-    assert(utils.check_if_string_is_valid_ascii(s), "First argument (s) passed to Sub must be a valid ASCII string.")
+    assert(type(s) == "string", "First argument (s) passed to Sub must be a valid ASCII string. Got " .. s .. " (type " .. type(s) .. ").")
+    assert(utils.check_if_string_is_valid_ascii(s), "First argument (s) passed to Sub must be a valid ASCII string. Got " .. s .. ".")
 
     if j < 1 then
         j = i
