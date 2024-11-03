@@ -1,0 +1,6 @@
+- Ensure that `console` is set to false in conf.lua
+- Ensure that `sprites.json` and `sprites_test.json` are all black
+- Remove `pprint.lua` and `ProFi.lua` from the `fantasy_console` directory
+- Copy all the examples
+- For linux_small: add sprites_small and start_small files and rename them to sprites and start
+- For linux_full: add sprites_full and sprites_full files and rename them to sprites and start

@@ -6,10 +6,10 @@
 Text manipulation.
 
 
-Write(s, x, y, [color])
+Write(x, y, s, [color])
 =======================
 
-    The Function Write uses Love2D's print function under the hood,
+    Function Write uses Love2D's print function under the hood,
     but it does not expose all of its arguments to the user.
     Rotation, scaling, and offset are set to Love2D's defaults.
 
@@ -18,15 +18,15 @@ Write(s, x, y, [color])
 
     Arguments
     ---------
-    s : string
-        Text to be printed. It has to be a valid ASCII string.
     x : number
         Position of the text beginning at the x-axis.
     y : number
         Position of the text beginning at the y-axis.
+    s : string
+        Text to be printed. It has to be a valid ASCII string.
     color : palette.<color>
         Color of the text. Defaults to the default foreground color.
-    
+
     Returns
     -------
     nothing
@@ -48,7 +48,7 @@ Join(ss, [delimiter])
         An optional argument that specifies what symbol or text
         will be added between the joined strings.
         It defaults to an empty string.
-    
+
     Returns
     -------
     string
@@ -70,7 +70,7 @@ Split(s, [delimiter])
     delimiter : string = " "
         The delimiter used to split the string. It defaults
         to a space.
-    
+
     Returns
     -------
     {strings}
@@ -90,7 +90,7 @@ Sub(s, i, j)
         Start of the substring (i included).
     j : number
         End of the substring (j included). Must be positive.
-    
+
     Returns
     -------
     string
@@ -141,7 +141,7 @@ Pset(x, y, [color])
     color : palette.<color>
         The color of the pixel to be created. It defaults
         to the default foreground color.
-    
+
     Returns
     -------
     nothing
@@ -191,7 +191,7 @@ Rect(x, y, w, h, [color])
     color : palette.<color>
         The color of the rectangle to be created. It defaults
         to the default foreground color.
-    
+
     Returns
     -------
     nothing
@@ -215,7 +215,7 @@ Rectfill(x, y, w, h, [color])
     color : palette.<color>
         The color of the rectangle to be created. It defaults
         to the default foreground color.
-    
+
     Returns
     -------
     nothing
@@ -238,7 +238,7 @@ Circ(x, y, r, [color])
     color : palette.<color>
         The color of the circle to be created. It defaults
         to the default foreground color.
-    
+
     Returns
     -------
     nothing
@@ -247,10 +247,10 @@ Circ(x, y, r, [color])
 Circfill(x, y, r, [color])
 ==========================
 
-    The Circfill function draws a filled circle on the screen. 
+    The Circfill function draws a filled circle on the screen.
     It reuses the Circ function for the borders, and then adds
     the coloring.
-    
+
     Arguments
     ---------
     x : number
@@ -262,7 +262,7 @@ Circfill(x, y, r, [color])
     color : palette.<color>
         The color of the circle to be created. It defaults
         to the default foreground color.
-    
+
     Returns
     -------
     nothing
@@ -312,6 +312,34 @@ Ovalfill(x, y, rx, ry, [color])
     color : palette.<color>
         The color of the ellipse to be created. It defaults
         to the default foreground color.
+
+    Returns
+    -------
+    nothing
+
+
+----------------------
+---------- SPRITES --
+----------------------
+
+
+Spr(x, y, num)
+==============
+
+    The Spr function allows to draw a sprite on on the specific coordinates.
+    Please note that this function, unlike its equivalent from PICO-8,
+    does not allow to specify a range of sprites to draw.
+
+    Arguments
+    ---------
+    x : number
+        Position of top-left sprite corner on the x axis.
+    y : number
+        Position of top-left sprite corner on the y axis.
+    num : number
+        Number of sprite in the spreadsheet. You should be able to
+        determine sprite number looking at the GUI of the sprites
+        editor.
 
     Returns
     -------

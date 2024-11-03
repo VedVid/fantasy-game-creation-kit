@@ -24,3 +24,19 @@ This software uses the following programs, libraries and resources:
    ttf font by erytau.
    https://erytau.itch.io/pixuf  [available as of 20240605]
    CC BY 4.0 – full text available in the `licenses` directory
+
+6. json.lua
+   Simple json serialization library for Lua, by rxi.
+   https://github.com/rxi/json.lua  [available as of 20240629]
+   MIT license – full text available in the `licenses` directory
+
+7. ProFi
+   Profiling library by Luke Perkin.
+   https://gist.github.com/perky/2838755/  [available as of 20240825]
+   MIT license – head comment from the ProFi.lua file is available
+   in the `licenses` directory.
+
+8. pprint.lua
+   Pretty printer for Lua, by Chen Tao.
+   https://github.com/jagt/pprint.lua  [available as of 20240908]
+   Unlicense – full text available in the `licenses` directory

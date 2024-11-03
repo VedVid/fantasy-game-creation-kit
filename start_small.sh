@@ -1,0 +1,1 @@
+love ./fantasy_console

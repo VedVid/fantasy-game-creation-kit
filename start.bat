@@ -1,2 +1,2 @@
 @echo off
-love\love.exe fantasy_console
+love_windows\love.exe fantasy_console

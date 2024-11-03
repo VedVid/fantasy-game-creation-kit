@@ -7,9 +7,11 @@ requiring user to write repeatedly module name over and over.
 ]]--
 
 
-local gamepixel = require "gamepixel"
+local agcalc = require "api_geometry_calculations"
+local agdraw = require "api_geometry_drawing"
 local g = require "globals"
 local palette = require "palette"
+local sprite = require "sprite"
 local utils = require "utils"
 
 
@@ -18,11 +20,11 @@ local utils = require "utils"
 ------------------
 
 
-function Write(s, x, y, color)
+function Write(x, y, s, color)
     --[[
     Function Write uses the Love2D's print function under the
     hood, but it does not expose all of its arguments to the
-    user. 
+    user.
     Rotation, scaling, and offset are set to the Love2D's
     defaults.
 
@@ -31,31 +33,37 @@ function Write(s, x, y, color)
 
     Arguments
     ---------
-    s : string
-        Text to be printed. Must be a valid ASCII string.
     x : number
         Position of text beginning at the x axis.
     y : number
         Position of text beginning at the y axis.
+    s : string
+        Text to be printed. Must be a valid ASCII string.
     color : palette.<color>
         Color of text. Defaults to the default foreground colour.
-    
+
     Returns
     -------
     nothing
     ]]--
 
-    assert(type(s) == "string", "First argument (s) to Write must be a valid ASCII string.")
-    assert(type(x) == "number", "Second argument (x) to Write must be a number.")
-    assert(x >= 0, "Second argument (x) to Write must not be negative.")
-    assert(type(y) == "number", "Third argument (y) to Write must be a number.")
-    assert(y >= 0, "Third argument (y) to Write must not be negative.")
-    assert(utils.check_if_string_is_valid_ascii(s), "First argument (s) to Write must be a valid ASCII string.")
+    assert(x ~= nil, "First argument (x) to Write must not be nil. Got nil.")
+    assert(type(x) == "number", "First argument (x) to Write must be a number. Got " .. tostring(x) .. " (type " .. tostring(type(x)) .. ").")
+    assert(x >= 0, "First argument (x) to Write must not be negative. Got " .. tostring(x) .. ".")
+    assert(y ~= nil, "Second argument (y) to Write must not be nil. Got nil.")
+    assert(type(y) == "number", "Second argument (y) to Write must be a number. Got " .. tostring(y) .. " (type " .. tostring(type(y)) .. ").")
+    assert(y >= 0, "Second argument (y) to Write must not be negative. Got " .. tostring(y) .. ".")
+    assert(s ~= nil, "Third argument (s) to Write must not be nil. Got nil.")
+    assert(type(s) == "string", "Third argument (s) to Write must be a valid ASCII string. Got " .. tostring(s) .. " (type " .. tostring(type(s)) .. ").")
+    assert(utils.check_if_string_is_valid_ascii(s), "Third argument (s) to Write must be a valid ASCII string. Got " .. tostring(s) .. ".")
 
     local lx = math.floor(x * g.screen.gamepixel.w)
     local ly = math.floor(y * g.screen.gamepixel.h)
     if not color then color = g.colors.default_fg_color.rgb01 end
-    love.graphics.setColor(unpack(color))
+    local ok, _ = pcall(love.graphics.setColor, unpack(color))
+    if not ok then
+        ok, _ = pcall(love.graphics.setColor, unpack(color.rgb01))
+    end
     love.graphics.print(s, lx, ly, 0, 1, 1, 0, 0)
     love.graphics.setColor(unpack(g.colors.default_fg_color.rgb01))
 end
@@ -75,16 +83,17 @@ function Join(ss, delimiter)
     delimiter : string = ""
         Optional argument. It specifies what symbol or text will
         be added between strings joined. Defaults to empty string.
-    
+
     Returns
     -------
     string
     ]]--
 
-    assert(type(ss) == "table", "First argument (ss) to Join must be a table.")
+    assert(ss ~= nil, "First argument (ss) to Join must not be nil. Got nil.")
+    assert(type(ss) == "table", "First argument (ss) to Join must be a table. Got " .. tostring(ss) .. " (type " .. tostring(type(ss)) .. ").")
     for _, element in ipairs(ss) do
-        assert(type(element) == "string", "Every element of table passed to Join must be a valid ASCII string.")
-        assert(utils.check_if_string_is_valid_ascii(element), "Every element of table passed to Join must be a valid ASCII string.")
+        assert(type(element) == "string", "Every element of table passed to Join must be a valid ASCII string. Got " .. tostring(element) .. " (type " .. tostring(type(element)) .. ").")
+        assert(utils.check_if_string_is_valid_ascii(element), "Every element of table passed to Join must be a valid ASCII string. Got " .. tostring(element) .. ".")
     end
 
     if not delimiter then
@@ -109,16 +118,17 @@ function Split(s, delimiter)
         Text to be split. Must be a valid ASCII string.
     delimiter : string = " "
         Delimiter used to split the string. Defaults to space.
-    
+
     Returns
     -------
     {strings}
     ]]--
 
-    assert(type(s) == "string", "First argument (s) passed to Split must be a string.")
-    assert(utils.check_if_string_is_valid_ascii(s), "First argument (s) passed to Split must be a valid ASCII string.")
+    assert(s ~= nil, "First argument (s) to Split must not be nil. Got nil.")
+    assert(type(s) == "string", "First argument (s) passed to Split must be a string. Got " .. tostring(s) .. " (type " .. tostring(type(s)) .. ").")
+    assert(utils.check_if_string_is_valid_ascii(s), "First argument (s) passed to Split must be a valid ASCII string. Got " .. tostring(s) .. ".")
     if delimiter then
-        assert(type(delimiter) == "string", "If second argument (delimiter) is passed to Split, it must be a string.")
+        assert(type(delimiter) == "string", "If second argument (delimiter) is passed to Split, it must be a string. Got " .. tostring(delimiter) .. ".")
     end
 
     if delimiter == "" then
@@ -152,14 +162,15 @@ function Sub(s, i, j)
         Start of the substring (i included).
     j : number
         End of the substring (j included). Must be positive.
-    
+
     Returns
     -------
     string
     ]]--
 
-    assert(type(s) == "string", "First argument (s) passed to Sub must be a valid ASCII string.")
-    assert(utils.check_if_string_is_valid_ascii(s), "First argument (s) passed to Sub must be a valid ASCII string.")
+    assert(s ~= nil, "First argument (s) to Sub must not be nil. Got nil.")
+    assert(type(s) == "string", "First argument (s) passed to Sub must be a valid ASCII string. Got " .. tostring(s) .. " (type " .. tostring(type(s)) .. ").")
+    assert(utils.check_if_string_is_valid_ascii(s), "First argument (s) passed to Sub must be a valid ASCII string. Got " .. tostring(s) .. ".")
 
     if j < 1 then
         j = i
@@ -211,60 +222,35 @@ function Pset(x, y, color)
     color : palette.<color>
         Color of pixel to-bo-created. Defaults to the default
         foreground colour.
-    
+
     Returns
     -------
     nothing
     ]]--
 
-    assert(type(x) == "number", "First argument (x) to Pset must be a number.")
-    assert(x >= 0, "First argument (x) to Pset must not be negative.")
-    assert(type(y) == "number", "Second argument (y) to Pset must be a number.")
-    assert(y >= 0, "Second argument (y) to Pset must not be negative.")
+    assert(x ~= nil, "First argument (x) to Pset must not be nil. Got nil.")
+    assert(type(x) == "number", "First argument (x) to Pset must be a number. Got " .. tostring(x) .. " (type " .. tostring(type(x)) .. ").")
+    assert(x >= 0, "First argument (x) to Pset must not be negative. Got " .. tostring(x) .. ".")
+    assert(type(y) == "number", "Second argument (y) to Pset must be a number. Got " .. tostring(y) .. " (type " .. tostring(type(y)) .. ").")
+    assert(y >= 0, "Second argument (y) to Pset must not be negative. Got " .. tostring(y) .. ".")
 
-    local lx = math.floor(x * g.screen.gamepixel.w)
-    local ly = math.floor(y * g.screen.gamepixel.h)
-    if not color then color = g.colors.default_fg_color.rgb01 end
-    love.graphics.setColor(unpack(color))
-    love.graphics.rectangle(
-        "fill",
-        lx,
-        ly,
-        g.screen.gamepixel.w,
-        g.screen.gamepixel.h
-    )
-    love.graphics.setColor(unpack(g.colors.default_fg_color.rgb01))
+    local coords = agcalc.pset(x, y)
+
+    agdraw.draw_with_pset(coords, color)
 end
 
 
 function Line(sx, sy, tx, ty, color)
-    -- This is a translation of bresenham algorithm by Petr Viktorin,
+    --[[
+    -- This function draws a line from sx, sy to tx, ty. Under the hood,
+    -- it uses translation of bresenham algorithm by Petr Viktorin
     -- written in Python, released under the MIT license.
     -- It's available at https://github.com/encukou/bresenham as of
     -- 20240521
-    --[[
-Copyright © 2016 Petr Viktorin
+    -- For details, please read the comment to
+    -- api_geometry_calculations.line, and to the
+    -- `bresenham_by_Petr_Viktoring.txt` file inside `licenses` directory.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
-    ]]--
-
-    --[[
     Arguments
     ---------
     sx : number
@@ -284,82 +270,28 @@ THE SOFTWARE.
     nothing
     ]]--
 
-    assert(type(sx) == "number", "First argument (sx) to Line must be a number.")
-    assert(sx >= 0, "First argument (sx) to Line must not be negative.")
-    assert(type(sy) == "number", "Second argument (sy) to Line must be a number.")
-    assert(sy >= 0, "Second argument (sy) to Line must not be negative.")
-    assert(type(tx) == "number", "Third argument (tx) to Line must be a number.")
-    assert(tx >= 0, "Third argument (tx) to Line must not be negative.")
-    assert(type(ty) == "number", "Fourth argument (ty) to Line must be a number.")
-    assert(ty >= 0, "Fourth argument (ty) to Line must not be negative.")
+    assert(sx ~= nil, "First argument (sx) to Line must not be nil. Got nil.")
+    assert(type(sx) == "number", "First argument (sx) to Line must be a number. Got " .. tostring(sx) .. " (type " .. tostring(type(sx)) .. ").")
+    assert(sx >= 0, "First argument (sx) to Line must not be negative. Got " .. tostring(sx) .. ".")
+    assert(sy ~= nil, "Second argument (sy) to Line must not be nil. Got nil.")
+    assert(type(sy) == "number", "Second argument (sy) to Line must be a number. Got " .. tostring(sy) .. " (type " .. tostring(type(sy)) .. ").")
+    assert(sy >= 0, "Second argument (sy) to Line must not be negative. Got " .. tostring(sy) .. ".")
+    assert(tx ~= nil, "Third argument (tx) to Line must not be nil. Got nil.")
+    assert(type(tx) == "number", "Third argument (tx) to Line must be a number. Got " .. tostring(tx) .. " (type " .. tostring(type(tx)) .. ").")
+    assert(tx >= 0, "Third argument (tx) to Line must not be negative. Got " .. tostring(tx) .. ".")
+    assert(ty ~= nil, "Fourth argument (ty) to Line must not be nil. Got nil.")
+    assert(type(ty) == "number", "Fourth argument (ty) to Line must be a number. Got " .. tostring(ty) .. " (type " .. tostring(type(ty)) .. ").")
+    assert(ty >= 0, "Fourth argument (ty) to Line must not be negative. Got " .. tostring(ty) .. ".")
 
-    if not color then color = g.colors.default_fg_color.rgb01 end
+    local coords = agcalc.line(sx, sy, tx, ty)
 
-    sx = math.floor(sx)
-    sy = math.floor(sy)
-    tx = math.floor(tx)
-    ty = math.floor(ty)
-
-    local dx = tx - sx
-    local dy = ty - sy
-
-    local xsign = 1
-    if dx <= 0 then
-        xsign = -1
-    end
-
-    local ysign = 1
-    if dy <= 0 then
-        ysign = -1
-    end
-
-    dx = math.abs(dx)
-    dy = math.abs(dy)
-
-    local xx = xsign
-    local xy = 0
-    local yx = 0
-    local yy = ysign
-    if dx <= dy then
-        dx, dy = dy, dx
-        xx = 0
-        xy = ysign
-        yx = xsign
-        yy = 0
-    end
-
-    local d = 2 * dy - dx
-    local y = 0
-
-    for x = 0, dx do
-        local coord = {}
-        coord.x = sx + x * xx + y * yx
-        coord.y = sy + x * xy + y * yy
-        Pset(coord.x, coord.y, color)
-        if d >= 0 then
-            y = y + 1
-            d = d - 2 * dx
-        end
-        d = d + 2 * dy
-    end
+    agdraw.draw_with_pset(coords, color)
 end
 
 
 function Rect(x, y, w, h, color)
     --[[
     Function Rect creates empty (ie not filled) rectangle on screen.
-    lx, ly are increased by half of the current gamepixel due the
-    three reasons:
-    - by default, Love2D starts drawing in the middle of the pixel,
-        which mights result in blurry lines unless we pass 0.5 to
-        x and y all the time (not feasible with current app architecture)
-        or unless we use "rough" line style (which we use);
-    - rough line style rounds the half-pixel which mights cause
-        off-by-one issues;
-    - setting wide line width cause the line to grow in both directions.
-    lw, lh are decreased by single gamepixel because Love2D does
-    not take into account the starting point when calculating size
-    of rectangle.
 
     Arguments
     ---------
@@ -374,41 +306,34 @@ function Rect(x, y, w, h, color)
     color : palette.<color>
         Color of pixel to-bo-created. Defaults to the default
         foreground colour.
-    
+
     Returns
     -------
     nothing
     ]]--
 
-    assert(type(x) == "number", "First argument (x) to Rect must be a number.")
-    assert(x >= 0, "First argument (x) to Rect must not be negative.")
-    assert(type(y) == "number", "Second argument (y) to Rect must be a number.")
-    assert(y >= 0, "Second argument (y) to Rect must not be negative.")
-    assert(type(w) == "number", "Third argument (w) to Rect must be a number.")
-    assert(w > 1, "Third argument (w) to Rect must be larger than 1.")
-    assert(type(h) == "number", "Fourth argument (h) to Rect must be a number.")
-    assert(h > 1, "Fourth argument (h) to Rect must be larger than 1.")
+    assert(x ~= nil, "First argument (x) to Rect must not be nil. Got nil.")
+    assert(type(x) == "number", "First argument (x) to Rect must be a number. Got " .. tostring(x) .. " (type " .. tostring(type(x)) .. ").")
+    assert(x >= 0, "First argument (x) to Rect must not be negative. Got " .. tostring(x) .. ".")
+    assert(y ~= nil, "Second argument (y) to Rect must not be nil. Got nil.")
+    assert(type(y) == "number", "Second argument (y) to Rect must be a number. Got " .. tostring(y) .. " (type " .. tostring(type(y)) .. ").")
+    assert(y >= 0, "Second argument (y) to Rect must not be negative. Got " .. tostring(y) .. ".")
+    assert(w ~= nil, "Third argument (w) to Rect must not be nil. Got nil.")
+    assert(type(w) == "number", "Third argument (w) to Rect must be a number. Got " .. tostring(w) .. " (type " .. tostring(type(w)) .. ").")
+    assert(w > 1, "Third argument (w) to Rect must be larger than 1. Got " .. tostring(w) .. ".")
+    assert(h ~= nil, "Fourth argument (h) to Rect must not be nil. Got nil.")
+    assert(type(h) == "number", "Fourth argument (h) to Rect must be a number. Got " .. tostring(h) .. " (type " .. tostring(type(h)) .. ").")
+    assert(h > 1, "Fourth argument (h) to Rect must be larger than 1. Got " .. tostring(h) .. ".")
 
-    local lx = (x * g.screen.gamepixel.w) + (g.screen.gamepixel.w / 2)
-    local ly = (y * g.screen.gamepixel.h) + (g.screen.gamepixel.h / 2)
-    local lw = (w - 1) * g.screen.gamepixel.w
-    local lh = (h - 1) * g.screen.gamepixel.h
+    local coords = agcalc.rect(x, y, w, h)
 
-    if not color then color = g.colors.default_fg_color.rgb01 end
-
-    love.graphics.setColor(unpack(color))
-    love.graphics.rectangle("line", lx, ly, lw, lh)
-    love.graphics.setColor(unpack(g.colors.default_fg_color.rgb01))
+    agdraw.draw_with_pset(coords, color)
 end
 
 
 function Rectfill(x, y, w, h, color)
     --[[
     Function Rectfill drawn filled rectangle on the screen.
-    `rectangle("line")` and `recangle("filled")` works a bit differently
-    in Love2D.
-    Rectfill does not require taking into account line width set in
-    Love2D, hence the Rectfill implementation is simpler than the Rect one.
 
     Arguments
     ---------
@@ -422,38 +347,35 @@ function Rectfill(x, y, w, h, color)
         Height of rectangle.
     color : palette.<color>
         Color of pixel to-bo-created. Defaults to the default foreground colour.
-    
+
     Returns
     -------
     nothing
     ]]--
 
-    assert(type(x) == "number", "First argument (x) to Rectfill must be a number.")
-    assert(x >= 0, "First argument (x) to Rectfill must not be negative.")
-    assert(type(y) == "number", "Second argument (y) to Rectfill must be a number.")
-    assert(y >= 0, "Second argument (y) to Rectfill must not be negative.")
-    assert(type(w) == "number", "Third argument (w) to Rectfill must be a number.")
-    assert(w > 1, "Third argument (w) to Rectfill must be larger than 1.")
-    assert(type(h) == "number", "Fourth argument (h) to Rectfill must be a number.")
-    assert(h > 1, "Fourth argument (h) to Rectfill must be larger than 1.")
+    assert(x ~= nil, "First argument (x) to Rectfill must not be nil. Got nil.")
+    assert(type(x) == "number", "First argument (x) to Rectfill must be a number. Got " .. tostring(x) .. " (type " .. tostring(type(x)) .. ").")
+    assert(x >= 0, "First argument (x) to Rectfill must not be negative. Got " .. tostring(x) .. ".")
+    assert(y ~= nil, "Second argument (y) to Rectfill must not be nil. Got nil.")
+    assert(type(y) == "number", "Second argument (y) to Rectfill must be a number. Got " .. tostring(y) .. " (type " .. tostring(type(y)) .. ").")
+    assert(y >= 0, "Second argument (y) to Rectfill must not be negative. Got " .. tostring(y) .. ".")
+    assert(w ~= nil, "Third argument (w) to Rectfill must not be nil. Got nil.")
+    assert(type(w) == "number", "Third argument (w) to Rectfill must be a number. Got " .. tostring(w) .. " (type " .. tostring(type(w)) .. ").")
+    assert(w > 1, "Third argument (w) to Rectfill must be larger than 1. Got " .. tostring(w) .. ".")
+    assert(h ~= nil, "Fourth argument (h) to Rectfill must not be nil. Got nil.")
+    assert(type(h) == "number", "Fourth argument (h) to Rectfill must be a number. Got " .. tostring(h) .. " (type " .. tostring(type(h)) .. ").")
+    assert(h > 1, "Fourth argument (h) to Rectfill must be larger than 1. Got " .. tostring(h) .. ".")
 
-    local lx = math.floor(x * g.screen.gamepixel.w)
-    local ly = math.floor(y * g.screen.gamepixel.h)
-    local lw = math.floor(w * g.screen.gamepixel.w)
-    local lh = math.floor(h * g.screen.gamepixel.h)
+    local coords = agcalc.rectfill(x, y, w, h)
 
-    if not color then color = g.colors.default_fg_color.rgb01 end
-
-    love.graphics.setColor(unpack(color))
-    love.graphics.rectangle("fill", lx, ly, lw, lh)
-    love.graphics.setColor(unpack(g.colors.default_fg_color.rgb01))
+    agdraw.draw_with_pset(coords, color)
 end
 
 
 function Circ(x, y, r, color)
     --[[
     Function Circ creates empty (ie not filled) circle on the screen.
-    It uses midpoint circle alogrithm. 
+    Under the hood, it uses midpoint circle alogrithm.
 
     Arguments
     ---------
@@ -465,53 +387,34 @@ function Circ(x, y, r, color)
         Radius.
     color : palette.<color>
         Color of circle. Defaults to the default foreground colour.
-    
+
     Returns
     -------
     nothing
     ]]--
 
-    assert(type(x) == "number", "First argument (x) to Circ must be a number.")
-    assert(x >= 0, "First argument (x) to Circ must not be negative.")
-    assert(type(y) == "number", "Second argument (y) to Circ must be a number.")
-    assert(y >= 0, "Second argument (y) to Circ must not be negative.")
-    assert(type(r) == "number", "Third argument (r) to Circ must be a number.")
-    assert(r > 0, "Third argument (r) to Circ must be larger than 0.")
+    assert(x ~= nil, "First argument (x) to Circ must not be nil. Got nil.")
+    assert(type(x) == "number", "First argument (x) to Circ must be a number. Got " .. tostring(x) .. " (type " .. tostring(type(x)) .. ").")
+    assert(x >= 0, "First argument (x) to Circ must not be negative. Got " .. tostring(x) .. ".")
+    assert(y ~= nil, "Second argument (y) to Circ must not be nil. Got nil.")
+    assert(type(y) == "number", "Second argument (y) to Circ must be a number. Got " .. tostring(y) .. " (type " .. tostring(type(y)) .. ").")
+    assert(y >= 0, "Second argument (y) to Circ must not be negative. Got " .. tostring(y) .. ".")
+    assert(r ~= nil, "Third argument (r) to Circ must not be nil. Got nil.")
+    assert(type(r) == "number", "Third argument (r) to Circ must be a number. Got " .. tostring(r) .. " (type " .. tostring(type(r)) .. ").")
+    assert(r > 0, "Third argument (r) to Circ must be larger than 0. Got " .. tostring(r) .. ".")
 
-    x = math.floor(x)
-    y = math.floor(y)
-    r = math.floor(r)
+    local coords = agcalc.circ(x, y, r)
 
-    if not color then color = g.colors.default_fg_color.rgb01 end
-
-    local dx = r
-    local dy = 0
-    local err = 1 - r
-    while dx >= dy do
-        Pset(x + dx, y + dy, color)
-        Pset(x - dx, y + dy, color)
-        Pset(x + dx, y - dy, color)
-        Pset(x - dx, y - dy, color)
-        Pset(x + dy, y + dx, color)
-        Pset(x - dy, y + dx, color)
-        Pset(x + dy, y - dx, color)
-        Pset(x - dy, y - dx, color)
-        dy = dy + 1
-        if err < 0 then
-            err = err + 2 * dy + 1
-        else
-            dx = dx - 1
-            err = err + 2 * (dy - dx) + 1
-        end
-    end
+    agdraw.draw_with_pset(coords, color)
 end
 
 
 function Circfill(x, y, r, color)
     --[[
-    Function Circfill draws filled circle on the screen. 
-    It reuses Circ function for the borders, and brute-forces the coloring.
-    
+    Function Circfill draws filled circle on the screen.
+    Under the hood, it uses midpoint circle alogrithm for border,
+    then brute-forces the colouring inside the borders.
+
     Arguments
     ---------
     x : number
@@ -522,33 +425,25 @@ function Circfill(x, y, r, color)
         Radius.
     color : palette.<color>
         Color of circle. Defaults to the default foreground colour.
-    
+
     Returns
     -------
     nothing
     ]]--
 
-    assert(type(x) == "number", "First argument (x) to Circfill must be a number.")
-    assert(x >= 0, "First argument (x) to Circfill must not be negative.")
-    assert(type(y) == "number", "Second argument (y) to Circfill must be a number.")
-    assert(y >= 0, "Second argument (y) to Circfill must not be negative.")
-    assert(type(r) == "number", "Third argument (r) to Circfill must be a number.")
-    assert(r > 0, "Third argument (r) to Circfill must be larger than 0.")
+    assert(x ~= nil, "First argument (x) to Circfill must not be nil. Got nil.")
+    assert(type(x) == "number", "First argument (x) to Circfill must be a number. Got " .. tostring(x) .. " (type " .. tostring(type(x)) .. ").")
+    assert(x >= 0, "First argument (x) to Circfill must not be negative. Got " .. tostring(x) .. ".")
+    assert(y ~= nil, "Second argument (y) to Circfill must not be nil. Got nil.")
+    assert(type(y) == "number", "Second argument (y) to Circfill must be a number. Got " .. tostring(y) .. " (type " .. tostring(type(y)) .. ").")
+    assert(y >= 0, "Second argument (y) to Circfill must not be negative. Got " .. tostring(y) .. ".")
+    assert(r ~= nil, "Third argument (r) to Circfill must not be nil. Got nil.")
+    assert(type(r) == "number", "Third argument (r) to Circfill must be a number. Got " .. tostring(r) .. " (type " .. tostring(type(r)) .. ").")
+    assert(r > 0, "Third argument (r) to Circfill must be larger than 0. Got " .. tostring(r) .. ".")
 
-    x = math.floor(x)
-    y = math.floor(y)
-    r = math.floor(r)
+    local coords = agcalc.circfill(x, y, r)
 
-    if not color then color = g.colors.default_fg_color.rgb01 end
-
-    for ty=-r,r do
-        for tx=-r,r do
-            if(tx*tx+ty*ty <= r*r) then
-                Pset(x + tx, y + ty, color)
-            end
-        end
-    end
-    Circ(x, y, r, color)
+    agdraw.draw_with_pset(coords, color)
 end
 
 
@@ -569,67 +464,28 @@ function Oval(x, y, rx, ry, color)
         Length of radius on the y axis.
     color : palette.<color>
         Color of ellipse. Defaults to the default foreground colour.
+
+    Returns
+    -------
+    nothing
     ]]--
 
-    assert(type(x) == "number", "First argument (x) to Oval must be a number.")
-    assert(x >= 0, "First argument (x) to Oval must not be negative.")
-    assert(type(y) == "number", "Second argument (y) to Oval must be a number.")
-    assert(y >= 0, "Second argument (y) to Oval must not be negative.")
-    assert(type(rx) == "number", "Third argument (rx) to Oval must be a number.")
-    assert(rx > 0, "Third argument (rx) to Oval must be larger than 0.")
-    assert(type(ry) == "number", "Fourth argument (ry) to Oval must be a number.")
-    assert(ry > 0, "Fourth argument (ry) to Oval must be larger than 0.")
+    assert(x ~= nil, "First argument (x) to Oval must not be nil. Got nil.")
+    assert(type(x) == "number", "First argument (x) to Oval must be a number. Got " .. tostring(x) .. " (type " .. tostring(type(x)) .. ").")
+    assert(x >= 0, "First argument (x) to Oval must not be negative. Got " .. tostring(x) .. ".")
+    assert(y ~= nil, "Second argument (y) to Oval must not be nil. Got nil.")
+    assert(type(y) == "number", "Second argument (y) to Oval must be a number. Got " .. tostring(y) .. " (type " .. tostring(type(y)) .. ").")
+    assert(y >= 0, "Second argument (y) to Oval must not be negative. Got " .. tostring(y) .. ".")
+    assert(rx ~= nil, "Third argument (rx) to Oval must not be nil. Got nil.")
+    assert(type(rx) == "number", "Third argument (r) to Oval must be a number. Got " .. tostring(rx) .. " (type " .. tostring(type(rx)) .. ").")
+    assert(rx > 0, "Third argument (r) to Oval must be larger than 0. Got " .. tostring(rx) .. ".")
+    assert(ry ~= nil, "Fourth argument (ry) to Oval must not be nil. Got nil.")
+    assert(type(ry) == "number", "Fourth argument (ry) to Oval must be a number. Got " .. tostring(ry) .. " (type " .. tostring(type(ry)) .. ").")
+    assert(ry > 0, "Fourth argument (ry) to Oval must be larger than 0. Got " .. tostring(ry) .. ".")
 
-    x = math.floor(x)
-    y = math.floor(y)
-    rx = math.floor(rx)
-    ry = math.floor(ry)
+    local coords = agcalc.oval(x, y, rx, ry)
 
-    if not color then color = g.colors.default_fg_color.rgb01 end
-
-    local dx, dy, d1, d2
-    local xx = 0;
-    local yy = ry;
-    d1 = (ry * ry) - (rx * rx * ry) + (0.25 * rx * rx)
-    dx = 2 * ry * ry * xx
-    dy = 2 * rx * rx * yy
-
-    while (dx < dy) do	
-        Pset(xx + x, yy + y, color)
-        Pset(-xx + x, yy + y, color)
-        Pset(xx + x, -yy + y, color)
-        Pset(-xx + x, -yy + y, color)
-        if d1 < 0 then
-            xx = xx + 1
-            dx = dx + (2 * ry * ry)
-            d1 = d1 + dx + (ry * ry)
-        else
-            xx = xx + 1
-            yy = yy - 1
-            dx = dx + (2 * ry * ry)
-            dy = dy - (2 * rx * rx)
-            d1 = d1 + dx - dy + (ry * ry)
-        end
-    end
-
-    d2 = ((ry * ry) * ((xx + 0.5) * (xx + 0.5))) + ((rx * rx) * ((yy - 1) * (yy - 1))) - (rx * rx * ry * ry)
-    while (yy >= 0) do	
-        Pset(xx + x, yy + y, color)
-        Pset(-xx + x, yy + y, color)
-        Pset(xx + x, -yy + y, color)
-        Pset(-xx + x, -yy + y, color)	
-        if d2 > 0 then
-            yy = yy - 1
-            dy = dy - (2 * rx * rx)
-            d2 = d2 + (rx * rx) - dy
-        else
-            yy = yy - 1
-            xx = xx + 1
-            dx = dx + (2 * ry * ry)
-            dy = dy - (2 * rx * rx)
-            d2 = d2 + dx - dy + (rx * rx)
-        end
-    end
+    agdraw.draw_with_pset(coords, color)
 end
 
 
@@ -650,63 +506,84 @@ function Ovalfill(x, y, rx, ry, color)
         Length of radius on the y axis.
     color : palette.<color>
         Color of ellipse. Defaults to the default foreground colour.
+
+    Returns
+    -------
+    nothing
     ]]--
 
-    assert(type(x) == "number", "First argument (x) to Ovalfill must be a number.")
-    assert(x >= 0, "First argument (x) to Ovalfill must not be negative.")
-    assert(type(y) == "number", "Second argument (y) to Ovalfill must be a number.")
-    assert(y >= 0, "Second argument (y) to Ovalfill must not be negative.")
-    assert(type(rx) == "number", "Third argument (rx) to Ovalfill must be a number.")
-    assert(rx > 0, "Third argument (rx) to Ovalfill must be larger than 0.")
-    assert(type(ry) == "number", "Fourth argument (ry) to Ovalfill must be a number.")
-    assert(ry > 0, "Fourth argument (ry) to Ovalfill must be larger than 0.")
+    assert(x ~= nil, "First argument (x) to Ovalfill must not be nil. Got nil.")
+    assert(type(x) == "number", "First argument (x) to Ovalfill must be a number. Got " .. tostring(x) .. " (type " .. tostring(type(x)) .. ").")
+    assert(x >= 0, "First argument (x) to Ovalfill must not be negative. Got " .. tostring(x) .. ".")
+    assert(y ~= nil, "Second argument (y) to Ovalfill must not be nil. Got nil.")
+    assert(type(y) == "number", "Second argument (y) to Ovalfill must be a number. Got " .. tostring(y) .. " (type " .. tostring(type(y)) .. ").")
+    assert(y >= 0, "Second argument (y) to Ovalfill must not be negative. Got " .. tostring(y) .. ".")
+    assert(rx ~= nil, "Third argument (rx) to Ovalfill must not be nil. Got nil.")
+    assert(type(rx) == "number", "Third argument (r) to Ovalfill must be a number. Got " .. tostring(rx) .. " (type " .. tostring(type(rx)) .. ").")
+    assert(rx > 0, "Third argument (r) to Ovalfill must be larger than 0. Got " .. tostring(rx) .. ".")
+    assert(ry ~= nil, "Fourth argument (ry) to Ovalfill must not be nil. Got nil.")
+    assert(type(ry) == "number", "Fourth argument (ry) to Ovalfill must be a number. Got " .. tostring(ry) .. " (type " .. tostring(type(ry)) .. ").")
+    assert(ry > 0, "Fourth argument (ry) to Ovalfill must be larger than 0. Got " .. tostring(ry) .. ".")
 
-    x = math.floor(x)
-    y = math.floor(y)
-    rx = math.floor(rx)
-    ry = math.floor(ry)
+    local coords = agcalc.ovalfill(x, y, rx, ry)
 
-    if not color then color = g.colors.default_fg_color.rgb01 end
+    agdraw.draw_with_pset(coords, color)
+end
 
-    local dx, dy, d1, d2
-    local xx = 0;
-    local yy = ry;
-    d1 = (ry * ry) - (rx * rx * ry) + (0.25 * rx * rx)
-    dx = 2 * ry * ry * xx
-    dy = 2 * rx * rx * yy
 
-    while (dx < dy) do
-        Line(x - xx, y + yy, x + xx, y + yy, color)
-        Line(x - xx, y - yy, x + xx, y - yy, color)
-        if d1 < 0 then
-            xx = xx + 1
-            dx = dx + (2 * ry * ry)
-            d1 = d1 + dx + (ry * ry)
-        else
-            xx = xx + 1
-            yy = yy - 1
-            dx = dx + (2 * ry * ry)
-            dy = dy - (2 * rx * rx)
-            d1 = d1 + dx - dy + (ry * ry)
-        end
-    end
+----------------------
+---------- SPRITES --
+----------------------
 
-    d2 = ((ry * ry) * ((xx + 0.5) * (xx + 0.5))) + ((rx * rx) * ((yy - 1) * (yy - 1))) - (rx * rx * ry * ry)
-    while (yy >= 0) do
-        Line(x - xx, y + yy, x + xx, y + yy, color)
-        Line(x - xx, y - yy, x + xx, y - yy, color)
-        if d2 > 0 then
-            yy = yy - 1
-            dy = dy - (2 * rx * rx)
-            d2 = d2 + (rx * rx) - dy
-        else
-            yy = yy - 1
-            xx = xx + 1
-            dx = dx + (2 * ry * ry)
-            dy = dy - (2 * rx * rx)
-            d2 = d2 + dx - dy + (rx * rx)
-        end
-    end
+
+function Spr(x, y, num)
+    --[[
+    Function Spr allows to draw a sprite on on the specific coordinates.
+    Please note that this function, unlike its equivalent from PICO-8,
+    does not allow to specify a range of sprites to draw.
+
+    Arguments
+    ---------
+    x : number
+        Position of top-left sprite corner on the x axis.
+    y : number
+        Position of top-left sprite corner on the y axis.
+    num : number
+        Number of sprite in the spreadsheet. You should be able to
+        determine sprite number looking at the GUI of the sprites
+        editor.
+
+    Returns
+    -------
+    nothing
+    ]]--
+
+    assert(type(x) == "number", "First argument (x) to Spr must be a number. Got " .. tostring(x) .. " (type " .. tostring(type(x)) .. ").")
+    assert(x >= 0, "First argument (x) to Spr must not be negative. Got " .. tostring(x) .. ".")
+    assert(type(y) == "number", "Second argument (y) to Spr must be a number. Got " .. tostring(y) .. " (type " .. tostring(type(y)) .. ").")
+    assert(y >= 0, "Second argument (y) to Spr must not be negative. Got " .. tostring(y) .. ".")
+    assert(type(num) == "number", "Third argument (num) to Spr must be a number. Got " .. tostring(num) .. " (type " .. tostring(type(num)) .. ").")
+    assert(num > 0, "Third argument (num) to Spr must be a number larger than 0. Got " .. tostring(num) .. ".")
+    assert(num <= g.sprites.amount, "Third argument (num) to Spr must be a number not larger than " .. tostring(g.sprites.amount) .. ". Got " .. tostring(num) .. ".")
+
+    local current_sprite = sprite.get_sprite(num)
+    local colors = current_sprite["colors"]
+    local nx = x
+    local ny = y
+	for _, color in pairs(colors) do
+		for _, v in pairs(color) do
+			-- row
+			for k, d in pairs(v) do
+				if k == "hex" then
+					Pset(nx, ny, palette.find_color_by_hex(d).rgb01)
+				end
+			end
+            nx = nx + 1
+		end
+        ny = ny + 1
+        nx = x
+		--color
+	end
 end
 
 
@@ -778,6 +655,7 @@ function Brpt(enabled)
 
     love.keyboard.setKeyRepeat(enabled)
 end
+
 
 --------------------
 ---------- COLORS --

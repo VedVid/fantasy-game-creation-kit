@@ -97,5 +97,51 @@ palette.white_bold = {
     rgb01={0.902, 0.831, 0.639, 1}
 }
 
+palette.colors = {
+    palette.black,
+    palette.black_bold,
+    palette.red,
+    palette.red_bold,
+    palette.green,
+    palette.green_bold,
+    palette.yellow,
+    palette.yellow_bold,
+    palette.blue,
+    palette.blue_bold,
+    palette.magenta,
+    palette.magenta_bold,
+    palette.cyan,
+    palette.cyan_bold,
+    palette.white,
+    palette.white_bold
+}
+
+
+function palette.find_color_by_hex(hexc)
+    --[[
+    Method find_color_by_hex searches through palette.colors trying
+    to find color that matches hex color passed as `hexc` argument.
+    This functionality is used by API functions that read color
+    values from the external files like `data/sprites.json`.
+    Errors if no color matches passed hex code.
+
+    Arguments
+    ---------
+    hexc : string
+        Color in hexadecimal format.
+
+    Returns
+    -------
+    palette.<color>
+    ]]--
+
+    for _, color in pairs(palette.colors) do
+        if color.hex == hexc then
+            return color
+        end
+    end
+    error("Couldn't find correct color for hex value: " .. hexc)
+end
+
 
 return palette
