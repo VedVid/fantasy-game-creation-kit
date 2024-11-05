@@ -1,19 +1,6 @@
 local actions = {}
 
 
-actions.all_actions = {
-    enemy = {
-        "Basic attack",
-        "Use magic wand",
-        "Drink health potion"
-    },
-    item = {
-        "Pick up",
-        "Ignore"
-    }
-}
-
-
 actions.attack = {}
 actions.attack.sprite_basic = {
     {31, 32, 33},
@@ -49,6 +36,42 @@ actions.potion.sprite_active = {
     {76, 77, 78},
     {106, 107, 108}
 }
+
+
+actions.all_actions = {
+    enemy = {
+        actions.attack,
+        actions.wand,
+        actions.potion
+    },
+    item = {
+        "Pick up",
+        "Ignore"
+    }
+}
+
+
+local icons_start_x = 52 + 16
+local icons_start_y = 100 + (8 * 4)
+local icons_distance_between_x = 32
+
+
+function actions.draw_buttons()
+    local current_x = icons_start_x
+    local current_y = icons_start_y
+    -- if next tile is enemy:
+        -- always draw attack, with no info below it
+        -- always draw wand, with info about amount of consumables available
+        -- always draw potion, with info about amount of consumables available
+    for _, action in ipairs(actions.all_actions.enemy) do
+        for i, row in ipairs(action.sprite_basic) do
+            Spr(current_x, current_y + (8 * i), row[1])
+            Spr(current_x + 8, current_y + (8 * i), row[2])
+            Spr(current_x + 16, current_y + (8 * i), row[3])
+        end
+        current_x = current_x + icons_distance_between_x
+    end
+end
 
 
 return actions

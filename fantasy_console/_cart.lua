@@ -1,5 +1,6 @@
 require "api"
 
+local actions = require "game/actions"
 local map = require "game/map"
 
 
@@ -28,4 +29,5 @@ end
 
 function Draw()
     map.draw_map()
+    actions.draw_buttons()
 end
