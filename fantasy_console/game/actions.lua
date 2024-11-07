@@ -140,12 +140,10 @@ end
 
 
 function actions.draw_frame()
-    local frame_offset_x = 28
-    local frame_offset_y = 28
-    Spr(icons_start_x - 4, icons_start_y + 4, 139)
-    Spr(icons_start_x - 4 + 24, icons_start_y + 4, 140)
-    Spr(icons_start_x - 4, icons_start_y + 4 + 24, 169)
-    Spr(icons_start_x - 4 + 24, icons_start_y + 4 + 24, 170)
+    Spr(icons_start_x - 4 + (icons_distance_between_x * (actions.currently_selected - 1)), icons_start_y + 4, 139)
+    Spr(icons_start_x - 4 + 24 + (icons_distance_between_x * (actions.currently_selected - 1)), icons_start_y + 4, 140)
+    Spr(icons_start_x - 4 + (icons_distance_between_x * (actions.currently_selected - 1)), icons_start_y + 4 + 24, 169)
+    Spr(icons_start_x - 4 + 24 + (icons_distance_between_x * (actions.currently_selected - 1)), icons_start_y + 4 + 24, 170)
 end
 
 
