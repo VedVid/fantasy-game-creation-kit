@@ -18,7 +18,20 @@ end
 
 
 function Input()
-    do end
+    if Btnp("left") then
+        if actions.currently_selected > 1 then
+            actions.currently_selected = actions.currently_selected - 1
+        end
+    elseif Btnp("right") then
+        if actions.currently_selected < #actions.all_actions.enemy then
+            actions.currently_selected = actions.currently_selected + 1
+        end
+    elseif Btnp("z") then
+        if actions.all_actions.enemy[actions.currently_selected].amount > 0 then
+            actions.all_actions.enemy[actions.currently_selected].amount =
+            actions.all_actions.enemy[actions.currently_selected].amount - 1
+        end
+    end
 end
 
 
