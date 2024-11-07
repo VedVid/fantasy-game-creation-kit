@@ -29,5 +29,6 @@ end
 
 function Draw()
     map.draw_map()
+    actions.draw_frame()
     actions.draw_buttons()
 end

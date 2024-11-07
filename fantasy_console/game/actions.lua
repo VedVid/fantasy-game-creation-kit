@@ -109,6 +109,8 @@ actions.all_actions = {
     }
 }
 
+actions.currently_selected = 1
+
 
 local icons_start_x = 52
 local icons_start_y = 100 + (8 * 4)
@@ -134,6 +136,16 @@ function actions.draw_buttons()
         end
         current_x = current_x + icons_distance_between_x
     end
+end
+
+
+function actions.draw_frame()
+    local frame_offset_x = 28
+    local frame_offset_y = 28
+    Spr(icons_start_x - 4, icons_start_y + 4, 139)
+    Spr(icons_start_x - 4 + 24, icons_start_y + 4, 140)
+    Spr(icons_start_x - 4, icons_start_y + 4 + 24, 169)
+    Spr(icons_start_x - 4 + 24, icons_start_y + 4 + 24, 170)
 end
 
 
