@@ -30,13 +30,21 @@ function Input()
         if actions.all_actions.enemy[actions.currently_selected].amount > 0 then
             actions.all_actions.enemy[actions.currently_selected].amount =
             actions.all_actions.enemy[actions.currently_selected].amount - 1
+            if actions.all_actions.enemy[actions.currently_selected] == actions.attack then
+                actions.attack.cooldown_current = actions.attack.cooldown_max
+            end
         end
     end
 end
 
 
 function Update()
-    do end
+    if actions.attack.amount == 0 then
+        actions.attack.cooldown_current = actions.attack.cooldown_current - 1
+        if actions.attack.cooldown_current == 0 then
+            actions.attack.amount = 1
+        end
+    end
 end
 
 

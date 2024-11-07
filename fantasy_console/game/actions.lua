@@ -13,6 +13,8 @@ actions.attack.sprite_available = {
     {94, 95, 96}
 }
 actions.attack.amount = 1
+actions.attack.cooldown_max = 60
+actions.attack.cooldown_current = 0
 
 actions.wand = {}
 actions.wand.sprite_empty = {
