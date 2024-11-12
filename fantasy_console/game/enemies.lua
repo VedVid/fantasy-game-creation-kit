@@ -49,6 +49,7 @@ local start_y = 60
 
 
 function enemies.draw_current_enemy()
+    --if next tile ~= enemy tile then return end
     for i, row in ipairs(enemies.current_enemy) do
         Spr(start_x, start_y + (8 * i), row[1])
         Spr(start_x + 8, start_y + (8 * i), row[2])
