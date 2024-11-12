@@ -1,6 +1,7 @@
 require "api"
 
 local actions = require "game/actions"
+local enemies = require "game/enemies"
 local map = require "game/map"
 
 
@@ -14,6 +15,7 @@ function Init()
         map.item_tile,
         map.enemy_tile
     }
+    enemies.current_enemy = enemies.bat
 end
 
 
@@ -52,4 +54,5 @@ function Draw()
     map.draw_map()
     actions.draw_frame()
     actions.draw_buttons()
+    enemies.draw_current_enemy()
 end
