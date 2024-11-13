@@ -44,8 +44,8 @@ enemies.all_enemies = {
 enemies.current_enemy = nil
 
 
-local start_x = 80
-local start_y = 60
+local start_x = (256 / 2) - 16
+local start_y = 45
 
 
 function enemies.draw_current_enemy()
