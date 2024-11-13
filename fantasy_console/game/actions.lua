@@ -113,13 +113,23 @@ actions.all_actions = {
     },
     item = {
         "Pick up",
-        "Ignore"
+        "Ignore",
+        "empty",
+        "empty",
+        "empty"
     },
     free = {
         actions.potion,
-        actions.wand
+        actions.wand,
+        actions.empty,
+        actions.empty,
+        actions.empty
     },
     empty = {
+        actions.empty,
+        actions.empty,
+        actions.empty,
+        actions.empty,
         actions.empty
     }
 }
@@ -135,19 +145,27 @@ local icons_distance_between_x = 32
 function actions.draw_buttons(current_tile)
     local current_x = icons_start_x
     local current_y = icons_start_y
+
+    local actions_to_be_drawn = actions.all_actions.empty
     if current_tile == map.enemy_tile then
-        for _, action in ipairs(actions.all_actions.enemy) do
-            local sprite_to_be_drawn = action.sprite_empty
+        actions_to_be_drawn = actions.all_actions.enemy
+    end
+
+    for _, action in ipairs(actions_to_be_drawn) do
+        local sprite_to_be_drawn = action.sprite_empty
+        if actions_to_be_drawn == actions.all_actions.empty then
+            sprite_to_be_drawn = actions.empty
+        else
             if action.amount > 0 then
                 sprite_to_be_drawn = action.sprite_available
             end
-            for i, row in ipairs(sprite_to_be_drawn) do
-                Spr(current_x, current_y + (8 * i), row[1])
-                Spr(current_x + 8, current_y + (8 * i), row[2])
-                Spr(current_x + 16, current_y + (8 * i), row[3])
-            end
-            current_x = current_x + icons_distance_between_x
         end
+        for i, row in ipairs(sprite_to_be_drawn) do
+            Spr(current_x, current_y + (8 * i), row[1])
+            Spr(current_x + 8, current_y + (8 * i), row[2])
+            Spr(current_x + 16, current_y + (8 * i), row[3])
+        end
+        current_x = current_x + icons_distance_between_x
     end
 end
 
