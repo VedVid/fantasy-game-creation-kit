@@ -3,6 +3,7 @@ require "api"
 local actions = require "game/actions"
 local enemies = require "game/enemies"
 local map = require "game/map"
+local player = require "game/player"
 
 
 function Init()
@@ -16,6 +17,7 @@ function Init()
         map.enemy_tile
     }
     enemies.current_enemy = enemies.bat
+    player.current_tile = map.current_map[2]
 end
 
 
@@ -25,15 +27,19 @@ function Input()
             actions.currently_selected = actions.currently_selected - 1
         end
     elseif Btnp("right") then
-        if actions.currently_selected < #actions.all_actions.enemy then
-            actions.currently_selected = actions.currently_selected + 1
+        if player.current_tile == map.enemy_tile then
+            if actions.currently_selected < #actions.all_actions.enemy then
+                actions.currently_selected = actions.currently_selected + 1
+            end
         end
     elseif Btnp("z") then
-        if actions.all_actions.enemy[actions.currently_selected].amount > 0 then
-            actions.all_actions.enemy[actions.currently_selected].amount =
-            actions.all_actions.enemy[actions.currently_selected].amount - 1
-            if actions.all_actions.enemy[actions.currently_selected] == actions.attack then
-                actions.attack.cooldown_current = actions.attack.cooldown_max
+        if player.current_tile == map.enemy_tile then
+            if actions.all_actions.enemy[actions.currently_selected].amount > 0 then
+                actions.all_actions.enemy[actions.currently_selected].amount =
+                actions.all_actions.enemy[actions.currently_selected].amount - 1
+                if actions.all_actions.enemy[actions.currently_selected] == actions.attack then
+                    actions.attack.cooldown_current = actions.attack.cooldown_max
+                end
             end
         end
     end
@@ -52,7 +58,7 @@ end
 
 function Draw()
     map.draw_map()
-    actions.draw_frame()
-    actions.draw_buttons()
-    enemies.draw_current_enemy()
+    actions.draw_frame(player.current_tile)
+    actions.draw_buttons(player.current_tile)
+    enemies.draw_current_enemy(player.current_tile)
 end

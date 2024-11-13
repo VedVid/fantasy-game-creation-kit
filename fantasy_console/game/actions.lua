@@ -1,3 +1,6 @@
+local map = require "game/map"
+
+
 local actions = {}
 
 
@@ -119,29 +122,28 @@ local icons_start_y = 100 + (8 * 4)
 local icons_distance_between_x = 32
 
 
-function actions.draw_buttons()
+function actions.draw_buttons(current_tile)
     local current_x = icons_start_x
     local current_y = icons_start_y
-    -- if next tile is enemy:
-        -- always draw attack, with no info below it
-        -- always draw wand, with info about amount of consumables available
-        -- always draw potion, with info about amount of consumables available
-    for _, action in ipairs(actions.all_actions.enemy) do
-        local sprite_to_be_drawn = action.sprite_empty
-        if action.amount > 0 then
-            sprite_to_be_drawn = action.sprite_available
+    if current_tile == map.enemy_tile then
+        for _, action in ipairs(actions.all_actions.enemy) do
+            local sprite_to_be_drawn = action.sprite_empty
+            if action.amount > 0 then
+                sprite_to_be_drawn = action.sprite_available
+            end
+            for i, row in ipairs(sprite_to_be_drawn) do
+                Spr(current_x, current_y + (8 * i), row[1])
+                Spr(current_x + 8, current_y + (8 * i), row[2])
+                Spr(current_x + 16, current_y + (8 * i), row[3])
+            end
+            current_x = current_x + icons_distance_between_x
         end
-        for i, row in ipairs(sprite_to_be_drawn) do
-            Spr(current_x, current_y + (8 * i), row[1])
-            Spr(current_x + 8, current_y + (8 * i), row[2])
-            Spr(current_x + 16, current_y + (8 * i), row[3])
-        end
-        current_x = current_x + icons_distance_between_x
     end
 end
 
 
-function actions.draw_frame()
+function actions.draw_frame(current_tile)
+    if current_tile ~= map.enemy_tile then return end
     Spr(icons_start_x - 4 + (icons_distance_between_x * (actions.currently_selected - 1)), icons_start_y + 4, 139)
     Spr(icons_start_x - 4 + 24 + (icons_distance_between_x * (actions.currently_selected - 1)), icons_start_y + 4, 140)
     Spr(icons_start_x - 4 + (icons_distance_between_x * (actions.currently_selected - 1)), icons_start_y + 4 + 24, 169)
