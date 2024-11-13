@@ -27,10 +27,17 @@ function Input()
             actions.currently_selected = actions.currently_selected - 1
         end
     elseif Btnp("right") then
+        local max_actions = 0
         if player.current_tile == map.enemy_tile then
-            if actions.currently_selected < #actions.all_actions.enemy then
+            max_actions = #actions.all_actions.enemy
+        elseif player.current_tile == map.neutral_tile then
+            -- here we'll also add map.enemy_tile_old and item_tile_old
+            -- to add player option to use free actions on every tile after
+            -- exhausting its default options
+            max_actions = #actions.all_actions.free
+        end
+        if actions.currently_selected < max_actions then
                 actions.currently_selected = actions.currently_selected + 1
-            end
         end
     elseif Btnp("z") then
         if player.current_tile == map.enemy_tile then
