@@ -30,23 +30,25 @@ function Input()
         local max_actions = 0
         if player.current_tile == map.enemy_tile then
             max_actions = #actions.all_actions.enemy
-        elseif player.current_tile == map.neutral_tile then
-            -- here we'll also add map.enemy_tile_old and item_tile_old
-            -- to add player option to use free actions on every tile after
-            -- exhausting its default options
+        else
+            -- neutral tiles, _old tiles
             max_actions = #actions.all_actions.free
         end
         if actions.currently_selected < max_actions then
                 actions.currently_selected = actions.currently_selected + 1
         end
     elseif Btnp("z") then
+        local pool_of_actions = nil
         if player.current_tile == map.enemy_tile then
-            if actions.all_actions.enemy[actions.currently_selected].amount > 0 then
-                actions.all_actions.enemy[actions.currently_selected].amount =
-                actions.all_actions.enemy[actions.currently_selected].amount - 1
-                if actions.all_actions.enemy[actions.currently_selected] == actions.attack then
-                    actions.attack.cooldown_current = actions.attack.cooldown_max
-                end
+            pool_of_actions = actions.all_actions.enemy
+        else
+            pool_of_actions = actions.all_actions.free
+        end
+        if pool_of_actions[actions.currently_selected].amount > 0 then
+            pool_of_actions[actions.currently_selected].amount =
+            pool_of_actions[actions.currently_selected].amount - 1
+            if pool_of_actions[actions.currently_selected] == actions.attack and actions.attack.cooldown_current <= 0 then
+                actions.attack.cooldown_current = actions.attack.cooldown_max
             end
         end
     end
