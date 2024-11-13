@@ -97,6 +97,12 @@ actions.air.sprite_available = {
 }
 actions.air.amount = 1
 
+actions.empty = {
+    {141, 142, 143},
+    {171, 172, 173},
+    {144, 145, 146}
+}
+
 actions.all_actions = {
     enemy = {
         actions.attack,
@@ -110,7 +116,11 @@ actions.all_actions = {
         "Ignore"
     },
     free = {
-        actions.potion
+        actions.potion,
+        actions.wand
+    },
+    empty = {
+        actions.empty
     }
 }
 
