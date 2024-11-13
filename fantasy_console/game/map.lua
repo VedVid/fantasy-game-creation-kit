@@ -4,16 +4,16 @@ require "../api"
 local map = {}
 
 
-map.base_tile = {
-    {1, 2, 3},
-    {2, 2, 2},
-    {4, 2, 5}
-}
-
-map.player_tile = {
+map.neutral_tile = {
     {6, 7, 8},
     {7 ,7, 7},
     {9, 7, 10}
+}
+
+map.neutral_tile_old = {
+    {1, 2, 3},
+    {2, 2, 2},
+    {4, 2, 5}
 }
 
 map.enemy_tile = {
@@ -22,10 +22,22 @@ map.enemy_tile = {
     {14, 12, 15}
 }
 
+map.enemy_tile_old = {
+    {21, 22, 23},
+    {22, 22, 22},
+    {24, 22, 25}
+}
+
 map.item_tile = {
     {16, 17, 18},
     {17, 17, 17},
     {19, 17, 20}
+}
+
+map.item_tile_old = {
+    {26, 27, 28},
+    {27, 27, 27},
+    {29, 27, 30}
 }
 
 local map_start_x = 20

@@ -8,8 +8,8 @@ local player = require "game/player"
 
 function Init()
     map.current_map = {
-        map.base_tile,
-        map.player_tile,
+        map.neutral_tile_old,
+        map.neutral_tile,
         map.enemy_tile,
         map.item_tile,
         map.enemy_tile,
