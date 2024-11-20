@@ -1,7 +1,5 @@
 require "../api"
 
-local map = require "game/map"
-
 
 local enemies = {}
 
@@ -66,8 +64,7 @@ local start_x = (256 / 2) - 16
 local start_y = 45
 
 
-function enemies.draw_current_enemy(current_tile)
-    if current_tile ~= map.enemy_tile then return end
+function enemies.draw_current_enemy()
     if enemies.current_enemy.current_hp <= 0 then return end
     for i, row in ipairs(enemies.current_enemy.sprite) do
         Spr(start_x, start_y + (8 * i), row[1])

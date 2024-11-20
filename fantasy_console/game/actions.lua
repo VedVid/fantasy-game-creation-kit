@@ -1,5 +1,4 @@
 local enemies = require "game/enemies"
-local map = require "game/map"
 
 
 local actions = {}
@@ -136,7 +135,7 @@ function actions.draw_buttons(current_tile)
 
     local actions_to_be_drawn = actions.all_actions.free
 
-    if current_tile == map.enemy_tile and enemies.current_enemy.current_hp > 0 then
+    if enemies.current_enemy.current_hp > 0 then
         actions_to_be_drawn = actions.all_actions.enemy
     end
 
@@ -155,8 +154,7 @@ function actions.draw_buttons(current_tile)
 end
 
 
-function actions.draw_frame(current_tile)
-    if current_tile ~= map.enemy_tile and current_tile ~= map.neutral_tile then return end
+function actions.draw_frame()
     Spr(icons_start_x - 4 + (icons_distance_between_x * (actions.currently_selected - 1)), icons_start_y + 4, 139)
     Spr(icons_start_x - 4 + 24 + (icons_distance_between_x * (actions.currently_selected - 1)), icons_start_y + 4, 140)
     Spr(icons_start_x - 4 + (icons_distance_between_x * (actions.currently_selected - 1)), icons_start_y + 4 + 24, 169)

@@ -1,7 +1,8 @@
 local player = {}
 
 
-player.current_tile = nil
+player.max_hp = 5
+player.current_hp = 5
 
 
 return player
