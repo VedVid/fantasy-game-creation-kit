@@ -1,3 +1,4 @@
+local enemies = require "game/enemies"
 local map = require "game/map"
 
 
@@ -135,7 +136,7 @@ function actions.draw_buttons(current_tile)
 
     local actions_to_be_drawn = actions.all_actions.free
 
-    if current_tile == map.enemy_tile then
+    if current_tile == map.enemy_tile and enemies.current_enemy.current_hp > 0 then
         actions_to_be_drawn = actions.all_actions.enemy
     end
 
