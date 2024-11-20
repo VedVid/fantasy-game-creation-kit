@@ -4,6 +4,14 @@ local enemies = require "game/enemies"
 local actions = {}
 
 
+actions.arrow = {}
+actions.arrow.sprite_available = {
+    {512, 4, 512},
+    {1, 2, 3},
+    {512, 5, 512}
+}
+actions.arrow.amount = 9999
+
 actions.attack = {}
 actions.attack.sprite_empty = {
     {31, 32, 33},
@@ -117,7 +125,8 @@ actions.all_actions = {
     },
     free = {
         actions.potion,
-        actions.wand
+        actions.wand,
+        actions.arrow
     }
 }
 
@@ -129,7 +138,7 @@ local icons_start_y = 100
 local icons_distance_between_x = 32
 
 
-function actions.draw_buttons(current_tile)
+function actions.draw_buttons()
     local current_x = icons_start_x
     local current_y = icons_start_y
 
