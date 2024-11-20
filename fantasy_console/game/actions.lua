@@ -119,7 +119,7 @@ actions.currently_selected = 1
 
 
 local icons_start_x = 52
-local icons_start_y = 100 + (8 * 4)
+local icons_start_y = 100
 local icons_distance_between_x = 32
 
 

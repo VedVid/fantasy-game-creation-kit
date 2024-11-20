@@ -6,28 +6,32 @@ local map = require "game/map"
 local enemies = {}
 
 
-enemies.bat = {
+enemies.bat = {}
+enemies.bat.sprite = {
     {512, 512, 512, 512},
     {185, 186, 187, 188},
     {215, 216, 217, 218},
     {512, 512, 512, 512}
 }
 
-enemies.ghost = {
+enemies.ghost = {}
+enemies.ghost.sprite = {
     {245, 246, 247, 248},
     {275, 276, 277, 278},
     {305, 306, 307, 308},
     {335, 336, 337, 338}
 }
 
-enemies.cyclop = {
+enemies.cyclop = {}
+enemies.cyclop.sprite = {
     {189, 190, 191, 192},
     {219, 220, 221, 222},
     {249, 250, 251, 252},
     {279, 280, 281, 282}
 }
 
-enemies.spider = {
+enemies.spider = {}
+enemies.spider.sprite = {
     {193, 194, 195, 196},
     {223, 224, 225, 226},
     {253, 254, 255, 256},
@@ -52,7 +56,7 @@ local start_y = 45
 
 function enemies.draw_current_enemy(current_tile)
     if current_tile ~= map.enemy_tile then return end
-    for i, row in ipairs(enemies.current_enemy) do
+    for i, row in ipairs(enemies.current_enemy.sprite) do
         Spr(start_x, start_y + (8 * i), row[1])
         Spr(start_x + 8, start_y + (8 * i), row[2])
         Spr(start_x + 16, start_y + (8 * i), row[3])

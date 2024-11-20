@@ -41,7 +41,7 @@ map.item_tile_old = {
 }
 
 local map_start_x = 20
-local map_start_y = 100
+local map_start_y = 132
 local map_distance_between_x = 32
 
 map.current_map = {}
