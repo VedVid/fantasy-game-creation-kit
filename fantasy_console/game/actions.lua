@@ -18,6 +18,7 @@ actions.attack.sprite_available = {
 actions.attack.amount = 1
 actions.attack.cooldown_max = 60
 actions.attack.cooldown_current = 0
+actions.attack.element = 0
 
 actions.wand = {}
 actions.wand.sprite_empty = {
@@ -57,6 +58,7 @@ actions.fire.sprite_available = {
     {109, 110, 111}
 }
 actions.fire.amount = 1
+actions.fire.element = 143
 
 actions.water = {}
 actions.water.sprite_empty = {
@@ -70,6 +72,7 @@ actions.water.sprite_available = {
     {115, 116, 117}
 }
 actions.water.amount = 1
+actions.water.element = 141
 
 actions.earth = {}
 actions.earth.sprite_empty = {
@@ -83,6 +86,7 @@ actions.earth.sprite_available = {
     {154, 155, 156}
 }
 actions.earth.amount = 1
+actions.earth.element = 144
 
 actions.air = {}
 actions.air.sprite_empty = {
@@ -96,6 +100,8 @@ actions.air.sprite_available = {
     {163, 164, 165}
 }
 actions.air.amount = 1
+actions.air.element = 142
+
 
 actions.all_actions = {
     enemy = {

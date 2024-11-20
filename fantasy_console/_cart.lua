@@ -47,8 +47,15 @@ function Input()
         if pool_of_actions[actions.currently_selected].amount > 0 then
             pool_of_actions[actions.currently_selected].amount =
             pool_of_actions[actions.currently_selected].amount - 1
-            if pool_of_actions[actions.currently_selected] == actions.attack and actions.attack.cooldown_current <= 0 then
-                actions.attack.cooldown_current = actions.attack.cooldown_max
+            if pool_of_actions[actions.currently_selected] == actions.attack then
+                enemies.current_enemy.current_hp = enemies.current_enemy.current_hp - 1
+                if actions.attack.cooldown_current <= 0 then
+                    actions.attack.cooldown_current = actions.attack.cooldown_max
+                end
+            elseif pool_of_actions[actions.currently_selected].element == enemies.current_enemy.element then
+                enemies.current_enemy.current_hp = 0
+            else
+                enemies.current_enemy.current_hp = enemies.current_enemy.current_hp - 2
             end
         end
     end
