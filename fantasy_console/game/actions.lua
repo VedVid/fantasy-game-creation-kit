@@ -31,7 +31,7 @@ actions.wand.sprite_available = {
     {70, 71, 72},
     {100, 101, 102}
 }
-actions.wand.amount = 1
+actions.wand.amount = 0
 
 actions.potion = {}
 actions.potion.sprite_empty = {
@@ -44,7 +44,7 @@ actions.potion.sprite_available = {
     {76, 77, 78},
     {106, 107, 108}
 }
-actions.potion.amount = 1
+actions.potion.amount = 0
 
 actions.fire = {}
 actions.fire.sprite_empty = {
