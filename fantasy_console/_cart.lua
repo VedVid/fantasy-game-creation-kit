@@ -33,6 +33,12 @@ function Input()
             pool_of_actions = actions.all_actions.free
         end
         if pool_of_actions[actions.currently_selected].amount > 0 then
+            if pool_of_actions[actions.currently_selected] == actions.arrow then
+                enemies.current_enemy = enemies.all_enemies[math.random(#enemies.all_enemies)]
+                enemies.current_enemy.current_hp = enemies.current_enemy.max_hp
+                actions.currently_selected = 1
+                return
+            end
             pool_of_actions[actions.currently_selected].amount =
             pool_of_actions[actions.currently_selected].amount - 1
             if pool_of_actions[actions.currently_selected] == actions.attack then
