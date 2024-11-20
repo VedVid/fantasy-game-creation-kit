@@ -16,7 +16,7 @@ function Init()
         map.item_tile,
         map.enemy_tile
     }
-    enemies.current_enemy = enemies.bat
+    enemies.current_enemy = enemies.spider
     player.current_tile = map.current_map[3]
 end
 
