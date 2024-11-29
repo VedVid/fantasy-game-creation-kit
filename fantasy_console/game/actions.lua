@@ -72,14 +72,14 @@ actions.earth.element = 144
 
 actions.air = {}
 actions.air.sprite_empty = {
-    {130, 131, 132},
-    {160, 161, 162},
-    {133, 134, 135}
+    {46, 47, 48},
+    {76, 77, 78},
+    {106, 107, 108}
 }
 actions.air.sprite_available = {
-    {136, 137, 138},
-    {166, 167, 168},
-    {163, 164, 165}
+    {43, 44, 45},
+    {73, 74, 75},
+    {103, 104, 105}
 }
 actions.air.amount = 1
 actions.air.element = 142
