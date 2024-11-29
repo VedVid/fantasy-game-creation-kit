@@ -28,32 +28,6 @@ actions.attack.cooldown_max = 60
 actions.attack.cooldown_current = 0
 actions.attack.element = 0
 
-actions.wand = {}
-actions.wand.sprite_empty = {
-    {37, 38, 39},
-    {67, 68, 69},
-    {97, 98, 99}
-}
-actions.wand.sprite_available = {
-    {40, 41, 42},
-    {70, 71, 72},
-    {100, 101, 102}
-}
-actions.wand.amount = 0
-
-actions.potion = {}
-actions.potion.sprite_empty = {
-    {43, 44, 45},
-    {73, 74, 75},
-    {103, 104, 105}
-}
-actions.potion.sprite_available = {
-    {46, 47, 48},
-    {76, 77, 78},
-    {106, 107, 108}
-}
-actions.potion.amount = 0
-
 actions.fire = {}
 actions.fire.sprite_empty = {
     {52, 53, 54},
