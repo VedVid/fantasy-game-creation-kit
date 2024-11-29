@@ -8,7 +8,6 @@ local player = require "game/player"
 
 function Init()
     enemies.current_enemy = enemies.spider
-    items.current_item = items.wand
 end
 
 
@@ -38,6 +37,7 @@ function Input()
             if pool_of_actions[actions.currently_selected] == actions.arrow then
                 enemies.current_enemy = enemies.all_enemies[math.random(#enemies.all_enemies)]
                 enemies.current_enemy.current_hp = enemies.current_enemy.max_hp
+                items.use_item()
                 actions.currently_selected = 1
                 return
             end
@@ -63,6 +63,7 @@ end
 
 
 function Update()
+    print(player.current_hp)
     if actions.attack.amount == 0 then
         actions.attack.cooldown_current = actions.attack.cooldown_current - 1
         if actions.attack.cooldown_current == 0 then
