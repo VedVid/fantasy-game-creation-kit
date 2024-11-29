@@ -2,11 +2,13 @@ require "api"
 
 local actions = require "game/actions"
 local enemies = require "game/enemies"
+local items = require "game/items"
 local player = require "game/player"
 
 
 function Init()
     enemies.current_enemy = enemies.spider
+    items.current_item = items.wand
 end
 
 
@@ -53,6 +55,7 @@ function Input()
             end
             if pool_of_actions == actions.all_actions.enemy and enemies.current_enemy.current_hp <= 0 then
                 actions.currently_selected = 1
+                items.current_item = items.all_items[math.random(#items.all_items)]
             end
         end
     end
@@ -73,4 +76,5 @@ function Draw()
     actions.draw_frame()
     actions.draw_buttons()
     enemies.draw_current_enemy()
+    items.draw_current_item()
 end

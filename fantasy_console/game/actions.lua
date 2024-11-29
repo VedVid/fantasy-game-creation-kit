@@ -119,13 +119,7 @@ actions.all_actions = {
         actions.water,
         actions.air
     },
-    item = {
-        "Pick up",
-        "Ignore"
-    },
     free = {
-        actions.potion,
-        actions.wand,
         actions.arrow
     }
 }
