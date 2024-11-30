@@ -55,6 +55,7 @@ function Input()
             end
             if pool_of_actions == actions.all_actions.enemy and enemies.current_enemy.current_hp <= 0 then
                 actions.currently_selected = 1
+                player.points = player.points + 1
                 items.current_item = items.all_items[math.random(#items.all_items)]
             end
         end
@@ -63,7 +64,6 @@ end
 
 
 function Update()
-    print(player.current_hp)
     if actions.attack.amount == 0 then
         actions.attack.cooldown_current = actions.attack.cooldown_current - 1
         if actions.attack.cooldown_current == 0 then
