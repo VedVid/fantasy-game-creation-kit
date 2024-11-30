@@ -64,7 +64,6 @@ end
 
 
 function Update()
-    print(tostring(actions.all_actions.enemy[1].amount))
     if actions.attack.amount == 0 then
         actions.attack.cooldown_current = actions.attack.cooldown_current - 1
         if actions.attack.cooldown_current == 0 then

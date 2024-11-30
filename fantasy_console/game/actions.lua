@@ -136,10 +136,10 @@ end
 function actions.draw_amount()
     if enemies.current_enemy.current_hp <= 0 then return end
     Write(icons_start_x + 4, icons_start_y + 33, "x Inf")
-    Write(icons_start_x + 36, icons_start_y + 33, "x" .. tostring(actions.all_actions.enemy[2].amount))
-    Write(icons_start_x + 36 + icons_distance_between_x, icons_start_y + 33, "x" .. tostring(actions.all_actions.enemy[3].amount))
-    Write(icons_start_x + 36 + (2 * icons_distance_between_x), icons_start_y + 33, "x" .. tostring(actions.all_actions.enemy[4].amount))
-    Write(icons_start_x + 36 + (3 * icons_distance_between_x), icons_start_y + 33, "x" .. tostring(actions.all_actions.enemy[5].amount))
+    Write(icons_start_x + 4 + icons_distance_between_x, icons_start_y + 33, "x" .. tostring(actions.all_actions.enemy[2].amount))
+    Write(icons_start_x + 4 + (2 * icons_distance_between_x), icons_start_y + 33, "x" .. tostring(actions.all_actions.enemy[3].amount))
+    Write(icons_start_x + 4 + (3 * icons_distance_between_x), icons_start_y + 33, "x" .. tostring(actions.all_actions.enemy[4].amount))
+    Write(icons_start_x + 4 + (4 * icons_distance_between_x), icons_start_y + 33, "x" .. tostring(actions.all_actions.enemy[5].amount))
 end
 
 
