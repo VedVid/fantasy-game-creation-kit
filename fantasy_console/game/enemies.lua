@@ -60,7 +60,7 @@ enemies.all_enemies = {
 enemies.current_enemy = nil
 
 
-local start_x = (256 / 2) - 16
+local start_x = (256 / 2) + 16
 local start_y = 45
 
 

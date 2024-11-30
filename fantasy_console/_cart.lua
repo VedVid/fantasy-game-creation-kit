@@ -77,5 +77,6 @@ function Draw()
     actions.draw_frame()
     actions.draw_buttons()
     enemies.draw_current_enemy()
+    player.draw_player()
     items.draw_current_item()
 end
