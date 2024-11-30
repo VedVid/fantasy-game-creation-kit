@@ -1,3 +1,6 @@
+require "../api"
+
+
 local player = {}
 
 
@@ -21,6 +24,7 @@ function player.draw_player()
         Spr(start_x + 16, start_y + (8 * i), row[3])
         Spr(start_x + 24, start_y + (8 * i), row[4])
     end
+
 end
 
 

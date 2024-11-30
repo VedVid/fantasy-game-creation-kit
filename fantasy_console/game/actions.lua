@@ -1,3 +1,5 @@
+require "../api"
+
 local enemies = require "game/enemies"
 
 

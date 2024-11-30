@@ -1,3 +1,5 @@
+require "../api"
+
 local actions = require "game/actions"
 local enemies = require "game/enemies"
 local player = require "game/player"
