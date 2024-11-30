@@ -64,6 +64,7 @@ end
 
 
 function Update()
+    print(tostring(actions.all_actions.enemy[1].amount))
     if actions.attack.amount == 0 then
         actions.attack.cooldown_current = actions.attack.cooldown_current - 1
         if actions.attack.cooldown_current == 0 then
@@ -76,6 +77,7 @@ end
 function Draw()
     actions.draw_frame()
     actions.draw_buttons()
+    actions.draw_amount()
     enemies.draw_current_enemy()
     player.draw_player()
     items.draw_current_item()
