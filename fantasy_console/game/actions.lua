@@ -133,6 +133,15 @@ function actions.draw_buttons()
 end
 
 
+function actions.draw_attack_bar()
+    if enemies.current_enemy.current_hp <= 0 then return end
+    Line(icons_start_x + 4, icons_start_y + 5, icons_start_x + 4 + (actions.attack.cooldown_max / 4), icons_start_y + 5, GreenBold)
+    if actions.attack.cooldown_current >= 4 then
+        Line(icons_start_x + 4, icons_start_y + 5, icons_start_x + 4 + (actions.attack.cooldown_current / 4), icons_start_y + 5, White)
+    end
+end
+
+
 function actions.draw_amount()
     if enemies.current_enemy.current_hp <= 0 then return end
     Write(icons_start_x + 4, icons_start_y + 33, "x Inf")

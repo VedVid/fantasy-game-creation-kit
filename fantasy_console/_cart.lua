@@ -41,6 +41,7 @@ function Input()
                 enemies.current_cooldown = 0
                 items.use_item()
                 actions.currently_selected = 1
+                actions.cooldown_current = 0
                 return
             end
             pool_of_actions[actions.currently_selected].amount =
@@ -87,6 +88,7 @@ function Draw()
     if player.current_hp > 0 then
         actions.draw_frame()
         actions.draw_buttons()
+        actions.draw_attack_bar()
         actions.draw_amount()
         enemies.draw_current_enemy()
         enemies.draw_attack_bar()

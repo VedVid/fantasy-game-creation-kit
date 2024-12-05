@@ -62,7 +62,7 @@ function items.use_wand()
     local current_charges = math.random(min_charges, max_charges)
     while current_charges > 0 do
         local stat_to_boost = boosts_available[math.random(#boosts_available)]
-        if stat_to_boost ~= actions.all_actions.enemy.attack then
+        if stat_to_boost ~= boosts_available[1] then
             stat_to_boost.amount = stat_to_boost.amount + 1
             current_charges = current_charges - 1
         end
