@@ -32,4 +32,14 @@ function player.draw_player()
 end
 
 
+function player.print_score()
+    local start_string_y = 192 / 2 - 30
+    local points_string = tostring(player.points)
+    Write((256 / 2) - 16, start_string_y, "GAME OVER", Yellow)
+    Write((256 / 2) - 13, start_string_y + 20, "You scored")
+    Write((256 / 2) - (4 * (math.floor(#points_string / 2))) + 3, start_string_y + 30, points_string, GreenBold)
+    Write((256 / 2) - 5, start_string_y + 40, "points")
+end
+
+
 return player

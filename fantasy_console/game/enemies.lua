@@ -60,6 +60,10 @@ enemies.all_enemies = {
 enemies.current_enemy = nil
 
 
+enemies.current_cooldown = 0
+enemies.max_cooldown = 64
+
+
 local start_x = (256 / 2) + 16
 local start_y = 45
 
@@ -74,6 +78,15 @@ function enemies.draw_current_enemy()
     end
     for i=1,enemies.current_enemy.current_hp do
         Spr(start_x + (8 * i) - 8, start_y + 40, enemies.current_enemy.element)
+    end
+end
+
+
+function enemies.draw_attack_bar()
+    if enemies.current_enemy.current_hp <= 0 then return end
+    Line(start_x, start_y + 50, start_x + (enemies.max_cooldown / 2) - 1, start_y + 50, Green)
+    if enemies.current_cooldown >= 2 then
+        Line(start_x, start_y + 50, start_x + (enemies.current_cooldown / 2) - 1, start_y + 50, Red)
     end
 end
 
