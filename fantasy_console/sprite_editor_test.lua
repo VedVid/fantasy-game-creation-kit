@@ -235,7 +235,7 @@ function TestHandlePressingUniversalButtons:test__shold_set_tab_to_the_first_one
     local x = editor.all_sprites_tab_1.x + 4
     local y = editor.all_sprites_tab_1.y + 4
 
-    editor.handle_pressing_universal_buttons(x, y)
+    editor.handle_mousepresses(x, y, 1)
 
     luaunit.assertEquals(editor.current_tab, 1)
 end
@@ -246,7 +246,7 @@ function TestHandlePressingUniversalButtons:test__should_set_tab_to_the_first_on
     local x = editor.all_sprites_tab_1.x
     local y = editor.all_sprites_tab_1.y
 
-    editor.handle_pressing_universal_buttons(x, y)
+    editor.handle_mousepresses(x, y, 1)
 
     luaunit.assertEquals(editor.current_tab, 1)
 end
@@ -257,7 +257,7 @@ function TestHandlePressingUniversalButtons:test__should_set_tab_to_the_first_on
     local x = editor.all_sprites_tab_1.x + editor.all_sprites_tab_1.w
     local y = editor.all_sprites_tab_1.y + editor.all_sprites_tab_1.h
 
-    editor.handle_pressing_universal_buttons(x, y)
+    editor.handle_mousepresses(x, y, 1)
 
     luaunit.assertEquals(editor.current_tab, 1)
 end
@@ -268,7 +268,7 @@ function TestHandlePressingUniversalButtons:test__shold_set_tab_to_the_second_on
     local x = editor.all_sprites_tab_2.x + 4
     local y = editor.all_sprites_tab_2.y + 4
 
-    editor.handle_pressing_universal_buttons(x, y)
+    editor.handle_mousepresses(x, y, 1)
 
     luaunit.assertEquals(editor.current_tab, 2)
 end
@@ -279,7 +279,7 @@ function TestHandlePressingUniversalButtons:test__shold_set_tab_to_the_third_one
     local x = editor.all_sprites_tab_3.x + 4
     local y = editor.all_sprites_tab_3.y + 4
 
-    editor.handle_pressing_universal_buttons(x, y)
+    editor.handle_mousepresses(x, y, 1)
 
     luaunit.assertEquals(editor.current_tab, 3)
 end
@@ -293,7 +293,7 @@ function TestHandlePressingUniversalButtons:test__should_set_tab_to_the_third_on
     local x = editor.all_sprites_tab_3.x
     local y = editor.all_sprites_tab_3.y
 
-    editor.handle_pressing_universal_buttons(x, y)
+    editor.handle_mousepresses(x, y, 1)
 
     print("This test actually fails - it switches to second tab instead of to the third tab.")
     print("It is something I would like to investigate, but it's tatally unnoticeable")
@@ -307,7 +307,7 @@ function TestHandlePressingUniversalButtons:test__should_set_tab_to_the_third_on
     local x = editor.all_sprites_tab_3.x + 1
     local y = editor.all_sprites_tab_3.y
 
-    editor.handle_pressing_universal_buttons(x, y)
+    editor.handle_mousepresses(x, y, 1)
 
     luaunit.assertEquals(editor.current_tab, 3)
 end
@@ -318,7 +318,7 @@ function TestHandlePressingUniversalButtons:test__should_set_tab_to_the_third_on
     local x = editor.all_sprites_tab_3.x + editor.all_sprites_tab_3.w
     local y = editor.all_sprites_tab_3.y + editor.all_sprites_tab_3.h
 
-    editor.handle_pressing_universal_buttons(x, y)
+    editor.handle_mousepresses(x, y, 1)
 
     luaunit.assertEquals(editor.current_tab, 3)
 end
@@ -329,7 +329,7 @@ function TestHandlePressingUniversalButtons:test__should_set_current_color_to_bl
     local x = editor.colors[10][2] + 2
     local y = editor.colors[10][3] + 2
 
-    editor.handle_pressing_universal_buttons(x, y)
+    editor.handle_mousepresses(x, y, 1)
 
     luaunit.assertEquals(editor.current_color, 10)
 end
