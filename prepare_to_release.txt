@@ -4,3 +4,4 @@
 - Copy all the examples
 - For linux_small: add sprites_small and start_small files and rename them to sprites and start
 - For linux_full: add sprites_full and sprites_full files and rename them to sprites and start
+- Ensure that the correct path is in the batch files, e.g. `love` instead of `love_windows`
