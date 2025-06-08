@@ -40,3 +40,8 @@ This software uses the following programs, libraries and resources:
    Pretty printer for Lua, by Chen Tao.
    https://github.com/jagt/pprint.lua  [available as of 20240908]
    Unlicense – full text available in the `licenses` directory
+
+9. denver.lua
+   denver is a simple library to help you play custom waveforms with LÖVE.
+   https://github.com/superzazu/denver.lua/  [available as of 20250608]
+   MIT license – full text available in the `licenses` directory
