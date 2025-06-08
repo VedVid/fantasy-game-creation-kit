@@ -3,6 +3,7 @@ local canvas = require "canvas"
 local g = require "globals"
 local sprite = require "sprite"
 local sprite_editor = require "sprite_editor"
+local sound_editor = require "sound_editor"
 
 
 local mode = nil
@@ -98,6 +99,9 @@ function love.draw()
         sprite_editor.draw_save_button()
         sprite_editor.draw_current_sprite()
         sprite_editor.write_current_sprite_number()
+    elseif mode == "sounds" then
+        love.graphics.clear(g.colors.default_fg_color.rgb01)
+        sound_editor.draw_all_sound_effects()
     end
     local current_time = love.timer.getTime()
     if g.next_time <= current_time then
